@@ -6,4 +6,5 @@
 export const environment = {
   production: true,
   oauthClientId: 'admin',
+  apiUrl: 'https://api.brcgames.ru/v1',
 };
