@@ -13,7 +13,7 @@ import {ListTableColumnAction} from '../../@common/list/ListTableColumnAction';
   selector: 'ngx-dashboard',
   templateUrl: './list.component.html',
 })
-export class PostsListComponent extends ListComponent<Post> {
+export class ContentListComponent extends ListComponent<Post> {
   constructor(repository: ServicesProvider, router: Router, route: ActivatedRoute) {
     super(repository.PostsService, router, route);
 
@@ -21,10 +21,13 @@ export class PostsListComponent extends ListComponent<Post> {
     this.cardTitle = 'Посты';
     this.cardIcon = 'assignment';
     this.provider.itemsPerPage = 20;
-    this.provider.columns = [
+  }
+
+  protected GetColumns(): ListTableColumn<Post>[] {
+    return [
       new ListTableColumn<Post>('id', '#').setSortable(),
       new ListTableColumn<Post>('title', 'Заголовок').setSortable()
-        .setLinkGetter(post => ['/posts', post.id, 'edit'])
+        .setLinkGetter(post => ['/posts', post.Id, 'edit'])
       /*.setDisabled(!this.can(UserRights.AddNews))*/,
       new ListTableColumn<Post>('dateAdded', 'Дата', ListTableColumnType.TimeAgo).setSortable(),
       new ListTableColumn<Post>('parent', 'Раздел').setCustomGetter((post) => '-'),
@@ -34,7 +37,7 @@ export class PostsListComponent extends ListComponent<Post> {
           new ListTableColumnAction<Post>('Просмотреть на сайте', 'file').setExternal(post => '#'),
         )
         .AddAction(
-          new ListTableColumnAction<Post>('Удалить пост', 'trash').setClick(post => this.deleteItem(post.id)),
+          new ListTableColumnAction<Post>('Удалить пост', 'trash').setClick(post => this.deleteItem(post.Id)),
         ),
     ];
   }

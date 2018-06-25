@@ -10,4 +10,5 @@ export class ListTableComponent<T extends Model = Model> {
   @Input() public provider: ListProvider<T>;
   @Input() public cardTitle = '';
   @Input() public cardIcon = '';
+  @Input() public addUrl = '';
 }

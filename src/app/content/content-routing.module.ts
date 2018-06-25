@@ -1,16 +1,16 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
-import { PostsComponent } from './posts.component';
-import { PostsListComponent } from './list/list.component';
+import { ContentComponent } from './content.component';
+import { ContentListComponent } from './list/list.component';
 
 const routes: Routes = [{
   path: '',
-  component: PostsComponent,
+  component: ContentComponent,
   children: [
     {
       path: 'list',
-      component: PostsListComponent,
+      component: ContentListComponent,
     },
     {
       path: '',
@@ -24,5 +24,5 @@ const routes: Routes = [{
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class PostsRoutingModule {
+export class ContentRoutingModule {
 }

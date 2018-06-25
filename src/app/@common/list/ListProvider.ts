@@ -37,6 +37,10 @@ export class ListProvider<T extends Model> {
               private route: ActivatedRoute/*, private _userService: UserService*/) {
   }
 
+  public setService(service: BaseService<T>) {
+    this.service = service;
+  }
+
   public init() {
     this.items = new BehaviorSubject<T[]>([]);
     this.route.queryParamMap.subscribe(params => {
@@ -76,8 +80,9 @@ export class ListProvider<T extends Model> {
   public load(page?: number) {
     page = page ? page : this.currentPage;
     this.service.getList(page, this.itemsPerPage, this.sort).subscribe((res) => {
-      this.items.next(res.data);
-      this.totalItems = res.totalItems;
+      console.log(res.Data);
+      this.items.next(res.Data);
+      this.totalItems = res.TotalItems;
       this.currentPage = page;
       this.dataLoaded = true;
     });

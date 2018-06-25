@@ -19,6 +19,14 @@ import {BioCommonModule} from './@common/BioCommonModule';
 import {ServicesProvider} from './@services/ServicesProvider';
 import {PostsService} from './@services/PostsService';
 import {RestClient} from './@common/HttpClient';
+import {SitesService} from "./@services/SitesService";
+import {FormsModule} from "@angular/forms";
+import {CustomFormsModule} from "ng4-validators";
+import {DevelopersService} from "./@services/DevelopersService";
+import {GamesService} from "./@services/GamesService";
+import {TopicsService} from "./@services/TopicsService";
+import {SectionsService} from "./@services/SectionsService";
+import {ImageUploadModule} from "angular2-image-upload";
 
 @NgModule({
   declarations: [AppComponent],
@@ -38,6 +46,10 @@ import {RestClient} from './@common/HttpClient';
     NgbModule.forRoot(),
     ThemeModule.forRoot(),
     CoreModule.forRoot(),
+    ImageUploadModule.forRoot(),
+
+    FormsModule,
+    CustomFormsModule,
 
     BioCommonModule,
   ],
@@ -47,6 +59,11 @@ import {RestClient} from './@common/HttpClient';
     {provide: OAuthStorage, useValue: localStorage},
     RestClient,
     PostsService,
+    SitesService,
+    DevelopersService,
+    GamesService,
+    TopicsService,
+    SectionsService,
     ServicesProvider,
   ],
 })

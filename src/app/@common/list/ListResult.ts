@@ -1,11 +1,8 @@
 // import { JsonProperty } from 'json-object-mapper';
-export class ListResult<T> {
-  public data: T[];
+
+export abstract class ListResult<T> {
+  public abstract Data: T[];
 
   // @JsonProperty()
-  public totalItems: number;
-
-  public constructor() {
-    this.totalItems = undefined;
-  }
+  public TotalItems: number;
 }

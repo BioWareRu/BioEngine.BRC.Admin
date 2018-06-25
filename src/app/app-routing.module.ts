@@ -1,11 +1,13 @@
-import { ExtraOptions, RouterModule, Routes } from '@angular/router';
-import { NgModule } from '@angular/core';
+import {ExtraOptions, RouterModule, Routes} from '@angular/router';
+import {NgModule} from '@angular/core';
 
 const routes: Routes = [
-  { path: 'pages', loadChildren: 'app/pages/pages.module#PagesModule' },
-  { path: 'posts', loadChildren: 'app/posts/posts.module#PostsModule' },
-  { path: '', redirectTo: 'pages', pathMatch: 'full' },
-  { path: '**', redirectTo: 'pages' },
+  {path: 'pages', loadChildren: 'app/pages/pages.module#PagesModule'},
+  {path: 'posts', loadChildren: 'app/content/content.module#ContentModule'},
+  {path: 'sites', loadChildren: 'app/sites/sites.module#SitesModule'},
+  {path: 'sections', loadChildren: 'app/sections/sections.module#SectionsModule'},
+  {path: '', redirectTo: 'pages', pathMatch: 'full'},
+  {path: '**', redirectTo: 'pages'},
 ];
 
 const config: ExtraOptions = {

@@ -15,19 +15,19 @@ export class PostsService extends BaseService<Post> {
   }
 
   public getList(page: number = 1, perPage: number = 20, sort: string = '-id'): Observable<PostListResult> {
-    return this.getAll('posts', page, perPage, sort).pipe(map(res => plainToClass(PostListResult, res)));
+    return this.getAll('posts', page, perPage, sort).pipe(map(res => plainToClass(PostListResult, res as PostListResult)));
   }
 
   public get(id: number): Observable<Post> {
-    return this.getOne('posts', id).pipe(map(res => plainToClass(Post, res)));
+    return this.getOne('posts', id).pipe(map(res => plainToClass(Post, res as Post)));
   }
 
   public add(item: Post): Observable<SavePostResponse> {
-    return this.doAdd('posts', item).pipe(map(res => plainToClass(SavePostResponse, res)));
+    return this.doAdd('posts', item).pipe(map(res => plainToClass(SavePostResponse, res as SavePostResponse)));
   }
 
   public update(id: number, item: Post): Observable<SavePostResponse> {
-    return this.doUpdate('posts', id, item).pipe(map(res => plainToClass(SavePostResponse, res)));
+    return this.doUpdate('posts', id, item).pipe(map(res => plainToClass(SavePostResponse, res as SavePostResponse)));
   }
 
   public delete(id: number): Observable<boolean> {

@@ -11,7 +11,7 @@ import { MENU_ITEMS } from '../app.menu';
     </ngx-sample-layout>
   `,
 })
-export class PostsComponent {
+export class ContentComponent {
 
   menu = MENU_ITEMS;
 }

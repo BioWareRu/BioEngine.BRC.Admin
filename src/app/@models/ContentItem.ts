@@ -1,6 +1,6 @@
 import {Model} from './base/Model';
 
-export class ContentItem<T extends ContentData> extends Model {
+export abstract class ContentItem<T extends ContentData> extends Model {
   public Id: number;
   public Type: ContentItemType;
   public AuthorId: number;
@@ -18,7 +18,7 @@ export class ContentItem<T extends ContentData> extends Model {
   public SectionIds: number[];
   public SiteIds: number[];
 
-  public Data: T;
+  public abstract Data: T;
 }
 
 export enum ContentItemType {

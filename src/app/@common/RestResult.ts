@@ -1,11 +1,14 @@
+import {Type} from "class-transformer";
+
 export class RestResult {
-  public code: number = undefined;
-  public errors: RestError[] = [];
-  public message: string = undefined;
-  public isSuccess: boolean = undefined;
+  public Code: number;
+  @Type(() => RestError)
+  public Errors: RestError[] = [];
+  public Message: string;
+  public IsSuccess: boolean;
 }
 
 export class RestError {
-  public message: string = undefined;
-  public field: string = undefined;
+  public Message: string;
+  public Field: string;
 }

@@ -28,8 +28,8 @@ export class RestClient {
     return this.httpClient.get(this.getUrl(resource, params));
   }
 
-  public post(resource, data) {
-    return this.httpClient.post(this.getUrl(resource), data);
+  public post(resource, data, params = null) {
+    return this.httpClient.post(this.getUrl(resource, params), data);
   }
 
   public put(resource, data) {

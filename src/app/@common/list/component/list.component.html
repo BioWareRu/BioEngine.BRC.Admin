@@ -45,6 +45,11 @@
                            target="_blank"><fa [name]="action.Icon"></fa></a>
                       </span>
                     </span>
+          <span class="tags-list" *ngIf="column.Type==provider.columnTypes.SitesList">
+            <span *ngFor="let siteId of column.getValue(item)">
+              <span class="tag">{{column.Sites[siteId].Title}}</span>
+            </span>
+          </span>
         </td>
       </tr>
       </tbody>
@@ -59,3 +64,6 @@
 <div [hidden]="provider.dataLoaded">
   Загрузка данных
 </div>
+<a class="addButton" *ngIf="addUrl" [routerLink]="addUrl">
+  <fa name="plus"></fa>
+</a>

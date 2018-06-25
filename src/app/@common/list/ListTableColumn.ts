@@ -2,6 +2,7 @@ import {Model} from '../../@models/base/Model';
 import {SortDirection} from '../SortDirection';
 import {ListTableColumnType} from './ListEnums';
 import {ListTableColumnAction} from './ListTableColumnAction';
+import {Site} from "../../@models/Site";
 
 export class ListTableColumn<T = Model> {
   public Title: string;
@@ -65,5 +66,16 @@ export class ListTableColumn<T = Model> {
       return this.linkGetter(model);
     }
     return null;
+  }
+}
+
+export class SitesTableColumn<T = Model> extends ListTableColumn<T> {
+  public Sites: Site[] = [];
+
+  constructor(key: string, title: string, sites: Site[]) {
+    super(key, title, ListTableColumnType.SitesList);
+    sites.forEach(site => {
+      this.Sites[site.Id] = site;
+    });
   }
 }
