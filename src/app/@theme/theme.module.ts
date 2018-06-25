@@ -22,20 +22,11 @@ import {
 import {
   FooterComponent,
   HeaderComponent,
-  SearchInputComponent,
-  ThemeSettingsComponent,
   SwitcherComponent,
-  LayoutDirectionSwitcherComponent,
-  ThemeSwitcherComponent,
-  TinyMCEComponent,
-  ThemeSwitcherListComponent,
 } from './components';
 import { CapitalizePipe, PluralPipe, RoundPipe, TimingPipe } from './pipes';
 import {
-  OneColumnLayoutComponent,
   SampleLayoutComponent,
-  ThreeColumnsLayoutComponent,
-  TwoColumnsLayoutComponent,
 } from './layouts';
 import { DEFAULT_THEME } from './styles/theme.default';
 import { COSMIC_THEME } from './styles/theme.cosmic';
@@ -61,22 +52,12 @@ const NB_MODULES = [
 
 const COMPONENTS = [
   SwitcherComponent,
-  LayoutDirectionSwitcherComponent,
-  ThemeSwitcherComponent,
-  ThemeSwitcherListComponent,
   HeaderComponent,
   FooterComponent,
-  SearchInputComponent,
-  ThemeSettingsComponent,
-  TinyMCEComponent,
-  OneColumnLayoutComponent,
   SampleLayoutComponent,
-  ThreeColumnsLayoutComponent,
-  TwoColumnsLayoutComponent,
 ];
 
 const ENTRY_COMPONENTS = [
-  ThemeSwitcherListComponent,
 ];
 
 const PIPES = [
