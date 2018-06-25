@@ -1,0 +1,5 @@
+<div class="form-group" [formGroup]="FormGroup" [ngClass]="{'has-danger': Control.invalid}">
+  <label>{{Label}}</label>
+  <input [formControlName]="FieldName" class="form-control" type="{{Type}}" [ngClass]="{'form-control-warning': Control.invalid}"/>
+  <errorsList [Control]="Control"></errorsList>
+</div>

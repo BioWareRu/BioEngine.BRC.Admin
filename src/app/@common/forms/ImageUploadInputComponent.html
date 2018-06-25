@@ -1,0 +1,14 @@
+<div class="form-group" [formGroup]="FormGroup" [ngClass]="{'has-danger': Control.invalid}">
+  <label>{{Label}} <a (click)="showInput()" *ngIf="hasImage"><fa name="edit"></fa></a> <a (click)="hideInput()" *ngIf="!hasImage && imageUrl"><fa name="ban"></fa></a> </label>
+  <div *ngIf="hasImage">
+    <img src="{{imageUrl}}"/>
+  </div>
+  <input type="hidden" [formControlName]="FieldName">
+  <div *ngIf="!hasImage">
+  <input type="file" *ngIf="!hasImage"
+         [ngClass]="{'form-control-warning': Control.invalid}"
+         (change)="onValueChange($event)"
+  />
+  </div>
+  <errorsList [Control]="Control"></errorsList>
+</div>
