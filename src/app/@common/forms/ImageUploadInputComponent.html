@@ -1,5 +1,5 @@
 <div class="form-group" [formGroup]="FormGroup" [ngClass]="{'has-danger': Control.invalid}">
-  <label>{{Label}} <a (click)="showInput()" *ngIf="hasImage"><fa name="edit"></fa></a> <a (click)="hideInput()" *ngIf="!hasImage && imageUrl"><fa name="ban"></fa></a> </label>
+  <label>{{Label}} <a (click)="showInput()" *ngIf="hasImage"><fa-icon icon="edit"></fa-icon></a> <a (click)="hideInput()" *ngIf="!hasImage && imageUrl"><fa-icon icon="ban"></fa-icon></a> </label>
   <div *ngIf="hasImage">
     <img src="{{imageUrl}}"/>
   </div>

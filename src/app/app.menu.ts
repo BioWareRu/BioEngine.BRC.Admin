@@ -13,19 +13,19 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Список',
-        link: '/posts/list',
+        link: '/content/list',
       },
       {
         title: 'Добавить пост',
-        link: '/posts/add',
+        link: '/content/posts/add',
       },
       {
         title: 'Добавить галерею',
-        link: '/posts/add',
+        link: '/content/gallery/add',
       },
       {
         title: 'Добавить файл',
-        link: '/posts/add',
+        link: '/content/files/add',
       },
     ],
   },

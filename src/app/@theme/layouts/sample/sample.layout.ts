@@ -10,6 +10,7 @@ import {
 } from '@nebular/theme';
 
 import { StateService } from '../../../@core/data/state.service';
+import {ToasterConfig} from "angular2-toaster";
 
 // TODO: move layouts into the framework
 @Component({
@@ -35,6 +36,7 @@ import { StateService } from '../../../@core/data/state.service';
 
       <nb-layout-column class="main-content">
         <ng-content select="router-outlet"></ng-content>
+        <toaster-container [toasterconfig]="config"></toaster-container>
       </nb-layout-column>
 
       <nb-layout-column start class="small" *ngIf="layout.id === 'two-column' || layout.id === 'three-column'">
@@ -59,6 +61,16 @@ import { StateService } from '../../../@core/data/state.service';
   `,
 })
 export class SampleLayoutComponent implements OnDestroy {
+
+  public config = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    timeout: 5000,
+    newestOnTop: true,
+    tapToDismiss: true,
+    preventDuplicates: true,
+    animation: 'slideUp',
+    limit: 5,
+  });
 
   subMenu: NbMenuItem[] = [
     {

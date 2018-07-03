@@ -1,8 +1,9 @@
 import {Model} from "./base/Model";
 import {Site} from "./Site";
 import {StorageItem} from "./results/StorageItem";
+import {ISiteEntity} from "./interfaces/ISiteEntity";
 
-export class BaseSection extends Model {
+export class BaseSection extends Model implements ISiteEntity {
   public Id: number;
   public Type: number;
   public ParentId: number;

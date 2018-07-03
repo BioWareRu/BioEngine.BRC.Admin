@@ -7,11 +7,13 @@ import {SectionsComponent} from "./sections.component";
 import {SectionsRoutingModule} from "./sections-routing.module";
 import {DeveloperFormComponent} from "./developers/form/form.component";
 import {SectionsListComponent} from "./list/list.component";
+import {GameFormComponent} from "./games/form/form.component";
 
 const SECTIONS_COMPONENTS = [
   SectionsComponent,
   DeveloperFormComponent,
   SectionsListComponent,
+  GameFormComponent
 ];
 
 @NgModule({

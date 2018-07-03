@@ -1,39 +1,50 @@
 import {Observable} from 'rxjs/Rx';
 import {RestClient} from './HttpClient';
 import {ListResult} from './list/ListResult';
+import {plainToClass} from "class-transformer";
+import {map} from "rxjs/operators";
+import {SaveModelResponse} from "./SaveModelResponse";
+import {ClassType} from "class-transformer/ClassTransformer";
 
 export abstract class BaseService<T> {
 
   constructor(protected httpClient: RestClient) {
   }
 
-  protected getAll(resource: string, page: number, perPage: number, sort) {
-    return this.httpClient.get(resource, {limit: perPage, offset: perPage * (page - 1), order: sort});
+  protected abstract getResource(): string;
+
+  protected abstract getListType(): ClassType<ListResult<T>>;
+
+  protected abstract getSaveType(): ClassType<SaveModelResponse<T>>;
+
+  protected abstract getType(): ClassType<T>;
+
+  public getAll(page: number, perPage: number, sort): Observable<ListResult<T>> {
+    return this.httpClient.get(this.getResource(), {
+      limit: perPage,
+      offset: perPage * (page - 1),
+      order: sort
+    }).pipe(map(res => plainToClass(this.getListType(), res as ListResult<T>)));
   }
 
-  protected getOne(resource: string, id: number) {
-    return this.httpClient.get(resource + '/' + id, {});
+  public get(id: number): Observable<T> {
+    return this.httpClient.get(this.getResource() + '/' + id, {})
+      .pipe(map(res => plainToClass(this.getType(), res as T)));
   }
 
-  protected doAdd(resource: string, item: any) {
-    return this.httpClient.post(resource, item);
+  public add(item: any): Observable<SaveModelResponse<T>> {
+    return this.httpClient.post(this.getResource(), item).pipe(map(res => plainToClass(this.getSaveType(), res as SaveModelResponse<T>)));
   }
 
-  protected doUpdate(resource: string, id: number, item: any) {
-    return this.httpClient.put(resource + '/' + id, item);
+  public update(id: number, item: any): Observable<SaveModelResponse<T>> {
+    return this.httpClient.put(this.getResource() + '/' + id, item).pipe(map(res => plainToClass(this.getSaveType(), res as SaveModelResponse<T>)));
   }
 
-  protected doDelete(resource: string, id: number) {
-    return this.httpClient.delete(resource + '/' + id);
+  public delete(id: number): Observable<boolean> {
+    return this.httpClient.delete(this.getResource() + '/' + id).pipe(map(() => true));
   }
 
-  public abstract getList(page: number, perPage: number, sort: string): Observable<ListResult<T>>;
-
-  public abstract get (id: number): Observable<T>;
-
-  public abstract add(item: any): Observable<any>;
-
-  public abstract update(id: number, item: any): Observable<any>;
-
-  public abstract delete(id: number): Observable<any>;
+  public count(): Observable<number> {
+    return this.httpClient.get(this.getResource() + '/count', {}).pipe(map(res => res as number));
+  }
 }

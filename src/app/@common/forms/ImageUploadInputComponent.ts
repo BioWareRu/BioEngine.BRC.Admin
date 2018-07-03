@@ -4,6 +4,8 @@ import {map} from "rxjs/operators";
 import {plainToClass} from "class-transformer";
 import {StorageItem} from "../../@models/results/StorageItem";
 import {RestClient} from "../HttpClient";
+import {library} from '@fortawesome/fontawesome-svg-core';
+import {faEdit, faBan} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'image-upload-input',
@@ -16,6 +18,8 @@ export class ImageUploadInputComponent extends FormInput {
 
   public constructor(cd: ChangeDetectorRef, private http: RestClient) {
     super(cd);
+    library.add(faEdit);
+    library.add(faBan);
   }
 
   ngOnInit() {

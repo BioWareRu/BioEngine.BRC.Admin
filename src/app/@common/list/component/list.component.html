@@ -1,9 +1,7 @@
-<nb-card [hidden]="!provider.dataLoaded">
-  <nb-card-header>
-    {{cardTitle}}
-  </nb-card-header>
+<nb-card>
+  <nb-card-header>{{Title}}</nb-card-header>
 
-  <nb-card-body>
+  <nb-card-body [hidden]="!provider.dataLoaded">
     <div class="text-center">
       <pagination-controls (pageChange)="provider.changePage($event)" id="server" previousLabel="Назад"
                            nextLabel="Вперёд"></pagination-controls>
@@ -18,9 +16,9 @@
                       'sorting':column.Sortable}"
             (click)="column.Sortable?provider.applySort(column.Key):null">
           {{column.Title}}
-          <fa name="sort" *ngIf="column.Sortable&&column.Sorted==null"></fa>
-          <fa name="sort-amount-desc" *ngIf="column.Sorted==provider.sortDirection.Desc"></fa>
-          <fa name="sort-amount-asc" *ngIf="column.Sorted==provider.sortDirection.Asc"></fa>
+          <fa-icon icon="sort" *ngIf="column.Sortable&&column.Sorted==null"></fa-icon>
+          <fa-icon icon="sort-amount-down" *ngIf="column.Sorted==provider.sortDirection.Desc"></fa-icon>
+          <fa-icon icon="sort-amount-up" *ngIf="column.Sorted==provider.sortDirection.Asc"></fa-icon>
         </th>
       </tr>
       </thead>
@@ -39,15 +37,25 @@
           <span *ngIf="column.Type===provider.columnTypes.Actions">
                       <span *ngFor="let action of column.Actions">
                         <a *ngIf="action.Type===provider.actionTypes.Click" title="{{action.Title}}" href="javascript:;"
-                           (click)="action.Click(item)"><fa [name]="action.Icon"></fa></a>
+                           (click)="action.Click(item)"><fa-icon [icon]="action.Icon"></fa-icon></a>
                         <a *ngIf="action.Type===provider.actionTypes.ExternalLink" title="{{action.Title}}"
                            href="{{action.GenerateUrl(item)}}"
-                           target="_blank"><fa [name]="action.Icon"></fa></a>
+                           target="_blank"><fa-icon [icon]="action.Icon"></fa-icon></a>
                       </span>
                     </span>
           <span class="tags-list" *ngIf="column.Type==provider.columnTypes.SitesList">
             <span *ngFor="let siteId of column.getValue(item)">
               <span class="tag">{{column.Sites[siteId].Title}}</span>
+            </span>
+          </span>
+          <span class="tags-list" *ngIf="column.Type==provider.columnTypes.SectionsList">
+            <span *ngFor="let sectionId of column.getValue(item)">
+              <span class="tag">{{column.Sections[sectionId].Title}}</span>
+            </span>
+          </span>
+          <span class="tags-list" *ngIf="column.Type==provider.columnTypes.TagsList">
+            <span *ngFor="let tagId of column.getValue(item)">
+              <span class="tag">{{column.Tags[tagId].Name}}</span>
             </span>
           </span>
         </td>
@@ -59,11 +67,12 @@
                            nextLabel="Вперёд"></pagination-controls>
     </div>
   </nb-card-body>
+  <nb-card-body [hidden]="provider.dataLoaded">
+    Загрузка данных
+  </nb-card-body>
 </nb-card>
 
-<div [hidden]="provider.dataLoaded">
-  Загрузка данных
-</div>
+
 <a class="addButton" *ngIf="addUrl" [routerLink]="addUrl">
-  <fa name="plus"></fa>
+  <fa-icon icon="plus"></fa-icon>
 </a>

@@ -1,23 +1,24 @@
 import {Component} from '@angular/core';
 import {ListComponent} from '../../@common/list/ListComponent';
 import {Site} from '../../@models/Site';
-import {ActivatedRoute, Router} from '@angular/router';
-import {ServicesProvider} from '../../@services/ServicesProvider';
 import {ListTableColumn} from '../../@common/list/ListTableColumn';
 import {ListTableColumnType} from '../../@common/list/ListEnums';
 import {ListTableColumnAction} from '../../@common/list/ListTableColumnAction';
+import {PageContext} from "../../@common/PageComponent";
+import {ServicesProvider} from "../../@services/ServicesProvider";
 
 @Component({
   selector: 'ngx-dashboard',
   templateUrl: './list.component.html',
+  providers: [
+    PageContext
+  ]
 })
 export class SitesListComponent extends ListComponent<Site> {
-  constructor(repository: ServicesProvider, router: Router, route: ActivatedRoute) {
-    super(repository.SitesService, router, route);
+  constructor(context: PageContext, servicesProvider: ServicesProvider) {
+    super(context, servicesProvider.SitesService);
 
-    this.title = 'Список сайтов';
-    this.cardTitle = 'Сайты';
-    this.cardIcon = 'assignment';
+    this.StateService.setTitle('Список сайтов');
     this.provider.itemsPerPage = 20;
   }
 

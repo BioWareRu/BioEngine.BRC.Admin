@@ -6,8 +6,8 @@ import {RouterModule} from '@angular/router';
 import {MomentModule} from 'ngx-moment';
 import 'moment/locale/ru';
 import {NbCardModule} from '@nebular/theme';
-import {AngularFontAwesomeModule} from 'angular-font-awesome';
 import {BioFormsModule} from "./forms/FormsModule";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 @NgModule({
   declarations: [
@@ -23,8 +23,8 @@ import {BioFormsModule} from "./forms/FormsModule";
     RouterModule,
     MomentModule,
     NbCardModule,
-    AngularFontAwesomeModule,
-    BioFormsModule
+    BioFormsModule,
+    FontAwesomeModule
   ],
 })
 export class BioCommonModule {

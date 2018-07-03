@@ -8,6 +8,11 @@ export class DeveloperData extends TypedData {
 
 export class Developer extends Section<DeveloperData> {
   Data: DeveloperData;
+
+  public Test()
+  {
+    return "bla";
+  }
 }
 
 export class Person {

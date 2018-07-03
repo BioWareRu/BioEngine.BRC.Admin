@@ -4,8 +4,9 @@ import {Post} from '../@models/Post';
 import {BaseService} from '../@common/BaseService';
 import {RestClient} from '../@common/HttpClient';
 import {PostListResult, SavePostResponse} from '../@models/results/Post';
-import {plainToClass} from 'class-transformer';
 import {map} from 'rxjs/operators';
+import {ClassType} from "class-transformer/ClassTransformer";
+import {SaveModelResponse} from "../@common/SaveModelResponse";
 
 @Injectable()
 export class PostsService extends BaseService<Post> {
@@ -14,39 +15,27 @@ export class PostsService extends BaseService<Post> {
     super(httpClient);
   }
 
-  public getList(page: number = 1, perPage: number = 20, sort: string = '-id'): Observable<PostListResult> {
-    return this.getAll('posts', page, perPage, sort).pipe(map(res => plainToClass(PostListResult, res as PostListResult)));
-  }
-
-  public get(id: number): Observable<Post> {
-    return this.getOne('posts', id).pipe(map(res => plainToClass(Post, res as Post)));
-  }
-
-  public add(item: Post): Observable<SavePostResponse> {
-    return this.doAdd('posts', item).pipe(map(res => plainToClass(SavePostResponse, res as SavePostResponse)));
-  }
-
-  public update(id: number, item: Post): Observable<SavePostResponse> {
-    return this.doUpdate('posts', id, item).pipe(map(res => plainToClass(SavePostResponse, res as SavePostResponse)));
-  }
-
-  public delete(id: number): Observable<boolean> {
-    return this.doDelete('posts', id).pipe(map(res => true));
-  }
-
-  public publish(id: number): Observable<boolean> {
-    return this.httpClient.put('posts/' + id + '/publish', {}).pipe(map(res => true));
-  }
-
-  public unpublish(id: number): Observable<boolean> {
-    return this.httpClient.put('posts/' + id + '/unpublish', {}).pipe(map(res => false));
-  }
-
   public pin(id: number): Observable<boolean> {
-    return this.httpClient.put('posts/' + id + '/pin', {}).pipe(map(res => true));
+    return this.httpClient.put('posts/' + id + '/pin', {}).pipe(map(() => true));
   }
 
   public unpin(id: number): Observable<boolean> {
-    return this.httpClient.put('posts/' + id + '/unpin', {}).pipe(map(res => false));
+    return this.httpClient.put('posts/' + id + '/unpin', {}).pipe(map(() => false));
+  }
+
+  protected getListType(): ClassType<PostListResult> {
+    return PostListResult;
+  }
+
+  protected getResource(): string {
+    return "posts";
+  }
+
+  protected getType(): ClassType<Post> {
+    return Post;
+  }
+
+  protected getSaveType(): ClassType<SaveModelResponse<Post>> {
+    return SavePostResponse;
   }
 }

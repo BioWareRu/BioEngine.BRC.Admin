@@ -1,12 +1,11 @@
 import {Injectable} from "@angular/core";
 import {BaseService} from "../@common/BaseService";
 import {RestClient} from "../@common/HttpClient";
-import {Observable} from "rxjs/Observable";
-import {ListResult} from "../@common/list/ListResult";
-import {map} from "rxjs/operators";
-import {plainToClass} from "class-transformer";
 import {BaseSection} from "../@models/Section";
 import {SectionsListResult} from "../@models/results/BaseSection";
+import {ClassType} from "class-transformer/ClassTransformer";
+import {SaveModelResponse} from "../@common/SaveModelResponse";
+import {ListResult} from "../@common/list/ListResult";
 
 @Injectable()
 export class SectionsService extends BaseService<BaseSection> {
@@ -15,24 +14,20 @@ export class SectionsService extends BaseService<BaseSection> {
     super(httpClient);
   }
 
-  add(item: any): Observable<any> {
-    throw new Error("read only service");
+  protected getResource(): string {
+    return "sections";
   }
 
-  delete(id: number): Observable<any> {
-    throw new Error("read only service");
+  protected getListType(): ClassType<ListResult<BaseSection>> {
+    return SectionsListResult;
   }
 
-  get(id: number): Observable<BaseSection> {
-    return this.getOne('sections', id).pipe(map(res => plainToClass(BaseSection, res as BaseSection)));
+  protected getSaveType(): ClassType<SaveModelResponse<BaseSection>> {
+    return undefined;
   }
 
-  getList(page: number, perPage: number, sort: string): Observable<ListResult<BaseSection>> {
-    return this.getAll('sections', page, perPage, sort).pipe(map(res => plainToClass(SectionsListResult, res as SectionsListResult)));
-  }
-
-  update(id: number, item: any): Observable<any> {
-    throw new Error("read only service");
+  protected getType(): ClassType<BaseSection> {
+    return BaseSection;
   }
 
 }

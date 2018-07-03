@@ -2,11 +2,10 @@ import {Injectable} from "@angular/core";
 import {BaseService} from "../@common/BaseService";
 import {Developer} from "../@models/Developer";
 import {RestClient} from "../@common/HttpClient";
-import {Observable} from "rxjs/Observable";
 import {ListResult} from "../@common/list/ListResult";
-import {map} from "rxjs/operators";
-import {plainToClass} from "class-transformer";
 import {DeveloperListResult, SaveDeveloperResponse} from "../@models/results/Developer";
+import {ClassType} from "class-transformer/ClassTransformer";
+import {SaveModelResponse} from "../@common/SaveModelResponse";
 
 @Injectable()
 export class DevelopersService extends BaseService<Developer> {
@@ -15,24 +14,21 @@ export class DevelopersService extends BaseService<Developer> {
     super(httpClient);
   }
 
-  add(item: any): Observable<any> {
-    return this.doAdd('developers', item).pipe(map(res => plainToClass(SaveDeveloperResponse, res as SaveDeveloperResponse)));
+  protected getListType(): ClassType<ListResult<Developer>> {
+    return DeveloperListResult;
   }
 
-  delete(id: number): Observable<any> {
-    return this.doDelete('developers', id).pipe(map(res => true));
+  protected getResource(): string {
+    return "developers";
   }
 
-  get(id: number): Observable<Developer> {
-    return this.getOne('developers', id).pipe(map(res => plainToClass(Developer, res as Developer)));
+  protected getSaveType(): ClassType<SaveModelResponse<Developer>> {
+    return SaveDeveloperResponse;
   }
 
-  getList(page: number, perPage: number, sort: string): Observable<ListResult<Developer>> {
-    return this.getAll('developers', page, perPage, sort).pipe(map(res => plainToClass(DeveloperListResult, res as DeveloperListResult)));
+  protected getType(): ClassType<Developer> {
+    return Developer;
   }
 
-  update(id: number, item: any): Observable<any> {
-    return this.doUpdate('developers', id, item).pipe(map(res => plainToClass(SaveDeveloperResponse, res as SaveDeveloperResponse)));
-  }
 
 }

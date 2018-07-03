@@ -26,7 +26,12 @@ import {DevelopersService} from "./@services/DevelopersService";
 import {GamesService} from "./@services/GamesService";
 import {TopicsService} from "./@services/TopicsService";
 import {SectionsService} from "./@services/SectionsService";
-import {ImageUploadModule} from "angular2-image-upload";
+import {ContentService} from "./@services/ContentService";
+import {ToastsService} from "./@common/ToastsService";
+import {ToasterModule} from "angular2-toaster";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {GalleryService} from "./@services/GalleryService";
+import {TagsService} from "./@services/TagsService";
 
 @NgModule({
   declarations: [AppComponent],
@@ -46,7 +51,8 @@ import {ImageUploadModule} from "angular2-image-upload";
     NgbModule.forRoot(),
     ThemeModule.forRoot(),
     CoreModule.forRoot(),
-    ImageUploadModule.forRoot(),
+    ToasterModule.forRoot(),
+    FontAwesomeModule,
 
     FormsModule,
     CustomFormsModule,
@@ -64,7 +70,11 @@ import {ImageUploadModule} from "angular2-image-upload";
     GamesService,
     TopicsService,
     SectionsService,
+    ContentService,
+    GalleryService,
+    TagsService,
     ServicesProvider,
+    ToastsService
   ],
 })
 export class AppModule {

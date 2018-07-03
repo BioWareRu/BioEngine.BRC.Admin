@@ -3,6 +3,8 @@ import {SortDirection} from '../SortDirection';
 import {ListTableColumnType} from './ListEnums';
 import {ListTableColumnAction} from './ListTableColumnAction';
 import {Site} from "../../@models/Site";
+import {BaseSection} from "../../@models/Section";
+import {Tag} from "../../@models/Tag";
 
 export class ListTableColumn<T = Model> {
   public Title: string;
@@ -76,6 +78,28 @@ export class SitesTableColumn<T = Model> extends ListTableColumn<T> {
     super(key, title, ListTableColumnType.SitesList);
     sites.forEach(site => {
       this.Sites[site.Id] = site;
+    });
+  }
+}
+
+export class SectionsTableColumn<T = Model> extends ListTableColumn<T> {
+  public Sections: BaseSection[] = [];
+
+  constructor(key: string, title: string, sections: BaseSection[]) {
+    super(key, title, ListTableColumnType.SectionsList);
+    sections.forEach(section => {
+      this.Sections[section.Id] = section;
+    });
+  }
+}
+
+export class TagsTableColumn<T = Model> extends ListTableColumn<T> {
+  public Tags: Tag[] = [];
+
+  constructor(key: string, title: string, tags: Tag[]) {
+    super(key, title, ListTableColumnType.TagsList);
+    tags.forEach(tag => {
+      this.Tags[tag.Id] = tag;
     });
   }
 }

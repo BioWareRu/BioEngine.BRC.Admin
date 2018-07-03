@@ -2,11 +2,10 @@ import {Injectable} from "@angular/core";
 import {BaseService} from "../@common/BaseService";
 import {Game} from "../@models/Game";
 import {RestClient} from "../@common/HttpClient";
-import {Observable} from "rxjs/Observable";
 import {ListResult} from "../@common/list/ListResult";
-import {map} from "rxjs/operators";
-import {plainToClass} from "class-transformer";
 import {GameListResult, SaveGameResponse} from "../@models/results/Game";
+import {ClassType} from "class-transformer/ClassTransformer";
+import {SaveModelResponse} from "../@common/SaveModelResponse";
 
 @Injectable()
 export class GamesService extends BaseService<Game> {
@@ -15,24 +14,21 @@ export class GamesService extends BaseService<Game> {
     super(httpClient);
   }
 
-  add(item: any): Observable<any> {
-    return this.doAdd('games', item).pipe(map(res => plainToClass(SaveGameResponse, res as SaveGameResponse)));
+  protected getListType(): ClassType<ListResult<Game>> {
+    return GameListResult;
   }
 
-  delete(id: number): Observable<any> {
-    return this.doDelete('games', id).pipe(map(res => true));
+  protected getResource(): string {
+    return "games";
   }
 
-  get(id: number): Observable<Game> {
-    return this.getOne('games', id).pipe(map(res => plainToClass(Game, res as Game)));
+  protected getSaveType(): ClassType<SaveModelResponse<Game>> {
+    return SaveGameResponse;
   }
 
-  getList(page: number, perPage: number, sort: string): Observable<ListResult<Game>> {
-    return this.getAll('games', page, perPage, sort).pipe(map(res => plainToClass(GameListResult, res as GameListResult)));
+  protected getType(): ClassType<Game> {
+    return Game;
   }
 
-  update(id: number, item: any): Observable<any> {
-    return this.doUpdate('games', id, item).pipe(map(res => plainToClass(SaveGameResponse, res as SaveGameResponse)));
-  }
 
 }

@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Input, OnInit} from '@angular/core';
-import {AbstractControl, FormGroup} from '@angular/forms';
+import {FormGroup} from '@angular/forms';
 import {BioFormControl} from "./BioFormControl";
 
 export abstract class FormInput implements OnInit {
@@ -12,7 +12,7 @@ export abstract class FormInput implements OnInit {
   @Input() public FormGroup: FormGroup;
 
   ngOnInit(): void {
-    this.Control = <BioFormControl>this.FormGroup.controls[this.FieldName];
+    this.Control = <BioFormControl>this.FormGroup.get(this.FieldName);
   }
 
   protected constructor(protected cd: ChangeDetectorRef) {

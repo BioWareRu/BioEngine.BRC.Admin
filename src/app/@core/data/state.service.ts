@@ -1,8 +1,8 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { of as observableOf,  Observable,  BehaviorSubject } from 'rxjs';
-import { takeWhile } from 'rxjs/operators';
+import {Injectable, OnDestroy} from '@angular/core';
+import {of as observableOf, Observable, BehaviorSubject} from 'rxjs';
+import {takeWhile} from 'rxjs/operators';
 
-import { NbLayoutDirectionService, NbLayoutDirection } from '@nebular/theme';
+import {NbLayoutDirectionService, NbLayoutDirection} from '@nebular/theme';
 
 @Injectable()
 export class StateService implements OnDestroy {
@@ -42,6 +42,7 @@ export class StateService implements OnDestroy {
 
   protected layoutState$ = new BehaviorSubject(this.layouts[0]);
   protected sidebarState$ = new BehaviorSubject(this.sidebars[0]);
+  protected titleState$ = new BehaviorSubject<string>('BRC Games');
 
   alive = true;
 
@@ -58,7 +59,7 @@ export class StateService implements OnDestroy {
   }
 
   private updateSidebarIcons(direction: NbLayoutDirection) {
-    const [ startSidebar, endSidebar ] = this.sidebars;
+    const [startSidebar, endSidebar] = this.sidebars;
     const isLtr = direction === NbLayoutDirection.LTR;
     const startIconClass = isLtr ? 'nb-layout-sidebar-left' : 'nb-layout-sidebar-right';
     const endIconClass = isLtr ? 'nb-layout-sidebar-right' : 'nb-layout-sidebar-left';
@@ -66,27 +67,21 @@ export class StateService implements OnDestroy {
     endSidebar.icon = endIconClass;
   }
 
-  setLayoutState(state: any): any {
-    this.layoutState$.next(state);
-  }
-
-  getLayoutStates(): Observable<any[]> {
-    return observableOf(this.layouts);
-  }
 
   onLayoutState(): Observable<any> {
     return this.layoutState$.asObservable();
   }
 
-  setSidebarState(state: any): any {
-    this.sidebarState$.next(state);
-  }
-
-  getSidebarStates(): Observable<any[]> {
-    return observableOf(this.sidebars);
-  }
 
   onSidebarState(): Observable<any> {
     return this.sidebarState$.asObservable();
+  }
+
+  onTitleChange(): Observable<string> {
+    return this.titleState$.asObservable();
+  }
+
+  setTitle(title: string) {
+    this.titleState$.next(title);
   }
 }

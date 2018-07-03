@@ -1,5 +1,5 @@
 <nb-card>
-  <nb-card-header>Добавление сайта</nb-card-header>
+  <nb-card-header>{{Title}}</nb-card-header>
   <nb-card-body>
     <form class="form-horizontal" [formGroup]="formGroup" *ngIf="formLoaded">
       <text-input [FormGroup]="formGroup" [FieldName]="'Title'"

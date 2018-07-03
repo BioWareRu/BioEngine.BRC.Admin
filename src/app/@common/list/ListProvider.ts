@@ -79,8 +79,7 @@ export class ListProvider<T extends Model> {
 
   public load(page?: number) {
     page = page ? page : this.currentPage;
-    this.service.getList(page, this.itemsPerPage, this.sort).subscribe((res) => {
-      console.log(res.Data);
+    this.service.getAll(page, this.itemsPerPage, this.sort).subscribe((res) => {
       this.items.next(res.Data);
       this.totalItems = res.TotalItems;
       this.currentPage = page;

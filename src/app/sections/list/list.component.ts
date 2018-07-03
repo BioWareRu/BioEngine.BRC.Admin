@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
 import {ListComponent} from "../../@common/list/ListComponent";
 import {ServicesProvider} from "../../@services/ServicesProvider";
 import {ListTableColumn, SitesTableColumn} from "../../@common/list/ListTableColumn";
@@ -8,40 +7,47 @@ import {ListTableColumnAction} from "../../@common/list/ListTableColumnAction";
 import {BaseSection} from "../../@models/Section";
 import {Site} from "../../@models/Site";
 import {map} from "rxjs/operators";
+import {PageContext} from "../../@common/PageComponent";
 
 @Component({
   selector: 'ngx-dashboard',
   templateUrl: './list.component.html',
+  providers: [
+    PageContext
+  ]
 })
 export class SectionsListComponent extends ListComponent<BaseSection> {
   private sites: Site[];
 
-  constructor(private servicesProvider: ServicesProvider, router: Router, route: ActivatedRoute) {
-    super(servicesProvider.SectionsService, router, route);
+  constructor(context: PageContext, private servicesProvider: ServicesProvider) {
+    super(context, servicesProvider.SectionsService);
 
-    this.title = 'Список разделов';
-    this.addUrl = '/sections/developers/add';
-    this.cardTitle = 'Разделы';
-    this.cardIcon = 'assignment';
+    context.StateService.setTitle('Список разделов');
     this.provider.itemsPerPage = 20;
   }
 
   ngOnInit() {
-    this.route.params.pipe(map(p => p.type)).subscribe(type => {
+    this.Route.params.pipe(map(p => p.type)).subscribe(type => {
       switch (type) {
         case "developers":
           this.provider.setService(this.servicesProvider.DevelopersService);
+          this.StateService.setTitle("Разработчики");
+          this.addUrl = '/sections/developers/add';
           break;
         case "games":
           this.provider.setService(this.servicesProvider.GamesService);
+          this.StateService.setTitle("Игры");
+          this.addUrl = '/sections/games/add';
           break;
         case "topics":
           this.provider.setService(this.servicesProvider.TopicsService);
+          this.StateService.setTitle("Темы");
+          this.addUrl = '/sections/topics/add';
           break;
         default:
           break;
       }
-      this.servicesProvider.SitesService.getList(1, 100, 'id').subscribe(res => {
+      this.servicesProvider.SitesService.getAll(1, 100, 'id').subscribe(res => {
         this.sites = res.Data;
         this.Init();
       });

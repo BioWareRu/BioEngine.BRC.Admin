@@ -1,21 +1,47 @@
 <nb-card>
-  <nb-card-header>Добавление разработчика</nb-card-header>
+  <nb-card-header>{{Title}}</nb-card-header>
   <nb-card-body>
     <form class="form-horizontal" [formGroup]="formGroup" *ngIf="formLoaded">
-      <text-input [FormGroup]="formGroup" [FieldName]="'Title'"
-                  [Label]="'Название'"></text-input>
-      <text-input [FormGroup]="formGroup" [FieldName]="'Url'"
-                  [Label]="'Адрес на сайте'"></text-input>
-      <text-input [FormGroup]="formGroup" [FieldName]="'Keywords'"
-                  [Label]="'Ключевые слова, через запятую'"></text-input>
-      <textarea-input [FormGroup]="formGroup" [FieldName]="'Description'"
-                      [Label]="'Описание'"></textarea-input>
-      <textarea-input [FormGroup]="formGroup" [FieldName]="'ShortDescription'"
-                      [Label]="'Краткое описание'"></textarea-input>
-      <text-input [FormGroup]="formGroup" [FieldName]="'Hashtag'" [Label]="'Тэг для соцсетей'"></text-input>
-      <image-upload-input [UploadUrl]="'https://localhost:5000/v1/sections/upload'" [FormGroup]="formGroup" [FieldName]="'Logo'" [Label]="'Большой логотип'"></image-upload-input>
-      <image-upload-input [FormGroup]="formGroup" [FieldName]="'LogoSmall'" [Label]="'Маленький логотип'"></image-upload-input>
-      <chips-input [FormGroup]="formGroup" [FieldName]="'Sites'" [Label]="'Сайты'" [Options]="sitesOptions"></chips-input>
+      <nb-tabset>
+        <nb-tab tabTitle="Основное">
+          <div class="row">
+            <div class="col-md-6">
+              <text-input [FormGroup]="formGroup" [FieldName]="'Title'"
+                          [Label]="'Название'"></text-input>
+            </div>
+            <div class="col-md-6">
+              <text-input [FormGroup]="formGroup" [FieldName]="'Url'"
+                          [Label]="'Адрес на сайте'"></text-input>
+            </div>
+          </div>
+          <chips-input [FormGroup]="formGroup" [FieldName]="'Sites'" [Label]="'Сайты'"
+                       [Options]="sitesOptions"></chips-input>
+          <cke-input [FormGroup]="formGroup" [FieldName]="'ShortDescription'"
+                     [Label]="'Краткое описание'"></cke-input>
+          <div class="row">
+            <div class="col-md-6">
+              <images-upload-input [FormGroup]="formGroup" FieldName="Logo"
+                                   Label="Большой логотип"
+                                   [Multiple]="false"
+                                   [Types]='["image/png", "image/jpeg", "image/jpg", "image/gif"]'></images-upload-input>
+            </div>
+            <div class="col-md-6">
+              <images-upload-input [FormGroup]="formGroup" FieldName="LogoSmall"
+                                   Label="Маленький логотип"
+                                   [Multiple]="false"
+                                   [Types]='["image/png", "image/jpeg", "image/jpg", "image/gif"]'></images-upload-input>
+            </div>
+          </div>
+          <text-input [FormGroup]="formGroup" [FieldName]="'Hashtag'" [Label]="'Тэг для соцсетей'"></text-input>
+        </nb-tab>
+        <nb-tab tabTitle="Seo">
+          <text-input [FormGroup]="formGroup" [FieldName]="'Keywords'"
+                      [Label]="'Ключевые слова, через запятую'"></text-input>
+          <textarea-input [FormGroup]="formGroup" [FieldName]="'Description'"
+                          [Label]="'Описание'"></textarea-input>
+        </nb-tab>
+      </nb-tabset>
+
       <button class="btn btn-primary" type="submit" (click)="save()" [disabled]="formGroup.invalid||!hasChanges">
         Сохранить
       </button>

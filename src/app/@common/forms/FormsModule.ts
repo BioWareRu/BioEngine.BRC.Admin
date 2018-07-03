@@ -7,12 +7,12 @@ import {CKEditorModule} from 'ng2-ckeditor';
 import {DropDownInputComponent} from './DropDownInputComponent';
 import {CKEInputComponent} from './CKEInputComponent';
 import {TextAreaInputComponent} from "./TextAreaInputComponent";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {TagInputModule} from "ngx-chips";
 import {ChipsInputComponent} from "./ChipsInputComponent";
 import {ImageUploadInputComponent} from "./ImageUploadInputComponent";
-import {ImageUploadModule} from "angular2-image-upload";
-import {AngularFontAwesomeModule} from "angular-font-awesome";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {ImagesUploadInputComponent} from "./ImagesUploadInputComponent";
+import {FileDropModule} from "ngx-file-drop";
 
 @NgModule({
   declarations: [
@@ -22,7 +22,8 @@ import {AngularFontAwesomeModule} from "angular-font-awesome";
     DropDownInputComponent,
     ChipsInputComponent,
     CKEInputComponent,
-    ImageUploadInputComponent
+    ImageUploadInputComponent,
+    ImagesUploadInputComponent,
   ],
   exports: [
     ErrorsListComponent,
@@ -31,7 +32,8 @@ import {AngularFontAwesomeModule} from "angular-font-awesome";
     DropDownInputComponent,
     ChipsInputComponent,
     CKEInputComponent,
-    ImageUploadInputComponent
+    ImageUploadInputComponent,
+    ImagesUploadInputComponent
   ],
   providers: [],
   imports: [
@@ -40,8 +42,8 @@ import {AngularFontAwesomeModule} from "angular-font-awesome";
     FormsModule,
     ReactiveFormsModule,
     CKEditorModule,
-    AngularFontAwesomeModule,
-    ImageUploadModule.forRoot()
+    FontAwesomeModule,
+    FileDropModule
   ]
 })
 export class BioFormsModule {

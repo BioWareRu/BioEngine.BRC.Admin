@@ -5,6 +5,9 @@ import {DevelopersService} from "./DevelopersService";
 import {GamesService} from "./GamesService";
 import {TopicsService} from "./TopicsService";
 import {SectionsService} from "./SectionsService";
+import {ContentService} from "./ContentService";
+import {GalleryService} from "./GalleryService";
+import {TagsService} from "./TagsService";
 
 @Injectable()
 export class ServicesProvider {
@@ -14,7 +17,10 @@ export class ServicesProvider {
     private _developersService: DevelopersService,
     private _gamesService: GamesService,
     private _topicsService: TopicsService,
-    private _sectionsService: SectionsService) {
+    private _sectionsService: SectionsService,
+    private _contentService: ContentService,
+    private _galleryService: GalleryService,
+    private _tagsService: TagsService) {
 
   }
 
@@ -40,5 +46,17 @@ export class ServicesProvider {
 
   get SectionsService(): SectionsService {
     return this._sectionsService;
+  }
+
+  get ContentService(): ContentService {
+    return this._contentService;
+  }
+
+  get GalleryService(): GalleryService {
+    return this._galleryService;
+  }
+
+  get TagsService(): TagsService {
+    return this._tagsService;
   }
 }
