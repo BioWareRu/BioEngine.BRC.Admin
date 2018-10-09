@@ -4,8 +4,8 @@ import {Site} from '../../@models/Site';
 import {ListTableColumn} from '../../@common/list/ListTableColumn';
 import {ListTableColumnType} from '../../@common/list/ListEnums';
 import {ListTableColumnAction} from '../../@common/list/ListTableColumnAction';
-import {PageContext} from "../../@common/PageComponent";
-import {ServicesProvider} from "../../@services/ServicesProvider";
+import {PageContext} from '../../@common/PageComponent';
+import {ServicesProvider} from '../../@services/ServicesProvider';
 
 @Component({
   selector: 'ngx-dashboard',
@@ -29,8 +29,6 @@ export class SitesListComponent extends ListComponent<Site> {
         .setLinkGetter(site => ['/sites', site.Id, 'edit'])
       /*.setDisabled(!this.can(UserRights.AddNews))*/,
       new ListTableColumn<Site>('DateAdded', 'Дата', ListTableColumnType.TimeAgo).setSortable(),
-      new ListTableColumn<Site>('Keywords', 'Ключевики'),
-      new ListTableColumn<Site>('Description', 'Описание'),
       new ListTableColumn<Site>('Actions', '')
         .AddAction(
           new ListTableColumnAction<Site>('Просмотреть на сайте', 'globe').setExternal(site => site.Url),

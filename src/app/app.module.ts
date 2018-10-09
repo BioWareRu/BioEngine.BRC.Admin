@@ -19,19 +19,23 @@ import {BioCommonModule} from './@common/BioCommonModule';
 import {ServicesProvider} from './@services/ServicesProvider';
 import {PostsService} from './@services/PostsService';
 import {RestClient} from './@common/HttpClient';
-import {SitesService} from "./@services/SitesService";
-import {FormsModule} from "@angular/forms";
-import {CustomFormsModule} from "ng4-validators";
-import {DevelopersService} from "./@services/DevelopersService";
-import {GamesService} from "./@services/GamesService";
-import {TopicsService} from "./@services/TopicsService";
-import {SectionsService} from "./@services/SectionsService";
-import {ContentService} from "./@services/ContentService";
-import {ToastsService} from "./@common/ToastsService";
-import {ToasterModule} from "angular2-toaster";
-import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
-import {GalleryService} from "./@services/GalleryService";
-import {TagsService} from "./@services/TagsService";
+import {SitesService} from './@services/SitesService';
+import {FormsModule} from '@angular/forms';
+import {CustomFormsModule} from 'ng4-validators';
+import {DevelopersService} from './@services/DevelopersService';
+import {GamesService} from './@services/GamesService';
+import {TopicsService} from './@services/TopicsService';
+import {SectionsService} from './@services/SectionsService';
+import {ContentService} from './@services/ContentService';
+import {ToastsService} from './@common/ToastsService';
+import {ToasterModule} from 'angular2-toaster';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {GalleryService} from './@services/GalleryService';
+import {TagsService} from './@services/TagsService';
+import {PagesService} from './@services/PagesService';
+import {FilesService} from './@services/FilesService';
+import {ForumsService} from './@services/ForumsService';
+import {SettingsService} from './@services/SettingsService';
 
 @NgModule({
   declarations: [AppComponent],
@@ -73,8 +77,12 @@ import {TagsService} from "./@services/TagsService";
     ContentService,
     GalleryService,
     TagsService,
+    PagesService,
+    FilesService,
+    ForumsService,
+    SettingsService,
     ServicesProvider,
-    ToastsService
+    ToastsService,
   ],
 })
 export class AppModule {

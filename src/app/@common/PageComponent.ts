@@ -1,7 +1,7 @@
-import {StateService} from "../@core/data/state.service";
-import {Injectable} from "@angular/core";
-import {ActivatedRoute, Router} from "@angular/router";
-import {ToastsService} from "./ToastsService";
+import {StateService} from '../@core/data/state.service';
+import {Injectable} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ToastsService} from './ToastsService';
 
 export abstract class PageComponent {
   public Title = 'Пустой заголовок';
@@ -10,7 +10,7 @@ export abstract class PageComponent {
   protected Route: ActivatedRoute;
   public ToastsService: ToastsService;
 
-  constructor(context: PageContext) {
+  protected constructor(context: PageContext) {
     this.StateService = context.StateService;
     this.Route = context.Route;
     this.Router = context.Router;

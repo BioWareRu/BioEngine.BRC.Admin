@@ -1,14 +1,14 @@
-import {Injectable} from "@angular/core";
-import {BaseService} from "../@common/BaseService";
-import {Developer} from "../@models/Developer";
-import {RestClient} from "../@common/HttpClient";
-import {ListResult} from "../@common/list/ListResult";
-import {DeveloperListResult, SaveDeveloperResponse} from "../@models/results/Developer";
-import {ClassType} from "class-transformer/ClassTransformer";
-import {SaveModelResponse} from "../@common/SaveModelResponse";
+import {Injectable} from '@angular/core';
+import {BaseServiceWithUpload} from '../@common/BaseService';
+import {Developer} from '../@models/Developer';
+import {RestClient} from '../@common/HttpClient';
+import {ListResult} from '../@common/list/ListResult';
+import {DeveloperListResult, SaveDeveloperResponse} from '../@models/results/Developer';
+import {ClassType} from 'class-transformer/ClassTransformer';
+import {SaveModelResponse} from '../@common/SaveModelResponse';
 
 @Injectable()
-export class DevelopersService extends BaseService<Developer> {
+export class DevelopersService extends BaseServiceWithUpload<Developer> {
 
   constructor(httpClient: RestClient) {
     super(httpClient);
@@ -29,6 +29,4 @@ export class DevelopersService extends BaseService<Developer> {
   protected getType(): ClassType<Developer> {
     return Developer;
   }
-
-
 }

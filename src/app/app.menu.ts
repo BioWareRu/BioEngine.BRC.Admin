@@ -53,7 +53,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Сайты',
-    icon: 'ion-md-albums',
+    icon: 'ion-md-globe',
     children: [
       {
         title: 'Список',
@@ -64,6 +64,16 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/sites/add',
       },
     ]
+  },
+  {
+    title: 'Тэги',
+    icon: 'ion-md-pricetags',
+    link: '/pages/tags',
+  },
+  {
+    title: 'Страницы',
+    icon: 'ion-md-document',
+    link: '/pages/pages',
   },
   {
     title: 'Опросы',

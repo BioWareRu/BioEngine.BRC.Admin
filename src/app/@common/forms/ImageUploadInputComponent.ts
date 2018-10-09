@@ -1,11 +1,11 @@
 import {ChangeDetectorRef, Component, Input} from '@angular/core';
 import {FormInput} from './FormInput';
-import {map} from "rxjs/operators";
-import {plainToClass} from "class-transformer";
-import {StorageItem} from "../../@models/results/StorageItem";
-import {RestClient} from "../HttpClient";
+import {map} from 'rxjs/operators';
+import {plainToClass} from 'class-transformer';
+import {StorageItem} from '../../@models/results/StorageItem';
+import {RestClient} from '../HttpClient';
 import {library} from '@fortawesome/fontawesome-svg-core';
-import {faEdit, faBan} from '@fortawesome/free-solid-svg-icons';
+import {faBan, faEdit} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'image-upload-input',
@@ -44,7 +44,7 @@ export class ImageUploadInputComponent extends FormInput {
     if ($event.target.files && $event.target.files.length) {
       const [file] = $event.target.files;
 
-      this.http.post("developers/upload/", file, {name: file.name}).pipe(map(data => plainToClass(StorageItem, data as StorageItem))).subscribe(
+      this.http.post('developers/upload/', file, {name: file.name}).pipe(map(data => plainToClass(StorageItem, data as StorageItem))).subscribe(
         data => {
           this.Control.patchValue(data);
           this.hasImage = true;

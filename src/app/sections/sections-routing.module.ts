@@ -1,9 +1,10 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
-import {SectionsComponent} from "./sections.component";
-import {SectionsListComponent} from "./list/list.component";
-import {DeveloperFormComponent} from "./developers/form/form.component";
-import {GameFormComponent} from "./games/form/form.component";
+import {SectionsComponent} from './sections.component';
+import {SectionsListComponent} from './list/list.component';
+import {DeveloperFormComponent} from './developers/form/form.component';
+import {GameFormComponent} from './games/form/form.component';
+import {TopicFormComponent} from './topics/form/form.component';
 
 const routes: Routes = [{
   path: '',
@@ -32,6 +33,14 @@ const routes: Routes = [{
     {
       path: 'games/:id/edit',
       component: GameFormComponent
+    },
+    {
+      path: 'topics/add',
+      component: TopicFormComponent,
+    },
+    {
+      path: 'topics/:id/edit',
+      component: TopicFormComponent
     },
     /*
     {

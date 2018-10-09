@@ -1,23 +1,32 @@
-import {ChangeDetectorRef, Component, Input} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {FormInput} from './FormInput';
+import {Observable} from 'rxjs/Observable';
+import {ListResult} from '../list/ListResult';
+import {map} from 'rxjs/operators';
 
 @Component({
-    selector: 'drop-down-input',
-    templateUrl: './DropDownInputComponent.html'
+  selector: 'drop-down-input',
+  templateUrl: './DropDownInputComponent.html'
 })
-export class DropDownInputComponent extends FormInput {
-    @Input() public OptGroups: any;
-    @Input() public Comparator: any;
+export class DropDownInputComponent extends FormInput implements OnInit {
+  @Input() public Options: Observable<ListResult<any>>;
+  @Input() public ValueField: string = 'Id';
+  @Input() public DisplayField: string = 'Title';
+  @Input() public GroupByField: string = null;
 
   public constructor(cd: ChangeDetectorRef) {
     super(cd);
   }
 
-    public compareModels(o1: any, o2: any) {
-        if (this.Comparator) {
-            return this.Comparator(o1, o2);
-        }
-        return o1 === o2;
-    }
+  items$: Observable<any[]>;
 
+  ngOnInit() {
+    super.ngOnInit();
+    if (this.Options) {
+      this.items$ = this.Options.pipe(
+        map(res => {
+          return res.Data;
+        }));
+    }
+  }
 }

@@ -1,16 +1,6 @@
-<nb-card>
-  <nb-card-header>{{Title}}</nb-card-header>
-  <nb-card-body>
-    <form class="form-horizontal" [formGroup]="formGroup" *ngIf="formLoaded">
-      <text-input [FormGroup]="formGroup" [FieldName]="'Title'"
-                  [Label]="'Название сайта'"></text-input>
-      <text-input [FormGroup]="formGroup" [FieldName]="'Url'"
-                  [Label]="'Адрес сайта'"></text-input>
-      <text-input [FormGroup]="formGroup" [FieldName]="'Keywords'"
-                  [Label]="'Ключевые слова, через запятую'"></text-input>
-      <text-input [FormGroup]="formGroup" [FieldName]="'Description'"
-                  [Label]="'Описание'"></text-input>
-      <button class="btn btn-primary" type="submit" (click)="save()" [disabled]="formGroup.invalid||!hasChanges">Сохранить</button>
-    </form>
-  </nb-card-body>
-</nb-card>
+<form-layout *ngIf="formLoaded" [FormComponent]="this">
+  <text-input [FormGroup]="formGroup" FieldName="Title"
+              Label="Название сайта"></text-input>
+  <text-input [FormGroup]="formGroup" FieldName="Url"
+              Label="Адрес сайта"></text-input>
+</form-layout>

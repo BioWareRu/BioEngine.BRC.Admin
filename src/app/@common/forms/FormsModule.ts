@@ -6,13 +6,15 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CKEditorModule} from 'ng2-ckeditor';
 import {DropDownInputComponent} from './DropDownInputComponent';
 import {CKEInputComponent} from './CKEInputComponent';
-import {TextAreaInputComponent} from "./TextAreaInputComponent";
-import {TagInputModule} from "ngx-chips";
-import {ChipsInputComponent} from "./ChipsInputComponent";
-import {ImageUploadInputComponent} from "./ImageUploadInputComponent";
-import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
-import {ImagesUploadInputComponent} from "./ImagesUploadInputComponent";
-import {FileDropModule} from "ngx-file-drop";
+import {TextAreaInputComponent} from './TextAreaInputComponent';
+import {TagsInputComponent} from './TagsInputComponent';
+import {ImageUploadInputComponent} from './ImageUploadInputComponent';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {UploadInputComponent} from './UploadInputComponent';
+import {FormLayoutComponent} from './FormLayoutComponent';
+import {FileDropModule} from 'ngx-file-drop';
+import {NgSelectModule} from '@ng-select/ng-select';
+import {ThemeModule} from '../../@theme/theme.module';
 
 @NgModule({
   declarations: [
@@ -20,26 +22,29 @@ import {FileDropModule} from "ngx-file-drop";
     TextInputComponent,
     TextAreaInputComponent,
     DropDownInputComponent,
-    ChipsInputComponent,
+    TagsInputComponent,
     CKEInputComponent,
     ImageUploadInputComponent,
-    ImagesUploadInputComponent,
+    UploadInputComponent,
+    FormLayoutComponent
   ],
   exports: [
     ErrorsListComponent,
     TextInputComponent,
     TextAreaInputComponent,
     DropDownInputComponent,
-    ChipsInputComponent,
+    TagsInputComponent,
     CKEInputComponent,
     ImageUploadInputComponent,
-    ImagesUploadInputComponent
+    UploadInputComponent,
+    FormLayoutComponent
   ],
   providers: [],
   imports: [
+    ThemeModule,
     CommonModule,
-    TagInputModule,
     FormsModule,
+    NgSelectModule,
     ReactiveFormsModule,
     CKEditorModule,
     FontAwesomeModule,

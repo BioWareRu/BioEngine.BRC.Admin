@@ -1,13 +1,13 @@
-﻿import {BaseService} from "../@common/BaseService";
-import {Site} from "../@models/Site";
-import {SaveSiteResponse, SiteListResult} from "../@models/results/Site";
-import {Injectable} from "@angular/core";
-import {RestClient} from "../@common/HttpClient";
-import {ClassType} from "class-transformer/ClassTransformer";
-import {SaveModelResponse} from "../@common/SaveModelResponse";
+﻿import {BaseServiceWithUpload} from '../@common/BaseService';
+import {Site} from '../@models/Site';
+import {SaveSiteResponse, SiteListResult} from '../@models/results/Site';
+import {Injectable} from '@angular/core';
+import {RestClient} from '../@common/HttpClient';
+import {ClassType} from 'class-transformer/ClassTransformer';
+import {SaveModelResponse} from '../@common/SaveModelResponse';
 
 @Injectable()
-export class SitesService extends BaseService<Site> {
+export class SitesService extends BaseServiceWithUpload<Site> {
 
   constructor(httpClient: RestClient) {
     super(httpClient);
@@ -28,5 +28,4 @@ export class SitesService extends BaseService<Site> {
   protected getType(): ClassType<Site> {
     return Site;
   }
-
 }

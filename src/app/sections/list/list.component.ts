@@ -1,13 +1,13 @@
-import {Component} from '@angular/core';
-import {ListComponent} from "../../@common/list/ListComponent";
-import {ServicesProvider} from "../../@services/ServicesProvider";
-import {ListTableColumn, SitesTableColumn} from "../../@common/list/ListTableColumn";
-import {ListTableColumnType} from "../../@common/list/ListEnums";
-import {ListTableColumnAction} from "../../@common/list/ListTableColumnAction";
-import {BaseSection} from "../../@models/Section";
-import {Site} from "../../@models/Site";
-import {map} from "rxjs/operators";
-import {PageContext} from "../../@common/PageComponent";
+import {Component, OnInit} from '@angular/core';
+import {ListComponent} from '../../@common/list/ListComponent';
+import {ServicesProvider} from '../../@services/ServicesProvider';
+import {ListTableColumn, SitesTableColumn} from '../../@common/list/ListTableColumn';
+import {ListTableColumnType} from '../../@common/list/ListEnums';
+import {ListTableColumnAction} from '../../@common/list/ListTableColumnAction';
+import {BaseSection, SectionType} from '../../@models/Section';
+import {Site} from '../../@models/Site';
+import {map} from 'rxjs/operators';
+import {PageContext} from '../../@common/PageComponent';
 
 @Component({
   selector: 'ngx-dashboard',
@@ -16,7 +16,7 @@ import {PageContext} from "../../@common/PageComponent";
     PageContext
   ]
 })
-export class SectionsListComponent extends ListComponent<BaseSection> {
+export class SectionsListComponent extends ListComponent<BaseSection> implements OnInit {
   private sites: Site[];
 
   constructor(context: PageContext, private servicesProvider: ServicesProvider) {
@@ -29,19 +29,19 @@ export class SectionsListComponent extends ListComponent<BaseSection> {
   ngOnInit() {
     this.Route.params.pipe(map(p => p.type)).subscribe(type => {
       switch (type) {
-        case "developers":
+        case 'developers':
           this.provider.setService(this.servicesProvider.DevelopersService);
-          this.StateService.setTitle("Разработчики");
+          this.StateService.setTitle('Разработчики');
           this.addUrl = '/sections/developers/add';
           break;
-        case "games":
+        case 'games':
           this.provider.setService(this.servicesProvider.GamesService);
-          this.StateService.setTitle("Игры");
+          this.StateService.setTitle('Игры');
           this.addUrl = '/sections/games/add';
           break;
-        case "topics":
+        case 'topics':
           this.provider.setService(this.servicesProvider.TopicsService);
-          this.StateService.setTitle("Темы");
+          this.StateService.setTitle('Темы');
           this.addUrl = '/sections/topics/add';
           break;
         default:
@@ -60,15 +60,22 @@ export class SectionsListComponent extends ListComponent<BaseSection> {
       new ListTableColumn<BaseSection>('Id', '#').setSortable(),
       new ListTableColumn<BaseSection>('TypeTitle', 'Тип'),
       new ListTableColumn<BaseSection>('Title', 'Заголовок').setSortable()
-        .setLinkGetter(developer => ['/sections/developers', developer.Id, 'edit'])
+        .setLinkGetter(section => {
+          switch (section.Type) {
+            case SectionType.Developer:
+              return ['/sections/developers', section.Id, 'edit'];
+            case SectionType.Game:
+              return ['/sections/games', section.Id, 'edit'];
+            case SectionType.Topic:
+              return ['/sections/topics', section.Id, 'edit'];
+          }
+        })
       /*.setDisabled(!this.can(UserRights.AddNews))*/,
       new ListTableColumn<BaseSection>('DateAdded', 'Дата', ListTableColumnType.TimeAgo).setSortable(),
-      new ListTableColumn<BaseSection>('Keywords', 'Ключевики'),
-      new ListTableColumn<BaseSection>('Description', 'Описание'),
       new SitesTableColumn<BaseSection>('SiteIds', 'Сайты', this.sites),
       new ListTableColumn<BaseSection>('Actions', '')
         .AddAction(
-          new ListTableColumnAction<BaseSection>('Просмотреть на сайте', 'globe').setExternal(developer => developer.Url),
+          new ListTableColumnAction<BaseSection>('Просмотреть на сайте', 'globe').setExternal(secion => secion.Url),
         )
         .AddAction(
           new ListTableColumnAction<BaseSection>('Удалить', 'trash').setClick(Developer => this.deleteItem(Developer.Id)),

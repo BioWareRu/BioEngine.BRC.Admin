@@ -3,8 +3,9 @@ import {NgModule} from '@angular/core';
 
 import {ContentComponent} from './content.component';
 import {ContentListComponent} from './list/list.component';
-import {PostFormComponent} from "./posts/form/form.component";
-import {GalleryFormComponent} from "./gallery/form.component";
+import {PostFormComponent} from './posts/form/form.component';
+import {GalleryFormComponent} from './gallery/form.component';
+import {FilesFormComponent} from './files/form.component';
 
 const routes: Routes = [{
   path: '',
@@ -33,6 +34,14 @@ const routes: Routes = [{
     {
       path: 'gallery/:id/edit',
       component: GalleryFormComponent
+    },
+    {
+      path: 'files/add',
+      component: FilesFormComponent,
+    },
+    {
+      path: 'files/:id/edit',
+      component: FilesFormComponent
     },
     {
       path: '',

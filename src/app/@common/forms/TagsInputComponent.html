@@ -1,0 +1,12 @@
+<div class="form-group" [formGroup]="FormGroup" [ngClass]="{'has-danger': Control.invalid}">
+  <label>{{Label}}</label>
+  <ng-select [items]="items$ | async"
+             [addTag]="addTagPromise"
+             [bindValue]="ValueField"
+             [bindLabel]="DisplayField"
+             multiple="true"
+             [hideSelected]="true"
+             [formControlName]="FieldName">
+  </ng-select>
+  <errorsList [Control]="Control"></errorsList>
+</div>

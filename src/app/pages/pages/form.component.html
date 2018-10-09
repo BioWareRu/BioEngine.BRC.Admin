@@ -1,0 +1,16 @@
+<form-layout *ngIf="formLoaded" [FormComponent]="this">
+  <div class="row">
+    <div class="col-md-6">
+      <text-input [FormGroup]="formGroup" FieldName="Title"
+                  Label="Название"></text-input>
+    </div>
+    <div class="col-md-6">
+      <text-input [FormGroup]="formGroup" FieldName="Url"
+                  Label="Адрес на сайте"></text-input>
+    </div>
+  </div>
+  <tags-input [FormGroup]="formGroup" FieldName="SiteIds" Label="Сайты"
+              [Options]="Sites"></tags-input>
+  <cke-input [FormGroup]="formGroup" FieldName="Text"
+             Label="Содержимое страницы"></cke-input>
+</form-layout>

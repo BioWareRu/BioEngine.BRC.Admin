@@ -1,9 +1,0 @@
-<div class="form-group" [formGroup]="FormGroup" [ngClass]="{'has-danger': Control.invalid}">
-  <label>{{Label}}</label>
-  <tag-input [formControlName]="FieldName" [placeholder]="Placeholder" [secondaryPlaceholder]="Placeholder2"
-             [ngClass]="{'form-control-warning': Control.invalid}" [onlyFromAutocomplete]="OnlyFromAutocomplete">
-    <tag-input-dropdown [autocompleteItems]="Options" [showDropdownIfEmpty]="true">
-    </tag-input-dropdown>
-  </tag-input>
-  <errorsList [Control]="Control"></errorsList>
-</div>

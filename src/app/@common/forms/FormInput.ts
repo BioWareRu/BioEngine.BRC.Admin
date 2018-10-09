@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Input, OnInit} from '@angular/core';
 import {FormGroup} from '@angular/forms';
-import {BioFormControl} from "./BioFormControl";
+import {BioFormControl} from './BioFormControl';
 
 export abstract class FormInput implements OnInit {
 

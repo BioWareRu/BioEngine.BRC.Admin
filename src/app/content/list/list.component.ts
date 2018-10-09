@@ -1,22 +1,22 @@
 import {Component} from '@angular/core';
-import {ListComponent} from "../../@common/list/ListComponent";
-import {ServicesProvider} from "../../@services/ServicesProvider";
+import {ListComponent} from '../../@common/list/ListComponent';
+import {ServicesProvider} from '../../@services/ServicesProvider';
 import {
   ListTableColumn,
   SectionsTableColumn,
   SitesTableColumn,
   TagsTableColumn
-} from "../../@common/list/ListTableColumn";
-import {ListTableColumnType} from "../../@common/list/ListEnums";
-import {ListTableColumnAction} from "../../@common/list/ListTableColumnAction";
-import {BaseSection} from "../../@models/Section";
-import {Site} from "../../@models/Site";
-import {map} from "rxjs/operators";
-import {BaseContentItem, ContentItemType} from "../../@models/ContentItem";
-import {Observable} from "rxjs/Observable";
-import {PageContext} from "../../@common/PageComponent";
-import "rxjs-compat/add/observable/forkJoin";
-import {Tag} from "../../@models/Tag";
+} from '../../@common/list/ListTableColumn';
+import {ListTableColumnType} from '../../@common/list/ListEnums';
+import {ListTableColumnAction} from '../../@common/list/ListTableColumnAction';
+import {BaseSection} from '../../@models/Section';
+import {Site} from '../../@models/Site';
+import {map} from 'rxjs/operators';
+import {BaseContentItem, ContentItemType} from '../../@models/ContentItem';
+import {Observable} from 'rxjs/Observable';
+import {PageContext} from '../../@common/PageComponent';
+import 'rxjs-compat/add/observable/forkJoin';
+import {Tag} from '../../@models/Tag';
 
 @Component({
   selector: 'ngx-dashboard',
@@ -34,7 +34,6 @@ export class ContentListComponent extends ListComponent<BaseContentItem> {
     super(context, servicesProvider.ContentService);
 
     context.StateService.setTitle('Список контента');
-    this.addUrl = '/sections/developers/add';
     this.provider.itemsPerPage = 20;
   }
 
@@ -44,10 +43,17 @@ export class ContentListComponent extends ListComponent<BaseContentItem> {
         case "posts":
           this.provider.setService(this.servicesProvider.PostsService);
           this.StateService.setTitle("Посты");
+          this.addUrl = '/content/posts/add';
           break;
         case "gallery":
           this.provider.setService(this.servicesProvider.GalleryService);
           this.StateService.setTitle("Галерея");
+          this.addUrl = '/content/gallery/add';
+          break;
+        case 'files':
+          this.provider.setService(this.servicesProvider.FilesService);
+          this.StateService.setTitle('Файлы');
+          this.addUrl = '/content/files/add';
           break;
         default:
           break;

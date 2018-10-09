@@ -4,8 +4,8 @@ import {BioFormControl} from './BioFormControl';
 @Component({
   selector: 'errorsList',
   template: `
-    <div [hidden]="Control.valid && !Control.ServerErrors">
-      <div *ngIf="Control.errors">
+    <div [hidden]="Control&&Control.valid && !Control.ServerErrors">
+      <div *ngIf="Control&&Control.errors">
         <div *ngIf="Control.errors['required']" class="form-text control-error">
           Поле обязательно для заполнения
         </div>
@@ -13,7 +13,7 @@ import {BioFormControl} from './BioFormControl';
           Значение должно являться корректным URL
         </div>
       </div>
-      <div>
+      <div *ngIf="Control">
         <div *ngFor="let e of Control.ServerErrors" class="form-text control-error">
           {{e}}
         </div>

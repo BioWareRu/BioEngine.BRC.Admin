@@ -1,31 +1,33 @@
-<nb-card>
-  <nb-card-header>{{Title}}</nb-card-header>
-  <nb-card-body>
-    <form class="form-horizontal" [formGroup]="formGroup" *ngIf="formLoaded">
-      <text-input [FormGroup]="formGroup" [FieldName]="'Title'"
-                  [Label]="'Название'"></text-input>
-      <text-input [FormGroup]="formGroup" [FieldName]="'Url'"
-                  [Label]="'Адрес на сайте'"></text-input>
-      <text-input [FormGroup]="formGroup" [FieldName]="'Keywords'"
-                  [Label]="'Ключевые слова, через запятую'"></text-input>
-      <textarea-input [FormGroup]="formGroup" [FieldName]="'Description'"
-                      [Label]="'Описание'"></textarea-input>
-      <textarea-input [FormGroup]="formGroup" [FieldName]="'ShortDescription'"
-                      [Label]="'Краткое описание'"></textarea-input>
-      <text-input [FormGroup]="formGroup" [FieldName]="'Hashtag'" [Label]="'Тэг для соцсетей'"></text-input>
-      <images-upload-input [FormGroup]="formGroup" FieldName="Logo"
-                           Label="Большой логотип"
-                           [Multiple]="false"
-                           [Types]='["image/png", "image/jpeg", "image/jpg", "image/gif"]'></images-upload-input>
-      <images-upload-input [FormGroup]="formGroup" FieldName="LogoSmall"
-                           Label="Маленький логотип"
-                           [Multiple]="false"
-                           [Types]='["image/png", "image/jpeg", "image/jpg", "image/gif"]'></images-upload-input>
-      <chips-input [FormGroup]="formGroup" [FieldName]="'Sites'" [Label]="'Сайты'"
-                   [Options]="sitesOptions"></chips-input>
-      <button class="btn btn-primary" type="submit" (click)="save()" [disabled]="formGroup.invalid||!hasChanges">
-        Сохранить
-      </button>
-    </form>
-  </nb-card-body>
-</nb-card>
+<form-layout *ngIf="formLoaded" [FormComponent]="this">
+  <div class="row">
+    <div class="col-md-6">
+      <text-input [FormGroup]="formGroup" FieldName="Title"
+                  Label="Название"></text-input>
+    </div>
+    <div class="col-md-6">
+      <text-input [FormGroup]="formGroup" FieldName="Url"
+                  Label="Адрес на сайте"></text-input>
+    </div>
+  </div>
+  <tags-input [FormGroup]="formGroup" FieldName="SiteIds" Label="Сайты"
+              [Options]="Sites"></tags-input>
+  <cke-input [FormGroup]="formGroup" FieldName="ShortDescription"
+             Label="Краткое описание"></cke-input>
+  <div class="row">
+    <div class="col-md-6">
+      <upload-input [FormGroup]="formGroup" FieldName="Logo"
+                    Label="Большой логотип"
+                    [Multiple]="false"
+                    [Service]="getService()"
+                    [Types]='["image/png", "image/jpeg", "image/jpg", "image/gif"]'></upload-input>
+    </div>
+    <div class="col-md-6">
+      <upload-input [FormGroup]="formGroup" FieldName="LogoSmall"
+                    Label="Маленький логотип"
+                    [Multiple]="false"
+                    [Service]="getService()"
+                    [Types]='["image/png", "image/jpeg", "image/jpg", "image/gif"]'></upload-input>
+    </div>
+  </div>
+  <text-input [FormGroup]="formGroup" FieldName="Hashtag" Label="Тэг для соцсетей"></text-input>
+</form-layout>

@@ -2,8 +2,8 @@ import {BaseService} from '../BaseService';
 import {OnInit} from '@angular/core';
 import {ListProvider} from './ListProvider';
 import {Model} from '../../@models/base/Model';
-import {ListTableColumn} from "./ListTableColumn";
-import {PageComponent, PageContext} from "../PageComponent";
+import {ListTableColumn} from './ListTableColumn';
+import {PageComponent, PageContext} from '../PageComponent';
 
 export abstract class ListComponent<T extends Model> extends PageComponent implements OnInit {
 

@@ -1,0 +1,44 @@
+<nb-card>
+  <nb-card-header>{{FormComponent.Title}}</nb-card-header>
+  <nb-card-body>
+    <form class="form-horizontal" [formGroup]="FormComponent.formGroup" *ngIf="FormComponent.formLoaded">
+      <nb-tabset>
+        <nb-tab tabTitle="Основное">
+          <ng-content></ng-content>
+        </nb-tab>
+        <nb-tab *ngFor="let settingsGroup
+         of FormComponent.ModelSettings" [tabTitle]="settingsGroup.Name">
+          <div *ngFor="let prop of settingsGroup.Properties">
+            <div [ngSwitch]="prop.Type">
+              <div *ngSwitchCase="FormComponent.SettingTypes.Dropdown">
+                <drop-down-input [FormGroup]="FormComponent.formGroup" FieldName="{{settingsGroup.Key+prop.Key}}"
+                                 [Options]="FormComponent.SettingsOptions(settingsGroup.Key, prop.Key)"
+                                 DisplayField="Title" GroupByField="Group" ValueField="Value"
+                                 Label="{{prop.Name}}"></drop-down-input>
+              </div>
+              <div *ngSwitchCase="FormComponent.SettingTypes.String">
+                <text-input [FormGroup]="FormComponent.formGroup" FieldName="{{settingsGroup.Key+prop.Key}}"
+                            Label="{{prop.Name}}"></text-input>
+              </div>
+              <div *ngSwitchCase="FormComponent.SettingTypes.LongString">
+                <textarea-input [FormGroup]="FormComponent.formGroup" FieldName="{{settingsGroup.Key+prop.Key}}"
+                                Label="{{prop.Name}}"></textarea-input>
+              </div>
+              <div *ngSwitchDefault>Unknown field</div>
+            </div>
+          </div>
+        </nb-tab>
+        <nb-tab tabTitle="<>">
+          <pre>
+          {{FormComponent.model|json}}
+            </pre>
+        </nb-tab>
+      </nb-tabset>
+      <button class="btn btn-primary" type="submit" (click)="save()"
+              [ngClass]="{'invalid': FormComponent.formGroup.invalid, 'no-changes':!FormComponent.hasChanges}"
+              [disabled]="FormComponent.formGroup.invalid||!FormComponent.hasChanges">
+        Сохранить
+      </button>
+    </form>
+  </nb-card-body>
+</nb-card>

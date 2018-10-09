@@ -1,20 +1,16 @@
-import {Model} from "./base/Model";
-import {Site} from "./Site";
-import {StorageItem} from "./results/StorageItem";
-import {ISiteEntity} from "./interfaces/ISiteEntity";
+import {Model} from './base/Model';
+import {StorageItem} from './results/StorageItem';
+import {ISiteEntity} from './interfaces/ISiteEntity';
 
 export class BaseSection extends Model implements ISiteEntity {
   public Id: number;
   public Type: number;
   public ParentId: number;
-  public ForumId: number;
   public Title: string;
   public Url: string;
   public Logo: StorageItem;
   public LogoSmall: StorageItem;
-  public Description: string;
   public ShortDescription: string;
-  public Keywords: string;
   public Hashtag: string;
   public DateAdded: string;
   public DateUpdated: string;
@@ -31,4 +27,10 @@ export abstract class Section<T extends TypedData> extends BaseSection {
 
 export abstract class TypedData {
 
+}
+
+export enum SectionType {
+  Developer = 1,
+  Game = 2,
+  Topic = 3
 }
