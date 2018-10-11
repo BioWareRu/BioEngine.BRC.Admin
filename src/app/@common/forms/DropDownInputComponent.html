@@ -1,4 +1,4 @@
-<div class="form-group" [formGroup]="FormGroup" [ngClass]="{'has-danger': Control.invalid}">
+<div class="form-group" [formGroup]="FormGroup" [ngClass]="{'has-danger': Control&&Control.invalid}">
   <label>{{Label}}</label>
   <ng-select [items]="items$ | async"
              [bindValue]="ValueField"

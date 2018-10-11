@@ -17,6 +17,7 @@ import {BaseService} from '../BaseService';
 import {map} from 'rxjs/operators';
 import {Model} from '../../@models/base/Model';
 import {Settings, SettingType} from '../../@models/base/Settings';
+import {CustomValidators} from 'ng4-validators';
 
 export abstract class BaseFormComponent extends PageComponent {
   public success = false;
@@ -99,11 +100,27 @@ export abstract class FormComponent<TModel extends Model,
       this.model.SettingsGroups.forEach((settingsGroup, groupIndex) => {
         if (!settingsGroup.IsEditable) return;
         settingsGroup.Properties.forEach((prop, propIndex) => {
-          this.registerFormControl(
-            settingsGroup.Key + prop.Key,
-            [<any>Validators.required],
-            `SettingsGroups.${groupIndex}.Properties.${propIndex}.Value`
-          );
+          prop.Values.forEach((val, valIndex) => {
+            const fieldProperty = `SettingsGroups.${groupIndex}.Properties.${propIndex}.Values.${valIndex}.Value`;
+            let fieldName = settingsGroup.Key + prop.Key;
+            if (val.SiteId) {
+              fieldName += val.SiteId;
+            }
+            const validators = [];
+            if (prop.IsRequired) {
+              validators.push(<any>Validators.required);
+            }
+            switch (prop.Type) {
+              case SettingType.Url:
+                validators.push(CustomValidators.url);
+                break;
+            }
+            this.registerFormControl(
+              fieldName,
+              validators,
+              fieldProperty
+            );
+          });
         });
         this.ModelSettings.push(settingsGroup);
       });

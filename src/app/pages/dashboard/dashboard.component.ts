@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import {ServicesProvider} from "../../@services/ServicesProvider";
-import {Observable} from "rxjs/Observable";
-import "rxjs-compat/add/observable/forkJoin";
+import {ServicesProvider} from '../../@services/ServicesProvider';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs-compat/add/observable/forkJoin';
 
 @Component({
   selector: 'ngx-dashboard',
@@ -9,14 +9,14 @@ import "rxjs-compat/add/observable/forkJoin";
 })
 export class DashboardComponent {
 
-  protected sitesCount = 0;
-  protected sectionsCount = 0;
-  protected developersCount = 0;
-  protected gamesCount = 0;
-  protected topicsCount = 0;
-  protected postsCount = 0;
-  protected galleryCount = 0;
-  protected filesCount = 0;
+  public sitesCount = 0;
+  public sectionsCount = 0;
+  public developersCount = 0;
+  public gamesCount = 0;
+  public topicsCount = 0;
+  public postsCount = 0;
+  public galleryCount = 0;
+  public filesCount = 0;
 
   constructor(private servicesProvider: ServicesProvider) {
     Observable.forkJoin(
@@ -25,13 +25,14 @@ export class DashboardComponent {
       this.servicesProvider.DevelopersService.count(),
       this.servicesProvider.GamesService.count(),
       this.servicesProvider.PostsService.count(),
-      //this.servicesProvider.TopicsService.count(),
+      this.servicesProvider.TopicsService.count(),
     ).subscribe(res => {
       this.sitesCount = res[0];
       this.sectionsCount = res[1];
       this.developersCount = res[2];
       this.gamesCount = res[3];
       this.postsCount = res[4];
+      this.topicsCount = res[5];
     });
   }
 }

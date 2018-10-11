@@ -20,9 +20,23 @@
                 <text-input [FormGroup]="FormComponent.formGroup" FieldName="{{settingsGroup.Key+prop.Key}}"
                             Label="{{prop.Name}}"></text-input>
               </div>
+              <div *ngSwitchCase="FormComponent.SettingTypes.PasswordString">
+                <text-input [FormGroup]="FormComponent.formGroup" Type="password"
+                            FieldName="{{settingsGroup.Key+prop.Key}}"
+                            Label="{{prop.Name}}"></text-input>
+              </div>
               <div *ngSwitchCase="FormComponent.SettingTypes.LongString">
                 <textarea-input [FormGroup]="FormComponent.formGroup" FieldName="{{settingsGroup.Key+prop.Key}}"
                                 Label="{{prop.Name}}"></textarea-input>
+              </div>
+              <div *ngSwitchCase="FormComponent.SettingTypes.Url">
+                <text-input [FormGroup]="FormComponent.formGroup" Type="url"
+                            FieldName="{{settingsGroup.Key+prop.Key}}"
+                            Label="{{prop.Name}}"></text-input>
+              </div>
+              <div *ngSwitchCase="FormComponent.SettingTypes.Checkbox">
+                <checkbox-input [FormGroup]="FormComponent.formGroup" FieldName="{{settingsGroup.Key+prop.Key}}"
+                                Label="{{prop.Name}}"></checkbox-input>
               </div>
               <div *ngSwitchDefault>Unknown field</div>
             </div>

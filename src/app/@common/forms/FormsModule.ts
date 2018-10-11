@@ -15,6 +15,7 @@ import {FormLayoutComponent} from './FormLayoutComponent';
 import {FileDropModule} from 'ngx-file-drop';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {ThemeModule} from '../../@theme/theme.module';
+import {CheckboxInputComponent} from './CheckboxInputComponent';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import {ThemeModule} from '../../@theme/theme.module';
     CKEInputComponent,
     ImageUploadInputComponent,
     UploadInputComponent,
+    CheckboxInputComponent,
     FormLayoutComponent
   ],
   exports: [
@@ -37,6 +39,7 @@ import {ThemeModule} from '../../@theme/theme.module';
     CKEInputComponent,
     ImageUploadInputComponent,
     UploadInputComponent,
+    CheckboxInputComponent,
     FormLayoutComponent
   ],
   providers: [],

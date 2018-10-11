@@ -13,8 +13,8 @@ import {faBan, faEdit} from '@fortawesome/free-solid-svg-icons';
 })
 export class ImageUploadInputComponent extends FormInput {
   @Input() public UploadUrl: string;
-  protected hasImage: boolean = false;
-  protected imageUrl: string = null;
+  public hasImage: boolean = false;
+  public imageUrl: string = null;
 
   public constructor(cd: ChangeDetectorRef, private http: RestClient) {
     super(cd);

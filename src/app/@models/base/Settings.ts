@@ -1,10 +1,16 @@
 import {Type} from 'class-transformer';
 
+export class SettingsPropertyValue {
+  public SiteId: number;
+  public Value: any;
+}
+
 export class SettingsProperty {
   public Name: string;
   public Key: string;
-  public Value: any;
+  public Values: SettingsPropertyValue[];
   public Type: SettingType;
+  public IsRequired: boolean;
 }
 
 export enum SettingType {
@@ -15,7 +21,14 @@ export enum SettingType {
   Date = 5,
   DateTime = 6,
   Dropdown = 7,
-  LongString = 8
+  LongString = 8,
+  Checkbox = 9,
+  Url = 10
+}
+
+export enum SettingMode {
+  OnePerEntity = 1,
+  OnePerSite = 2
 }
 
 export class SettingsOption {
@@ -28,6 +41,7 @@ export class Settings {
   public Name: string;
   public Key: string;
   public IsEditable: boolean;
+  public Mode: SettingMode;
 
   @Type(() => SettingsProperty)
   public Properties: SettingsProperty[] = [];
