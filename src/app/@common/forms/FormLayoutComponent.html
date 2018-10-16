@@ -4,6 +4,15 @@
     <form class="form-horizontal" [formGroup]="FormComponent.formGroup" *ngIf="FormComponent.formLoaded">
       <nb-tabset>
         <nb-tab tabTitle="Основное">
+          <!--<div *ngIf="!FormComponent.formGroup.valid">
+            Form is invalid
+            <div *ngFor="let key of ObjectKeys(FormComponent.formGroup.controls)">
+              <div>
+                {{key}}
+                <errorsList [Control]="FormComponent.formGroup.controls[key]"></errorsList>
+              </div>
+            </div>
+          </div>-->
           <ng-content></ng-content>
         </nb-tab>
         <nb-tab *ngFor="let settingsGroup
@@ -50,8 +59,22 @@
       </nb-tabset>
       <button class="btn btn-primary" type="submit" (click)="save()"
               [ngClass]="{'invalid': FormComponent.formGroup.invalid, 'no-changes':!FormComponent.hasChanges}"
-              [disabled]="FormComponent.formGroup.invalid||!FormComponent.hasChanges">
+              [disabled]="FormComponent.formGroup.invalid||!FormComponent.hasChanges||FormComponent.inProgress">
         Сохранить
+      </button>
+
+      <button class="btn btn-success" (click)="FormComponent.changePublishState()"
+              *ngIf="!FormComponent.model.IsPublished"
+              [disabled]="FormComponent.formGroup.invalid||FormComponent.hasChanges||FormComponent.inProgress"
+      >
+        Опубликовать
+      </button>
+
+      <button class="btn btn-warning" (click)="FormComponent.changePublishState()"
+              *ngIf="FormComponent.model.IsPublished"
+              [disabled]="FormComponent.formGroup.invalid||FormComponent.hasChanges||FormComponent.inProgress"
+      >
+        Спрятать
       </button>
     </form>
   </nb-card-body>

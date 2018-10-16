@@ -48,6 +48,16 @@ export abstract class BaseService<T> {
       .pipe(map(res => plainToClass(this.getSaveType(), res as SaveModelResponse<T>)));
   }
 
+  public publish(id: number): Observable<T> {
+    return this.httpClient.post(this.getResource() + '/publish/' + id, {})
+      .pipe(map(res => plainToClass(this.getType(), res as T)));
+  }
+
+  public unpublish(id: number): Observable<T> {
+    return this.httpClient.post(this.getResource() + '/hide/' + id, {})
+      .pipe(map(res => plainToClass(this.getType(), res as T)));
+  }
+
   public delete(id: number): Observable<boolean> {
     return this.httpClient.delete(this.getResource() + '/' + id)
       .pipe(map(() => true));

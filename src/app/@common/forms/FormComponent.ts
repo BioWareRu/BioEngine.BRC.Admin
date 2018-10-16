@@ -21,6 +21,7 @@ import {CustomValidators} from 'ng4-validators';
 
 export abstract class BaseFormComponent extends PageComponent {
   public success = false;
+  public inProgress = false;
   public hasErrors = false;
   public hasChanges = false;
 
@@ -183,6 +184,7 @@ export abstract class FormComponent<TModel extends Model,
 
   public save() {
     this.success = false;
+    this.inProgress = true;
     let result;
     if (this.isNew) {
       result = this.doAdd();
@@ -195,10 +197,41 @@ export abstract class FormComponent<TModel extends Model,
         this.success = true;
         this.processSuccessSave(saveResult);
         this.ToastsService.success('Успех!', 'Сохранение прошло успешно.');
+        this.inProgress = false;
       },
       e => {
         this.hasErrors = true;
         this.handleSubmitError(e);
+        this.inProgress = false;
+      }
+    );
+  }
+
+  public changePublishState() {
+    this.success = false;
+    this.inProgress = true;
+    let result;
+    if (this.model.IsPublished) {
+      result = this.getService().unpublish(this.model.Id);
+    } else {
+      result = this.getService().publish(this.model.Id);
+    }
+    result.subscribe(
+      (saveResult: TModel) => {
+        this.hasChanges = false;
+        this.success = true;
+        this.model = saveResult;
+        if (saveResult.IsPublished) {
+          this.ToastsService.success('Успех!', 'Опубликовано.');
+        } else {
+          this.ToastsService.success('Успех!', 'Публикация снята.');
+        }
+        this.inProgress = false;
+      },
+      e => {
+        this.hasErrors = true;
+        this.handleSubmitError(e);
+        this.inProgress = false;
       }
     );
   }
@@ -278,7 +311,6 @@ export abstract class ContentFormComponent<TModel extends ISectionEntity,
   protected constructForm() {
     this.registerFormControl('Title', [<any>Validators.required]);
     this.registerFormControl('Url', [<any>Validators.required]);
-    this.registerFormControl('Description', [<any>Validators.required]);
     this.registerFormControl('SectionIds', [<any>Validators.required]);
     this.registerFormControl('TagIds', [<any>Validators.required]);
     this.constructorDataFrom();

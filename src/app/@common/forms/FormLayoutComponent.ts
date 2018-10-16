@@ -10,7 +10,7 @@ import {SaveModelResponse} from '../SaveModelResponse';
 export class FormLayoutComponent<TModel extends Model,
   TResultModel extends SaveModelResponse<TModel>> {
   @Input() public FormComponent: FormComponent<TModel, TResultModel>;
-
+  public ObjectKeys = Object.keys;
   public save() {
     this.FormComponent.save();
   }
