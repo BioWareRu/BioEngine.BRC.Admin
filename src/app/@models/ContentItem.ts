@@ -7,7 +7,6 @@ export class BaseContentItem extends Model implements ISiteEntity, ISectionEntit
   public Type: ContentItemType;
   public AuthorId: number;
   public Url: string;
-  public Description: string;
   public DateAdded: string;
   public DateUpdated: string;
   public DatePublished: string;

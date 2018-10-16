@@ -19,7 +19,7 @@ export class DevelopersService extends BaseServiceWithUpload<Developer> {
   }
 
   protected getResource(): string {
-    return "developers";
+    return 'developers';
   }
 
   protected getSaveType(): ClassType<SaveModelResponse<Developer>> {
