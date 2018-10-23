@@ -11,7 +11,8 @@ export class FormLayoutComponent<TModel extends Model,
   TResultModel extends SaveModelResponse<TModel>> {
   @Input() public FormComponent: FormComponent<TModel, TResultModel>;
   public ObjectKeys = Object.keys;
-  public save() {
+
+  public save(): void {
     this.FormComponent.save();
   }
 }

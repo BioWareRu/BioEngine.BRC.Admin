@@ -10,12 +10,21 @@ import {BioCommonModule} from '../@common/BioCommonModule';
 import {PagesListComponent} from './pages/list.component';
 import {PageFormComponent} from './pages/form.component';
 import {BioFormsModule} from '../@common/forms/FormsModule';
+import {MenuListComponent} from './menu/list.component';
+import {MenuFormComponent} from './menu/form.component';
+import {TreeModule} from 'angular-tree-component';
+import {MenuItemFormComponent, MenuItemFormDialogComponent} from './menu/menuItemForm.component';
+import {NbContextMenuModule, NbDialogModule} from '@nebular/theme';
 
 const PAGES_COMPONENTS = [
   PagesComponent,
   TagsListComponent,
   PagesListComponent,
-  PageFormComponent
+  PageFormComponent,
+  MenuListComponent,
+  MenuFormComponent,
+  MenuItemFormComponent,
+  MenuItemFormDialogComponent
 ];
 
 @NgModule({
@@ -26,10 +35,16 @@ const PAGES_COMPONENTS = [
     MiscellaneousModule,
     BioCommonModule,
     BioFormsModule,
+    TreeModule,
+    NbDialogModule.forChild(),
+    NbContextMenuModule
   ],
   declarations: [
     ...PAGES_COMPONENTS,
   ],
+  entryComponents: [
+    MenuItemFormDialogComponent
+  ]
 })
 export class PagesModule {
 }

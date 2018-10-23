@@ -2,7 +2,6 @@ import {Model} from '../../@models/base/Model';
 import {Subject} from 'rxjs/Subject';
 import {BaseService} from '../BaseService';
 import {ActivatedRoute, Router} from '@angular/router';
-// import {UserRights, UserService} from '../../services/UserService';
 import {ListTableColumn} from './ListTableColumn';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {SortDirection} from '../SortDirection';
@@ -15,8 +14,6 @@ export class ListProvider<T extends Model> {
   public totalItems = 0;
   public dataLoaded = false;
   public items: Subject<T[]>;
-  public cardTitle = '';
-  public cardIcon = '';
   public columns: ListTableColumn<T>[];
   public sortDirection = SortDirection;
   public columnTypes = ListTableColumnType;
@@ -37,11 +34,11 @@ export class ListProvider<T extends Model> {
               private route: ActivatedRoute/*, private _userService: UserService*/) {
   }
 
-  public setService(service: BaseService<T>) {
+  public setService(service: BaseService<T>): void {
     this.service = service;
   }
 
-  public init() {
+  public init(): void {
     this.items = new BehaviorSubject<T[]>([]);
     this.route.queryParamMap.subscribe(params => {
       const pageNumber = parseInt(params.get('page'), 10);
@@ -61,7 +58,7 @@ export class ListProvider<T extends Model> {
     });
   }
 
-  public applySort(column: string) {
+  public applySort(column: string): void {
     let sortKey;
     if (this.sort === column) {
       sortKey = ListProvider.getSortKey(column, true);
@@ -72,12 +69,12 @@ export class ListProvider<T extends Model> {
     this.reload();
   }
 
-  public changePage(page: number) {
+  public changePage(page: number): void {
     this.currentPage = page;
     this.reload();
   }
 
-  public load(page?: number) {
+  public load(page?: number): void {
     page = page ? page : this.currentPage;
     this.service.getAll(page, this.itemsPerPage, this.sort).subscribe((res) => {
       this.items.next(res.Data);
@@ -87,11 +84,7 @@ export class ListProvider<T extends Model> {
     });
   }
 
-  private reload() {
+  private reload(): void {
     this.router.navigate([], {queryParams: {page: this.currentPage, sort: this.sort}, relativeTo: this.route});
   }
-
-  /*public can(right: UserRights): boolean {
-    return this._userService.hasRight(right);
-  }*/
 }

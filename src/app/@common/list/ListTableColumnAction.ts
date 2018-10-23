@@ -25,7 +25,7 @@ export class ListTableColumnAction<T> {
     return this;
   }
 
-  public Click(model: T) {
+  public Click(model: T): void {
     this.DoClick(model);
   }
 }

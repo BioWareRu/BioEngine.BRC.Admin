@@ -24,6 +24,18 @@ export abstract class PageComponent {
 
 @Injectable()
 export class PageContext {
-  constructor(public StateService: StateService, public Router: Router, public Route: ActivatedRoute, public ToastsService: ToastsService) {
+  public StateService: StateService;
+
+  public Router: Router;
+
+  public ToastsService: ToastsService;
+
+  public Route: ActivatedRoute;
+
+  constructor(stateService: StateService, router: Router, route: ActivatedRoute, toastsService: ToastsService) {
+    this.Route = route;
+    this.ToastsService = toastsService;
+    this.Router = router;
+    this.StateService = stateService;
   }
 }

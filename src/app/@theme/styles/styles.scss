@@ -8,6 +8,7 @@
 @import './pace.theme';
 @import './bootstrap-rtl';
 @import '~@ng-select/ng-select/themes/material.theme.css';
+@import '~angular-tree-component/dist/angular-tree-component.css';
 
 // install the framework and custom global styles
 @include nb-install() {

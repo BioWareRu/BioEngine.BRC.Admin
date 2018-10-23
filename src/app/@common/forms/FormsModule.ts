@@ -8,7 +8,6 @@ import {DropDownInputComponent} from './DropDownInputComponent';
 import {CKEInputComponent} from './CKEInputComponent';
 import {TextAreaInputComponent} from './TextAreaInputComponent';
 import {TagsInputComponent} from './TagsInputComponent';
-import {ImageUploadInputComponent} from './ImageUploadInputComponent';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {UploadInputComponent} from './UploadInputComponent';
 import {FormLayoutComponent} from './FormLayoutComponent';
@@ -25,7 +24,6 @@ import {CheckboxInputComponent} from './CheckboxInputComponent';
     DropDownInputComponent,
     TagsInputComponent,
     CKEInputComponent,
-    ImageUploadInputComponent,
     UploadInputComponent,
     CheckboxInputComponent,
     FormLayoutComponent
@@ -37,7 +35,6 @@ import {CheckboxInputComponent} from './CheckboxInputComponent';
     DropDownInputComponent,
     TagsInputComponent,
     CKEInputComponent,
-    ImageUploadInputComponent,
     UploadInputComponent,
     CheckboxInputComponent,
     FormLayoutComponent

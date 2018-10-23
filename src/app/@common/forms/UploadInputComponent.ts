@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Input, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {FormInput} from './FormInput';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {faBan, faEdit, faTimes} from '@fortawesome/free-solid-svg-icons';
@@ -50,10 +50,10 @@ import {IBaseServiceWithUpload} from '../BaseService';
     }
   `]
 })
-export class UploadInputComponent extends FormInput {
+export class UploadInputComponent extends FormInput implements OnInit {
   @Input() public Types: string[] = [];
   @Input() public Multiple: boolean;
-  @Input() public DisplayMode: string = 'images';
+  @Input() public DisplayMode = 'images';
   @Input() public Service: IBaseServiceWithUpload;
   @ViewChild('fileInput') fileInput;
   protected items: StorageItem[] = [];
@@ -66,13 +66,13 @@ export class UploadInputComponent extends FormInput {
   }
 
 
-  ngOnInit() {
+  ngOnInit(): void {
     super.ngOnInit();
     if (this.Control.value == null) {
       return;
     }
     if (Array.isArray(this.Control.value)) {
-      if (this.Control.value.length == 0) {
+      if (this.Control.value.length === 0) {
         return;
       }
       this.items = this.Control.value;
@@ -81,27 +81,29 @@ export class UploadInputComponent extends FormInput {
     this.items = [this.Control.value];
   }
 
-  openFileChooseDialog() {
-    this.fileInput.nativeElement.click()
+  openFileChooseDialog(): void {
+    this.fileInput.nativeElement.click();
   }
 
-  onValueChange($event) {
+  onValueChange($event): void {
     if ($event.target.files && $event.target.files.length) {
       const queue = [];
       for (const key in $event.target.files) {
-        if (!$event.target.files.hasOwnProperty(key)) continue;
+        if (!$event.target.files.hasOwnProperty(key)) {
+          continue;
+        }
         queue.push(this.Service.upload($event.target.files[key]));
       }
       this.processUpload(queue);
     }
   }
 
-  delete(index: number) {
+  delete(index: number): void {
     this.items.splice(index, 1);
     this.Control.patchValue(this.items);
   }
 
-  processFiles(files: UploadFile[]) {
+  processFiles(files: UploadFile[]): void {
 
     const queue = [];
     let length = files.length;
@@ -115,7 +117,7 @@ export class UploadInputComponent extends FormInput {
           }
           else {
             queue.push(this.Service.upload(file));
-            if (queue.length == length) {
+            if (queue.length === length) {
               this.processUpload(queue);
             }
           }
@@ -124,7 +126,7 @@ export class UploadInputComponent extends FormInput {
     }
   }
 
-  private processUpload(queue: Observable<StorageItem>[]) {
+  private processUpload(queue: Observable<StorageItem>[]): void {
     if (!this.Multiple && queue.length > 1) {
       this.toastsService.error('Ошибка выбора файла', 'Разрешено загружать только 1 файл');
       return;

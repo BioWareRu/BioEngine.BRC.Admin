@@ -10,8 +10,8 @@ import {map} from 'rxjs/operators';
 })
 export class DropDownInputComponent extends FormInput implements OnInit {
   @Input() public Options: Observable<ListResult<any>>;
-  @Input() public ValueField: string = 'Id';
-  @Input() public DisplayField: string = 'Title';
+  @Input() public ValueField = 'Id';
+  @Input() public DisplayField = 'Title';
   @Input() public GroupByField: string = null;
 
   public constructor(cd: ChangeDetectorRef) {
@@ -20,7 +20,7 @@ export class DropDownInputComponent extends FormInput implements OnInit {
 
   items$: Observable<any[]>;
 
-  ngOnInit() {
+  ngOnInit(): void {
     super.ngOnInit();
     if (this.Options) {
       this.items$ = this.Options.pipe(

@@ -4,7 +4,7 @@ import {ISiteEntity} from './interfaces/ISiteEntity';
 
 export class BaseSection extends Model implements ISiteEntity {
   public Id: number;
-  public Type: number;
+  public Type: SectionType;
   public ParentId: number;
   public Title: string;
   public Url: string;
@@ -30,7 +30,7 @@ export abstract class TypedData {
 }
 
 export enum SectionType {
-  Developer = 1,
-  Game = 2,
-  Topic = 3
+  Developer = 'BioEngine.BRC.Domain.Entities.Developer',
+  Game = 'BioEngine.BRC.Domain.Entities.Game',
+  Topic = 'BioEngine.BRC.Domain.Entities.Topic'
 }

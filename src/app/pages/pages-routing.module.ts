@@ -6,6 +6,8 @@ import {DashboardComponent} from './dashboard/dashboard.component';
 import {TagsListComponent} from './tags/list.component';
 import {PagesListComponent} from './pages/list.component';
 import {PageFormComponent} from './pages/form.component';
+import {MenuListComponent} from './menu/list.component';
+import {MenuFormComponent} from './menu/form.component';
 
 const routes: Routes = [{
   path: '',
@@ -30,6 +32,18 @@ const routes: Routes = [{
     {
       path: 'pages/:id/edit',
       component: PageFormComponent
+    },
+    {
+      path: 'menu',
+      component: MenuListComponent
+    },
+    {
+      path: 'menu/add',
+      component: MenuFormComponent,
+    },
+    {
+      path: 'menu/:id/edit',
+      component: MenuFormComponent
     },
     {
       path: '',

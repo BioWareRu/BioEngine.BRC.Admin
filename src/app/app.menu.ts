@@ -76,6 +76,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/pages',
   },
   {
+    title: 'Меню',
+    icon: 'ion-md-menu',
+    link: '/pages/menu',
+  },
+  {
     title: 'Опросы',
     icon: 'ion-md-checkbox-outline',
   },

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ListComponent} from '../../@common/list/ListComponent';
 import {ServicesProvider} from '../../@services/ServicesProvider';
 import {
@@ -25,7 +25,7 @@ import {Tag} from '../../@models/Tag';
     PageContext
   ]
 })
-export class ContentListComponent extends ListComponent<BaseContentItem> {
+export class ContentListComponent extends ListComponent<BaseContentItem> implements OnInit {
   private sites: Site[];
   private sections: BaseSection[];
   private tags: Tag[];
@@ -37,17 +37,17 @@ export class ContentListComponent extends ListComponent<BaseContentItem> {
     this.provider.itemsPerPage = 20;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.Route.params.pipe(map(p => p.type)).subscribe(type => {
       switch (type) {
-        case "posts":
+        case 'posts':
           this.provider.setService(this.servicesProvider.PostsService);
-          this.StateService.setTitle("Посты");
+          this.StateService.setTitle('Посты');
           this.addUrl = '/content/posts/add';
           break;
-        case "gallery":
+        case 'gallery':
           this.provider.setService(this.servicesProvider.GalleryService);
-          this.StateService.setTitle("Галерея");
+          this.StateService.setTitle('Галерея');
           this.addUrl = '/content/gallery/add';
           break;
         case 'files':
@@ -81,13 +81,13 @@ export class ContentListComponent extends ListComponent<BaseContentItem> {
           let route;
           switch (content.Type) {
             case ContentItemType.Post:
-              route = "posts";
+              route = 'posts';
               break;
             case ContentItemType.File:
-              route = "files";
+              route = 'files';
               break;
             case ContentItemType.Gallery:
-              route = "gallery";
+              route = 'gallery';
               break;
           }
           return ['/content/' + route, content.Id, 'edit'];

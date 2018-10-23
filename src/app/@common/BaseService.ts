@@ -1,4 +1,3 @@
-import {Observable} from 'rxjs/Rx';
 import {RestClient} from './HttpClient';
 import {ListResult} from './list/ListResult';
 import {plainToClass} from 'class-transformer';
@@ -6,6 +5,7 @@ import {map} from 'rxjs/operators';
 import {SaveModelResponse} from './SaveModelResponse';
 import {ClassType} from 'class-transformer/ClassTransformer';
 import {StorageItem} from '../@models/results/StorageItem';
+import {Observable} from 'rxjs';
 
 export abstract class BaseService<T> {
 
@@ -76,6 +76,6 @@ export interface IBaseServiceWithUpload {
 export abstract class BaseServiceWithUpload<T> extends BaseService<T> implements IBaseServiceWithUpload {
   public upload(file): Observable<StorageItem> {
     return this.httpClient.post(this.getResource() + '/upload/', file, {name: file.name})
-      .pipe(map(data => plainToClass(StorageItem, data as StorageItem)))
+      .pipe(map(data => plainToClass(StorageItem, data as StorageItem)));
   }
 }

@@ -12,9 +12,9 @@ import {ListResult} from '../list/ListResult';
 })
 export class TagsInputComponent extends FormInput implements OnInit {
   @Input() public Options: Observable<ListResult<any>>;
-  @Input() public AllowAdd: boolean = false;
-  @Input() public ValueField: string = 'Id';
-  @Input() public DisplayField: string = 'Title';
+  @Input() public AllowAdd = false;
+  @Input() public ValueField = 'Id';
+  @Input() public DisplayField = 'Title';
 
   items$: Observable<any[]>;
   public addTagPromise = (name: string): Promise<any> => {
@@ -23,13 +23,13 @@ export class TagsInputComponent extends FormInput implements OnInit {
         resolve(result.Model);
       });
     });
-  }
+  };
 
   public constructor(cd: ChangeDetectorRef, private tagsService: TagsService) {
     super(cd);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     super.ngOnInit();
     if (this.Options) {
       this.items$ = this.Options.pipe(

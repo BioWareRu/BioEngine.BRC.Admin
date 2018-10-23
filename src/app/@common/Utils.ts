@@ -65,13 +65,13 @@ export class Utils {
     '<': 'less', '>': 'greater', ':': ' '
   };
 
-  public static slugify(string, options?) {
+  public static slugify(string, options?): string {
     options = (typeof options === 'string')
       ? {replacement: options}
       : options || {};
 
     string = string.split('')
-      .reduce(function (result, ch) {
+      .reduce(function (result, ch): string {
         if (Utils.charMap.hasOwnProperty(ch)) {
           ch = Utils.charMap[ch];
         }
@@ -90,7 +90,7 @@ export class Utils {
     return options.lower ? string.toLowerCase() : string;
   }
 
-  public static slugifyUrl(str: string) {
+  public static slugifyUrl(str: string): string {
     if (!str) {
       return '';
     }

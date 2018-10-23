@@ -1,9 +1,7 @@
 import {Injectable, Injector} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {environment} from '../../environments/environment';
-/*import {AppState} from './AppState';*/
-import {RestError} from '../@models/RestError';
-import {HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 
 @Injectable()
 export class RestClient {
@@ -13,7 +11,7 @@ export class RestClient {
   constructor(private httpClient: HttpClient) {
   }
 
-  public static encodeQueryData(data) {
+  public static encodeQueryData(data): string {
     const ret = [];
     for (const d in data) {
       if (!data.hasOwnProperty(d)) {
@@ -24,23 +22,23 @@ export class RestClient {
     return ret.join('&');
   }
 
-  public get(resource, params) {
+  public get(resource, params): Observable<any> {
     return this.httpClient.get(this.getUrl(resource, params));
   }
 
-  public post(resource, data, params = null) {
+  public post(resource, data, params = null): Observable<any> {
     return this.httpClient.post(this.getUrl(resource, params), data);
   }
 
-  public put(resource, data) {
+  public put(resource, data): Observable<any> {
     return this.httpClient.put(this.getUrl(resource), data);
   }
 
-  public delete(resource) {
+  public delete(resource): Observable<any> {
     return this.httpClient.delete(this.getUrl(resource));
   }
 
-  private getUrl(resource: string, params?: object) {
+  private getUrl(resource: string, params?: object): string {
     let url = this.baseUrl + resource + '?';
     if (params) {
       url += RestClient.encodeQueryData(params);
@@ -48,23 +46,6 @@ export class RestClient {
     return url;
   }
 }
-
-/*
-@Injectable()
-export class LoadingInterceptor implements HttpInterceptor {
-  constructor(private _appState: AppState) {
-  }
-
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    this._appState.notifyDataChanged('loading', true);
-    return next.handle(req).do((response) => {
-      if (response instanceof HttpResponse) {
-        this._appState.notifyDataChanged('loading', false);
-      }
-    });
-  }
-}
-*/
 
 @Injectable()
 export class ErrorsInterceptor implements HttpInterceptor {
@@ -83,7 +64,7 @@ export class ErrorsInterceptor implements HttpInterceptor {
     });
   }
 
-  private processError(response: any) {
+  private processError(response: any): Observable<any> {
     // this._appState.notifyDataChanged('loading', false);
     /*if (response.status === 401) {
       const authService = this._inj.get(AuthService);
@@ -97,6 +78,6 @@ export class ErrorsInterceptor implements HttpInterceptor {
         // this._appState.notifyDataChanged('httpError', new RestError(response.status, response.message));
       }
     }
-    return Observable.empty;
+    return Observable.create(null);
   }
 }

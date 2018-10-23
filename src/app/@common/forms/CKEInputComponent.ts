@@ -1,8 +1,8 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
 import {FormInput} from './FormInput';
-import "./CKEInputComponent.loader";
+import './CKEInputComponent.loader';
 import 'ckeditor';
-import {OAuthService} from "angular-oauth2-oidc";
+import {OAuthService} from 'angular-oauth2-oidc';
 
 @Component({
   selector: 'cke-input',
@@ -10,7 +10,6 @@ import {OAuthService} from "angular-oauth2-oidc";
 })
 export class CKEInputComponent extends FormInput {
   public config = {
-    //uiColor: '#2979ff',
     height: '300',
     extraAllowedContent: true,
     customConfig: '',

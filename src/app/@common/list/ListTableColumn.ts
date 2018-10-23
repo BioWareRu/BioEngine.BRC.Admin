@@ -2,9 +2,9 @@ import {Model} from '../../@models/base/Model';
 import {SortDirection} from '../SortDirection';
 import {ListTableColumnType} from './ListEnums';
 import {ListTableColumnAction} from './ListTableColumnAction';
-import {Site} from "../../@models/Site";
-import {BaseSection} from "../../@models/Section";
-import {Tag} from "../../@models/Tag";
+import {Site} from '../../@models/Site';
+import {BaseSection} from '../../@models/Section';
+import {Tag} from '../../@models/Tag';
 
 export class ListTableColumn<T = Model> {
   public Title: string;
@@ -56,14 +56,14 @@ export class ListTableColumn<T = Model> {
     return this;
   }
 
-  public getValue(model: T) {
+  public getValue(model: T): any {
     if (this.getter) {
       return this.getter(model);
     }
     return model.hasOwnProperty(this.Key) ? model[this.Key] : null;
   }
 
-  public getLink(model: T) {
+  public getLink(model: T): any {
     if (this.linkGetter) {
       return this.linkGetter(model);
     }

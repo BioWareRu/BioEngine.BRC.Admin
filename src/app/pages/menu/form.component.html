@@ -1,0 +1,20 @@
+<form-layout *ngIf="formLoaded" [FormComponent]="this">
+  <text-input [FormGroup]="formGroup" FieldName="Title"
+              Label="Название"></text-input>
+  <tags-input [FormGroup]="formGroup" FieldName="SiteIds" Label="Сайты"
+              [Options]="Sites"></tags-input>
+  Пункты меню
+  <tree-root style="width: 100%;
+    border: solid 1px #d5dbe0;
+    border-radius: .17rem;
+    display: block;
+    min-height: 200px;
+    padding: 5px;
+    margin: 15px 0;" #tree (initialized)="onInit(tree)" (activate)="onActivate($event)" [nodes]="model.Items"
+             [options]="options">
+    <ng-template #treeNodeTemplate let-node let-index="index">
+      <span [nbContextMenu]="menuItems" node="node">{{ node.data.Label }}</span>
+    </ng-template>
+  </tree-root>
+  <button class="btn btn-primary btn-sm" (click)="addMenuItem(true)">Добавить пункт</button>
+</form-layout>

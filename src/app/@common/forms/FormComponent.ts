@@ -2,7 +2,7 @@ import {FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
 import {HttpErrorResponse} from '@angular/common/http';
 import {RestResult} from '../RestResult';
-import {HostListener, OnInit} from '@angular/core';
+import {HostListener, Input, OnInit} from '@angular/core';
 import {BioFormControl} from './BioFormControl';
 import {plainToClass} from 'class-transformer';
 import {ServicesProvider} from '../../@services/ServicesProvider';
@@ -18,8 +18,12 @@ import {map} from 'rxjs/operators';
 import {Model} from '../../@models/base/Model';
 import {Settings, SettingType} from '../../@models/base/Settings';
 import {CustomValidators} from 'ng4-validators';
+import {BaseSection} from '../../@models/Section';
+import {Tag} from '../../@models/Tag';
+import {ListResult} from '../list/ListResult';
+import {Site} from '../../@models/Site';
 
-export abstract class BaseFormComponent extends PageComponent {
+export abstract class BaseFormComponent extends PageComponent implements OnInit {
   public success = false;
   public inProgress = false;
   public hasErrors = false;
@@ -30,36 +34,62 @@ export abstract class BaseFormComponent extends PageComponent {
   public formLoaded = false;
 
   public formGroup: FormGroup;
+  protected controls: { [p: string]: BioFormControl } = {};
+  protected controlsByProperty: { [p: string]: BioFormControl } = {};
 
-  initForm() {
+  initForm(): void {
     this.constructForm();
     this.formGroup = new FormGroup(this.controls);
     this.formLoaded = true;
   }
 
-  protected abstract constructForm();
-
   @HostListener('window:beforeunload', ['$event'])
-  checkChanges($event) {
+  checkChanges($event): void {
     if (this.hasChanges) {
       $event.returnValue = 'Форма не была сохранена. Данные будут потеряны!';
     }
   }
 
-  protected controls: { [p: string]: BioFormControl } = {};
-  protected controlsByProperty: { [p: string]: BioFormControl } = {};
-
-  public registerChange(key: string, oldValue: any, newValue: any) {
+  public registerChange(key: string, oldValue: any, newValue: any): void {
     this.hasChanges = true;
     this.hasErrors = false;
     this.success = false;
     this.processChange(key, oldValue, newValue);
   }
 
-  public processChange(key: string, oldValue: any, newValue: any) {
+  public processChange(key: string, oldValue: any, newValue: any): void {
   }
 
-  protected handleSubmitError(response: HttpErrorResponse) {
+  registerFormControl(
+    name: string,
+    validatorOrOpts?:
+      | ValidatorFn
+      | ValidatorFn[]
+      | AbstractControlOptions
+      | null,
+    property: string = null
+  ): void {
+    if (property == null) {
+      property = name;
+    }
+    this.controls[name] = this.controlsByProperty[
+      property
+      ] = new BioFormControl(
+      <BaseFormComponent>this,
+      name,
+      this.getModel(),
+      property,
+      validatorOrOpts
+    );
+  }
+
+  ngOnInit(): void {
+    this.loadFormData();
+  }
+
+  protected abstract constructForm(): void;
+
+  protected handleSubmitError(response: HttpErrorResponse): void {
     if (response.status === 422) {
       const data: RestResult = plainToClass(
         RestResult,
@@ -77,7 +107,26 @@ export abstract class BaseFormComponent extends PageComponent {
     }
   }
 
-  protected afterInit() {
+  protected afterInit(): void {
+  }
+
+  protected loadFormData(): void {
+    this.initForm();
+    this.afterInit();
+  }
+
+  protected abstract getModel(): any;
+}
+
+export abstract class SimpleFormComponent<TModel> extends BaseFormComponent implements OnInit {
+  @Input() public Model: TModel;
+
+  protected constructor(context: PageContext) {
+    super(context);
+  }
+
+  protected getModel(): TModel {
+    return this.Model;
   }
 }
 
@@ -99,7 +148,9 @@ export abstract class FormComponent<TModel extends Model,
   constructSettingsForm(): any {
     if (this.model.SettingsGroups) {
       this.model.SettingsGroups.forEach((settingsGroup, groupIndex) => {
-        if (!settingsGroup.IsEditable) return;
+        if (!settingsGroup.IsEditable) {
+          return;
+        }
         settingsGroup.Properties.forEach((prop, propIndex) => {
           prop.Values.forEach((val, valIndex) => {
             const fieldProperty = `SettingsGroups.${groupIndex}.Properties.${propIndex}.Values.${valIndex}.Value`;
@@ -128,7 +179,7 @@ export abstract class FormComponent<TModel extends Model,
     }
   }
 
-  public SettingsOptions(groupKey: string, propertyKey: string) {
+  public SettingsOptions(groupKey: string, propertyKey: string): Observable<any> {
     return this.servicesProvider.SettingsService.getOptions(
       groupKey,
       propertyKey
@@ -161,28 +212,7 @@ export abstract class FormComponent<TModel extends Model,
     });
   }
 
-  registerFormControl(
-    name: string,
-    validatorOrOpts?:
-      | ValidatorFn
-      | ValidatorFn[]
-      | AbstractControlOptions
-      | null,
-    property: string = null
-  ) {
-    if (property == null) property = name;
-    this.controls[name] = this.controlsByProperty[
-      property
-      ] = new BioFormControl(
-      <BaseFormComponent>this,
-      name,
-      this.model,
-      property,
-      validatorOrOpts
-    );
-  }
-
-  public save() {
+  public save(): void {
     this.success = false;
     this.inProgress = true;
     let result;
@@ -207,7 +237,7 @@ export abstract class FormComponent<TModel extends Model,
     );
   }
 
-  public changePublishState() {
+  public changePublishState(): void {
     this.success = false;
     this.inProgress = true;
     let result;
@@ -236,6 +266,10 @@ export abstract class FormComponent<TModel extends Model,
     );
   }
 
+  updateControlValue(name: string): void {
+    this.controls[name].reloadValue();
+  }
+
   protected doAdd(): Observable<SaveModelResponse<TModel>> {
     return this.getService().add(this.model);
   }
@@ -244,39 +278,38 @@ export abstract class FormComponent<TModel extends Model,
     return this.getService().update(this.modelId, this.model);
   }
 
-  protected loadFormData() {
+  protected loadFormData(): void {
     this.constructSettingsForm();
-    this.initForm();
-    this.afterInit();
+    super.loadFormData();
   }
 
   protected abstract getNewModelTitle(): string;
 
-  updateControlValue(name: string) {
-    this.controls[name].reloadValue();
-  }
-
   protected abstract getService(): BaseService<TModel>;
 
-  protected processSuccessSave(saveResult: SaveModelResponse<TModel>) {
+  protected processSuccessSave(saveResult: SaveModelResponse<TModel>): void {
     if (!this.modelId) {
       this.Router.navigate([this.getRoute(), saveResult.Model.Id, 'edit']);
     }
   }
 
   protected abstract getRoute(): string;
+
+  protected getModel(): any {
+    return this.model;
+  }
 }
 
 export abstract class SiteEntityFormComponent<TModel extends ISiteEntity,
   TSaveModel extends SaveModelResponse<TModel>> extends FormComponent<TModel, TSaveModel> {
-  protected get Sites() {
+  protected get Sites(): Observable<ListResult<Site>> {
     return this.servicesProvider.SitesService.getAll(1, 1000, 'id');
   }
 }
 
 export abstract class SectionFormComponent<TModel extends ISiteEntity,
   TSaveModel extends SaveModelResponse<TModel>> extends SiteEntityFormComponent<TModel, TSaveModel> {
-  public processChange(key: string, oldValue: any, newValue: any) {
+  public processChange(key: string, oldValue: any, newValue: any): void {
     if (key === 'Title') {
       const origSlug = Utils.slugifyUrl(oldValue);
       if (!this.model.Url || origSlug === this.model.Url) {
@@ -287,7 +320,7 @@ export abstract class SectionFormComponent<TModel extends ISiteEntity,
     }
   }
 
-  protected constructForm() {
+  protected constructForm(): void {
     this.registerFormControl('Title', [<any>Validators.required]);
     this.registerFormControl('Url', [<any>Validators.required]);
     this.registerFormControl('ShortDescription', [<any>Validators.required]);
@@ -300,15 +333,15 @@ export abstract class SectionFormComponent<TModel extends ISiteEntity,
 
 export abstract class ContentFormComponent<TModel extends ISectionEntity,
   TSaveModel extends SaveModelResponse<TModel>> extends SiteEntityFormComponent<TModel, TSaveModel> {
-  protected get Sections() {
+  protected get Sections(): Observable<ListResult<BaseSection>> {
     return this.servicesProvider.SectionsService.getAll(1, 1000, 'id');
   }
 
-  protected get Tags() {
+  protected get Tags(): Observable<ListResult<Tag>> {
     return this.servicesProvider.TagsService.getAll(1, 1000, 'id');
   }
 
-  protected constructForm() {
+  protected constructForm(): void {
     this.registerFormControl('Title', [<any>Validators.required]);
     this.registerFormControl('Url', [<any>Validators.required]);
     this.registerFormControl('SectionIds', [<any>Validators.required]);
@@ -316,5 +349,5 @@ export abstract class ContentFormComponent<TModel extends ISectionEntity,
     this.constructorDataFrom();
   }
 
-  protected abstract constructorDataFrom();
+  protected abstract constructorDataFrom(): void;
 }

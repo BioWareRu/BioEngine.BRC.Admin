@@ -14,7 +14,7 @@ import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {ThemeModule} from './@theme/theme.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {OAuthModule, OAuthStorage} from 'angular-oauth2-oidc'
+import {OAuthModule, OAuthStorage} from 'angular-oauth2-oidc';
 import {BioCommonModule} from './@common/BioCommonModule';
 import {ServicesProvider} from './@services/ServicesProvider';
 import {PostsService} from './@services/PostsService';
@@ -36,6 +36,9 @@ import {PagesService} from './@services/PagesService';
 import {FilesService} from './@services/FilesService';
 import {ForumsService} from './@services/ForumsService';
 import {SettingsService} from './@services/SettingsService';
+import {MenuService} from './@services/MenuService';
+import {TreeModule} from 'angular-tree-component';
+import {NbDialogModule} from '@nebular/theme';
 
 @NgModule({
   declarations: [AppComponent],
@@ -52,7 +55,9 @@ import {SettingsService} from './@services/SettingsService';
       },
     }),
 
+    TreeModule.forRoot(),
     NgbModule.forRoot(),
+    NbDialogModule.forRoot(),
     ThemeModule.forRoot(),
     CoreModule.forRoot(),
     ToasterModule.forRoot(),
@@ -81,6 +86,7 @@ import {SettingsService} from './@services/SettingsService';
     FilesService,
     ForumsService,
     SettingsService,
+    MenuService,
     ServicesProvider,
     ToastsService,
   ],

@@ -6,7 +6,7 @@ import {FormInput} from './FormInput';
   templateUrl: './TextInputComponent.html'
 })
 export class TextInputComponent extends FormInput {
-  @Input() public Type: string = 'text';
+  @Input() public Type = 'text';
 
   public constructor(cd: ChangeDetectorRef) {
     super(cd);

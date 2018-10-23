@@ -12,6 +12,7 @@ import {PagesService} from './PagesService';
 import {FilesService} from './FilesService';
 import {ForumsService} from './ForumsService';
 import {SettingsService} from './SettingsService';
+import {MenuService} from './MenuService';
 
 @Injectable()
 export class ServicesProvider {
@@ -29,6 +30,7 @@ export class ServicesProvider {
     private _filesService: FilesService,
     private _forumsService: ForumsService,
     private _settingsService: SettingsService,
+    private _menuService: MenuService
   ) {
   }
 
@@ -82,5 +84,9 @@ export class ServicesProvider {
 
   get SettingsService(): SettingsService {
     return this._settingsService;
+  }
+
+  get MenuService(): MenuService {
+    return this._menuService;
   }
 }

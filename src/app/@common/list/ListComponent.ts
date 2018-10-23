@@ -18,24 +18,24 @@ export abstract class ListComponent<T extends Model> extends PageComponent imple
 
   protected abstract GetColumns(): ListTableColumn<T>[];
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.Init();
   }
 
-  protected Init() {
-    this.provider.columns = this.GetColumns();
-    this.provider.init();
+  public deleteItem(id: number): void {
+    this.service.delete(id).subscribe((res: boolean) => {
+      if (res) {
+        this.provider.load();
+      }
+    });
   }
 
   public getRowClass(model: T): { [key: string]: boolean } {
     return {};
   }
 
-  public deleteItem(id: number) {
-    this.service.delete(id).subscribe((res: boolean) => {
-      if (res) {
-        this.provider.load();
-      }
-    });
+  protected Init(): void {
+    this.provider.columns = this.GetColumns();
+    this.provider.init();
   }
 }

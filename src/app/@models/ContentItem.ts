@@ -28,9 +28,9 @@ export abstract class ContentItem<T extends ContentData> extends BaseContentItem
 }
 
 export enum ContentItemType {
-  Post = 1,
-  File = 2,
-  Gallery = 3
+  Post = 'BioEngine.BRC.Domain.Entities.Post',
+  File = 'BioEngine.BRC.Domain.Entities.File',
+  Gallery = 'BioEngine.BRC.Domain.Entities.Gallery'
 }
 
 export class ContentData {
