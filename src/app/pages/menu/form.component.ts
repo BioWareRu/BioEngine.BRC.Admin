@@ -138,7 +138,7 @@ export class MenuFormComponent extends SiteEntityFormComponent<Menu, SaveMenuRes
         model: node
       }
     };
-    this.dialogService.open(MenuItemFormDialogComponent, context).close(res => {
+    this.dialogService.open(MenuItemFormDialogComponent, context).onClose.subscribe(() => {
       this.hasChanges = true;
     });
   }

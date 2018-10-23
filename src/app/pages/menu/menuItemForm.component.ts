@@ -49,6 +49,8 @@ export class MenuItemFormDialogComponent {
   public constructor(protected dialogRef: NbDialogRef<MenuItemFormDialogComponent>) {
   }
 
+  public model: TreeNode;
+
   public save(): void {
     this.dialogRef.close();
   }
