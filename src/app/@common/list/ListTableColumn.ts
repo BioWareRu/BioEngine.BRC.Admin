@@ -14,7 +14,7 @@ export class ListTableColumn<T = Model> {
   public Type: ListTableColumnType;
   public Disabled: boolean;
   public Actions: ListTableColumnAction<T>[] = [];
-
+  public DoClick: (model: T) => any;
   private getter: (model: T) => {};
   private linkGetter: (model: T) => {};
 
@@ -69,6 +69,17 @@ export class ListTableColumn<T = Model> {
     }
     return null;
   }
+
+  public Click(model: T): void {
+    this.DoClick(model);
+  }
+
+  public setClick(click: (model: T) => any): ListTableColumn<T> {
+    this.Type = ListTableColumnType.ActionLink;
+    this.DoClick = click;
+    return this;
+  }
+
 }
 
 export class SitesTableColumn<T = Model> extends ListTableColumn<T> {

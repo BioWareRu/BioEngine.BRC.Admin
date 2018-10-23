@@ -6,6 +6,7 @@ import {SaveModelResponse} from './SaveModelResponse';
 import {ClassType} from 'class-transformer/ClassTransformer';
 import {StorageItem} from '../@models/results/StorageItem';
 import {Observable} from 'rxjs';
+import {Filter} from './Filter';
 
 export abstract class BaseService<T> {
 
@@ -20,11 +21,12 @@ export abstract class BaseService<T> {
 
   protected abstract getType(): ClassType<T>;
 
-  public getAll(page: number, perPage: number, sort): Observable<ListResult<T>> {
+  public getAll(page: number = 0, perPage: number = 10, sort = '', filter: Filter = null): Observable<ListResult<T>> {
     return this.httpClient.get(this.getResource(), {
-      limit: perPage,
-      offset: perPage * (page - 1),
+      limit: perPage || 10,
+      offset: perPage * (page - 1) || 0,
       order: sort,
+      filter: filter == null ? null : filter.toString()
     }).pipe(map(res => plainToClass(this.getListType(), res as ListResult<T>)));
   }
 

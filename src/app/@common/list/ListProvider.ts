@@ -6,6 +6,7 @@ import {ListTableColumn} from './ListTableColumn';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {SortDirection} from '../SortDirection';
 import {ListTableColumnActionType, ListTableColumnType} from './ListEnums';
+import {Filter} from '../Filter';
 
 export class ListProvider<T extends Model> {
 
@@ -31,7 +32,7 @@ export class ListProvider<T extends Model> {
   }
 
   constructor(private service: BaseService<T>, private router: Router,
-              private route: ActivatedRoute/*, private _userService: UserService*/) {
+              private route: ActivatedRoute, private filter: Filter = null) {
   }
 
   public setService(service: BaseService<T>): void {
@@ -42,8 +43,12 @@ export class ListProvider<T extends Model> {
     this.items = new BehaviorSubject<T[]>([]);
     this.route.queryParamMap.subscribe(params => {
       const pageNumber = parseInt(params.get('page'), 10);
+      const perPage = parseInt(params.get('perPage'), 10);
       if (pageNumber >= 1) {
         this.currentPage = pageNumber;
+      }
+      if (perPage > 0) {
+        this.itemsPerPage = perPage;
       }
       const sort = params.get('sort');
       if (sort != null) {
@@ -53,6 +58,10 @@ export class ListProvider<T extends Model> {
         this.columns.forEach(col => {
           col.setSorted(col.Key === key ? sortDirection : null);
         });
+      }
+      const filter = params.get('filter');
+      if (filter != null && filter !== '') {
+        this.filter = Filter.fromString(filter);
       }
       this.load(this.currentPage);
     });
@@ -76,7 +85,7 @@ export class ListProvider<T extends Model> {
 
   public load(page?: number): void {
     page = page ? page : this.currentPage;
-    this.service.getAll(page, this.itemsPerPage, this.sort).subscribe((res) => {
+    this.service.getAll(page, this.itemsPerPage, this.sort, this.filter).subscribe((res) => {
       this.items.next(res.Data);
       this.totalItems = res.TotalItems;
       this.currentPage = page;
@@ -84,7 +93,20 @@ export class ListProvider<T extends Model> {
     });
   }
 
+  public applyFilter(filter: Filter): void {
+    this.filter = filter;
+    this.reload();
+  }
+
   private reload(): void {
-    this.router.navigate([], {queryParams: {page: this.currentPage, sort: this.sort}, relativeTo: this.route});
+    this.router.navigate([], {
+      queryParams: {
+        page: this.currentPage,
+        perPage: this.itemsPerPage,
+        sort: this.sort,
+        filter: this.filter ? this.filter.toString() : ''
+      },
+      relativeTo: this.route
+    });
   }
 }
