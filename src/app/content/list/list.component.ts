@@ -13,10 +13,10 @@ import {BaseSection} from '../../@models/Section';
 import {Site} from '../../@models/Site';
 import {map} from 'rxjs/operators';
 import {BaseContentItem, ContentItemType} from '../../@models/ContentItem';
-import {Observable} from 'rxjs/Observable';
 import {PageContext} from '../../@common/PageComponent';
-import 'rxjs-compat/add/observable/forkJoin';
 import {Tag} from '../../@models/Tag';
+import {forkJoin} from 'rxjs';
+import {Filter, FilterOperator} from '../../@common/Filter';
 
 @Component({
   selector: 'ngx-dashboard',
@@ -58,7 +58,7 @@ export class ContentListComponent extends ListComponent<BaseContentItem> impleme
         default:
           break;
       }
-      Observable.forkJoin(
+      forkJoin(
         this.servicesProvider.SitesService.getAll(1, 100, 'id'),
         this.servicesProvider.SectionsService.getAll(1, 100, 'id'),
         this.servicesProvider.TagsService.getAll(1, 100, 'id')
@@ -75,7 +75,9 @@ export class ContentListComponent extends ListComponent<BaseContentItem> impleme
   protected GetColumns(): ListTableColumn<BaseContentItem>[] {
     return [
       new ListTableColumn<BaseContentItem>('Id', '#').setSortable(),
-      new ListTableColumn<BaseContentItem>('TypeTitle', 'Тип'),
+      new ListTableColumn<BaseContentItem>('TypeTitle', 'Тип').setClick(content => {
+        this.provider.applyFilter(Filter.simple('type', FilterOperator.Equal, content.Type));
+      }),
       new ListTableColumn<BaseContentItem>('Title', 'Заголовок').setSortable()
         .setLinkGetter(content => {
           let route;

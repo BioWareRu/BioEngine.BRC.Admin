@@ -3,7 +3,7 @@ import {FormInput} from './FormInput';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {faBan, faEdit, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {Observable} from 'rxjs/Observable';
-import 'rxjs-compat/add/observable/forkJoin';
+import {forkJoin} from 'rxjs';
 import {StorageItem} from '../../@models/results/StorageItem';
 import {FileSystemFileEntry, UploadFile} from 'ngx-file-drop';
 import {ToastsService} from '../ToastsService';
@@ -132,7 +132,7 @@ export class UploadInputComponent extends FormInput implements OnInit {
       return;
     }
     this.toastsService.warning('Загрузка файлов', 'Загрузка файлов в процессе');
-    Observable.forkJoin(queue).subscribe(results => {
+    forkJoin(queue).subscribe(results => {
       if (this.Multiple) {
         this.items = this.items.concat(results);
         this.Control.patchValue(this.items);

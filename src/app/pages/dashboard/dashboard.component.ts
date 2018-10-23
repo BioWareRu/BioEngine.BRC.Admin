@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {ServicesProvider} from '../../@services/ServicesProvider';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs-compat/add/observable/forkJoin';
+import {forkJoin} from 'rxjs';
 
 @Component({
   selector: 'ngx-dashboard',
@@ -19,7 +18,7 @@ export class DashboardComponent {
   public filesCount = 0;
 
   constructor(private servicesProvider: ServicesProvider) {
-    Observable.forkJoin(
+    forkJoin(
       this.servicesProvider.SitesService.count(),
       this.servicesProvider.SectionsService.count(),
       this.servicesProvider.DevelopersService.count(),
