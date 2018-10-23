@@ -10,9 +10,7 @@ const routes: Routes = [
   {path: '**', redirectTo: 'pages'},
 ];
 
-const config: ExtraOptions = {
-  useHash: true,
-};
+const config: ExtraOptions = {};
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, config)],
