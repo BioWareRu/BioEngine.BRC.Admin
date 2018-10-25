@@ -114,3 +114,9 @@ export class TagsTableColumn<T = Model> extends ListTableColumn<T> {
     });
   }
 }
+
+export class AuthorTableColumn<T = Model> extends ListTableColumn<T> {
+  constructor(key: string, title: string) {
+    super(key, title, ListTableColumnType.Author);
+  }
+}

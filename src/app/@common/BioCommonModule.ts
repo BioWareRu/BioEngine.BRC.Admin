@@ -5,7 +5,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import {RouterModule} from '@angular/router';
 import {MomentModule} from 'ngx-moment';
 import 'moment/locale/ru';
-import {NbCardModule} from '@nebular/theme';
+import {NbCardModule, NbUserModule} from '@nebular/theme';
 import {BioFormsModule} from './forms/FormsModule';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
@@ -23,6 +23,7 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     RouterModule,
     MomentModule,
     NbCardModule,
+    NbUserModule,
     BioFormsModule,
     FontAwesomeModule
   ],

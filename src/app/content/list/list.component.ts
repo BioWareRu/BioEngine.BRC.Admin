@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ListComponent} from '../../@common/list/ListComponent';
 import {ServicesProvider} from '../../@services/ServicesProvider';
 import {
+  AuthorTableColumn,
   ListTableColumn,
   SectionsTableColumn,
   SitesTableColumn,
@@ -98,6 +99,7 @@ export class ContentListComponent extends ListComponent<BaseContentItem> impleme
       new SitesTableColumn<BaseContentItem>('SiteIds', 'Сайты', this.sites),
       new SectionsTableColumn<BaseContentItem>('SectionIds', 'Разделы', this.sections),
       new TagsTableColumn<BaseContentItem>('TagIds', 'Тэги', this.tags),
+      new AuthorTableColumn<BaseContentItem>('Author', 'Автор'),
       new ListTableColumn<BaseContentItem>('Actions', '')
         .AddAction(
           new ListTableColumnAction<BaseContentItem>('Просмотреть на сайте', 'globe').setExternal(content => content.Url),

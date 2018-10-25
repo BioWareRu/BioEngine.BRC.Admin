@@ -60,6 +60,9 @@
               <span class="tag">{{column.Tags[tagId].Name}}</span>
             </span>
           </span>
+          <span class="tags-list" *ngIf="column.Type==provider.columnTypes.Author">
+            <nb-user [name]="column.getValue(item)?.Name" [picture]="column.getValue(item)?.AvatarLink"></nb-user>
+          </span>
         </td>
       </tr>
       </tbody>

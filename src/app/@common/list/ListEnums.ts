@@ -1,5 +1,5 @@
 export enum ListTableColumnType {
-  Text, Link, Date, TimeAgo, Actions, SitesList, SectionsList, TagsList, ActionLink
+  Text, Link, Date, TimeAgo, Actions, SitesList, SectionsList, TagsList, ActionLink, Author
 }
 
 export enum ListTableColumnActionType {
