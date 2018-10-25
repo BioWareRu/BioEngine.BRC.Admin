@@ -4,34 +4,35 @@ import {ClassType} from 'class-transformer/ClassTransformer';
 import {SaveModelResponse} from '../@common/SaveModelResponse';
 import {ListResult} from '../@common/list/ListResult';
 import {Injectable} from '@angular/core';
-import {SettingsOption} from '../@models/base/Settings';
+import {PropertiesOption} from '../@models/base/Properties';
+import {Observable} from 'rxjs';
 
 @Injectable()
-export class SettingsService extends BaseService<SettingsOption> {
+export class PropertiesService extends BaseService<PropertiesOption> {
   constructor(httpClient: RestClient) {
     super(httpClient);
   }
 
-  public getOptions(groupKey: string, propertyKey: string) {
+  public getOptions(groupKey: string, propertyKey: string): Observable<PropertiesOption[]> {
     return this.httpClient.get(this.getResource(), {
-      settingsKey: groupKey,
+      setKey: groupKey,
       propertyKey: propertyKey,
     });
   }
 
   protected getResource(): string {
-    return 'settings';
+    return 'properties';
   }
 
-  protected getListType(): ClassType<ListResult<SettingsOption>> {
+  protected getListType(): ClassType<ListResult<PropertiesOption>> {
     return null;
   }
 
-  protected getSaveType(): ClassType<SaveModelResponse<SettingsOption>> {
+  protected getSaveType(): ClassType<SaveModelResponse<PropertiesOption>> {
     return null;
   }
 
-  protected getType(): ClassType<SettingsOption> {
-    return SettingsOption;
+  protected getType(): ClassType<PropertiesOption> {
+    return PropertiesOption;
   }
 }

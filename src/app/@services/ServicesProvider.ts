@@ -11,7 +11,7 @@ import {TagsService} from './TagsService';
 import {PagesService} from './PagesService';
 import {FilesService} from './FilesService';
 import {ForumsService} from './ForumsService';
-import {SettingsService} from './SettingsService';
+import {PropertiesService} from './properties.service';
 import {MenuService} from './MenuService';
 
 @Injectable()
@@ -29,7 +29,7 @@ export class ServicesProvider {
     private _pagesService: PagesService,
     private _filesService: FilesService,
     private _forumsService: ForumsService,
-    private _settingsService: SettingsService,
+    private _propertiesService: PropertiesService,
     private _menuService: MenuService
   ) {
   }
@@ -82,8 +82,8 @@ export class ServicesProvider {
     return this._filesService;
   }
 
-  get SettingsService(): SettingsService {
-    return this._settingsService;
+  get PropertiesService(): PropertiesService {
+    return this._propertiesService;
   }
 
   get MenuService(): MenuService {

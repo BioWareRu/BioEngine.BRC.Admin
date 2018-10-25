@@ -1,19 +1,19 @@
 import {Type} from 'class-transformer';
 
-export class SettingsPropertyValue {
+export class PropertiesElementValue {
   public SiteId: number;
   public Value: any;
 }
 
-export class SettingsProperty {
+export class PropertiesElement {
   public Name: string;
   public Key: string;
-  public Values: SettingsPropertyValue[];
-  public Type: SettingType;
+  public Values: PropertiesElementValue[];
+  public Type: PropertiesElementType;
   public IsRequired: boolean;
 }
 
-export enum SettingType {
+export enum PropertiesElementType {
   String = 1,
   HtmlString = 2,
   PasswordString = 3,
@@ -26,23 +26,23 @@ export enum SettingType {
   Url = 10
 }
 
-export enum SettingMode {
+export enum PropertiesFrequency {
   OnePerEntity = 1,
   OnePerSite = 2
 }
 
-export class SettingsOption {
+export class PropertiesOption {
   public Title: string;
   public Value: any;
   public Group: string;
 }
 
-export class Settings {
+export class Properties {
   public Name: string;
   public Key: string;
   public IsEditable: boolean;
-  public Mode: SettingMode;
+  public Frequency: PropertiesFrequency;
 
-  @Type(() => SettingsProperty)
-  public Properties: SettingsProperty[] = [];
+  @Type(() => PropertiesElement)
+  public Properties: PropertiesElement[] = [];
 }

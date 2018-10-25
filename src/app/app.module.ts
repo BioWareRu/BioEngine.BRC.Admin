@@ -35,7 +35,7 @@ import {TagsService} from './@services/TagsService';
 import {PagesService} from './@services/PagesService';
 import {FilesService} from './@services/FilesService';
 import {ForumsService} from './@services/ForumsService';
-import {SettingsService} from './@services/SettingsService';
+import {PropertiesService} from './@services/properties.service';
 import {MenuService} from './@services/MenuService';
 import {TreeModule} from 'angular-tree-component';
 import {NbDialogModule} from '@nebular/theme';
@@ -85,7 +85,7 @@ import {NbDialogModule} from '@nebular/theme';
     PagesService,
     FilesService,
     ForumsService,
-    SettingsService,
+    PropertiesService,
     MenuService,
     ServicesProvider,
     ToastsService,

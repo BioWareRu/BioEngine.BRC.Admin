@@ -16,7 +16,7 @@ import {SaveModelResponse} from '../SaveModelResponse';
 import {BaseService} from '../BaseService';
 import {map} from 'rxjs/operators';
 import {Model} from '../../@models/base/Model';
-import {Settings, SettingType} from '../../@models/base/Settings';
+import {Properties, PropertiesElementType} from '../../@models/base/Properties';
 import {CustomValidators} from 'ng4-validators';
 import {BaseSection} from '../../@models/Section';
 import {Tag} from '../../@models/Tag';
@@ -133,8 +133,8 @@ export abstract class SimpleFormComponent<TModel> extends BaseFormComponent impl
 export abstract class FormComponent<TModel extends Model,
   TResultModel extends SaveModelResponse<TModel>> extends BaseFormComponent implements OnInit {
   public model: TModel;
-  public SettingTypes = SettingType;
-  public ModelSettings: Settings[] = [];
+  public PropertiesElementTypes = PropertiesElementType;
+  public ModelProperties: Properties[] = [];
   protected modelId: number;
   protected isPublished: boolean;
 
@@ -145,16 +145,16 @@ export abstract class FormComponent<TModel extends Model,
     super(context);
   }
 
-  constructSettingsForm(): any {
-    if (this.model.SettingsGroups) {
-      this.model.SettingsGroups.forEach((settingsGroup, groupIndex) => {
-        if (!settingsGroup.IsEditable) {
+  buildPropertiesForm(): any {
+    if (this.model.PropertiesGroups) {
+      this.model.PropertiesGroups.forEach((propertiesSet, groupIndex) => {
+        if (!propertiesSet.IsEditable) {
           return;
         }
-        settingsGroup.Properties.forEach((prop, propIndex) => {
+        propertiesSet.Properties.forEach((prop, propIndex) => {
           prop.Values.forEach((val, valIndex) => {
-            const fieldProperty = `SettingsGroups.${groupIndex}.Properties.${propIndex}.Values.${valIndex}.Value`;
-            let fieldName = settingsGroup.Key + prop.Key;
+            const fieldProperty = `PropertiesGroups.${groupIndex}.Properties.${propIndex}.Values.${valIndex}.Value`;
+            let fieldName = propertiesSet.Key + prop.Key;
             if (val.SiteId) {
               fieldName += val.SiteId;
             }
@@ -163,7 +163,7 @@ export abstract class FormComponent<TModel extends Model,
               validators.push(<any>Validators.required);
             }
             switch (prop.Type) {
-              case SettingType.Url:
+              case PropertiesElementType.Url:
                 validators.push(CustomValidators.url);
                 break;
             }
@@ -174,13 +174,13 @@ export abstract class FormComponent<TModel extends Model,
             );
           });
         });
-        this.ModelSettings.push(settingsGroup);
+        this.ModelProperties.push(propertiesSet);
       });
     }
   }
 
-  public SettingsOptions(groupKey: string, propertyKey: string): Observable<any> {
-    return this.servicesProvider.SettingsService.getOptions(
+  public PropertiesOptions(groupKey: string, propertyKey: string): Observable<any> {
+    return this.servicesProvider.PropertiesService.getOptions(
       groupKey,
       propertyKey
     );
@@ -279,7 +279,7 @@ export abstract class FormComponent<TModel extends Model,
   }
 
   protected loadFormData(): void {
-    this.constructSettingsForm();
+    this.buildPropertiesForm();
     super.loadFormData();
   }
 

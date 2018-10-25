@@ -15,36 +15,36 @@
           </div>-->
           <ng-content></ng-content>
         </nb-tab>
-        <nb-tab *ngFor="let settingsGroup
-         of FormComponent.ModelSettings" [tabTitle]="settingsGroup.Name">
-          <div *ngFor="let prop of settingsGroup.Properties">
+        <nb-tab *ngFor="let propertiesSet
+         of FormComponent.ModelProperties" [tabTitle]="propertiesSet.Name">
+          <div *ngFor="let prop of propertiesSet.Properties">
             <div [ngSwitch]="prop.Type">
-              <div *ngSwitchCase="FormComponent.SettingTypes.Dropdown">
-                <drop-down-input [FormGroup]="FormComponent.formGroup" FieldName="{{settingsGroup.Key+prop.Key}}"
-                                 [Options]="FormComponent.SettingsOptions(settingsGroup.Key, prop.Key)"
+              <div *ngSwitchCase="FormComponent.PropertiesElementTypes.Dropdown">
+                <drop-down-input [FormGroup]="FormComponent.formGroup" FieldName="{{propertiesSet.Key+prop.Key}}"
+                                 [Options]="FormComponent.PropertiesOptions(propertiesSet.Key, prop.Key)"
                                  DisplayField="Title" GroupByField="Group" ValueField="Value"
                                  Label="{{prop.Name}}"></drop-down-input>
               </div>
-              <div *ngSwitchCase="FormComponent.SettingTypes.String">
-                <text-input [FormGroup]="FormComponent.formGroup" FieldName="{{settingsGroup.Key+prop.Key}}"
+              <div *ngSwitchCase="FormComponent.PropertiesElementTypes.String">
+                <text-input [FormGroup]="FormComponent.formGroup" FieldName="{{propertiesSet.Key+prop.Key}}"
                             Label="{{prop.Name}}"></text-input>
               </div>
-              <div *ngSwitchCase="FormComponent.SettingTypes.PasswordString">
+              <div *ngSwitchCase="FormComponent.PropertiesElementTypes.PasswordString">
                 <text-input [FormGroup]="FormComponent.formGroup" Type="password"
-                            FieldName="{{settingsGroup.Key+prop.Key}}"
+                            FieldName="{{propertiesSet.Key+prop.Key}}"
                             Label="{{prop.Name}}"></text-input>
               </div>
-              <div *ngSwitchCase="FormComponent.SettingTypes.LongString">
-                <textarea-input [FormGroup]="FormComponent.formGroup" FieldName="{{settingsGroup.Key+prop.Key}}"
+              <div *ngSwitchCase="FormComponent.PropertiesElementTypes.LongString">
+                <textarea-input [FormGroup]="FormComponent.formGroup" FieldName="{{propertiesSet.Key+prop.Key}}"
                                 Label="{{prop.Name}}"></textarea-input>
               </div>
-              <div *ngSwitchCase="FormComponent.SettingTypes.Url">
+              <div *ngSwitchCase="FormComponent.PropertiesElementTypes.Url">
                 <text-input [FormGroup]="FormComponent.formGroup" Type="url"
-                            FieldName="{{settingsGroup.Key+prop.Key}}"
+                            FieldName="{{propertiesSet.Key+prop.Key}}"
                             Label="{{prop.Name}}"></text-input>
               </div>
-              <div *ngSwitchCase="FormComponent.SettingTypes.Checkbox">
-                <checkbox-input [FormGroup]="FormComponent.formGroup" FieldName="{{settingsGroup.Key+prop.Key}}"
+              <div *ngSwitchCase="FormComponent.PropertiesElementTypes.Checkbox">
+                <checkbox-input [FormGroup]="FormComponent.formGroup" FieldName="{{propertiesSet.Key+prop.Key}}"
                                 Label="{{prop.Name}}"></checkbox-input>
               </div>
               <div *ngSwitchDefault>Unknown field</div>
