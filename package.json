@@ -40,7 +40,7 @@
     "@angular/router": "^7.0.1",
     "@fortawesome/angular-fontawesome": "^0.3.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.6",
-    "@fortawesome/free-solid-svg-icons": "^5.4.1",
+    "@fortawesome/free-solid-svg-icons": "^5.4.2",
     "@nebular/bootstrap": "^2.0.2",
     "@nebular/theme": "^2.0.2",
     "@ng-bootstrap/ng-bootstrap": "3.3.1",
