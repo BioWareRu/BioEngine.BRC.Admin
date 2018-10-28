@@ -1,55 +1,80 @@
 import {NgModule} from '@angular/core';
 import {ErrorsListComponent} from './ErrorsListComponent';
-import {TextInputComponent} from './TextInputComponent';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CKEditorModule} from 'ng2-ckeditor';
-import {DropDownInputComponent} from './DropDownInputComponent';
-import {CKEInputComponent} from './CKEInputComponent';
-import {TextAreaInputComponent} from './TextAreaInputComponent';
-import {TagsInputComponent} from './TagsInputComponent';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {UploadInputComponent} from './UploadInputComponent';
+import {CKEFormFieldControlComponent, CKEInputComponent} from './fields/CKEInputComponent';
+import {UploadInputComponent} from './fields/UploadInputComponent';
 import {FormLayoutComponent} from './FormLayoutComponent';
-import {FileDropModule} from 'ngx-file-drop';
-import {NgSelectModule} from '@ng-select/ng-select';
-import {ThemeModule} from '../../@theme/theme.module';
-import {CheckboxInputComponent} from './CheckboxInputComponent';
+import {
+    MatAutocompleteModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
+    MatSelectModule,
+    MatTabsModule
+} from '@angular/material';
+import {TextInputComponent} from './fields/TextInputComponent';
+import {FlexLayoutModule} from '@angular/flex-layout';
+import {TextAreaInputComponent} from './fields/TextAreaInputComponent';
+import {CheckboxInputComponent} from './fields/CheckboxInputComponent';
+import {SelectInputComponent} from './fields/SelectInputComponent';
+import {ChipsInputComponent} from './fields/ChipsInputComponent';
+import {InputFileConfig, InputFileModule} from 'ngx-input-file';
 
+const config: InputFileConfig = {};
 @NgModule({
-  declarations: [
-    ErrorsListComponent,
-    TextInputComponent,
-    TextAreaInputComponent,
-    DropDownInputComponent,
-    TagsInputComponent,
-    CKEInputComponent,
-    UploadInputComponent,
-    CheckboxInputComponent,
-    FormLayoutComponent
-  ],
-  exports: [
-    ErrorsListComponent,
-    TextInputComponent,
-    TextAreaInputComponent,
-    DropDownInputComponent,
-    TagsInputComponent,
-    CKEInputComponent,
-    UploadInputComponent,
-    CheckboxInputComponent,
-    FormLayoutComponent
-  ],
-  providers: [],
-  imports: [
-    ThemeModule,
-    CommonModule,
-    FormsModule,
-    NgSelectModule,
-    ReactiveFormsModule,
-    CKEditorModule,
-    FontAwesomeModule,
-    FileDropModule
-  ]
+    declarations: [
+        ErrorsListComponent,
+        TextInputComponent,
+        TextAreaInputComponent,
+        CKEInputComponent,
+        UploadInputComponent,
+        CheckboxInputComponent,
+        SelectInputComponent,
+        FormLayoutComponent,
+        ChipsInputComponent,
+        CKEFormFieldControlComponent
+    ],
+    exports: [
+        ErrorsListComponent,
+        TextInputComponent,
+        TextAreaInputComponent,
+        SelectInputComponent,
+        CKEInputComponent,
+        UploadInputComponent,
+        CheckboxInputComponent,
+        FormLayoutComponent,
+        ChipsInputComponent
+    ],
+    providers: [],
+    imports: [
+        CommonModule,
+        FormsModule,
+        // NgSelectModule,
+        MatProgressSpinnerModule,
+        MatIconModule,
+        MatInputModule,
+        MatFormFieldModule,
+        MatDatepickerModule,
+        MatSelectModule,
+        MatChipsModule,
+        FlexLayoutModule,
+        MatCheckboxModule,
+        MatAutocompleteModule,
+        ReactiveFormsModule,
+        CKEditorModule,
+        MatIconModule,
+
+        MatTabsModule,
+        MatButtonModule,
+        InputFileModule.forRoot(config),
+    ]
 })
 export class BioFormsModule {
 

@@ -1,7 +1,0 @@
-<div class="form-group" [formGroup]="FormGroup" [ngClass]="{'has-danger': Control&&Control.invalid}">
-  <label>
-    <input [formControlName]="FieldName" type="checkbox"
-           [ngClass]="{'form-control-warning': Control&&Control.invalid}"/> {{Label}}
-  </label>
-  <errorsList [Control]="Control"></errorsList>
-</div>

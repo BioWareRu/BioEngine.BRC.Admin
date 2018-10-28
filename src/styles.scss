@@ -1,0 +1,150 @@
+* {
+    text-rendering: optimizeLegibility;
+    -o-text-rendering: optimizeLegibility;
+    -ms-text-rendering: optimizeLegibility;
+    -moz-text-rendering: optimizeLegibility;
+    -webkit-text-rendering: optimizeLegibility;
+    -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box;
+
+    &:before, &:after {
+        box-sizing: border-box;
+    }
+
+    // Remove focus outline
+    &:focus {
+        outline: none;
+    }
+}
+
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+html,
+body {
+    display: flex;
+    flex: 1 0 auto;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: #F5F5F5;
+}
+
+@import '~@angular/material/theming';
+@include mat-core();
+
+$md-brc: (
+    50 : #e8ecf1,
+    100 : #c6cfdd,
+    200 : #a0afc6,
+    300 : #7a8faf,
+    400 : #5e779d,
+    500 : #415f8c,
+    600 : #3b5784,
+    700 : #324d79,
+    800 : #2a436f,
+    900 : #1c325c,
+    A100 : #9bbaff,
+    A200 : #6898ff,
+    A400 : #3575ff,
+    A700 : #1b63ff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+$brc-primary: mat-palette($md-brc);
+$brc-accent: mat-palette($mat-cyan);
+$brc-warn: mat-palette($mat-pink);
+
+$brc-theme: mat-light-theme($brc-primary, $brc-accent, $brc-warn);
+
+@include angular-material-theme($brc-theme);
+
+@import '~perfect-scrollbar/css/perfect-scrollbar.css';
+
+.page-layout {
+    position: relative;
+    overflow: hidden;
+
+    &.blank {
+        width: 100%;
+        min-height: 100%;
+    }
+}
+
+@each $prop, $abbrev in (margin: m, padding: p) {
+
+    @for $index from 0 through 64 {
+        $size: $index * 4;
+        $length: #{$size}px;
+
+        .#{$abbrev}-#{$size} {
+            #{$prop}: $length !important;
+        }
+    }
+}
+
+.sidebar {
+    background-color: #415F8C;
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+    top: 0;
+    bottom: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 280px;
+    min-width: 280px;
+    max-width: 280px;
+    z-index: 1000;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .35);
+    left: 0;
+    position: relative !important;
+
+    .logo {
+        padding: 20px;
+        img {
+            max-width: 100%;
+        }
+    }
+
+    .nav-item a {
+        color: #FFF;
+    }
+}
+
+.input-file-container img.image-preview, .input-file-container .replace-button {
+    max-width: 10rem;
+    max-height: 10rem;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.input-file-container .replace-button {
+    background-color: #415f8c;
+    padding: 5px;
+}

@@ -1,0 +1,7 @@
+<mat-form-field [formGroup]="FormGroup" [fxFlex]="FxFlex" [appearance]="Appearance">
+    <mat-label>{{Label}}</mat-label>
+    <textarea [cdkTextareaAutosize]="AutoResize" [rows]="Rows" matInput [formControlName]="FieldName"
+              [placeholder]="Placeholder"></textarea>
+    <mat-icon matSuffix *ngIf="Icon">{{Icon}}</mat-icon>
+    <mat-error *ngFor="let error of Errors">{{error}}</mat-error>
+</mat-form-field>

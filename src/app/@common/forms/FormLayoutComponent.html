@@ -1,10 +1,86 @@
+<div style="position: relative;" class="mat-elevation-z8 p-24">
+    <form class="form-horizontal" [formGroup]="FormComponent.formGroup" *ngIf="FormComponent.formLoaded">
+        <mat-tab-group>
+            <mat-tab label="Основное">
+                <div class="p-12">
+                    <ng-content></ng-content>
+                </div>
+            </mat-tab>
+            <mat-tab *ngFor="let propertiesSet
+         of FormComponent.ModelProperties" [label]="propertiesSet.Name">
+                <div class="p-12" *ngFor="let prop of propertiesSet.Properties">
+                    <div [ngSwitch]="prop.Type">
+                        <div *ngSwitchCase="FormComponent.PropertiesElementTypes.Dropdown">
+                            <select-input [FormGroup]="FormComponent.formGroup"
+                                          FieldName="{{propertiesSet.Key+prop.Key}}"
+                                          [Options]="FormComponent.PropertiesOptions(propertiesSet.Key, prop.Key)"
+                                          TitleField="Title" GroupField="Group" ValueField="Value"
+                                          Label="{{prop.Name}}"></select-input>
+                        </div>
+                        <div *ngSwitchCase="FormComponent.PropertiesElementTypes.String">
+                            <text-input [FormGroup]="FormComponent.formGroup" FieldName="{{propertiesSet.Key+prop.Key}}"
+                                        Label="{{prop.Name}}"></text-input>
+                        </div>
+                        <div *ngSwitchCase="FormComponent.PropertiesElementTypes.PasswordString">
+                            <text-input [FormGroup]="FormComponent.formGroup" Type="password"
+                                        FieldName="{{propertiesSet.Key+prop.Key}}"
+                                        Label="{{prop.Name}}"></text-input>
+                        </div>
+                        <div *ngSwitchCase="FormComponent.PropertiesElementTypes.LongString">
+                            <textarea-input [FormGroup]="FormComponent.formGroup"
+                                            FieldName="{{propertiesSet.Key+prop.Key}}"
+                                            Label="{{prop.Name}}"></textarea-input>
+                        </div>
+                        <div *ngSwitchCase="FormComponent.PropertiesElementTypes.Url">
+                            <text-input [FormGroup]="FormComponent.formGroup" Type="url"
+                                        FieldName="{{propertiesSet.Key+prop.Key}}"
+                                        Label="{{prop.Name}}"></text-input>
+                        </div>
+                        <div *ngSwitchCase="FormComponent.PropertiesElementTypes.Checkbox">
+                            <checkbox-input [FormGroup]="FormComponent.formGroup"
+                                            FieldName="{{propertiesSet.Key+prop.Key}}"
+                                            Label="{{prop.Name}}"></checkbox-input>
+                        </div>
+                        <div *ngSwitchDefault>Unknown field</div>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="<>">
+          <pre>
+          {{FormComponent.model|json}}
+            </pre>
+            </mat-tab>
+        </mat-tab-group>
+        <div class="p-12">
+            <button mat-raised-button color="primary" type="submit" (click)="save()"
+                    [ngClass]="{'invalid': FormComponent.formGroup.invalid, 'no-changes':!FormComponent.hasChanges}"
+                    [disabled]="FormComponent.formGroup.invalid||!FormComponent.hasChanges||FormComponent.inProgress">
+                Сохранить
+            </button>
+
+            <button mat-raised-button color="accent" (click)="FormComponent.changePublishState()"
+                    *ngIf="!FormComponent.model.IsPublished"
+                    [disabled]="FormComponent.formGroup.invalid||FormComponent.hasChanges||FormComponent.inProgress"
+            >
+                Опубликовать
+            </button>
+            <button mat-raised-button color="warn" (click)="FormComponent.changePublishState()"
+                    *ngIf="FormComponent.model.IsPublished"
+                    [disabled]="FormComponent.formGroup.invalid||FormComponent.hasChanges||FormComponent.inProgress"
+            >
+                Спрятать
+            </button>
+        </div>
+    </form>
+</div>
+<!--
 <nb-card>
   <nb-card-header>{{FormComponent.Title}}</nb-card-header>
   <nb-card-body>
-    <form class="form-horizontal" [formGroup]="FormComponent.formGroup" *ngIf="FormComponent.formLoaded">
+
       <nb-tabset>
         <nb-tab tabTitle="Основное">
-          <!--<div *ngIf="!FormComponent.formGroup.valid">
+          &lt;!&ndash;<div *ngIf="!FormComponent.formGroup.valid">
             Form is invalid
             <div *ngFor="let key of ObjectKeys(FormComponent.formGroup.controls)">
               <div>
@@ -12,70 +88,18 @@
                 <errorsList [Control]="FormComponent.formGroup.controls[key]"></errorsList>
               </div>
             </div>
-          </div>-->
+          </div>&ndash;&gt;
           <ng-content></ng-content>
         </nb-tab>
         <nb-tab *ngFor="let propertiesSet
          of FormComponent.ModelProperties" [tabTitle]="propertiesSet.Name">
-          <div *ngFor="let prop of propertiesSet.Properties">
-            <div [ngSwitch]="prop.Type">
-              <div *ngSwitchCase="FormComponent.PropertiesElementTypes.Dropdown">
-                <drop-down-input [FormGroup]="FormComponent.formGroup" FieldName="{{propertiesSet.Key+prop.Key}}"
-                                 [Options]="FormComponent.PropertiesOptions(propertiesSet.Key, prop.Key)"
-                                 DisplayField="Title" GroupByField="Group" ValueField="Value"
-                                 Label="{{prop.Name}}"></drop-down-input>
-              </div>
-              <div *ngSwitchCase="FormComponent.PropertiesElementTypes.String">
-                <text-input [FormGroup]="FormComponent.formGroup" FieldName="{{propertiesSet.Key+prop.Key}}"
-                            Label="{{prop.Name}}"></text-input>
-              </div>
-              <div *ngSwitchCase="FormComponent.PropertiesElementTypes.PasswordString">
-                <text-input [FormGroup]="FormComponent.formGroup" Type="password"
-                            FieldName="{{propertiesSet.Key+prop.Key}}"
-                            Label="{{prop.Name}}"></text-input>
-              </div>
-              <div *ngSwitchCase="FormComponent.PropertiesElementTypes.LongString">
-                <textarea-input [FormGroup]="FormComponent.formGroup" FieldName="{{propertiesSet.Key+prop.Key}}"
-                                Label="{{prop.Name}}"></textarea-input>
-              </div>
-              <div *ngSwitchCase="FormComponent.PropertiesElementTypes.Url">
-                <text-input [FormGroup]="FormComponent.formGroup" Type="url"
-                            FieldName="{{propertiesSet.Key+prop.Key}}"
-                            Label="{{prop.Name}}"></text-input>
-              </div>
-              <div *ngSwitchCase="FormComponent.PropertiesElementTypes.Checkbox">
-                <checkbox-input [FormGroup]="FormComponent.formGroup" FieldName="{{propertiesSet.Key+prop.Key}}"
-                                Label="{{prop.Name}}"></checkbox-input>
-              </div>
-              <div *ngSwitchDefault>Unknown field</div>
-            </div>
-          </div>
+
         </nb-tab>
-        <nb-tab tabTitle="<>">
-          <pre>
-          {{FormComponent.model|json}}
-            </pre>
-        </nb-tab>
+
       </nb-tabset>
-      <button class="btn btn-primary" type="submit" (click)="save()"
-              [ngClass]="{'invalid': FormComponent.formGroup.invalid, 'no-changes':!FormComponent.hasChanges}"
-              [disabled]="FormComponent.formGroup.invalid||!FormComponent.hasChanges||FormComponent.inProgress">
-        Сохранить
-      </button>
 
-      <button class="btn btn-success" (click)="FormComponent.changePublishState()"
-              *ngIf="!FormComponent.model.IsPublished"
-              [disabled]="FormComponent.formGroup.invalid||FormComponent.hasChanges||FormComponent.inProgress"
-      >
-        Опубликовать
-      </button>
 
-      <button class="btn btn-warning" (click)="FormComponent.changePublishState()"
-              *ngIf="FormComponent.model.IsPublished"
-              [disabled]="FormComponent.formGroup.invalid||FormComponent.hasChanges||FormComponent.inProgress"
-      >
-        Спрятать
-      </button>
-    </form>
+
   </nb-card-body>
 </nb-card>
+-->

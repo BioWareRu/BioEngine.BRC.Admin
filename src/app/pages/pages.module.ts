@@ -1,50 +1,45 @@
 import {NgModule} from '@angular/core';
 
-import {PagesComponent} from './pages.component';
-import {DashboardModule} from './dashboard/dashboard.module';
-import {PagesRoutingModule} from './pages-routing.module';
-import {ThemeModule} from '../@theme/theme.module';
-import {MiscellaneousModule} from './miscellaneous/miscellaneous.module';
-import {TagsListComponent} from './tags/list.component';
 import {BioCommonModule} from '../@common/BioCommonModule';
-import {PagesListComponent} from './pages/list.component';
-import {PageFormComponent} from './pages/form.component';
+import {PagesListComponent} from './list/list.component';
+import {PageFormComponent} from './form/form.component';
 import {BioFormsModule} from '../@common/forms/FormsModule';
-import {MenuListComponent} from './menu/list.component';
-import {MenuFormComponent} from './menu/form.component';
-import {TreeModule} from 'angular-tree-component';
-import {MenuItemFormComponent, MenuItemFormDialogComponent} from './menu/menuItemForm.component';
-import {NbContextMenuModule, NbDialogModule} from '@nebular/theme';
+// import {TreeModule} from 'angular-tree-component';
+import {RouterModule, Routes} from '@angular/router';
 
 const PAGES_COMPONENTS = [
-  PagesComponent,
-  TagsListComponent,
-  PagesListComponent,
-  PageFormComponent,
-  MenuListComponent,
-  MenuFormComponent,
-  MenuItemFormComponent,
-  MenuItemFormDialogComponent
+    PagesListComponent,
+    PageFormComponent,
+];
+const routes: Routes = [
+    {
+        path: 'list',
+        component: PagesListComponent,
+    },
+    {
+        path: 'add',
+        component: PageFormComponent,
+    },
+    {
+        path: ':id/edit',
+        component: PageFormComponent
+    },
+    {
+        path: '',
+        redirectTo: 'list',
+        pathMatch: 'full',
+    }
 ];
 
 @NgModule({
-  imports: [
-    PagesRoutingModule,
-    ThemeModule,
-    DashboardModule,
-    MiscellaneousModule,
-    BioCommonModule,
-    BioFormsModule,
-    TreeModule,
-    NbDialogModule.forChild(),
-    NbContextMenuModule
-  ],
-  declarations: [
-    ...PAGES_COMPONENTS,
-  ],
-  entryComponents: [
-    MenuItemFormDialogComponent
-  ]
+    imports: [
+        BioCommonModule,
+        BioFormsModule,
+        RouterModule.forChild(routes)
+    ],
+    declarations: [
+        ...PAGES_COMPONENTS,
+    ],
 })
 export class PagesModule {
 }

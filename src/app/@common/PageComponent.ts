@@ -1,41 +1,41 @@
-import {StateService} from '../@core/data/state.service';
 import {Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ToastsService} from './ToastsService';
+import {StateService} from './StateService';
 
 export abstract class PageComponent {
-  public Title = 'Пустой заголовок';
-  protected StateService: StateService;
-  protected Router: Router;
-  protected Route: ActivatedRoute;
-  public ToastsService: ToastsService;
+    public Title = 'Пустой заголовок';
+    public ToastsService: ToastsService;
+    protected StateService: StateService;
+    protected Router: Router;
+    protected Route: ActivatedRoute;
 
-  protected constructor(context: PageContext) {
-    this.StateService = context.StateService;
-    this.Route = context.Route;
-    this.Router = context.Router;
-    this.ToastsService = context.ToastsService;
-    this.StateService.onTitleChange().subscribe(title => {
-      this.Title = title;
-      document.title = title + ' - BRC Games';
-    });
-  }
+    protected constructor(context: PageContext) {
+        this.StateService = context.StateService;
+        this.Route = context.Route;
+        this.Router = context.Router;
+        this.ToastsService = context.ToastsService;
+        this.StateService.onTitleChange().subscribe(title => {
+            this.Title = title;
+            document.title = title + ' - BRC Games';
+        });
+    }
 }
 
 @Injectable()
 export class PageContext {
-  public StateService: StateService;
+    public StateService: StateService;
 
-  public Router: Router;
+    public Router: Router;
 
-  public ToastsService: ToastsService;
+    public ToastsService: ToastsService;
 
-  public Route: ActivatedRoute;
+    public Route: ActivatedRoute;
 
-  constructor(stateService: StateService, router: Router, route: ActivatedRoute, toastsService: ToastsService) {
-    this.Route = route;
-    this.ToastsService = toastsService;
-    this.Router = router;
-    this.StateService = stateService;
-  }
+    constructor(stateService: StateService, router: Router, route: ActivatedRoute, toastsService: ToastsService) {
+        this.Route = route;
+        this.ToastsService = toastsService;
+        this.Router = router;
+        this.StateService = stateService;
+    }
 }

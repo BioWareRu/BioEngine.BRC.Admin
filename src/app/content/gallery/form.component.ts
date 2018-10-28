@@ -8,34 +8,34 @@ import {ServicesProvider} from '../../@services/ServicesProvider';
 import {BaseService} from '../../@common/BaseService';
 
 @Component({
-  moduleId: module.id,
-  selector: 'galleryForm',
-  templateUrl: './form.component.html',
-  providers: [
-    PageContext
-  ]
+    moduleId: module.id,
+    selector: 'galleryForm',
+    templateUrl: './form.component.html',
+    providers: [
+        PageContext
+    ]
 })
 export class GalleryFormComponent extends ContentFormComponent<Gallery, SaveGalleryResponse> implements OnInit {
 
 
-  constructor(context: PageContext, protected servicesProvider: ServicesProvider) {
-    super(context, servicesProvider);
-  }
+    constructor(context: PageContext, servicesProvider: ServicesProvider) {
+        super(context, servicesProvider);
+    }
 
-  protected constructorDataFrom() {
-    this.registerFormControl('Text', [<any>Validators.required], 'Data.Text');
-    this.registerFormControl('Pictures', [<any>Validators.required], 'Data.Pictures');
-  }
+    protected constructorDataFrom(): void {
+        this.registerFormControl('Text', [<any>Validators.required], 'Data.Text');
+        this.registerFormControl('Pictures', [<any>Validators.required], 'Data.Pictures');
+    }
 
-  protected getNewModelTitle(): string {
-    return 'Создание галереи';
-  }
+    protected getNewModelTitle(): string {
+        return 'Создание галереи';
+    }
 
-  protected getRoute(): string {
-    return '/content/gallery';
-  }
+    protected getRoute(): string {
+        return '/content/gallery';
+    }
 
-  protected getService(): BaseService<Gallery> {
-    return this.servicesProvider.GalleryService;
-  }
+    protected getService(): BaseService<Gallery> {
+        return this.servicesProvider.GalleryService;
+    }
 }

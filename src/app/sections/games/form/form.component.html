@@ -1,33 +1,41 @@
-<form-layout *ngIf="formLoaded" [FormComponent]="this">
-  <div class="row">
-    <div class="col-md-6">
-      <text-input [FormGroup]="formGroup" FieldName="Title"
-                  Label="Название"></text-input>
-    </div>
-    <div class="col-md-6">
-      <text-input [FormGroup]="formGroup" FieldName="Url"
-                  Label="Адрес на сайте"></text-input>
-    </div>
-  </div>
-  <tags-input [FormGroup]="formGroup" FieldName="SiteIds" Label="Сайты"
-              [Options]="Sites"></tags-input>
-  <cke-input [FormGroup]="formGroup" FieldName="ShortDescription"
-             Label="Краткое описание"></cke-input>
-  <div class="row">
-    <div class="col-md-6">
-      <upload-input [FormGroup]="formGroup" FieldName="Logo"
-                    Label="Большой логотип"
-                    [Multiple]="false"
-                    [Service]="getService()"
-                    [Types]='["image/png", "image/jpeg", "image/jpg", "image/gif"]'></upload-input>
-    </div>
-    <div class="col-md-6">
-      <upload-input [FormGroup]="formGroup" FieldName="LogoSmall"
-                    Label="Маленький логотип"
-                    [Multiple]="false"
-                    [Service]="getService()"
-                    [Types]='["image/png", "image/jpeg", "image/jpg", "image/gif"]'></upload-input>
-    </div>
-  </div>
-  <text-input [FormGroup]="formGroup" FieldName="Hashtag" Label="Тэг для соцсетей"></text-input>
-</form-layout>
+<div class="page-layout blank p-24">
+    <form-layout *ngIf="formLoaded" [FormComponent]="this">
+        <div fxLayout="row">
+            <div fxFlex="45">
+                <text-input [FormGroup]="formGroup" FieldName="Title" Label="Название"></text-input>
+            </div>
+            <div fxFlex="10">
+            </div>
+            <div fxFlex="45">
+                <text-input [FormGroup]="formGroup" FieldName="Url" Label="Адрес на сайте"></text-input>
+            </div>
+        </div>
+        <div fxLayout="row">
+            <div fxFlex="45">
+                <chips-input [FormGroup]="formGroup" FieldName="SiteIds" Label="Сайты" ValueField="Id"
+                             TitleField="Title"
+                             [Options]="Sites"></chips-input>
+            </div>
+            <div fxFlex="10">
+            </div>
+            <div fxFlex="45">
+                <text-input [FormGroup]="formGroup" FieldName="Hashtag" Label="Тэг для соцсетей"></text-input>
+            </div>
+        </div>
+        <cke-input [FormGroup]="formGroup" FieldName="ShortDescription" Label="Краткое описание"></cke-input>
+        <div fxLayout="row">
+            <div fxFlex="45">
+                <upload-input [FormGroup]="formGroup" FieldName="Logo" Label="Большой логотип" [Multiple]="false"
+                              [Service]="getService()"
+                              [Types]='["image/png", "image/jpeg", "image/jpg", "image/gif"]'></upload-input>
+            </div>
+            <div fxFlex="10">
+            </div>
+            <div fxFlex="45">
+                <upload-input [FormGroup]="formGroup" FieldName="LogoSmall" Label="Маленький логотип" [Multiple]="false"
+                              [Service]="getService()"
+                              [Types]='["image/png", "image/jpeg", "image/jpg", "image/gif"]'></upload-input>
+            </div>
+        </div>
+    </form-layout>
+</div>

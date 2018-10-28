@@ -8,31 +8,31 @@ import {PageContext} from '../../../@common/PageComponent';
 import {BaseService} from '../../../@common/BaseService';
 
 @Component({
-  moduleId: module.id,
-  selector: 'postForm',
-  templateUrl: './form.component.html',
-  providers: [
-    PageContext
-  ]
+    moduleId: module.id,
+    selector: 'postForm',
+    templateUrl: './form.component.html',
+    providers: [
+        PageContext
+    ]
 })
 export class PostFormComponent extends ContentFormComponent<Post, SavePostResponse> implements OnInit {
-  constructor(context: PageContext, protected servicesProvider: ServicesProvider) {
-    super(context, servicesProvider);
-  }
+    constructor(context: PageContext, servicesProvider: ServicesProvider) {
+        super(context, servicesProvider);
+    }
 
-  protected constructorDataFrom() {
-    this.registerFormControl('Text', [<any>Validators.required], 'Data.Text');
-  }
+    protected constructorDataFrom(): void {
+        this.registerFormControl('Text', [<any>Validators.required], 'Data.Text');
+    }
 
-  protected getNewModelTitle(): string {
-    return 'Создание поста';
-  }
+    protected getNewModelTitle(): string {
+        return 'Создание поста';
+    }
 
-  protected getRoute(): string {
-    return '/contents/posts';
-  }
+    protected getRoute(): string {
+        return '/contents/posts';
+    }
 
-  protected getService(): BaseService<Post> {
-    return this.servicesProvider.PostsService;
-  }
+    protected getService(): BaseService<Post> {
+        return this.servicesProvider.PostsService;
+    }
 }
