@@ -26,8 +26,11 @@ import {CheckboxInputComponent} from './fields/CheckboxInputComponent';
 import {SelectInputComponent} from './fields/SelectInputComponent';
 import {ChipsInputComponent} from './fields/ChipsInputComponent';
 import {InputFileConfig, InputFileModule} from 'ngx-input-file';
+import {AutocompleteInputComponent} from './fields/AutocompleteInputComponent';
+import {DatePickerInputComponent} from './fields/DatePickerInputComponent';
 
 const config: InputFileConfig = {};
+
 @NgModule({
     declarations: [
         ErrorsListComponent,
@@ -39,7 +42,9 @@ const config: InputFileConfig = {};
         SelectInputComponent,
         FormLayoutComponent,
         ChipsInputComponent,
-        CKEFormFieldControlComponent
+        CKEFormFieldControlComponent,
+        AutocompleteInputComponent,
+        DatePickerInputComponent
     ],
     exports: [
         ErrorsListComponent,
@@ -50,7 +55,9 @@ const config: InputFileConfig = {};
         UploadInputComponent,
         CheckboxInputComponent,
         FormLayoutComponent,
-        ChipsInputComponent
+        ChipsInputComponent,
+        AutocompleteInputComponent,
+        DatePickerInputComponent
     ],
     providers: [],
     imports: [
