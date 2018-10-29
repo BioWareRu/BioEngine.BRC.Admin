@@ -53,6 +53,7 @@ import {NotificationComponent} from './snacks/NotificationComponent';
         MatPaginatorModule,
         MatButtonModule,
         MatChipsModule,
+        MatCardModule,
         MatSnackBarModule,
         MomentModule,
         RouterModule,
