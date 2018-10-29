@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ToastsService} from './ToastsService';
 import {StateService} from './StateService';
+import {SnackBarService} from './snacks/SnackBarService';
 
 export abstract class PageComponent {
     public Title = 'Пустой заголовок';
-    public ToastsService: ToastsService;
+    public SnackBarService: SnackBarService;
     protected StateService: StateService;
     protected Router: Router;
     protected Route: ActivatedRoute;
@@ -14,7 +14,7 @@ export abstract class PageComponent {
         this.StateService = context.StateService;
         this.Route = context.Route;
         this.Router = context.Router;
-        this.ToastsService = context.ToastsService;
+        this.SnackBarService = context.SnackBarService;
         this.StateService.onTitleChange().subscribe(title => {
             this.Title = title;
             document.title = title + ' - BRC Games';
@@ -28,13 +28,13 @@ export class PageContext {
 
     public Router: Router;
 
-    public ToastsService: ToastsService;
+    public SnackBarService: SnackBarService;
 
     public Route: ActivatedRoute;
 
-    constructor(stateService: StateService, router: Router, route: ActivatedRoute, toastsService: ToastsService) {
+    constructor(stateService: StateService, router: Router, route: ActivatedRoute, snackBarService: SnackBarService) {
         this.Route = route;
-        this.ToastsService = toastsService;
+        this.SnackBarService = snackBarService;
         this.Router = router;
         this.StateService = stateService;
     }

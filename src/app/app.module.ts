@@ -25,7 +25,6 @@ import {GamesService} from './@services/GamesService';
 import {TopicsService} from './@services/TopicsService';
 import {SectionsService} from './@services/SectionsService';
 import {ContentService} from './@services/ContentService';
-import {ToastsService} from './@common/ToastsService';
 import {GalleryService} from './@services/GalleryService';
 import {TagsService} from './@services/TagsService';
 import {PagesService} from './@services/PagesService';
@@ -99,8 +98,7 @@ import {LayoutModule} from './layout/layout.module';
         ForumsService,
         PropertiesService,
         MenuService,
-        ServicesProvider,
-        ToastsService,
+        ServicesProvider
     ],
 })
 export class AppModule {

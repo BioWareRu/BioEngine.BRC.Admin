@@ -22,6 +22,7 @@ import {BaseSection} from '../../@models/Section';
 import {Tag} from '../../@models/Tag';
 import {Site} from '../../@models/Site';
 import {forkJoin} from 'rxjs';
+import {SnackBarMessage} from '../snacks/SnackBarMessage';
 
 export abstract class BaseFormComponent extends PageComponent implements OnInit {
     public success = false;
@@ -99,9 +100,10 @@ export abstract class BaseFormComponent extends PageComponent implements OnInit 
                 const control = this.controlsByProperty[error.Field];
                 control.setServerError(error.Message);
             });
-            this.ToastsService.error(
+            this.SnackBarService.error(new SnackBarMessage(
                 'Ошибка валидации',
                 'Произошла ошибка валидации, проверьте заполнение формы'
+                )
             );
         }
     }
@@ -225,7 +227,7 @@ export abstract class FormComponent<TModel extends Model,
                 this.hasChanges = false;
                 this.success = true;
                 this.processSuccessSave(saveResult);
-                this.ToastsService.success('Успех!', 'Сохранение прошло успешно.');
+                this.SnackBarService.success(new SnackBarMessage('Успех!', 'Сохранение прошло успешно.'));
                 this.inProgress = false;
             },
             e => {
@@ -251,9 +253,9 @@ export abstract class FormComponent<TModel extends Model,
                 this.success = true;
                 this.model = saveResult;
                 if (saveResult.IsPublished) {
-                    this.ToastsService.success('Успех!', 'Опубликовано.');
+                    this.SnackBarService.success(new SnackBarMessage('Успех!', 'Опубликовано.'));
                 } else {
-                    this.ToastsService.success('Успех!', 'Публикация снята.');
+                    this.SnackBarService.success(new SnackBarMessage('Успех!', 'Публикация снята.'));
                 }
                 this.inProgress = false;
             },

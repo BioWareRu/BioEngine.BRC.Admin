@@ -14,18 +14,21 @@ import {
     MatMenuModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
+    MatSnackBarModule,
     MatSortModule,
     MatTableModule
 } from '@angular/material';
 import {BrcPerfectScrollbarDirective} from './scroll/scrollbar.component';
 import {UserComponent} from './user/user.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import {NotificationComponent} from './snacks/NotificationComponent';
 
 @NgModule({
     declarations: [
         ListTableComponent,
         BrcPerfectScrollbarDirective,
-        UserComponent
+        UserComponent,
+        NotificationComponent
     ],
     exports: [
         CommonModule,
@@ -50,11 +53,15 @@ import {FlexLayoutModule} from '@angular/flex-layout';
         MatPaginatorModule,
         MatButtonModule,
         MatChipsModule,
+        MatSnackBarModule,
         MomentModule,
         RouterModule,
         MatSortModule,
         CommonModule,
         FlexLayoutModule
+    ],
+    entryComponents: [
+        NotificationComponent
     ]
 })
 export class BioCommonModule {

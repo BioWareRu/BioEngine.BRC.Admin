@@ -3,10 +3,11 @@ import {FormInput} from './FormInput';
 import {Observable} from 'rxjs/Observable';
 import {forkJoin} from 'rxjs';
 import {StorageItem} from '../../../@models/results/StorageItem';
-import {ToastsService} from '../../ToastsService';
 import {IBaseServiceWithUpload} from '../../BaseService';
 import {InputFile} from 'ngx-input-file';
 import {FormControl} from '@angular/forms';
+import {SnackBarService} from '../../snacks/SnackBarService';
+import {SnackBarMessage} from '../../snacks/SnackBarMessage';
 
 @Component({
     selector: 'upload-input',
@@ -21,7 +22,7 @@ export class UploadInputComponent extends FormInput implements OnInit {
     protected items: StorageItem[] = [];
     private uploadControl: FormControl;
 
-    public constructor(private toastsService: ToastsService) {
+    public constructor(private snackBarService: SnackBarService) {
         super();
     }
 
@@ -79,11 +80,7 @@ export class UploadInputComponent extends FormInput implements OnInit {
     }
 
     private processUpload(queue: Observable<StorageItem>[]): void {
-        if (!this.Multiple && queue.length > 1) {
-            this.toastsService.error('Ошибка выбора файла', 'Разрешено загружать только 1 файл');
-            return;
-        }
-        this.toastsService.warning('Загрузка файлов', 'Загрузка файлов в процессе');
+        this.snackBarService.info(new SnackBarMessage('Загрузка файлов', 'Загрузка файлов в процессе'));
         forkJoin(queue).subscribe(results => {
             if (this.Multiple) {
                 this.items = this.items.concat(results);
@@ -93,7 +90,7 @@ export class UploadInputComponent extends FormInput implements OnInit {
                 this.items = [item];
                 this.Control.patchValue(item);
             }
-            this.toastsService.success('Загрузка файлов', 'Загрузка файлов успешно завершена');
+            this.snackBarService.success(new SnackBarMessage('Загрузка файлов', 'Загрузка файлов успешно завершена'));
         });
     }
 }
