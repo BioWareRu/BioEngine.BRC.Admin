@@ -1,14 +1,14 @@
 <mat-form-field [formGroup]="FormGroup" [fxFlex]="FxFlex" [appearance]="Appearance">
     <mat-label>{{Label}}</mat-label>
     <mat-select [formControlName]="FieldName" [placeholder]="Placeholder" [multiple]="IsMultiple">
-        <ng-container *ngIf="GroupField">
+        <ng-container *ngIf="groups && groups.length > 1">
             <mat-optgroup *ngFor="let group of groups" [label]="group.title">
                 <mat-option *ngFor="let option of group.options" [value]="option.value">
                     {{option.title}}
                 </mat-option>
             </mat-optgroup>
         </ng-container>
-        <ng-container *ngIf="!GroupField">
+        <ng-container *ngIf="groups && groups.length === 1">
             <mat-option *ngFor="let option of groups[0].options" [value]="option.value">
                 {{option.title}}
             </mat-option>
