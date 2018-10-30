@@ -5,6 +5,7 @@ import {SimpleFormComponent} from '../@common/forms/FormComponent';
 import {Validators} from '@angular/forms';
 import {DialogComponent} from '../@common/modals/DialogComponent';
 import {MAT_DIALOG_DATA} from '@angular/material';
+import {MenuItem} from '../@models/Menu';
 
 @Component({
     moduleId: module.id,
@@ -14,7 +15,7 @@ import {MAT_DIALOG_DATA} from '@angular/material';
         PageContext
     ]
 })
-export class MenuItemFormComponent extends SimpleFormComponent<TreeNode> {
+export class MenuItemFormComponent extends SimpleFormComponent<MenuItem> {
 
     public constructor(context: PageContext) {
         super(context);
@@ -30,9 +31,9 @@ export class MenuItemFormComponent extends SimpleFormComponent<TreeNode> {
     moduleId: module.id,
     selector: 'menuItemFormDialog',
     template: `
-        <h1 mat-dialog-title>Пункт меню {{data.name}}</h1>
+        <h1 mat-dialog-title>Пункт меню {{item.Label}}</h1>
         <div mat-dialog-content>
-            <menuItemForm [Model]="data.data">
+            <menuItemForm [Model]="item">
 
             </menuItemForm>
         </div>
@@ -48,5 +49,8 @@ export class MenuItemFormDialogComponent extends DialogComponent<TreeNode> {
     public constructor(
         @Inject(MAT_DIALOG_DATA) data: TreeNode) {
         super(data);
+        this.item = data.data;
     }
+
+    public item: MenuItem;
 }
