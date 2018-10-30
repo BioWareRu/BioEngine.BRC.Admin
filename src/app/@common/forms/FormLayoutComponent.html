@@ -11,11 +11,11 @@
                 <div class="p-12" *ngFor="let prop of propertiesSet.Properties">
                     <div [ngSwitch]="prop.Type">
                         <div *ngSwitchCase="FormComponent.PropertiesElementTypes.Dropdown">
-                            <select-input [FormGroup]="FormComponent.formGroup"
-                                          FieldName="{{propertiesSet.Key+prop.Key}}"
-                                          [Options]="FormComponent.PropertiesOptions(propertiesSet.Key, prop.Key)"
-                                          TitleField="Title" GroupField="Group" ValueField="Value"
-                                          Label="{{prop.Name}}"></select-input>
+                            <autocomplete-input [FormGroup]="FormComponent.formGroup"
+                                                FieldName="{{propertiesSet.Key+prop.Key}}"
+                                                [Options]="FormComponent.PropertiesOptions(propertiesSet.Key, prop.Key)"
+                                                TitleField="Title" GroupField="Group" ValueField="Value"
+                                                Label="{{prop.Name}}"></autocomplete-input>
                         </div>
                         <div *ngSwitchCase="FormComponent.PropertiesElementTypes.String">
                             <text-input [FormGroup]="FormComponent.formGroup" FieldName="{{propertiesSet.Key+prop.Key}}"
