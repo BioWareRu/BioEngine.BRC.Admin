@@ -1,6 +1,10 @@
 pool:
   vmImage: 'Ubuntu 16.04'
 
+variables:
+  Version: '3.0.$(Build.BuildId)'
+  ImageName: biowareru/bioengine-brc-admin:$(Version)
+
 steps:
 - task: NodeTool@0
   inputs:
@@ -13,7 +17,14 @@ steps:
     ng build --prod --aot
   displayName: 'npm install and build'
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    pathtoPublish: './dist'
-    artifactName: 'dist'
+- script: |
+    docker build . -t $(ImageName)
+  displayName: 'build docker image'
+  
+- script: |
+    docker login -u $(dockerId) -p $(dockerPswd)
+  displayName: 'login to docker hub'
+
+- script: |
+    docker push $(ImageName)
+  displayName: 'push image to docker hub'
