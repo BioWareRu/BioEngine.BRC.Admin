@@ -148,3 +148,26 @@ $brc-theme: mat-light-theme($brc-primary, $brc-accent, $brc-warn);
     background-color: #415f8c;
     padding: 5px;
 }
+
+snack-bar-container {
+    padding: 0 !important;
+    background: transparent !important;
+    &.panel-primary {
+        mat-card {
+            color: mat-color($brc-primary, default-contrast);
+            background: mat-color($brc-primary);
+        }
+    }
+    &.panel-warn {
+        mat-card {
+            color: mat-color($brc-warn, default-contrast);
+            background: mat-color($brc-warn);
+        }
+    }
+    &.panel-accent {
+        mat-card {
+            color: mat-color($brc-accent, default-contrast);
+            background: mat-color($brc-accent);
+        }
+    }
+}
