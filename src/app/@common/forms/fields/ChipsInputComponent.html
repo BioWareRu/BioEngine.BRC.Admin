@@ -6,7 +6,7 @@
             [selectable]="Selectable"
             [removable]="Removable"
             (removed)="remove(value)">
-            {{Labels[value]}}
+            {{displayFn(value)}}
             <mat-icon matChipRemove *ngIf="Removable">cancel</mat-icon>
         </mat-chip>
         <input
@@ -22,14 +22,14 @@
     </mat-chip-list>
     <mat-autocomplete #autoGroup="matAutocomplete" [displayWith]="displayFn.bind(this)"
                       (optionSelected)="selected($event)" (closed)="inputClosed()">
-        <ng-container *ngIf="GroupField && groups.length>0">
+        <ng-container *ngIf="groups && groups.length>1">
             <mat-optgroup *ngFor="let group of groups | async" [label]="group.title">
                 <mat-option *ngFor="let option of group.options" [value]="option.value">
                     {{option.title}}
                 </mat-option>
             </mat-optgroup>
         </ng-container>
-        <ng-container *ngIf="!GroupField && groups.length>0">
+        <ng-container *ngIf="groups && groups.length===1">
             <mat-option *ngFor="let option of groups[0].options" [value]="option.value">
                 {{option.title}}
             </mat-option>
