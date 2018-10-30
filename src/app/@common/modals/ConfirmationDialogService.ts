@@ -18,9 +18,7 @@ export class ConfirmationDialogService {
     ): ConfirmationDialogComponent {
         return this.dialogService.show(
             ConfirmationDialogComponent,
-            new ConfirmationDialogComponentData(title, text, confirmText, cancelText),
-            config => {
-            }
+            new ConfirmationDialogComponentData(title, text, confirmText, cancelText)
         );
     }
 }
