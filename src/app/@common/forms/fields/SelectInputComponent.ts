@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormInput} from './FormInput';
+import {Observable} from 'rxjs';
 
 @Component({
     selector: 'select-input',
@@ -7,7 +8,7 @@ import {FormInput} from './FormInput';
 })
 export class SelectInputComponent extends FormInput implements OnInit {
     public groups: SelectGroup[] = [];
-    @Input() public Options: [] = [];
+    @Input() public Options: any[] | Observable<any>;
     @Input() public GroupField: string = null;
     @Input() public TitleField = 'title';
     @Input() public ValueField = 'value';
@@ -18,7 +19,18 @@ export class SelectInputComponent extends FormInput implements OnInit {
         if (this.GroupField === null) {
             this.groups.push(new SelectGroup());
         }
-        this.Options.forEach(option => {
+        if (Array.isArray(this.Options)) {
+            this.buildGroups(this.Options);
+        }
+        else {
+            this.Options.subscribe(data => {
+                this.buildGroups(data);
+            });
+        }
+    }
+
+    private buildGroups(options: any[]): void {
+        options.forEach(option => {
             const selectOption = new SelectOption();
             selectOption.title = option[this.TitleField];
             selectOption.value = option[this.ValueField];

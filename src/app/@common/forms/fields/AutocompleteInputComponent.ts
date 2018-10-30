@@ -1,6 +1,7 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {FormInput} from './FormInput';
 import {MatAutocomplete, MatAutocompleteTrigger} from '@angular/material';
+import {Observable} from 'rxjs';
 
 @Component({
     selector: 'autocomplete-input',
@@ -8,7 +9,7 @@ import {MatAutocomplete, MatAutocompleteTrigger} from '@angular/material';
 })
 export class AutocompleteInputComponent extends FormInput implements OnInit {
     public groups: SelectGroup[] = [];
-    @Input() public Options: any[] = [];
+    @Input() public Options: any[] | Observable<any>;
     @Input() public GroupField: string = null;
     @Input() public TitleField = 'title';
     @Input() public ValueField = 'value';
@@ -17,44 +18,61 @@ export class AutocompleteInputComponent extends FormInput implements OnInit {
     @ViewChild(MatAutocomplete) MatAutocomplete: MatAutocomplete;
     protected RemoveSelectedValues = false;
     protected Labels: { [key: number]: string; } = null;
+    protected Values: any[] = [];
+    private filter: string;
 
     public ngOnInit(): void {
         super.ngOnInit();
-        this.buildGroups(this.Options);
-        this.buildLabels();
+        if (!this.Options) {
+            throw new Error('Empty options for field ' + this.FieldName);
+        }
+        if (Array.isArray(this.Options)) {
+            this.Values = this.Options;
+            this.buildGroups();
+            this.buildLabels();
+        }
+        else {
+            this.Options.subscribe(data => {
+                this.Values = data;
+                this.buildGroups();
+                this.buildLabels();
+            });
+        }
     }
 
     // noinspection JSMethodCanBeStatic
     public displayFn(item: any): string {
-        return item !== null && this.Labels.hasOwnProperty(item) ? this.Labels[item] : undefined;
+        return item !== null && this.Labels && this.Labels.hasOwnProperty(item) ? this.Labels[item] : undefined;
     }
 
     public onSearchChange(input: string): void {
-        input = input.toLowerCase();
-        const filteredOptions = this.Options.filter(option => option[this.TitleField].toLowerCase().indexOf(input) !== -1);
-        this.buildGroups(filteredOptions);
+        this.filter = input.toLowerCase();
+        this.buildGroups();
     }
 
     protected buildLabels(): void {
         const labels: { [key: number]: string; } = {};
-        this.Options.forEach(option => {
+        this.Values.forEach(option => {
             labels[option[this.ValueField]] = option[this.TitleField];
         });
         this.Labels = labels;
     }
 
-    protected buildGroups(options: any[]): void {
+    protected buildGroups(): void {
         const groups: SelectGroup[] = [];
 
         if (this.GroupField === null) {
             groups.push(new SelectGroup());
         }
-        options.forEach(option => {
+        this.Values.forEach(option => {
             const selectOption = new SelectOption();
             selectOption.title = option[this.TitleField];
             selectOption.value = option[this.ValueField];
 
             if (this.RemoveSelectedValues && this.isValueSelected(selectOption.value)) {
+                return;
+            }
+            if (this.filter && selectOption.title.toLowerCase().indexOf(this.filter) === -1) {
                 return;
             }
             if (this.GroupField === null) {

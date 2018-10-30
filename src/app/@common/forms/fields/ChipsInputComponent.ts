@@ -25,7 +25,7 @@ export class ChipsInputComponent extends AutocompleteInputComponent implements O
         const values = this.Control.value || [];
         values.push(event.option.value);
         this.Control.setValue(values);
-        this.buildGroups(this.Options);
+        this.buildGroups();
 
     }
 
@@ -43,7 +43,7 @@ export class ChipsInputComponent extends AutocompleteInputComponent implements O
             if (this.Control.value.length === 0) {
                 this.Control.setValue(null);
             }
-            this.buildGroups(this.Options);
+            this.buildGroups();
         }
     }
 
@@ -59,8 +59,8 @@ export class ChipsInputComponent extends AutocompleteInputComponent implements O
             }
             values.push(result.Model[this.ValueField]);
             this.Control.setValue(values);
-            this.Options.push(result.Model);
-            this.buildGroups(this.Options);
+            this.Values.push(result.Model);
+            this.buildGroups();
             this.buildLabels();
             this.newInput.nativeElement.value = null;
             this.addInProgress = false;
