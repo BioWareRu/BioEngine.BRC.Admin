@@ -84,6 +84,7 @@ $brc-theme: mat-light-theme($brc-primary, $brc-accent, $brc-warn);
 @include angular-material-theme($brc-theme);
 
 @import '~perfect-scrollbar/css/perfect-scrollbar.css';
+@import '~angular-tree-component/dist/angular-tree-component.css';
 
 .page-layout {
     position: relative;

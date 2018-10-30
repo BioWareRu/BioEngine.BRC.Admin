@@ -47,6 +47,8 @@ const config: InputFileConfig = {};
         DatePickerInputComponent
     ],
     exports: [
+        FormsModule,
+        ReactiveFormsModule,
         ErrorsListComponent,
         TextInputComponent,
         TextAreaInputComponent,

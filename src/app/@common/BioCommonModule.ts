@@ -9,6 +9,7 @@ import {
     MatButtonModule,
     MatCardModule,
     MatChipsModule,
+    MatDialogModule,
     MatGridListModule,
     MatIconModule,
     MatMenuModule,
@@ -22,13 +23,15 @@ import {BrcPerfectScrollbarDirective} from './scroll/scrollbar.component';
 import {UserComponent} from './user/user.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {NotificationComponent} from './snacks/NotificationComponent';
+import {ConfirmationDialogComponent} from './modals/ConfirmationDialogService';
 
 @NgModule({
     declarations: [
         ListTableComponent,
         BrcPerfectScrollbarDirective,
         UserComponent,
-        NotificationComponent
+        NotificationComponent,
+        ConfirmationDialogComponent
     ],
     exports: [
         CommonModule,
@@ -42,7 +45,9 @@ import {NotificationComponent} from './snacks/NotificationComponent';
         ListTableComponent,
         BrcPerfectScrollbarDirective,
         UserComponent,
-        FlexLayoutModule
+        FlexLayoutModule,
+        MatButtonModule,
+        MatDialogModule
     ],
     providers: [],
     imports: [
@@ -59,10 +64,12 @@ import {NotificationComponent} from './snacks/NotificationComponent';
         RouterModule,
         MatSortModule,
         CommonModule,
-        FlexLayoutModule
+        FlexLayoutModule,
+        MatDialogModule
     ],
     entryComponents: [
-        NotificationComponent
+        NotificationComponent,
+        ConfirmationDialogComponent
     ]
 })
 export class BioCommonModule {

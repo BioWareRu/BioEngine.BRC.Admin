@@ -7,18 +7,14 @@
                      ValueField="Id"
                      [Options]="Sites"></chips-input>
         Пункты меню
-        <!--<tree-root style="width: 100%;
-          border: solid 1px #d5dbe0;
-          border-radius: .17rem;
-          display: block;
-          min-height: 200px;
-          padding: 5px;
-          margin: 15px 0;" #tree (initialized)="onInit(tree)" (activate)="onActivate($event)" [nodes]="model.Items"
+        <tree-root class="mat-elevation-z4" #tree (initialized)="onInit(tree)" [nodes]="model.Items"
                    [options]="options">
           <ng-template #treeNodeTemplate let-node let-index="index">
-            <span [nbContextMenu]="menuItems" node="node">{{ node.data.Label }}</span>
+              <span (dblclick)="openEditDialog(node)" node="node">{{ node.data.Label }}</span>
+              <mat-icon (click)="addMenuItem(node)">add</mat-icon>
+              <mat-icon (click)="deleteMenuItem(node)">delete</mat-icon>
           </ng-template>
-        </tree-root>-->
-        <button class="btn btn-primary btn-sm" (click)="addMenuItem(true)">Добавить пункт</button>
+        </tree-root>
+        <button mat-raised-button color="primary" (click)="addMenuItem()">Добавить пункт</button>
     </form-layout>
 </div>
