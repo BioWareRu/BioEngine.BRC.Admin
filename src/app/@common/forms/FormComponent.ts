@@ -21,7 +21,6 @@ import {CustomValidators} from 'ng4-validators';
 import {BaseSection} from '../../@models/Section';
 import {Tag} from '../../@models/Tag';
 import {Site} from '../../@models/Site';
-import {forkJoin} from 'rxjs';
 import {SnackBarMessage} from '../snacks/SnackBarMessage';
 
 export abstract class BaseFormComponent extends PageComponent implements OnInit {
@@ -303,13 +302,8 @@ export abstract class FormComponent<TModel extends Model,
 
 export abstract class SiteEntityFormComponent<TModel extends ISiteEntity,
     TSaveModel extends SaveModelResponse<TModel>> extends FormComponent<TModel, TSaveModel> {
-    public Sites: Site[] = [];
-
-    protected loadFormData(): void {
-        this.servicesProvider.SitesService.getAll(1, 1000, 'id').subscribe(result => {
-            this.Sites = result.Data;
-            super.loadFormData();
-        });
+    protected get Sites(): Observable<Site[]> {
+        return this.servicesProvider.SitesService.getAll(1, 1000, 'id').pipe(map(list => list.Data));
     }
 }
 
@@ -339,19 +333,12 @@ export abstract class SectionFormComponent<TModel extends ISiteEntity,
 
 export abstract class ContentFormComponent<TModel extends ISectionEntity,
     TSaveModel extends SaveModelResponse<TModel>> extends SiteEntityFormComponent<TModel, TSaveModel> {
-    public Sections: BaseSection[] = [];
-    public Tags: Tag[] = [];
+    protected get Sections(): Observable<BaseSection[]> {
+        return this.servicesProvider.SectionsService.getAll(1, 1000, 'id').pipe(map(list => list.Data));
+    }
 
-    protected loadFormData(): void {
-        forkJoin(
-            this.servicesProvider.SectionsService.getAll(1, 1000, 'id'),
-            this.servicesProvider.TagsService.getAll(1, 1000, 'id')
-        ).subscribe(res => {
-            this.Sections = res[0].Data;
-            this.Tags = res[1].Data;
-            super.loadFormData();
-        });
-
+    protected get Tags(): Observable<Tag[]> {
+        return this.servicesProvider.TagsService.getAll(1, 1000, 'id').pipe(map(list => list.Data));
     }
 
     protected constructForm(): void {
