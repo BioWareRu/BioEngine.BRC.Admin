@@ -15,5 +15,6 @@ export class StateService {
 
     public setTitle(title: string): void {
         this.titleState$.next(title);
+        document.title = title + ' - BRC Games';
     }
 }

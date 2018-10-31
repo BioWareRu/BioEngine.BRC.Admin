@@ -5,7 +5,8 @@ import {User} from '../../@models/User';
     template: `
         <ng-container *ngIf="user">
             <div class="avatar" [ngStyle]="{'background-image': 'url(' + user.PhotoUrl + ')'}"></div>
-            <div class="name"><a target="_blank" [href]="user.ProfileUrl">{{user.Name}}</a></div>
+            <div class="name"><a [ngStyle]="{'color':'#'+color}" target="_blank"
+                                 [href]="user.ProfileUrl">{{user.Name}}</a></div>
         </ng-container>
     `,
     styles: [`
@@ -36,4 +37,5 @@ import {User} from '../../@models/User';
 })
 export class UserComponent {
     @Input() public user: User;
+    @Input() public color: string;
 }

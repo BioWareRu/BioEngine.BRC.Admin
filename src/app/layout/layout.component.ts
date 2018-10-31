@@ -22,8 +22,10 @@ export class LayoutComponent {
     public user: User;
     public title: string;
 
-    constructor(private breakpointObserver: BreakpointObserver, private usersService: UsersService, private stateService: StateService) {
+    constructor(private breakpointObserver: BreakpointObserver, private usersService: UsersService, public stateService: StateService) {
         this.usersService.getUser().subscribe(user => this.user = user);
-        this.stateService.onTitleChange().subscribe(title => this.title = title);
+        this.stateService.onTitleChange().subscribe(title => setTimeout(() => {
+            this.title = title;
+        }, 1));
     }
 }

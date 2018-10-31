@@ -15,23 +15,24 @@ export abstract class ListComponent<T extends Model> extends PageComponent imple
     protected constructor(context: PageContext, private service: BaseService<T>) {
         super(context);
         this.provider = new ListProvider<T>(this.service, this.Router, this.Route);
-        // this.provider.getRowClass = this.getRowClass;
     }
 
     ngOnInit(): void {
         this.Init();
     }
 
-    public deleteItem(id: number): void {
-        this.service.delete(id).subscribe((res: boolean) => {
-            if (res) {
-                this.provider.load();
-            }
+    public deleteItem(model: T): void {
+        const dialog = this.ConfirmationService.confirm(
+            `Удаление записи "${model.Title}"`,
+            `Вы точно хотите удалить запись "${model.Title}"?`);
+        dialog.onConfirm.subscribe(() => {
+            this.provider.dataLoaded = false;
+            this.service.delete(model.Id).subscribe((res: boolean) => {
+                if (res) {
+                    this.provider.load();
+                }
+            });
         });
-    }
-
-    public getRowClass(model: T): { [key: string]: boolean } {
-        return {};
     }
 
     protected abstract GetColumns(): ListTableColumn<T>[];

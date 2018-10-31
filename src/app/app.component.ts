@@ -6,7 +6,8 @@ import {NavigationItem} from './@common/navigation/NavigationItem';
 
 @Component({
     selector: 'ngx-app',
-    template: '<app-layout [navigation]="navigation"></app-layout>',
+    template: `
+        <app-layout [navigation]="navigation"></app-layout>`,
     styles: [`
         :host {
             position: relative;

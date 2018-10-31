@@ -43,17 +43,17 @@ export class ContentListComponent extends ListComponent<BaseContentItem> impleme
             switch (type) {
                 case 'posts':
                     this.provider.applyFilter(Filter.simple('Type', FilterOperator.Equal, ContentItemType.Post));
-                    this.StateService.setTitle('Посты');
+                    this.setTitle('Посты');
                     this.addUrl = '/content/posts/add';
                     break;
                 case 'gallery':
                     this.provider.applyFilter(Filter.simple('Type', FilterOperator.Equal, ContentItemType.Gallery));
-                    this.StateService.setTitle('Галерея');
+                    this.setTitle('Галерея');
                     this.addUrl = '/content/gallery/add';
                     break;
                 case 'files':
                     this.provider.applyFilter(Filter.simple('Type', FilterOperator.Equal, ContentItemType.File));
-                    this.StateService.setTitle('Файлы');
+                    this.setTitle('Файлы');
                     this.addUrl = '/content/files/add';
                     break;
                 default:
@@ -105,7 +105,7 @@ export class ContentListComponent extends ListComponent<BaseContentItem> impleme
                     new ListTableColumnAction<BaseContentItem>('Просмотреть на сайте', 'public').setExternal(content => content.Url),
                 )
                 .AddAction(
-                    new ListTableColumnAction<BaseContentItem>('Удалить', 'delete').setClick(content => this.deleteItem(content.Id)),
+                    new ListTableColumnAction<BaseContentItem>('Удалить', 'delete').setClick(content => this.deleteItem(content)),
                 ),
         ];
     }

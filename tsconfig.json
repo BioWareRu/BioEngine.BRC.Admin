@@ -9,6 +9,9 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "paths": {
+            "@common": [
+                "@common/"
+            ]
         },
         "target": "es5",
         "typeRoots": [

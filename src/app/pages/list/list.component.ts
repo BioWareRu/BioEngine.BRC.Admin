@@ -21,7 +21,7 @@ export class PagesListComponent extends ListComponent<Page> implements OnInit {
     constructor(context: PageContext, private servicesProvider: ServicesProvider) {
         super(context, servicesProvider.PagesService);
 
-        this.StateService.setTitle('Список страниц');
+        this.setTitle('Список страниц');
         this.provider.itemsPerPage = 20;
         this.addUrl = '/pages/add';
     }
@@ -48,7 +48,7 @@ export class PagesListComponent extends ListComponent<Page> implements OnInit {
                     new ListTableColumnAction<Page>('Просмотреть на сайте', 'public').setExternal(page => page.Url),
                 )
                 .AddAction(
-                    new ListTableColumnAction<Page>('Удалить', 'delete').setClick(Developer => this.deleteItem(Developer.Id)),
+                    new ListTableColumnAction<Page>('Удалить', 'delete').setClick(Developer => this.deleteItem(Developer)),
                 ),
         ];
     }

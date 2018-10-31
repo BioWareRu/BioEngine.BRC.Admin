@@ -196,7 +196,7 @@ export abstract class FormComponent<TModel extends Model,
                     .subscribe(model => {
                         this.model = model;
                         this.isPublished = model.IsPublished;
-                        this.StateService.setTitle(model.Title);
+                        this.setTitle(model.Title);
                         this.loadFormData();
                     });
             } else {
@@ -205,7 +205,7 @@ export abstract class FormComponent<TModel extends Model,
                     .new()
                     .subscribe(model => {
                         this.model = model;
-                        this.StateService.setTitle(this.getNewModelTitle());
+                        this.setTitle(this.getNewModelTitle());
                         this.loadFormData();
                     });
             }
@@ -316,7 +316,7 @@ export abstract class SectionFormComponent<TModel extends ISiteEntity,
                 this.model.Url = Utils.slugifyUrl(newValue);
                 this.updateControlValue('Url');
             }
-            this.StateService.setTitle(this.model.Title);
+            this.setTitle(this.model.Title);
         }
     }
 

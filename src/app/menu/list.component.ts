@@ -21,7 +21,7 @@ export class MenuListComponent extends ListComponent<Menu> implements OnInit {
   constructor(context: PageContext, private servicesProvider: ServicesProvider) {
     super(context, servicesProvider.MenuService);
 
-    this.StateService.setTitle('Список меню');
+      this.setTitle('Список меню');
     this.provider.itemsPerPage = 20;
       this.addUrl = '/menu/add';
   }
@@ -45,7 +45,7 @@ export class MenuListComponent extends ListComponent<Menu> implements OnInit {
       new SitesTableColumn<Menu>('SiteIds', 'Сайты', this.sites),
       new ListTableColumn<Menu>('Actions', '')
         .AddAction(
-            new ListTableColumnAction<Menu>('Удалить', 'delete').setClick(menu => this.deleteItem(menu.Id)),
+            new ListTableColumnAction<Menu>('Удалить', 'delete').setClick(menu => this.deleteItem(menu)),
         ),
     ];
   }

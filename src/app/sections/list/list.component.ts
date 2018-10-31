@@ -32,17 +32,17 @@ export class SectionsListComponent extends ListComponent<BaseSection> implements
             switch (type) {
                 case 'developers':
                     this.provider.applyFilter(Filter.simple('Type', FilterOperator.Equal, SectionType.Developer));
-                    this.StateService.setTitle('Разработчики');
+                    this.setTitle('Разработчики');
                     this.addUrl = '/sections/developers/add';
                     break;
                 case 'games':
                     this.provider.applyFilter(Filter.simple('Type', FilterOperator.Equal, SectionType.Game));
-                    this.StateService.setTitle('Игры');
+                    this.setTitle('Игры');
                     this.addUrl = '/sections/games/add';
                     break;
                 case 'topics':
                     this.provider.applyFilter(Filter.simple('Type', FilterOperator.Equal, SectionType.Topic));
-                    this.StateService.setTitle('Темы');
+                    this.setTitle('Темы');
                     this.addUrl = '/sections/topics/add';
                     break;
                 default:
@@ -79,7 +79,7 @@ export class SectionsListComponent extends ListComponent<BaseSection> implements
                     new ListTableColumnAction<BaseSection>('Просмотреть на сайте', 'globe').setExternal(secion => secion.Url),
                 )
                 .AddAction(
-                    new ListTableColumnAction<BaseSection>('Удалить', 'trash').setClick(Developer => this.deleteItem(Developer.Id)),
+                    new ListTableColumnAction<BaseSection>('Удалить', 'trash').setClick(Developer => this.deleteItem(Developer)),
                 ),
         ];
     }

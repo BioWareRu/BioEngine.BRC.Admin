@@ -38,44 +38,7 @@ body {
 @import '~@angular/material/theming';
 @include mat-core();
 
-$md-brc: (
-    50 : #e8ecf1,
-    100 : #c6cfdd,
-    200 : #a0afc6,
-    300 : #7a8faf,
-    400 : #5e779d,
-    500 : #415f8c,
-    600 : #3b5784,
-    700 : #324d79,
-    800 : #2a436f,
-    900 : #1c325c,
-    A100 : #9bbaff,
-    A200 : #6898ff,
-    A400 : #3575ff,
-    A700 : #1b63ff,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #000000,
-        400 : #ffffff,
-        500 : #ffffff,
-        600 : #ffffff,
-        700 : #ffffff,
-        800 : #ffffff,
-        900 : #ffffff,
-        A100 : #000000,
-        A200 : #000000,
-        A400 : #ffffff,
-        A700 : #ffffff,
-    )
-);
-
-$brc-primary: mat-palette($md-brc);
-$brc-accent: mat-palette($mat-cyan);
-$brc-warn: mat-palette($mat-pink);
-
-$brc-theme: mat-light-theme($brc-primary, $brc-accent, $brc-warn);
+@import "app/@common/styles/theme";
 
 @include angular-material-theme($brc-theme);
 

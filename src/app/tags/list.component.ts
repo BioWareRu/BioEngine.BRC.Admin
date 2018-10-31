@@ -18,7 +18,7 @@ export class TagsListComponent extends ListComponent<Tag> {
   constructor(context: PageContext, servicesProvider: ServicesProvider) {
     super(context, servicesProvider.TagsService);
 
-    this.StateService.setTitle('Список тэгов');
+      this.setTitle('Список тэгов');
     this.provider.itemsPerPage = 20;
   }
 
@@ -29,7 +29,7 @@ export class TagsListComponent extends ListComponent<Tag> {
       new ListTableColumn<Tag>('DateAdded', 'Дата', ListTableColumnType.TimeAgo).setSortable(),
       new ListTableColumn<Tag>('Actions', '')
         .AddAction(
-            new ListTableColumnAction<Tag>('Удалить тэг', 'delete').setClick(tag => this.deleteItem(tag.Id)),
+            new ListTableColumnAction<Tag>('Удалить тэг', 'delete').setClick(tag => this.deleteItem(tag)),
         ),
     ];
   }
