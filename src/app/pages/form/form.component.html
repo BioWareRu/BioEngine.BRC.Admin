@@ -1,0 +1,22 @@
+<div class="page-layout blank p-24">
+    <form-layout *ngIf="formLoaded" [FormComponent]="this">
+        <div fxLayout="row">
+            <div fxFlex="45">
+                <text-input [FormGroup]="formGroup" FieldName="Title"
+                            Label="Название"></text-input>
+            </div>
+            <div fxFlex="10">
+            </div>
+            <div fxFlex="45">
+                <text-input [FormGroup]="formGroup" FieldName="Url"
+                            Label="Адрес на сайте"></text-input>
+            </div>
+        </div>
+        <chips-input [FormGroup]="formGroup" FieldName="SiteIds" Label="Сайты"
+                     TitleField="Title"
+                     ValueField="Id"
+                     [Options]="Sites"></chips-input>
+        <cke-input [FormGroup]="formGroup" FieldName="Text"
+                   Label="Содержимое страницы"></cke-input>
+    </form-layout>
+</div>

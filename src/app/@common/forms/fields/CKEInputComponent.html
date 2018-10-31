@@ -1,0 +1,5 @@
+<mat-form-field [fxFlex]="FxFlex" [appearance]="Appearance">
+    <mat-label>{{Label}}</mat-label>
+    <mat-ckeditor [fieldName]="FieldName" [formGroup]="FormGroup" [ckeConfig]="config"></mat-ckeditor>
+    <mat-error><span *ngFor="let error of Errors">{{error}}</span></mat-error>
+</mat-form-field>

@@ -1,3 +1,88 @@
+<div style="position: relative;" class="mat-elevation-z8">
+    <div class="loading-shade" *ngIf="!provider.dataLoaded">
+        <mat-spinner></mat-spinner>
+    </div>
+    <mat-table [dataSource]="provider.items" matSort>
+        <ng-container *ngFor="let column of provider.columns" matColumnDef="{{column.Key}}">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{column.Title}}</mat-header-cell>
+            <mat-cell *matCellDef="let row" [ngClass]="{'actions': column.Type == columnTypes.Actions}">
+                <ng-container ngSwitch="{{column.Type}}">
+                    <ng-container *ngSwitchCase="columnTypes.Text">{{column.getValue(row)}}
+                    </ng-container>
+                    <ng-container *ngSwitchCase="columnTypes.Link">
+                        <a [routerLink]="column.getLink(row)"
+                           [class.disabled]="column.Disabled">{{column.getValue(row)}}</a>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="columnTypes.ActionLink">
+                        <a href="javascript:"
+                           (click)="column.Click(row)"
+                           [class.disabled]="column.Disabled">{{column.getValue(row)}}</a>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="columnTypes.TimeAgo">
+                        <span title="{{column.getValue(row)| amLocal | amDateFormat:'DD MMMM YYYY, HH:mm:ss'}}">{{(column.getValue(row)) | amTimeAgo}}</span>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="columnTypes.SitesList">
+                        <mat-chip-list>
+                            <mat-chip selected *ngFor="let siteId of column.getValue(row)">
+                                {{column.Sites[siteId].Title}}
+                            </mat-chip>
+                        </mat-chip-list>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="columnTypes.SectionsList">
+                        <mat-chip-list>
+                            <mat-chip color="warn" selected *ngFor="let sectionId of column.getValue(row)">
+                                {{column.Sections[sectionId].Title}}
+                            </mat-chip>
+                        </mat-chip-list>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="columnTypes.TagsList">
+                        <mat-chip-list>
+                            <mat-chip color="accent" selected *ngFor="let tagId of column.getValue(row)">
+                                {{column.Tags[tagId].Name}}
+                            </mat-chip>
+                        </mat-chip-list>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="columnTypes.Author">
+                        <brc-user [user]="column.getValue(row)"></brc-user>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="columnTypes.Actions">
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <ng-container *ngFor="let action of column.Actions">
+                                <ng-container ngSwitch="{{action.Type}}">
+                                    <button mat-menu-item *ngSwitchCase="action.Types.Click"
+                                            (click)="action.DoClick(row)">
+                                        <mat-icon>{{action.Icon}}</mat-icon>
+                                        <span>{{action.Title}}</span>
+                                    </button>
+                                    <a mat-menu-item *ngSwitchCase="action.Types.ExternalLink"
+                                       [href]="action.GenerateUrl(row)">
+                                        <mat-icon>{{action.Icon}}</mat-icon>
+                                        <span>{{action.Title}}</span>
+                                    </a>
+                                </ng-container>
+                            </ng-container>
+                        </mat-menu>
+                    </ng-container>
+                    <ng-container *ngSwitchDefault="">
+                        {{column.getValue(row)}}
+                    </ng-container>
+                </ng-container>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+        <mat-row *matRowDef="let row; columns:columnsToDisplay"></mat-row>
+    </mat-table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
+<a class="addButton" *ngIf="addUrl" [routerLink]="addUrl" mat-fab color="primary">
+    <mat-icon>add</mat-icon>
+</a>
+<!--
 <nb-card>
   <nb-card-header>{{Title}}</nb-card-header>
 
@@ -16,9 +101,9 @@
                       'sorting':column.Sortable}"
             (click)="column.Sortable?provider.applySort(column.Key):null">
           {{column.Title}}
-          <fa-icon icon="sort" *ngIf="column.Sortable&&column.Sorted==null"></fa-icon>
-          <fa-icon icon="sort-amount-down" *ngIf="column.Sorted==provider.sortDirection.Desc"></fa-icon>
-          <fa-icon icon="sort-amount-up" *ngIf="column.Sorted==provider.sortDirection.Asc"></fa-icon>
+          <mat-icon *ngIf="column.Sortable&&column.Sorted==null">sort</mat-icon>
+          <mat-icon *ngIf="column.Sorted==provider.sortDirection.Desc">arrow_downward</mat-icon>
+          <mat-icon *ngIf="column.Sorted==provider.sortDirection.Asc">arrow_upward</mat-icon>
         </th>
       </tr>
       </thead>
@@ -28,41 +113,9 @@
         [ngClass]="provider.getRowClass(item)"
       >
         <td *ngFor="let column of provider.columns">
-          <span *ngIf="column.Type===provider.columnTypes.Text">{{column.getValue(item)}}</span>
-          <span *ngIf="column.Type===provider.columnTypes.Link"><a [routerLink]="column.getLink(item)"
-                                                                   [class.disabled]="column.Disabled">{{column.getValue(item)}}</a></span>
-          <span *ngIf="column.Type===provider.columnTypes.ActionLink"><a href="javascript:" (click)="column.Click(item)"
-                                                                         [class.disabled]="column.Disabled">{{column.getValue(item)}}</a></span>
-          <span
-            *ngIf="column.Type===provider.columnTypes.TimeAgo"
-            title="{{column.getValue(item)| amLocal | amDateFormat:'DD MMMM YYYY, HH:mm:ss'}}">{{(column.getValue(item)) | amTimeAgo}}</span>
-          <span *ngIf="column.Type===provider.columnTypes.Actions">
-                      <span *ngFor="let action of column.Actions">
-                        <a *ngIf="action.Type===provider.actionTypes.Click" title="{{action.Title}}" href="javascript:"
-                           (click)="action.Click(item)"><fa-icon [icon]="action.Icon"></fa-icon></a>
-                        <a *ngIf="action.Type===provider.actionTypes.ExternalLink" title="{{action.Title}}"
-                           href="{{action.GenerateUrl(item)}}"
-                           target="_blank"><fa-icon [icon]="action.Icon"></fa-icon></a>
-                      </span>
-                    </span>
-          <span class="tags-list" *ngIf="column.Type==provider.columnTypes.SitesList">
-            <span *ngFor="let siteId of column.getValue(item)">
-              <span class="tag">{{column.Sites[siteId].Title}}</span>
-            </span>
-          </span>
-          <span class="tags-list" *ngIf="column.Type==provider.columnTypes.SectionsList">
-            <span *ngFor="let sectionId of column.getValue(item)">
-              <span class="tag">{{column.Sections[sectionId].Title}}</span>
-            </span>
-          </span>
-          <span class="tags-list" *ngIf="column.Type==provider.columnTypes.TagsList">
-            <span *ngFor="let tagId of column.getValue(item)">
-              <span class="tag">{{column.Tags[tagId].Name}}</span>
-            </span>
-          </span>
-          <span class="tags-list" *ngIf="column.Type==provider.columnTypes.Author">
-            <nb-user [name]="column.getValue(item)?.Name" [picture]="column.getValue(item)?.AvatarLink"></nb-user>
-          </span>
+
+
+
         </td>
       </tr>
       </tbody>
@@ -79,5 +132,6 @@
 
 
 <a class="addButton" *ngIf="addUrl" [routerLink]="addUrl">
-  <fa-icon icon="plus"></fa-icon>
+  <mat-icon>add</mat-icon>
 </a>
+-->

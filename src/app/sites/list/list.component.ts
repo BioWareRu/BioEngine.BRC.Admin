@@ -18,7 +18,7 @@ export class SitesListComponent extends ListComponent<Site> {
   constructor(context: PageContext, servicesProvider: ServicesProvider) {
     super(context, servicesProvider.SitesService);
 
-    this.StateService.setTitle('Список сайтов');
+      this.setTitle('Список сайтов');
     this.provider.itemsPerPage = 20;
   }
 
@@ -34,7 +34,7 @@ export class SitesListComponent extends ListComponent<Site> {
           new ListTableColumnAction<Site>('Просмотреть на сайте', 'globe').setExternal(site => site.Url),
         )
         .AddAction(
-          new ListTableColumnAction<Site>('Удалить пост', 'trash').setClick(site => this.deleteItem(site.Id)),
+            new ListTableColumnAction<Site>('Удалить пост', 'trash').setClick(site => this.deleteItem(site)),
         ),
     ];
   }

@@ -8,78 +8,79 @@ import {BaseSection, SectionType} from '../../@models/Section';
 import {Site} from '../../@models/Site';
 import {map} from 'rxjs/operators';
 import {PageContext} from '../../@common/PageComponent';
+import {Filter, FilterOperator} from '../../@common/Filter';
 
 @Component({
-  selector: 'ngx-dashboard',
-  templateUrl: './list.component.html',
-  providers: [
-    PageContext
-  ]
+    selector: 'sections-list',
+    templateUrl: './list.component.html',
+    providers: [
+        PageContext
+    ]
 })
 export class SectionsListComponent extends ListComponent<BaseSection> implements OnInit {
-  private sites: Site[];
+    private sites: Site[];
 
-  constructor(context: PageContext, private servicesProvider: ServicesProvider) {
-    super(context, servicesProvider.SectionsService);
+    constructor(context: PageContext, private servicesProvider: ServicesProvider) {
+        super(context, servicesProvider.SectionsService);
 
-    context.StateService.setTitle('Список разделов');
-    this.provider.itemsPerPage = 20;
-  }
+        context.StateService.setTitle('Список разделов');
+        this.provider.itemsPerPage = 20;
+    }
 
-  ngOnInit() {
-    this.Route.params.pipe(map(p => p.type)).subscribe(type => {
-      switch (type) {
-        case 'developers':
-          this.provider.setService(this.servicesProvider.DevelopersService);
-          this.StateService.setTitle('Разработчики');
-          this.addUrl = '/sections/developers/add';
-          break;
-        case 'games':
-          this.provider.setService(this.servicesProvider.GamesService);
-          this.StateService.setTitle('Игры');
-          this.addUrl = '/sections/games/add';
-          break;
-        case 'topics':
-          this.provider.setService(this.servicesProvider.TopicsService);
-          this.StateService.setTitle('Темы');
-          this.addUrl = '/sections/topics/add';
-          break;
-        default:
-          break;
-      }
-      this.servicesProvider.SitesService.getAll(1, 100, 'id').subscribe(res => {
-        this.sites = res.Data;
-        this.Init();
-      });
-    });
+    ngOnInit(): void {
+        this.Route.params.pipe(map(p => p.type)).subscribe(type => {
+            switch (type) {
+                case 'developers':
+                    this.provider.applyFilter(Filter.simple('Type', FilterOperator.Equal, SectionType.Developer));
+                    this.setTitle('Разработчики');
+                    this.addUrl = '/sections/developers/add';
+                    break;
+                case 'games':
+                    this.provider.applyFilter(Filter.simple('Type', FilterOperator.Equal, SectionType.Game));
+                    this.setTitle('Игры');
+                    this.addUrl = '/sections/games/add';
+                    break;
+                case 'topics':
+                    this.provider.applyFilter(Filter.simple('Type', FilterOperator.Equal, SectionType.Topic));
+                    this.setTitle('Темы');
+                    this.addUrl = '/sections/topics/add';
+                    break;
+                default:
+                    break;
+            }
+            this.servicesProvider.SitesService.getAll(1, 100, 'id').subscribe(res => {
+                this.sites = res.Data;
+                this.Init();
+            });
+        });
 
-  }
+    }
 
-  protected GetColumns(): ListTableColumn<BaseSection>[] {
-    return [
-      new ListTableColumn<BaseSection>('Id', '#').setSortable(),
-      new ListTableColumn<BaseSection>('TypeTitle', 'Тип'),
-      new ListTableColumn<BaseSection>('Title', 'Заголовок').setSortable()
-        .setLinkGetter(section => {
-          switch (section.Type) {
-            case SectionType.Developer:
-              return ['/sections/developers', section.Id, 'edit'];
-            case SectionType.Game:
-              return ['/sections/games', section.Id, 'edit'];
-            case SectionType.Topic:
-              return ['/sections/topics', section.Id, 'edit'];
-          }
-        })
-      /*.setDisabled(!this.can(UserRights.AddNews))*/,
-      new ListTableColumn<BaseSection>('DateAdded', 'Дата', ListTableColumnType.TimeAgo).setSortable(),
-      new SitesTableColumn<BaseSection>('SiteIds', 'Сайты', this.sites),
-      new ListTableColumn<BaseSection>('Actions', '')
-        .AddAction(
-          new ListTableColumnAction<BaseSection>('Просмотреть на сайте', 'globe').setExternal(secion => secion.Url),
-        )
-        .AddAction(
-          new ListTableColumnAction<BaseSection>('Удалить', 'trash').setClick(Developer => this.deleteItem(Developer.Id)),
-        ),
-    ];
-  }
+    protected GetColumns(): ListTableColumn<BaseSection>[] {
+        return [
+            new ListTableColumn<BaseSection>('Id', '#').setSortable(),
+            new ListTableColumn<BaseSection>('TypeTitle', 'Тип'),
+            new ListTableColumn<BaseSection>('Title', 'Заголовок').setSortable()
+                .setLinkGetter(section => {
+                    switch (section.Type) {
+                        case SectionType.Developer:
+                            return ['/sections/developers', section.Id, 'edit'];
+                        case SectionType.Game:
+                            return ['/sections/games', section.Id, 'edit'];
+                        case SectionType.Topic:
+                            return ['/sections/topics', section.Id, 'edit'];
+                    }
+                })
+            /*.setDisabled(!this.can(UserRights.AddNews))*/,
+            new ListTableColumn<BaseSection>('DateAdded', 'Дата', ListTableColumnType.TimeAgo).setSortable(),
+            new SitesTableColumn<BaseSection>('SiteIds', 'Сайты', this.sites),
+            new ListTableColumn<BaseSection>('Actions', '')
+                .AddAction(
+                    new ListTableColumnAction<BaseSection>('Просмотреть на сайте', 'globe').setExternal(secion => secion.Url),
+                )
+                .AddAction(
+                    new ListTableColumnAction<BaseSection>('Удалить', 'trash').setClick(Developer => this.deleteItem(Developer)),
+                ),
+        ];
+    }
 }

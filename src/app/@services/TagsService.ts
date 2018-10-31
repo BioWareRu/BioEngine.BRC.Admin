@@ -1,4 +1,4 @@
-import {BaseService} from '../@common/BaseService';
+import {BaseService, IBaseServiceCreatable} from '../@common/BaseService';
 import {Tag} from '../@models/Tag';
 import {ListResult} from '../@common/list/ListResult';
 import {ClassType} from 'class-transformer/ClassTransformer';
@@ -9,31 +9,31 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 
 @Injectable()
-export class TagsService extends BaseService<Tag> {
+export class TagsService extends BaseService<Tag> implements IBaseServiceCreatable<Tag> {
 
-  constructor(httpClient: RestClient) {
-    super(httpClient);
-  }
+    constructor(httpClient: RestClient) {
+        super(httpClient);
+    }
 
-  protected getListType(): ClassType<ListResult<Tag>> {
-    return TagListResult;
-  }
+    public create(name: string): Observable<SaveModelResponse<Tag>> {
+        const tag = new Tag();
+        tag.Name = name;
+        return this.add(tag);
+    }
 
-  public create(name: string): Observable<SaveModelResponse<Tag>> {
-    const tag = new Tag();
-    tag.Name = name;
-    return this.add(tag);
-  }
+    protected getListType(): ClassType<ListResult<Tag>> {
+        return TagListResult;
+    }
 
-  protected getSaveType(): ClassType<SaveModelResponse<Tag>> {
-    return SaveTagResponse;
-  }
+    protected getSaveType(): ClassType<SaveModelResponse<Tag>> {
+        return SaveTagResponse;
+    }
 
-  protected getType(): ClassType<Tag> {
-    return Tag;
-  }
+    protected getType(): ClassType<Tag> {
+        return Tag;
+    }
 
-  protected getResource(): string {
-    return 'tags';
-  }
+    protected getResource(): string {
+        return 'tags';
+    }
 }

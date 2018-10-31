@@ -1,76 +1,53 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
-import {SectionsComponent} from './sections.component';
 import {SectionsListComponent} from './list/list.component';
 import {DeveloperFormComponent} from './developers/form/form.component';
 import {GameFormComponent} from './games/form/form.component';
 import {TopicFormComponent} from './topics/form/form.component';
 
-const routes: Routes = [{
-  path: '',
-  component: SectionsComponent,
-  children: [
+const routes: Routes = [
     {
-      path: 'list',
-      component: SectionsListComponent,
+        path: 'list',
+        component: SectionsListComponent,
     },
     {
-      path: 'list/:type',
-      component: SectionsListComponent,
+        path: 'list/:type',
+        component: SectionsListComponent,
     },
     {
-      path: 'developers/add',
-      component: DeveloperFormComponent,
+        path: 'developers/add',
+        component: DeveloperFormComponent,
     },
     {
-      path: 'developers/:id/edit',
-      component: DeveloperFormComponent
+        path: 'developers/:id/edit',
+        component: DeveloperFormComponent
     },
     {
-      path: 'games/add',
-      component: GameFormComponent,
+        path: 'games/add',
+        component: GameFormComponent,
     },
     {
-      path: 'games/:id/edit',
-      component: GameFormComponent
+        path: 'games/:id/edit',
+        component: GameFormComponent
     },
     {
-      path: 'topics/add',
-      component: TopicFormComponent,
+        path: 'topics/add',
+        component: TopicFormComponent,
     },
     {
-      path: 'topics/:id/edit',
-      component: TopicFormComponent
-    },
-    /*
-    {
-      path: 'games/add',
-      component: SitesFormComponent,
+        path: 'topics/:id/edit',
+        component: TopicFormComponent
     },
     {
-      path: 'topics/add',
-      component: SitesFormComponent,
-    },
-
-    {
-      path: 'games/:id/edit',
-      component: SitesFormComponent
-    },
-    {
-      path: 'topics/:id/edit',
-      component: SitesFormComponent
-    },*/
-    {
-      path: '',
-      redirectTo: 'list',
-      pathMatch: 'full',
-    },
-  ],
-}];
+        path: '',
+        redirectTo: 'list',
+        pathMatch: 'full',
+    }
+];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule],
 })
 export class SectionsRoutingModule {
 }

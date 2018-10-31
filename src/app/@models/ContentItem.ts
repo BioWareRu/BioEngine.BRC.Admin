@@ -1,19 +1,13 @@
 import {Model} from './base/Model';
 import {ISiteEntity} from './interfaces/ISiteEntity';
 import {ISectionEntity} from './interfaces/ISectionEntity';
-
-export class UserData {
-  public Id: number;
-  public Name: string;
-  public ProfileLink: string;
-  public AvatarLink: string;
-}
+import {User} from './User';
 
 export class BaseContentItem extends Model implements ISiteEntity, ISectionEntity {
   public Id: number;
   public Type: ContentItemType;
   public AuthorId: number;
-  public Author: UserData;
+    public Author: User;
   public Url: string;
   public DateAdded: string;
   public DateUpdated: string;

@@ -1,0 +1,22 @@
+<loading-bar></loading-bar>
+<div id="main">
+    <div class="container" id="container-1">
+        <div class="sidebar">
+            <div class="navbar-top">
+                <div class="logo"><img class="logo-icon" src="assets/images/logos/logo.png"></div>
+            </div>
+            <navigation [navigation]="navigation"></navigation>
+        </div>
+        <div id="container-2" class="container">
+            <mat-toolbar color="primary">
+                <span>{{title}}</span>
+                <span class="fill-space"></span>
+                <brc-user color="fff" [user]="user"></brc-user>
+            </mat-toolbar>
+            <div id="container-3" class="container" brcPerfectScrollbar
+                 [brcPerfectScrollbarOptions]="{suppressScrollX: true, updateOnRouteChange : true}">
+                <content></content>
+            </div>
+        </div>
+    </div>
+</div>

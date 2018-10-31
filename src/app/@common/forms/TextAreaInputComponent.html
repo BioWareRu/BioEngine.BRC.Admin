@@ -1,6 +1,0 @@
-<div class="form-group" [formGroup]="FormGroup" [ngClass]="{'has-danger': Control&&Control.invalid}">
-  <label>{{Label}}</label>
-  <textarea [formControlName]="FieldName" class="form-control"
-            [ngClass]="{'form-control-warning': Control&&Control.invalid}"></textarea>
-  <errorsList [Control]="Control"></errorsList>
-</div>

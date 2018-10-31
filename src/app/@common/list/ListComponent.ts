@@ -7,35 +7,38 @@ import {PageComponent, PageContext} from '../PageComponent';
 
 export abstract class ListComponent<T extends Model> extends PageComponent implements OnInit {
 
-  public provider: ListProvider<T>;
-  public addUrl = '';
+    public provider: ListProvider<T>;
+    public addUrl = '';
+    public columns: ListTableColumn<T>[] = [];
+    public isInitalized = false;
 
-  protected constructor(context: PageContext, private service: BaseService<T>) {
-    super(context);
-    this.provider = new ListProvider<T>(this.service, this.Router, this.Route);
-    this.provider.getRowClass = this.getRowClass;
-  }
+    protected constructor(context: PageContext, private service: BaseService<T>) {
+        super(context);
+        this.provider = new ListProvider<T>(this.service, this.Router, this.Route);
+    }
 
-  protected abstract GetColumns(): ListTableColumn<T>[];
+    ngOnInit(): void {
+        this.Init();
+    }
 
-  ngOnInit(): void {
-    this.Init();
-  }
+    public deleteItem(model: T): void {
+        const dialog = this.ConfirmationService.confirm(
+            `Удаление записи "${model.Title}"`,
+            `Вы точно хотите удалить запись "${model.Title}"?`);
+        dialog.onConfirm.subscribe(() => {
+            this.provider.dataLoaded = false;
+            this.service.delete(model.Id).subscribe((res: boolean) => {
+                if (res) {
+                    this.provider.load();
+                }
+            });
+        });
+    }
 
-  public deleteItem(id: number): void {
-    this.service.delete(id).subscribe((res: boolean) => {
-      if (res) {
-        this.provider.load();
-      }
-    });
-  }
+    protected abstract GetColumns(): ListTableColumn<T>[];
 
-  public getRowClass(model: T): { [key: string]: boolean } {
-    return {};
-  }
-
-  protected Init(): void {
-    this.provider.columns = this.GetColumns();
-    this.provider.init();
-  }
+    protected Init(): void {
+        this.columns = this.GetColumns();
+        this.isInitalized = true;
+    }
 }
