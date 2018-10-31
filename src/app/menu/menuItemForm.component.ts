@@ -53,4 +53,6 @@ export class MenuItemFormDialogComponent extends DialogComponent<TreeNode> {
         super(data);
         this.item = data.data;
     }
+
+    public item: MenuItem;
 }
