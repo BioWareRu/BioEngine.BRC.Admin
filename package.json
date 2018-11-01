@@ -33,7 +33,7 @@
         "@angular/material": "^7.0.2",
         "@angular/material-moment-adapter": "^7.0.2",
         "@angular/platform-browser": "^7.0.1",
-        "@angular/platform-browser-dynamic": "^7.0.1",
+        "@angular/platform-browser-dynamic": "^7.0.2",
         "@angular/router": "^7.0.1",
         "angular-oauth2-oidc": "5.0.2",
         "angular-tree-component": "^8.0.0",
