@@ -32,7 +32,7 @@ export class GalleryFormComponent extends ContentFormComponent<Gallery, SaveGall
     }
 
     protected getRoute(): string {
-        return '/content/gallery';
+        return '/content/list/gallery';
     }
 
     protected getService(): BaseService<Gallery> {

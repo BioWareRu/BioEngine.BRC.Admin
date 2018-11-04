@@ -30,7 +30,7 @@ export class FilesFormComponent extends ContentFormComponent<File, SaveFileRespo
     }
 
     protected getRoute(): string {
-        return '/content/files';
+        return '/content/list/files';
     }
 
     protected getService(): BaseService<File> {

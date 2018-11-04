@@ -29,7 +29,7 @@ export class PostFormComponent extends ContentFormComponent<Post, SavePostRespon
     }
 
     protected getRoute(): string {
-        return '/contents/posts';
+        return '/content/list/posts';
     }
 
     protected getService(): BaseService<Post> {
