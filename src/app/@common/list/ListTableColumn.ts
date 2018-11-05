@@ -1,5 +1,4 @@
 import {Model} from '../../@models/base/Model';
-import {SortDirection} from '../SortDirection';
 import {ListTableColumnType} from './ListEnums';
 import {ListTableColumnAction} from './ListTableColumnAction';
 import {Site} from '../../@models/Site';
