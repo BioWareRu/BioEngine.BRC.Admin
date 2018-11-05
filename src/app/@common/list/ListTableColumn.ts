@@ -10,7 +10,6 @@ export class ListTableColumn<T = Model> {
   public Title: string;
   public Key: string;
   public Sortable: boolean;
-  public Sorted: SortDirection;
   public Type: ListTableColumnType;
   public Disabled: boolean;
   public Actions: ListTableColumnAction<T>[] = [];
@@ -26,11 +25,6 @@ export class ListTableColumn<T = Model> {
 
   public setSortable(sortable: boolean = true): ListTableColumn<T> {
     this.Sortable = sortable;
-    return this;
-  }
-
-  public setSorted(direction: SortDirection): ListTableColumn<T> {
-    this.Sorted = direction;
     return this;
   }
 
