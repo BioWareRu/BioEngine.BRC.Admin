@@ -1,11 +1,11 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {FormInput} from './FormInput';
-import {MatAutocomplete, MatAutocompleteTrigger} from '@angular/material';
-import {Observable} from 'rxjs';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { FormInput } from './FormInput';
+import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'autocomplete-input',
-    templateUrl: './AutocompleteInputComponent.html',
+    templateUrl: './AutocompleteInputComponent.html'
 })
 export class AutocompleteInputComponent extends FormInput implements OnInit {
     public groups: SelectGroup[] = [];
@@ -14,12 +14,14 @@ export class AutocompleteInputComponent extends FormInput implements OnInit {
     @Input() public TitleField = 'title';
     @Input() public ValueField = 'value';
     @Input() public Type = 'text';
-    @ViewChild(MatAutocompleteTrigger) AutoCompleteTrigger: MatAutocompleteTrigger;
+    @ViewChild(MatAutocompleteTrigger)
+    AutoCompleteTrigger: MatAutocompleteTrigger;
     @ViewChild(MatAutocomplete) MatAutocomplete: MatAutocomplete;
     protected RemoveSelectedValues = false;
-    protected Labels: { [key: number]: string; } = null;
+    protected Labels: { [key: number]: string } = null;
     protected Values: any[] = [];
     private filter: string;
+    public isInitialized = false;
 
     public ngOnInit(): void {
         super.ngOnInit();
@@ -30,19 +32,22 @@ export class AutocompleteInputComponent extends FormInput implements OnInit {
             this.Values = this.Options;
             this.buildGroups();
             this.buildLabels();
-        }
-        else {
+            this.isInitialized = true;
+        } else {
             this.Options.subscribe(data => {
                 this.Values = data;
                 this.buildGroups();
                 this.buildLabels();
+                this.isInitialized = true;
             });
         }
     }
 
     // noinspection JSMethodCanBeStatic
     public displayFn(item: any): string {
-        return item !== null && this.Labels && this.Labels.hasOwnProperty(item) ? this.Labels[item] : undefined;
+        return item !== null && this.Labels && this.Labels.hasOwnProperty(item)
+            ? this.Labels[item]
+            : undefined;
     }
 
     public onSearchChange(input: string): void {
@@ -51,7 +56,7 @@ export class AutocompleteInputComponent extends FormInput implements OnInit {
     }
 
     protected buildLabels(): void {
-        const labels: { [key: number]: string; } = {};
+        const labels: { [key: number]: string } = {};
         this.Values.forEach(option => {
             labels[option[this.ValueField]] = option[this.TitleField];
         });
@@ -69,16 +74,21 @@ export class AutocompleteInputComponent extends FormInput implements OnInit {
             selectOption.title = option[this.TitleField];
             selectOption.value = option[this.ValueField];
 
-            if (this.RemoveSelectedValues && this.isValueSelected(selectOption.value)) {
+            if (
+                this.RemoveSelectedValues &&
+                this.isValueSelected(selectOption.value)
+            ) {
                 return;
             }
-            if (this.filter && selectOption.title.toLowerCase().indexOf(this.filter) === -1) {
+            if (
+                this.filter &&
+                selectOption.title.toLowerCase().indexOf(this.filter) === -1
+            ) {
                 return;
             }
             if (this.GroupField === null) {
                 groups[0].options.push(selectOption);
-            }
-            else {
+            } else {
                 let group: SelectGroup = null;
                 const groupTitle = option[this.GroupField];
                 groups.forEach(selectGroup => {
@@ -99,7 +109,7 @@ export class AutocompleteInputComponent extends FormInput implements OnInit {
 
     protected isValueSelected(value: any): boolean {
         // noinspection TsLint
-        return this.Control.value == value;
+        return this.Control.value === value;
     }
 }
 
