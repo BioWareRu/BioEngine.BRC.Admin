@@ -1,20 +1,36 @@
 <div class="page-layout blank p-24">
     <form-layout *ngIf="formLoaded" [FormComponent]="this">
-        <text-input [FormGroup]="formGroup" FieldName="Title"
-                    Label="Название"></text-input>
-        <chips-input [FormGroup]="formGroup" FieldName="SiteIds" Label="Сайты"
-                     TitleField="Title"
-                     ValueField="Id"
-                     [Options]="Sites"></chips-input>
+        <text-input
+            [FormGroup]="formGroup"
+            FieldName="Title"
+            Label="Название"
+        ></text-input>
+        <autocomplete-input
+            [FormGroup]="formGroup"
+            FieldName="SiteId"
+            Label="Сайт"
+            TitleField="Title"
+            ValueField="Id"
+            [Options]="Sites"
+        ></autocomplete-input>
         Пункты меню
-        <tree-root class="mat-elevation-z4" #tree (initialized)="onInit(tree)" [nodes]="model.Items"
-                   [options]="options">
-          <ng-template #treeNodeTemplate let-node let-index="index">
-              <span (dblclick)="openEditDialog(node)" node="node">{{ node.data.Label }}</span>
-              <mat-icon (click)="addMenuItem(node)">add</mat-icon>
-              <mat-icon (click)="deleteMenuItem(node)">delete</mat-icon>
-          </ng-template>
+        <tree-root
+            class="mat-elevation-z4"
+            #tree
+            (initialized)="onInit(tree)"
+            [nodes]="model.Items"
+            [options]="options"
+        >
+            <ng-template #treeNodeTemplate let-node let-index="index">
+                <span (dblclick)="openEditDialog(node)" node="node">{{
+                    node.data.Label
+                }}</span>
+                <mat-icon (click)="addMenuItem(node)">add</mat-icon>
+                <mat-icon (click)="deleteMenuItem(node)">delete</mat-icon>
+            </ng-template>
         </tree-root>
-        <button mat-raised-button color="primary" (click)="addMenuItem()">Добавить пункт</button>
+        <button mat-raised-button color="primary" (click)="addMenuItem()">
+            Добавить пункт
+        </button>
     </form-layout>
 </div>
