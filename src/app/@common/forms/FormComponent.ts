@@ -1,29 +1,36 @@
-import {FormGroup, Validators} from '@angular/forms';
-import {Observable} from 'rxjs/Observable';
-import {HttpErrorResponse} from '@angular/common/http';
-import {RestResult} from '../RestResult';
-import {HostListener, Input, OnInit} from '@angular/core';
-import {BioFormControl} from './BioFormControl';
-import {plainToClass} from 'class-transformer';
-import {ServicesProvider} from '../../@services/ServicesProvider';
-import {ISiteEntity} from '../../@models/interfaces/ISiteEntity';
-import {ISectionEntity} from '../../@models/interfaces/ISectionEntity';
-import {AbstractControlOptions} from '@angular/forms/src/model';
-import {ValidatorFn} from '@angular/forms/src/directives/validators';
-import {PageComponent, PageContext} from '../PageComponent';
-import {Utils} from '../Utils';
-import {SaveModelResponse} from '../SaveModelResponse';
-import {BaseService} from '../BaseService';
-import {map} from 'rxjs/operators';
-import {Model} from '../../@models/base/Model';
-import {Properties, PropertiesElementType} from '../../@models/base/Properties';
-import {CustomValidators} from 'ng4-validators';
-import {BaseSection} from '../../@models/Section';
-import {Tag} from '../../@models/Tag';
-import {Site} from '../../@models/Site';
-import {SnackBarMessage} from '../snacks/SnackBarMessage';
+import { FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs/Observable';
+import { HttpErrorResponse } from '@angular/common/http';
+import { RestResult } from '../RestResult';
+import { HostListener, Input, OnInit } from '@angular/core';
+import { BioFormControl } from './BioFormControl';
+import { plainToClass } from 'class-transformer';
+import { ServicesProvider } from '../../@services/ServicesProvider';
+import {
+    ISiteEntity,
+    ISingleSiteEntity
+} from '../../@models/interfaces/ISiteEntity';
+import { ISectionEntity } from '../../@models/interfaces/ISectionEntity';
+import { AbstractControlOptions } from '@angular/forms/src/model';
+import { ValidatorFn } from '@angular/forms/src/directives/validators';
+import { PageComponent, PageContext } from '../PageComponent';
+import { Utils } from '../Utils';
+import { SaveModelResponse } from '../SaveModelResponse';
+import { BaseService } from '../BaseService';
+import { map } from 'rxjs/operators';
+import { Model } from '../../@models/base/Model';
+import {
+    Properties,
+    PropertiesElementType
+} from '../../@models/base/Properties';
+import { CustomValidators } from 'ng4-validators';
+import { BaseSection } from '../../@models/Section';
+import { Tag } from '../../@models/Tag';
+import { Site } from '../../@models/Site';
+import { SnackBarMessage } from '../snacks/SnackBarMessage';
 
-export abstract class BaseFormComponent extends PageComponent implements OnInit {
+export abstract class BaseFormComponent extends PageComponent
+    implements OnInit {
     public success = false;
     public inProgress = false;
     public hasErrors = false;
@@ -46,7 +53,8 @@ export abstract class BaseFormComponent extends PageComponent implements OnInit 
     @HostListener('window:beforeunload', ['$event'])
     checkChanges($event): void {
         if (this.hasChanges) {
-            $event.returnValue = 'Форма не была сохранена. Данные будут потеряны!';
+            $event.returnValue =
+                'Форма не была сохранена. Данные будут потеряны!';
         }
     }
 
@@ -57,8 +65,7 @@ export abstract class BaseFormComponent extends PageComponent implements OnInit 
         this.processChange(key, oldValue, newValue);
     }
 
-    public processChange(key: string, oldValue: any, newValue: any): void {
-    }
+    public processChange(key: string, oldValue: any, newValue: any): void {}
 
     registerFormControl(
         name: string,
@@ -74,7 +81,7 @@ export abstract class BaseFormComponent extends PageComponent implements OnInit 
         }
         this.controls[name] = this.controlsByProperty[
             property
-            ] = new BioFormControl(
+        ] = new BioFormControl(
             <BaseFormComponent>this,
             name,
             this.getModel(),
@@ -99,16 +106,16 @@ export abstract class BaseFormComponent extends PageComponent implements OnInit 
                 const control = this.controlsByProperty[error.Field];
                 control.setServerError(error.Message);
             });
-            this.SnackBarService.error(new SnackBarMessage(
-                'Ошибка валидации',
-                'Произошла ошибка валидации, проверьте заполнение формы'
+            this.SnackBarService.error(
+                new SnackBarMessage(
+                    'Ошибка валидации',
+                    'Произошла ошибка валидации, проверьте заполнение формы'
                 )
             );
         }
     }
 
-    protected afterInit(): void {
-    }
+    protected afterInit(): void {}
 
     protected loadFormData(): void {
         this.initForm();
@@ -118,7 +125,8 @@ export abstract class BaseFormComponent extends PageComponent implements OnInit 
     protected abstract getModel(): any;
 }
 
-export abstract class SimpleFormComponent<TModel> extends BaseFormComponent implements OnInit {
+export abstract class SimpleFormComponent<TModel> extends BaseFormComponent
+    implements OnInit {
     @Input() public Model: TModel;
 
     protected constructor(context: PageContext) {
@@ -130,8 +138,10 @@ export abstract class SimpleFormComponent<TModel> extends BaseFormComponent impl
     }
 }
 
-export abstract class FormComponent<TModel extends Model,
-    TResultModel extends SaveModelResponse<TModel>> extends BaseFormComponent implements OnInit {
+export abstract class FormComponent<
+    TModel extends Model,
+    TResultModel extends SaveModelResponse<TModel>
+> extends BaseFormComponent implements OnInit {
     public model: TModel;
     public PropertiesElementTypes = PropertiesElementType;
     public ModelProperties: Properties[] = [];
@@ -179,7 +189,10 @@ export abstract class FormComponent<TModel extends Model,
         }
     }
 
-    public PropertiesOptions(groupKey: string, propertyKey: string): Observable<any> {
+    public PropertiesOptions(
+        groupKey: string,
+        propertyKey: string
+    ): Observable<any> {
         return this.servicesProvider.PropertiesService.getOptions(
             groupKey,
             propertyKey
@@ -226,7 +239,9 @@ export abstract class FormComponent<TModel extends Model,
                 this.hasChanges = false;
                 this.success = true;
                 this.processSuccessSave(saveResult);
-                this.SnackBarService.success(new SnackBarMessage('Успех!', 'Сохранение прошло успешно.'));
+                this.SnackBarService.success(
+                    new SnackBarMessage('Успех!', 'Сохранение прошло успешно.')
+                );
                 this.inProgress = false;
             },
             e => {
@@ -252,9 +267,13 @@ export abstract class FormComponent<TModel extends Model,
                 this.success = true;
                 this.model = saveResult;
                 if (saveResult.IsPublished) {
-                    this.SnackBarService.success(new SnackBarMessage('Успех!', 'Опубликовано.'));
+                    this.SnackBarService.success(
+                        new SnackBarMessage('Успех!', 'Опубликовано.')
+                    );
                 } else {
-                    this.SnackBarService.success(new SnackBarMessage('Успех!', 'Публикация снята.'));
+                    this.SnackBarService.success(
+                        new SnackBarMessage('Успех!', 'Публикация снята.')
+                    );
                 }
                 this.inProgress = false;
             },
@@ -289,7 +308,11 @@ export abstract class FormComponent<TModel extends Model,
 
     protected processSuccessSave(saveResult: SaveModelResponse<TModel>): void {
         if (!this.modelId) {
-            this.Router.navigate([this.getRoute(), saveResult.Model.Id, 'edit']);
+            this.Router.navigate([
+                this.getRoute(),
+                saveResult.Model.Id,
+                'edit'
+            ]);
         }
     }
 
@@ -300,15 +323,32 @@ export abstract class FormComponent<TModel extends Model,
     }
 }
 
-export abstract class SiteEntityFormComponent<TModel extends ISiteEntity,
-    TSaveModel extends SaveModelResponse<TModel>> extends FormComponent<TModel, TSaveModel> {
+export abstract class SiteEntityFormComponent<
+    TModel extends ISiteEntity,
+    TSaveModel extends SaveModelResponse<TModel>
+> extends FormComponent<TModel, TSaveModel> {
     protected get Sites(): Observable<Site[]> {
-        return this.servicesProvider.SitesService.getAll(1, 1000, 'id').pipe(map(list => list.Data));
+        return this.servicesProvider.SitesService.getAll(1, 1000, 'id').pipe(
+            map(list => list.Data)
+        );
     }
 }
 
-export abstract class SectionFormComponent<TModel extends ISiteEntity,
-    TSaveModel extends SaveModelResponse<TModel>> extends SiteEntityFormComponent<TModel, TSaveModel> {
+export abstract class SingleSiteEntityFormComponent<
+    TModel extends ISingleSiteEntity,
+    TSaveModel extends SaveModelResponse<TModel>
+> extends FormComponent<TModel, TSaveModel> {
+    protected get Sites(): Observable<Site[]> {
+        return this.servicesProvider.SitesService.getAll(1, 1000, 'id').pipe(
+            map(list => list.Data)
+        );
+    }
+}
+
+export abstract class SectionFormComponent<
+    TModel extends ISiteEntity,
+    TSaveModel extends SaveModelResponse<TModel>
+> extends SiteEntityFormComponent<TModel, TSaveModel> {
     public processChange(key: string, oldValue: any, newValue: any): void {
         if (key === 'Title') {
             const origSlug = Utils.slugifyUrl(oldValue);
@@ -323,7 +363,9 @@ export abstract class SectionFormComponent<TModel extends ISiteEntity,
     protected constructForm(): void {
         this.registerFormControl('Title', [<any>Validators.required]);
         this.registerFormControl('Url', [<any>Validators.required]);
-        this.registerFormControl('ShortDescription', [<any>Validators.required]);
+        this.registerFormControl('ShortDescription', [
+            <any>Validators.required
+        ]);
         this.registerFormControl('Hashtag', [<any>Validators.required]);
         this.registerFormControl('Logo', [<any>Validators.required]);
         this.registerFormControl('LogoSmall', [<any>Validators.required]);
@@ -331,14 +373,20 @@ export abstract class SectionFormComponent<TModel extends ISiteEntity,
     }
 }
 
-export abstract class ContentFormComponent<TModel extends ISectionEntity,
-    TSaveModel extends SaveModelResponse<TModel>> extends SiteEntityFormComponent<TModel, TSaveModel> {
+export abstract class ContentFormComponent<
+    TModel extends ISectionEntity,
+    TSaveModel extends SaveModelResponse<TModel>
+> extends SiteEntityFormComponent<TModel, TSaveModel> {
     protected get Sections(): Observable<BaseSection[]> {
-        return this.servicesProvider.SectionsService.getAll(1, 1000, 'id').pipe(map(list => list.Data));
+        return this.servicesProvider.SectionsService.getAll(1, 1000, 'id').pipe(
+            map(list => list.Data)
+        );
     }
 
     protected get Tags(): Observable<Tag[]> {
-        return this.servicesProvider.TagsService.getAll(1, 1000, 'id').pipe(map(list => list.Data));
+        return this.servicesProvider.TagsService.getAll(1, 1000, 'id').pipe(
+            map(list => list.Data)
+        );
     }
 
     protected constructForm(): void {
