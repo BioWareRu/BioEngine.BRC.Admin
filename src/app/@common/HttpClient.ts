@@ -1,83 +1,91 @@
-import {Injectable, Injector} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {environment} from '../../environments/environment';
-import {HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import { Injectable, Injector } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { environment } from '../../environments/environment';
+import {
+    HttpClient,
+    HttpEvent,
+    HttpHandler,
+    HttpInterceptor,
+    HttpRequest
+} from '@angular/common/http';
+import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class RestClient {
+    private baseUrl: string = environment.apiUrl;
 
-  private baseUrl: string = environment.apiUrl;
+    constructor(private httpClient: HttpClient) {}
 
-  constructor(private httpClient: HttpClient) {
-  }
-
-  public static encodeQueryData(data): string {
-    const ret = [];
-    for (const d in data) {
-      if (!data.hasOwnProperty(d)) {
-        continue;
-      }
-      ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(data[d]));
+    public static encodeQueryData(data): string {
+        const ret = [];
+        for (const d in data) {
+            if (!data.hasOwnProperty(d)) {
+                continue;
+            }
+            ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(data[d]));
+        }
+        return ret.join('&');
     }
-    return ret.join('&');
-  }
 
-  public get(resource, params): Observable<any> {
-    return this.httpClient.get(this.getUrl(resource, params));
-  }
-
-  public post(resource, data, params = null): Observable<any> {
-    return this.httpClient.post(this.getUrl(resource, params), data);
-  }
-
-  public put(resource, data): Observable<any> {
-    return this.httpClient.put(this.getUrl(resource), data);
-  }
-
-  public delete(resource): Observable<any> {
-    return this.httpClient.delete(this.getUrl(resource));
-  }
-
-  private getUrl(resource: string, params?: object): string {
-    let url = this.baseUrl + resource + '?';
-    if (params) {
-      url += RestClient.encodeQueryData(params);
+    public get(resource, params): Observable<any> {
+        return this.httpClient.get(this.getUrl(resource, params));
     }
-    return url;
-  }
+
+    public post(resource, data, params = null): Observable<any> {
+        return this.httpClient.post(this.getUrl(resource, params), data);
+    }
+
+    public put(resource, data): Observable<any> {
+        return this.httpClient.put(this.getUrl(resource), data);
+    }
+
+    public delete(resource): Observable<any> {
+        return this.httpClient.delete(this.getUrl(resource));
+    }
+
+    private getUrl(resource: string, params?: object): string {
+        let url = this.baseUrl + resource + '?';
+        if (params) {
+            url += RestClient.encodeQueryData(params);
+        }
+        return url;
+    }
 }
 
 @Injectable()
 export class ErrorsInterceptor implements HttpInterceptor {
-  private terminateErrorCodes = [
-    400, 403, 404, 500, 502, 504,
-  ];
+    private terminateErrorCodes = [400, 403, 404, 500, 502, 504];
 
-  constructor(private _inj: Injector/*, private _appState: AppState*/) {
-  }
+    constructor(private _inj: Injector /*, private _appState: AppState*/) {}
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(req).do(() => {
+    intercept(
+        req: HttpRequest<any>,
+        next: HttpHandler
+    ): Observable<HttpEvent<any>> {
+        return next.handle(req).pipe(
+            tap(
+                () => {},
+                error => {
+                    return this.processError(error);
+                }
+            )
+        );
+    }
 
-    }, (error) => {
-      return this.processError(error);
-    });
-  }
-
-  private processError(response: any): Observable<any> {
-    // this._appState.notifyDataChanged('loading', false);
-    /*if (response.status === 401) {
+    private processError(response: any): Observable<any> {
+        // this._appState.notifyDataChanged('loading', false);
+        /*if (response.status === 401) {
       const authService = this._inj.get(AuthService);
       authService.relogin();
     }*/
-    if (this.terminateErrorCodes.indexOf(response.status) > -1) {
-      if (response.error) {
-        const error = response.error;
-        // this._appState.notifyDataChanged('httpError', new RestError(error.code, error.errors[0].message));
-      } else {
-        // this._appState.notifyDataChanged('httpError', new RestError(response.status, response.message));
-      }
+        if (this.terminateErrorCodes.indexOf(response.status) > -1) {
+            if (response.error) {
+                const error = response.error;
+                // this._appState.notifyDataChanged('httpError', new RestError(error.code, error.errors[0].message));
+            } else {
+                // this._appState.notifyDataChanged('httpError', new RestError(response.status, response.message));
+            }
+        }
+        return Observable.create(null);
     }
-    return Observable.create(null);
-  }
 }

@@ -2,21 +2,33 @@
     <form-layout *ngIf="formLoaded" [FormComponent]="this">
         <div fxLayout="row">
             <div fxFlex="45">
-                <text-input [FormGroup]="formGroup" FieldName="Title"
-                            Label="Название"></text-input>
+                <text-input
+                    [FormGroup]="FormGroup"
+                    FieldName="Title"
+                    Label="Название"
+                ></text-input>
             </div>
-            <div fxFlex="10">
-            </div>
+            <div fxFlex="10"></div>
             <div fxFlex="45">
-                <text-input [FormGroup]="formGroup" FieldName="Url"
-                            Label="Адрес на сайте"></text-input>
+                <text-input
+                    [FormGroup]="FormGroup"
+                    FieldName="Url"
+                    Label="Адрес на сайте"
+                ></text-input>
             </div>
         </div>
-        <chips-input [FormGroup]="formGroup" FieldName="SiteIds" Label="Сайты"
-                     TitleField="Title"
-                     ValueField="Id"
-                     [Options]="Sites"></chips-input>
-        <cke-input [FormGroup]="formGroup" FieldName="Text"
-                   Label="Содержимое страницы"></cke-input>
+        <chips-input
+            [FormGroup]="FormGroup"
+            FieldName="SiteIds"
+            Label="Сайты"
+            TitleField="Title"
+            ValueField="Id"
+            [Options]="Sites"
+        ></chips-input>
+        <cke-input
+            [FormGroup]="FormGroup"
+            FieldName="Text"
+            Label="Содержимое страницы"
+        ></cke-input>
     </form-layout>
 </div>

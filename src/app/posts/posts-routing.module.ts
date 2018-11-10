@@ -1,21 +1,21 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
-import { SitesListComponent } from './list/list.component';
-import { SiteFormPageComponent } from './form/form-page.component';
+import { ContentListComponent } from './list/list.component';
+import { PostFormPageComponent } from './form/form-page.component';
 
 const routes: Routes = [
     {
         path: 'list',
-        component: SitesListComponent
+        component: ContentListComponent
     },
     {
         path: 'add',
-        component: SiteFormPageComponent
+        component: PostFormPageComponent
     },
     {
         path: ':id/edit',
-        component: SiteFormPageComponent
+        component: PostFormPageComponent
     },
     {
         path: '',
@@ -28,4 +28,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class SitesRoutingModule {}
+export class PostsRoutingModule {}

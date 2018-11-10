@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { PageContext } from '../@common/PageComponent';
 import { SingleSiteEntityFormComponent } from '../@common/forms/FormComponent';
 import { ServicesProvider } from '../@services/ServicesProvider';
-import { BaseService } from '../@common/BaseService';
 import { Validators } from '@angular/forms';
 import { SaveMenuResponse } from '../@models/results/Menu';
 import { Menu, MenuItem } from '../@models/Menu';
@@ -10,18 +8,18 @@ import { ITreeOptions, TreeComponent, TreeNode } from 'angular-tree-component';
 import { DialogService } from '../@common/modals/DialogService';
 import { MenuItemFormDialogComponent } from './menuItemForm.component';
 import { ConfirmationDialogService } from '../@common/modals/ConfirmationDialogService';
+import { SnackBarService } from 'app/@common/snacks/SnackBarService';
 
 @Component({
-    moduleId: module.id,
-    selector: 'menuForm',
+    selector: 'menu-form',
     templateUrl: './form.component.html',
     styleUrls: ['./form.component.scss'],
-    providers: [PageContext],
     encapsulation: ViewEncapsulation.None
 })
-export class MenuFormComponent
-    extends SingleSiteEntityFormComponent<Menu, SaveMenuResponse>
-    implements OnInit {
+export class MenuFormComponent extends SingleSiteEntityFormComponent<
+    Menu,
+    SaveMenuResponse
+> {
     public options: ITreeOptions = {
         allowDrag: true,
         displayField: 'Label',
@@ -30,12 +28,12 @@ export class MenuFormComponent
     private tree: TreeComponent;
 
     public constructor(
-        context: PageContext,
         servicesProvider: ServicesProvider,
+        snackBarService: SnackBarService,
         private dialogService: DialogService,
         private confirmationService: ConfirmationDialogService
     ) {
-        super(context, servicesProvider);
+        super(servicesProvider, snackBarService, servicesProvider.MenuService);
     }
 
     public constructForm(): void {
@@ -81,36 +79,21 @@ export class MenuFormComponent
     }
 
     public openEditDialog(currentNode: TreeNode): void {
-        this.dialogService.show(MenuItemFormDialogComponent, currentNode);
-        /*const context: Partial<NbDialogConfig<any>> = {
-          context: {
-            model: node
-          }
-        };
-        this.dialogService.open(MenuItemFormDialogComponent, context).onClose.subscribe(() => {
-          this.hasChanges = true;
-        });*/
+        this.dialogService
+            .show(MenuItemFormDialogComponent, currentNode)
+            .dialogRef.afterClosed()
+            .subscribe(() => {
+                this.hasChanges = true;
+            });
     }
 
-    protected getRoute(): string {
-        return '/menu';
-    }
-
-    protected getService(): BaseService<Menu> {
-        return this.servicesProvider.MenuService;
-    }
-
-    protected getNewModelTitle(): string {
-        return 'Создание меню';
-    }
-
-    protected loadFormData(): void {
+    public loadFormData(menu: Menu = null): void {
+        super.loadFormData(menu);
         if (this.model.Items.length === 0) {
             const item = new MenuItem();
             item.Label = 'Начало';
             item.Url = '/';
             this.model.Items.push(item);
         }
-        super.loadFormData();
     }
 }

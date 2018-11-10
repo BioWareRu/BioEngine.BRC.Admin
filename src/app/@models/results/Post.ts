@@ -1,15 +1,11 @@
-import {ListResult} from '../../@common/list/ListResult';
-import {Post} from '../Post';
-import {SaveModelResponse} from '../../@common/SaveModelResponse';
-import {Site} from "../Site";
-import {Type} from "class-transformer";
+import { ListResult } from '../../@common/list/ListResult';
+import { Type } from 'class-transformer';
+import { Post } from '../Post';
+import { SaveModelResponse } from 'app/@common/SaveModelResponse';
 
 export class PostListResult extends ListResult<Post> {
-
-  @Type(() => Post)
-  public Data: Post[];
+    @Type(() => Post)
+    public Data: Post[];
 }
 
-export class SavePostResponse extends SaveModelResponse<Post> {
-
-}
+export class SavePostResponse extends SaveModelResponse<Post> {}

@@ -1,45 +1,39 @@
-import {NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 
-import {BioCommonModule} from '../@common/BioCommonModule';
-import {PagesListComponent} from './list/list.component';
-import {PageFormComponent} from './form/form.component';
-import {BioFormsModule} from '../@common/forms/FormsModule';
-// import {TreeModule} from 'angular-tree-component';
-import {RouterModule, Routes} from '@angular/router';
+import { BioCommonModule } from '../@common/BioCommonModule';
+import { PagesListComponent } from './list/list.component';
+import { PageFormComponent } from './form/form.component';
+import { BioFormsModule } from '../@common/forms/FormsModule';
+import { RouterModule, Routes } from '@angular/router';
+import { PageFormPageComponent } from './form/form-page.component';
 
 const PAGES_COMPONENTS = [
     PagesListComponent,
     PageFormComponent,
+    PageFormPageComponent
 ];
 const routes: Routes = [
     {
         path: 'list',
-        component: PagesListComponent,
+        component: PagesListComponent
     },
     {
         path: 'add',
-        component: PageFormComponent,
+        component: PageFormPageComponent
     },
     {
         path: ':id/edit',
-        component: PageFormComponent
+        component: PageFormPageComponent
     },
     {
         path: '',
         redirectTo: 'list',
-        pathMatch: 'full',
+        pathMatch: 'full'
     }
 ];
 
 @NgModule({
-    imports: [
-        BioCommonModule,
-        BioFormsModule,
-        RouterModule.forChild(routes)
-    ],
-    declarations: [
-        ...PAGES_COMPONENTS,
-    ],
+    imports: [BioCommonModule, BioFormsModule, RouterModule.forChild(routes)],
+    declarations: [...PAGES_COMPONENTS]
 })
-export class PagesModule {
-}
+export class PagesModule {}

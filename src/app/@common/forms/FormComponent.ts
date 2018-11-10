@@ -2,7 +2,15 @@ import { FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RestResult } from '../RestResult';
-import { HostListener, Input, OnInit } from '@angular/core';
+import {
+    HostListener,
+    Input,
+    OnInit,
+    ViewChild,
+    EventEmitter,
+    Pipe,
+    PipeTransform
+} from '@angular/core';
 import { BioFormControl } from './BioFormControl';
 import { plainToClass } from 'class-transformer';
 import { ServicesProvider } from '../../@services/ServicesProvider';
@@ -28,25 +36,83 @@ import { BaseSection } from '../../@models/Section';
 import { Tag } from '../../@models/Tag';
 import { Site } from '../../@models/Site';
 import { SnackBarMessage } from '../snacks/SnackBarMessage';
+import { SnackBarService } from '../snacks/SnackBarService';
+import { PostBlock, BasePostBlock } from 'app/@models/Post';
+import { PostFormComponent } from 'app/posts/form/form.component';
 
-export abstract class BaseFormComponent extends PageComponent
-    implements OnInit {
+export abstract class FormPageComponent<
+    TModel extends Model,
+    TResultModel extends SaveModelResponse<TModel>
+> extends PageComponent implements OnInit {
+    @Input() public Model: TModel;
+    protected modelId: number;
+    protected isPublished: boolean;
+    @ViewChild('modelForm') protected Form: FormComponent<TModel, TResultModel>;
+
+    ngOnInit(): void {
+        const id: Observable<number> = this.Route.params.pipe(map(p => p.id));
+        id.subscribe(modelId => {
+            if (modelId > 0) {
+                this.modelId = modelId;
+                this.getService()
+                    .get(modelId)
+                    .subscribe(model => {
+                        this.Model = model;
+                        this.isPublished = model.IsPublished;
+                        this.setTitle(model.Title);
+                        this.loadFormData();
+                    });
+            } else {
+                this.getService()
+                    .new()
+                    .subscribe(model => {
+                        this.Model = model;
+                        this.setTitle(this.getNewModelTitle());
+                        this.loadFormData();
+                    });
+            }
+        });
+    }
+
+    loadFormData(): void {
+        this.Form.loadFormData(this.Model);
+        this.Form.onSuccessSave.subscribe(result =>
+            this.processSuccessSave(result)
+        );
+    }
+
+    protected processSuccessSave(saveResult: SaveModelResponse<TModel>): void {
+        if (!this.modelId) {
+            this.Router.navigate([
+                this.getRoute(),
+                saveResult.Model.Id,
+                'edit'
+            ]);
+        }
+    }
+
+    protected abstract getNewModelTitle(): string;
+    protected abstract getService(): BaseService<TModel>;
+    protected abstract getRoute(): string;
+}
+
+export abstract class BaseFormComponent {
     public success = false;
     public inProgress = false;
     public hasErrors = false;
     public hasChanges = false;
 
-    public isNew = false;
-
     public formLoaded = false;
 
-    public formGroup: FormGroup;
-    protected controls: { [p: string]: BioFormControl } = {};
+    @Input()
+    public FormGroup: FormGroup;
     protected controlsByProperty: { [p: string]: BioFormControl } = {};
 
+    constructor(protected snackBarService: SnackBarService) {}
+
     initForm(): void {
+        this.FormGroup = this.FormGroup || new FormGroup({});
         this.constructForm();
-        this.formGroup = new FormGroup(this.controls);
         this.formLoaded = true;
     }
 
@@ -79,19 +145,15 @@ export abstract class BaseFormComponent extends PageComponent
         if (property == null) {
             property = name;
         }
-        this.controls[name] = this.controlsByProperty[
-            property
-        ] = new BioFormControl(
+        const control = new BioFormControl(
             <BaseFormComponent>this,
             name,
             this.getModel(),
             property,
             validatorOrOpts
         );
-    }
-
-    ngOnInit(): void {
-        this.loadFormData();
+        this.FormGroup.addControl(name, control);
+        this.controlsByProperty[property] = control;
     }
 
     protected abstract constructForm(): void;
@@ -106,7 +168,7 @@ export abstract class BaseFormComponent extends PageComponent
                 const control = this.controlsByProperty[error.Field];
                 control.setServerError(error.Message);
             });
-            this.SnackBarService.error(
+            this.snackBarService.error(
                 new SnackBarMessage(
                     'Ошибка валидации',
                     'Произошла ошибка валидации, проверьте заполнение формы'
@@ -117,7 +179,7 @@ export abstract class BaseFormComponent extends PageComponent
 
     protected afterInit(): void {}
 
-    protected loadFormData(): void {
+    public loadFormData(): void {
         this.initForm();
         this.afterInit();
     }
@@ -128,9 +190,8 @@ export abstract class BaseFormComponent extends PageComponent
 export abstract class SimpleFormComponent<TModel> extends BaseFormComponent
     implements OnInit {
     @Input() public Model: TModel;
-
-    protected constructor(context: PageContext) {
-        super(context);
+    ngOnInit(): void {
+        this.loadFormData();
     }
 
     protected getModel(): TModel {
@@ -141,18 +202,24 @@ export abstract class SimpleFormComponent<TModel> extends BaseFormComponent
 export abstract class FormComponent<
     TModel extends Model,
     TResultModel extends SaveModelResponse<TModel>
-> extends BaseFormComponent implements OnInit {
+> extends BaseFormComponent {
+    @Input()
     public model: TModel;
     public PropertiesElementTypes = PropertiesElementType;
     public ModelProperties: Properties[] = [];
     protected modelId: number;
     protected isPublished: boolean;
 
+    public onSuccessSave: EventEmitter<TResultModel> = new EventEmitter<
+        TResultModel
+    >();
+    private isNew = true;
     protected constructor(
-        context: PageContext,
-        public servicesProvider: ServicesProvider
+        public servicesProvider: ServicesProvider,
+        snackBarService: SnackBarService,
+        protected service: BaseService<TModel>
     ) {
-        super(context);
+        super(snackBarService);
     }
 
     buildPropertiesForm(): any {
@@ -199,32 +266,6 @@ export abstract class FormComponent<
         );
     }
 
-    ngOnInit(): void {
-        const id: Observable<number> = this.Route.params.pipe(map(p => p.id));
-        id.subscribe(modelId => {
-            if (modelId > 0) {
-                this.modelId = modelId;
-                this.getService()
-                    .get(modelId)
-                    .subscribe(model => {
-                        this.model = model;
-                        this.isPublished = model.IsPublished;
-                        this.setTitle(model.Title);
-                        this.loadFormData();
-                    });
-            } else {
-                this.isNew = true;
-                this.getService()
-                    .new()
-                    .subscribe(model => {
-                        this.model = model;
-                        this.setTitle(this.getNewModelTitle());
-                        this.loadFormData();
-                    });
-            }
-        });
-    }
-
     public save(): void {
         this.success = false;
         this.inProgress = true;
@@ -238,8 +279,8 @@ export abstract class FormComponent<
             (saveResult: TResultModel) => {
                 this.hasChanges = false;
                 this.success = true;
-                this.processSuccessSave(saveResult);
-                this.SnackBarService.success(
+                this.onSuccessSave.emit(saveResult);
+                this.snackBarService.success(
                     new SnackBarMessage('Успех!', 'Сохранение прошло успешно.')
                 );
                 this.inProgress = false;
@@ -257,9 +298,9 @@ export abstract class FormComponent<
         this.inProgress = true;
         let result;
         if (this.model.IsPublished) {
-            result = this.getService().unpublish(this.model.Id);
+            result = this.service.unpublish(this.model.Id);
         } else {
-            result = this.getService().publish(this.model.Id);
+            result = this.service.publish(this.model.Id);
         }
         result.subscribe(
             (saveResult: TModel) => {
@@ -267,11 +308,11 @@ export abstract class FormComponent<
                 this.success = true;
                 this.model = saveResult;
                 if (saveResult.IsPublished) {
-                    this.SnackBarService.success(
+                    this.snackBarService.success(
                         new SnackBarMessage('Успех!', 'Опубликовано.')
                     );
                 } else {
-                    this.SnackBarService.success(
+                    this.snackBarService.success(
                         new SnackBarMessage('Успех!', 'Публикация снята.')
                     );
                 }
@@ -286,37 +327,26 @@ export abstract class FormComponent<
     }
 
     updateControlValue(name: string): void {
-        this.controls[name].reloadValue();
+        (this.FormGroup.controls[name] as BioFormControl).reloadValue();
     }
 
     protected doAdd(): Observable<SaveModelResponse<TModel>> {
-        return this.getService().add(this.model);
+        return this.service.add(this.model);
     }
 
     protected doUpdate(): Observable<SaveModelResponse<TModel>> {
-        return this.getService().update(this.modelId, this.model);
+        return this.service.update(this.model.Id, this.model);
     }
 
-    protected loadFormData(): void {
-        this.buildPropertiesForm();
-        super.loadFormData();
-    }
-
-    protected abstract getNewModelTitle(): string;
-
-    protected abstract getService(): BaseService<TModel>;
-
-    protected processSuccessSave(saveResult: SaveModelResponse<TModel>): void {
-        if (!this.modelId) {
-            this.Router.navigate([
-                this.getRoute(),
-                saveResult.Model.Id,
-                'edit'
-            ]);
+    public loadFormData(model: TModel = null): void {
+        this.model = model;
+        if (this.model.Id > 0) {
+            this.isNew = false;
         }
+        this.initForm();
+        this.buildPropertiesForm();
+        this.afterInit();
     }
-
-    protected abstract getRoute(): string;
 
     protected getModel(): any {
         return this.model;
@@ -356,7 +386,6 @@ export abstract class SectionFormComponent<
                 this.model.Url = Utils.slugifyUrl(newValue);
                 this.updateControlValue('Url');
             }
-            this.setTitle(this.model.Title);
         }
     }
 
@@ -394,8 +423,18 @@ export abstract class ContentFormComponent<
         this.registerFormControl('Url', [<any>Validators.required]);
         this.registerFormControl('SectionIds', [<any>Validators.required]);
         this.registerFormControl('TagIds', [<any>Validators.required]);
-        this.constructorDataFrom();
+        this.registerFormControl('Blocks', [<any>Validators.required]);
     }
+}
 
-    protected abstract constructorDataFrom(): void;
+@Pipe({ name: 'keys' })
+export class KeysPipe implements PipeTransform {
+    transform(value, args: string[]): any {
+        const keys = [];
+        // tslint:disable-next-line:forin
+        for (const key in value) {
+            keys.push({ key: key, value: value[key] });
+        }
+        return keys;
+    }
 }

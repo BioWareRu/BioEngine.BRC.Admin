@@ -1,17 +1,25 @@
-import {Component, ElementRef, HostBinding, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {FormInput} from './FormInput';
+import {
+    Component,
+    ElementRef,
+    HostBinding,
+    Input,
+    OnDestroy,
+    OnInit,
+    ViewChild
+} from '@angular/core';
+import { FormInput } from './FormInput';
 import './CKEInputComponent.loader';
 import 'ckeditor';
-import {OAuthService} from 'angular-oauth2-oidc';
-import {MatFormFieldControl} from '@angular/material';
-import {FormBuilder, FormGroup, NgControl} from '@angular/forms';
-import {Subject} from 'rxjs';
-import {coerceBooleanProperty} from '@angular/cdk/coercion';
-import {FocusMonitor} from '@angular/cdk/a11y';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { MatFormFieldControl } from '@angular/material';
+import { FormBuilder, FormGroup, NgControl } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { FocusMonitor } from '@angular/cdk/a11y';
 
 @Component({
     selector: 'cke-input',
-    templateUrl: './CKEInputComponent.html',
+    templateUrl: './CKEInputComponent.html'
 })
 export class CKEInputComponent extends FormInput {
     public config = {
@@ -20,15 +28,44 @@ export class CKEInputComponent extends FormInput {
         extraPlugins: 'divarea',
         customConfig: '',
         toolbar: [
-            {name: 'clipboard', items: ['Undo', 'Redo']},
-            {name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike', 'RemoveFormat', 'CopyFormatting']},
-            {name: 'align', items: ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock']},
-            {name: 'insert', items: ['Image', 'Iframe', 'Table']},
-            {name: 'links', items: ['Link', 'Unlink']},
-            {name: 'paragraph', items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote']},
-            {name: 'styles', items: ['Format', 'Font', 'FontSize']},
-            {name: 'colors', items: ['TextColor', 'BGColor']},
-            {name: 'tools', items: ['Maximize', 'Source']},
+            { name: 'clipboard', items: ['Undo', 'Redo'] },
+            {
+                name: 'basicstyles',
+                items: [
+                    'Bold',
+                    'Italic',
+                    'Underline',
+                    'Strike',
+                    'RemoveFormat',
+                    'CopyFormatting'
+                ]
+            },
+            {
+                name: 'align',
+                items: [
+                    'JustifyLeft',
+                    'JustifyCenter',
+                    'JustifyRight',
+                    'JustifyBlock'
+                ]
+            },
+            { name: 'insert', items: ['Image', 'Iframe', 'Table'] },
+            { name: 'links', items: ['Link', 'Unlink'] },
+            {
+                name: 'paragraph',
+                items: [
+                    'NumberedList',
+                    'BulletedList',
+                    '-',
+                    'Outdent',
+                    'Indent',
+                    '-',
+                    'Blockquote'
+                ]
+            },
+            { name: 'styles', items: ['Format', 'Font', 'FontSize'] },
+            { name: 'colors', items: ['TextColor', 'BGColor'] },
+            { name: 'tools', items: ['Maximize', 'Source'] }
         ],
         filebrowserBrowseUrl: '',
         filebrowserWindowWidth: '1000',
@@ -37,35 +74,48 @@ export class CKEInputComponent extends FormInput {
 
     public constructor(private oauthService: OAuthService) {
         super();
-        this.config.filebrowserBrowseUrl = '/ckfinder/ckfinder.html?token=' + this.oauthService.getAccessToken();
+        this.config.filebrowserBrowseUrl =
+            '/ckfinder/ckfinder.html?token=' +
+            this.oauthService.getAccessToken();
     }
 }
 
 export class CKEFormFieldControlValue {
-    constructor(public  Text: string) {
-
-    }
+    constructor(public Text: string) {}
 }
 
 // noinspection TsLint
 @Component({
     selector: 'mat-ckeditor',
     template: `
-        <div [formGroup]="formGroup">
-            <ckeditor [formControlName]="fieldName" #myckeditor [config]="ckeConfig"
-                      debounce="500"></ckeditor>
+        <div [formGroup]="FormGroup">
+            <ckeditor
+                [formControlName]="fieldName"
+                #myckeditor
+                [config]="ckeConfig"
+                debounce="500"
+            ></ckeditor>
         </div>
     `,
-    providers: [{provide: MatFormFieldControl, useExisting: CKEFormFieldControlComponent}]
+    providers: [
+        {
+            provide: MatFormFieldControl,
+            useExisting: CKEFormFieldControlComponent
+        }
+    ]
 })
-export class CKEFormFieldControlComponent implements MatFormFieldControl<CKEFormFieldControlValue>, OnInit, OnDestroy {
+export class CKEFormFieldControlComponent
+    implements
+        MatFormFieldControl<CKEFormFieldControlValue>,
+        OnInit,
+        OnDestroy {
     static nextId = 0;
 
     stateChanges = new Subject<void>();
     focused = false;
     errorState = false;
 
-    @Input() formGroup: FormGroup;
+    @Input() FormGroup: FormGroup;
     @Input() fieldName: string;
     @Input() ckeConfig: any;
     @ViewChild('ckeditor') ckeditor: any;
@@ -79,18 +129,22 @@ export class CKEFormFieldControlComponent implements MatFormFieldControl<CKEForm
     readonly controlType: string;
     readonly ngControl: NgControl | null;
 
-    constructor(fb: FormBuilder, private fm: FocusMonitor, private elRef: ElementRef) {
-        fm.monitor(elRef.nativeElement, true).subscribe((origin) => {
+    constructor(
+        fb: FormBuilder,
+        private fm: FocusMonitor,
+        private elRef: ElementRef
+    ) {
+        fm.monitor(elRef.nativeElement, true).subscribe(origin => {
             this.focused = !!origin;
             this.stateChanges.next();
         });
     }
 
     get empty(): boolean {
-        if (!this.formGroup) {
+        if (!this.FormGroup) {
             return true;
         }
-        const n = this.formGroup.get(this.fieldName);
+        const n = this.FormGroup.get(this.fieldName);
         return !n.value;
     }
 
@@ -137,8 +191,10 @@ export class CKEFormFieldControlComponent implements MatFormFieldControl<CKEForm
 
     @Input()
     get value(): CKEFormFieldControlValue | null {
-        if (this.formGroup) {
-            const n: CKEFormFieldControlValue = this.formGroup.get(this.fieldName).value;
+        if (this.FormGroup) {
+            const n: CKEFormFieldControlValue = this.FormGroup.get(
+                this.fieldName
+            ).value;
             if (n.Text.length > 0) {
                 return new CKEFormFieldControlValue(n.Text);
             }
@@ -148,14 +204,14 @@ export class CKEFormFieldControlComponent implements MatFormFieldControl<CKEForm
 
     set value(value: CKEFormFieldControlValue | null) {
         value = value || new CKEFormFieldControlValue('');
-        this.formGroup.get(this.fieldName).setValue(value);
-        this.errorState = !this.formGroup.get(this.fieldName).valid;
+        this.FormGroup.get(this.fieldName).setValue(value);
+        this.errorState = !this.FormGroup.get(this.fieldName).valid;
         this.stateChanges.next();
     }
 
     ngOnInit(): void {
-        this.formGroup.get(this.fieldName).valueChanges.subscribe(() => {
-            this.errorState = !this.formGroup.get(this.fieldName).valid;
+        this.FormGroup.get(this.fieldName).valueChanges.subscribe(() => {
+            this.errorState = !this.FormGroup.get(this.fieldName).valid;
             this.stateChanges.next();
         });
     }
@@ -175,4 +231,3 @@ export class CKEFormFieldControlComponent implements MatFormFieldControl<CKEForm
         }
     }
 }
-
