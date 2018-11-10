@@ -1,32 +1,31 @@
-import {RouterModule, Routes} from '@angular/router';
-import {NgModule} from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
 
-import {SitesListComponent} from './list/list.component';
-import {SitesFormComponent} from './form/sites-form.component';
+import { SitesListComponent } from './list/list.component';
+import { SiteFormPageComponent } from './form/form-page.component';
 
 const routes: Routes = [
     {
         path: 'list',
-        component: SitesListComponent,
+        component: SitesListComponent
     },
     {
         path: 'add',
-        component: SitesFormComponent,
+        component: SiteFormPageComponent
     },
     {
         path: ':id/edit',
-        component: SitesFormComponent
+        component: SiteFormPageComponent
     },
     {
         path: '',
         redirectTo: 'list',
-        pathMatch: 'full',
-    },
+        pathMatch: 'full'
+    }
 ];
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule],
+    exports: [RouterModule]
 })
-export class SitesRoutingModule {
-}
+export class SitesRoutingModule {}

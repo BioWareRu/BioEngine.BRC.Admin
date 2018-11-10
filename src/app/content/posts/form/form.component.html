@@ -1,20 +1,76 @@
 <div class="page-layout blank p-24">
     <form-layout *ngIf="formLoaded" [FormComponent]="this">
-        <text-input [FormGroup]="formGroup" FieldName="Title"
-                    Label="Название"></text-input>
-        <text-input [FormGroup]="formGroup" FieldName="Url"
-                    Label="Адрес на сайте"></text-input>
-        <chips-input [FormGroup]="formGroup" FieldName="SectionIds" Label="Разделы"
-                     TitleField="Title"
-                     ValueField="Id"
-                     [Options]="Sections"></chips-input>
-        <chips-input [FormGroup]="formGroup" FieldName="TagIds" Label="Тэги"
-                     TitleField="Name"
-                     ValueField="Id"
-                     [Creatable]="true"
-                     [EntitiesService]="servicesProvider.TagsService"
-                     [Options]="Tags"></chips-input>
-        <cke-input [FormGroup]="formGroup" FieldName="Text"
-                   Label="Текст"></cke-input>
+        <text-input
+            [FormGroup]="formGroup"
+            FieldName="Title"
+            Label="Название"
+        ></text-input>
+        <text-input
+            [FormGroup]="formGroup"
+            FieldName="Url"
+            Label="Адрес на сайте"
+        ></text-input>
+        <chips-input
+            [FormGroup]="formGroup"
+            FieldName="SectionIds"
+            Label="Разделы"
+            TitleField="Title"
+            ValueField="Id"
+            [Options]="Sections"
+        ></chips-input>
+        <chips-input
+            [FormGroup]="formGroup"
+            FieldName="TagIds"
+            Label="Тэги"
+            TitleField="Name"
+            ValueField="Id"
+            [Creatable]="true"
+            [EntitiesService]="servicesProvider.TagsService"
+            [Options]="Tags"
+        ></chips-input>
+        <div class="blocks" cdkDropList (cdkDropListDropped)="drop($event)">
+            <div
+                *ngFor="let block of model.Blocks"
+                [ngSwitch]="block.Type"
+                class="blockElement"
+                cdkDrag
+            >
+                <ng-container *ngSwitchCase="BlockTypes.Text">
+                    <text-block-form
+                        [formGroup]="formGroup"
+                        [Model]="block"
+                    ></text-block-form>
+                </ng-container>
+                <ng-container *ngSwitchCase="BlockTypes.Gallery">
+                    <gallery-block-form
+                        [formGroup]="formGroup"
+                        [Model]="block"
+                    ></gallery-block-form>
+                </ng-container>
+                <ng-container *ngSwitchCase="BlockTypes.File">
+                    <file-block-form
+                        [formGroup]="formGroup"
+                        [Model]="block"
+                    ></file-block-form>
+                </ng-container>
+            </div>
+        </div>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+            Добавить блок
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="addBlock(BlockTypes.Text)">
+                <mat-icon>import_contacts</mat-icon>
+                <span>Текст</span>
+            </button>
+            <button mat-menu-item (click)="addBlock(BlockTypes.Gallery)">
+                <mat-icon>images</mat-icon>
+                <span>Галерея</span>
+            </button>
+            <button mat-menu-item (click)="addBlock(BlockTypes.File)">
+                <mat-icon>attachment</mat-icon>
+                <span>Файл</span>
+            </button>
+        </mat-menu>
     </form-layout>
 </div>

@@ -1,53 +1,52 @@
-import {RouterModule, Routes} from '@angular/router';
-import {NgModule} from '@angular/core';
-import {SectionsListComponent} from './list/list.component';
-import {DeveloperFormComponent} from './developers/form/form.component';
-import {GameFormComponent} from './games/form/form.component';
-import {TopicFormComponent} from './topics/form/form.component';
+import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { SectionsListComponent } from './list/list.component';
+import { DeveloperFormPageComponent } from './developers/form/form-page.component';
+import { GameFormPageComponent } from './games/form/form-page.component';
+import { TopicFormPageComponent } from './topics/form/form-page.component';
 
 const routes: Routes = [
     {
         path: 'list',
-        component: SectionsListComponent,
+        component: SectionsListComponent
     },
     {
         path: 'list/:type',
-        component: SectionsListComponent,
+        component: SectionsListComponent
     },
     {
         path: 'developers/add',
-        component: DeveloperFormComponent,
+        component: DeveloperFormPageComponent
     },
     {
         path: 'developers/:id/edit',
-        component: DeveloperFormComponent
+        component: DeveloperFormPageComponent
     },
     {
         path: 'games/add',
-        component: GameFormComponent,
+        component: GameFormPageComponent
     },
     {
         path: 'games/:id/edit',
-        component: GameFormComponent
+        component: GameFormPageComponent
     },
     {
         path: 'topics/add',
-        component: TopicFormComponent,
+        component: TopicFormPageComponent
     },
     {
         path: 'topics/:id/edit',
-        component: TopicFormComponent
+        component: TopicFormPageComponent
     },
     {
         path: '',
         redirectTo: 'list',
-        pathMatch: 'full',
+        pathMatch: 'full'
     }
 ];
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule],
+    exports: [RouterModule]
 })
-export class SectionsRoutingModule {
-}
+export class SectionsRoutingModule {}

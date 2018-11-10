@@ -1,25 +1,24 @@
-import {Component, OnInit} from '@angular/core';
-import {PageContext} from '../../@common/PageComponent';
-import {SiteEntityFormComponent} from '../../@common/forms/FormComponent';
-import {SavePageResponse} from '../../@models/results/Page';
-import {ServicesProvider} from '../../@services/ServicesProvider';
-import {BaseService} from '../../@common/BaseService';
-import {Page} from '../../@models/Page';
-import {Validators} from '@angular/forms';
-
+import { Component, OnInit } from '@angular/core';
+import { SiteEntityFormComponent } from '../../@common/forms/FormComponent';
+import { SavePageResponse } from '../../@models/results/Page';
+import { ServicesProvider } from '../../@services/ServicesProvider';
+import { Page } from '../../@models/Page';
+import { Validators } from '@angular/forms';
+import { SnackBarService } from 'app/@common/snacks/SnackBarService';
 
 @Component({
-    moduleId: module.id,
-    selector: 'developerForm',
-    templateUrl: './form.component.html',
-    providers: [
-        PageContext
-    ]
+    selector: 'page-form',
+    templateUrl: './form.component.html'
 })
-export class PageFormComponent extends SiteEntityFormComponent<Page, SavePageResponse> implements OnInit {
-
-    public constructor(context: PageContext, servicesProvider: ServicesProvider) {
-        super(context, servicesProvider);
+export class PageFormComponent extends SiteEntityFormComponent<
+    Page,
+    SavePageResponse
+> {
+    public constructor(
+        snackBarService: SnackBarService,
+        servicesProvider: ServicesProvider
+    ) {
+        super(servicesProvider, snackBarService, servicesProvider.PagesService);
     }
 
     public constructForm(): void {
@@ -28,18 +27,4 @@ export class PageFormComponent extends SiteEntityFormComponent<Page, SavePageRes
         this.registerFormControl('SiteIds', [<any>Validators.required]);
         this.registerFormControl('Text', [<any>Validators.required]);
     }
-
-    protected getNewModelTitle(): string {
-        return 'Создание страницы';
-    }
-
-    protected getRoute(): string {
-        return '/pages';
-    }
-
-    protected getService(): BaseService<Page> {
-        return this.servicesProvider.PagesService;
-    }
-
-
 }

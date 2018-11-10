@@ -15,7 +15,6 @@ import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {BioCommonModule} from './@common/BioCommonModule';
 import {ServicesProvider} from './@services/ServicesProvider';
-import {PostsService} from './@services/PostsService';
 import {RestClient} from './@common/HttpClient';
 import {SitesService} from './@services/SitesService';
 import {FormsModule} from '@angular/forms';
@@ -24,11 +23,9 @@ import {DevelopersService} from './@services/DevelopersService';
 import {GamesService} from './@services/GamesService';
 import {TopicsService} from './@services/TopicsService';
 import {SectionsService} from './@services/SectionsService';
-import {ContentService} from './@services/ContentService';
-import {GalleryService} from './@services/GalleryService';
+import {PostsService} from './@services/ContentService';
 import {TagsService} from './@services/TagsService';
 import {PagesService} from './@services/PagesService';
-import {FilesService} from './@services/FilesService';
 import {ForumsService} from './@services/ForumsService';
 import {PropertiesService} from './@services/properties.service';
 import {MenuService} from './@services/MenuService';
@@ -84,17 +81,14 @@ import {LayoutModule} from './layout/layout.module';
         {provide: APP_BASE_HREF, useValue: '/'},
         {provide: OAuthStorage, useValue: localStorage},
         RestClient,
-        PostsService,
         SitesService,
         DevelopersService,
         GamesService,
         TopicsService,
         SectionsService,
-        ContentService,
-        GalleryService,
+        PostsService,
         TagsService,
         PagesService,
-        FilesService,
         ForumsService,
         PropertiesService,
         MenuService,
