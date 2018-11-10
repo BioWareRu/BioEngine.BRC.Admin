@@ -12,15 +12,13 @@ import { ListTableColumnType } from '../../@common/list/ListEnums';
 import { ListTableColumnAction } from '../../@common/list/ListTableColumnAction';
 import { BaseSection } from '../../@models/Section';
 import { Site } from '../../@models/Site';
-import { map } from 'rxjs/operators';
 import { Post } from '../../@models/Post';
 import { PageContext } from '../../@common/PageComponent';
 import { Tag } from '../../@models/Tag';
 import { forkJoin } from 'rxjs';
-import { Filter, FilterOperator } from '../../@common/Filter';
 
 @Component({
-    selector: 'content-list',
+    selector: 'posts-list',
     templateUrl: './list.component.html',
     providers: [PageContext]
 })
@@ -36,7 +34,7 @@ export class ContentListComponent extends ListComponent<Post>
     ) {
         super(context, servicesProvider.PostsService);
 
-        context.StateService.setTitle('Список контента');
+        context.StateService.setTitle('Список постов');
         this.provider.itemsPerPage = 20;
     }
 
@@ -59,7 +57,7 @@ export class ContentListComponent extends ListComponent<Post>
             new ListTableColumn<Post>('Title', 'Заголовок')
                 .setSortable()
                 .setLinkGetter(content => {
-                    return ['/content/', content.Id, 'edit'];
+                    return ['/posts/', content.Id, 'edit'];
                 }),
             new ListTableColumn<Post>(
                 'DateAdded',

@@ -1,12 +1,12 @@
-import {Model} from '../../@models/base/Model';
-import {Subject} from 'rxjs/Subject';
-import {BaseService} from '../BaseService';
-import {ActivatedRoute, Router} from '@angular/router';
-import {ListTableColumn} from './ListTableColumn';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import { Model } from '../../@models/base/Model';
+import { Subject } from 'rxjs/Subject';
+import { BaseService } from '../BaseService';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ListTableColumn } from './ListTableColumn';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import {Filter} from '../Filter';
-import {MatPaginator, MatSort, SortDirection} from '@angular/material';
+import { Filter } from '../Filter';
+import { MatPaginator, MatSort, SortDirection } from '@angular/material';
 
 export class ListProvider<T extends Model> {
     public items: Subject<T[]>;
@@ -18,16 +18,17 @@ export class ListProvider<T extends Model> {
     private currentPage = 0;
     private sort = '-id';
 
-    constructor(private service: BaseService<T>, private router: Router,
-                private route: ActivatedRoute, private filter: Filter = null) {
-    }
-
+    constructor(
+        private service: BaseService<T>,
+        private router: Router,
+        private route: ActivatedRoute,
+        private filter: Filter = null
+    ) {}
 
     public init(): void {
         this.items = new BehaviorSubject<T[]>([]);
 
         this.paginator.page.subscribe(e => {
-            console.log(e);
             this.itemsPerPage = e.pageSize;
             this.changePage(e.pageIndex);
         });
@@ -48,7 +49,8 @@ export class ListProvider<T extends Model> {
             if (sort != null) {
                 this.sort = sort;
                 const key = this.sort.replace('-', '');
-                const sortDirection: SortDirection = this.sort.indexOf('-') > -1 ? 'desc' : 'asc';
+                const sortDirection: SortDirection =
+                    this.sort.indexOf('-') > -1 ? 'desc' : 'asc';
                 this.sorter.active = key;
                 this.sorter.direction = sortDirection;
             }
@@ -63,12 +65,14 @@ export class ListProvider<T extends Model> {
     public load(page?: number): void {
         this.dataLoaded = false;
         page = page ? page : this.currentPage;
-        this.service.getAll(page, this.paginator.pageSize, this.sort, this.filter).subscribe((res) => {
-            this.items.next(res.Data);
-            this.paginator.pageIndex = page;
-            this.paginator.length = res.TotalItems;
-            this.dataLoaded = true;
-        });
+        this.service
+            .getAll(page, this.paginator.pageSize, this.sort, this.filter)
+            .subscribe(res => {
+                this.items.next(res.Data);
+                this.paginator.pageIndex = page;
+                this.paginator.length = res.TotalItems;
+                this.dataLoaded = true;
+            });
     }
 
     public changePage(page: number): void {
@@ -89,7 +93,6 @@ export class ListProvider<T extends Model> {
                 break;
         }
         this.sort = sortKey;
-        console.log(this.sort);
         this.reload();
     }
 

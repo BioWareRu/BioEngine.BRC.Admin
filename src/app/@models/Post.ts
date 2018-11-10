@@ -29,6 +29,7 @@ export class Post extends Model implements ISiteEntity, ISectionEntity {
 export abstract class BasePostBlock {
     public Id: number;
     public abstract Type: ContentBlockItemType;
+    public Position: number;
 }
 
 export abstract class PostBlock<T extends PostBlockData> extends BasePostBlock {

@@ -1,4 +1,4 @@
-import {NavigationItem} from './@common/navigation/NavigationItem';
+import { NavigationItem } from './@common/navigation/NavigationItem';
 
 export const navigation: NavigationItem[] = [
     {
@@ -6,43 +6,29 @@ export const navigation: NavigationItem[] = [
         type: 'item',
         title: 'Дашборд',
         icon: 'home',
-        url: '/dashboard',
+        url: '/dashboard'
     },
     {
-        id: 'content',
+        id: 'posts',
         type: 'collapsable',
-        title: 'Контент',
+        title: 'Посты',
         icon: 'create',
         children: [
             {
-                id: 'contentList',
+                id: 'postsList',
                 type: 'item',
                 title: 'Список',
                 icon: 'view_list',
-                url: '/content/list',
+                url: '/posts'
             },
             {
                 id: 'addPost',
                 type: 'item',
                 title: 'Добавить пост',
                 icon: 'import_contacts',
-                url: '/content/posts/add',
-            },
-            {
-                id: 'addGallery',
-                type: 'item',
-                icon: 'images',
-                title: 'Добавить галерею',
-                url: '/content/gallery/add',
-            },
-            {
-                id: 'addFile',
-                type: 'item',
-                icon: 'attachment',
-                title: 'Добавить файл',
-                url: '/content/files/add',
-            },
-        ],
+                url: '/posts/add'
+            }
+        ]
     },
     {
         id: 'sections',
@@ -98,8 +84,8 @@ export const navigation: NavigationItem[] = [
                 type: 'item',
                 title: 'Добавить сайт',
                 icon: 'add',
-                url: '/sites/add',
-            },
+                url: '/sites/add'
+            }
         ]
     },
     {
@@ -107,32 +93,32 @@ export const navigation: NavigationItem[] = [
         type: 'item',
         title: 'Тэги',
         icon: 'labels',
-        url: '/tags',
+        url: '/tags'
     },
     {
         id: 'pages',
         type: 'item',
         title: 'Страницы',
         icon: 'note',
-        url: '/pages',
+        url: '/pages'
     },
     {
         id: 'menu',
         type: 'item',
         title: 'Меню',
         icon: 'menu',
-        url: '/menu',
+        url: '/menu'
     },
     {
         id: 'polls',
         type: 'item',
         title: 'Опросы',
-        icon: 'poll',
+        icon: 'poll'
     },
     {
         id: 'settings',
         type: 'item',
         title: 'Настройки',
-        icon: 'settings',
-    },
+        icon: 'settings'
+    }
 ];

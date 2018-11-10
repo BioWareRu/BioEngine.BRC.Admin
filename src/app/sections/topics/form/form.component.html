@@ -3,7 +3,7 @@
         <div fxLayout="row">
             <div fxFlex="45">
                 <text-input
-                    [FormGroup]="formGroup"
+                    [FormGroup]="FormGroup"
                     FieldName="Title"
                     Label="Название"
                 ></text-input>
@@ -11,7 +11,7 @@
             <div fxFlex="10"></div>
             <div fxFlex="45">
                 <text-input
-                    [FormGroup]="formGroup"
+                    [FormGroup]="FormGroup"
                     FieldName="Url"
                     Label="Адрес на сайте"
                 ></text-input>
@@ -20,7 +20,7 @@
         <div fxLayout="row">
             <div fxFlex="45">
                 <chips-input
-                    [FormGroup]="formGroup"
+                    [FormGroup]="FormGroup"
                     FieldName="SiteIds"
                     Label="Сайты"
                     ValueField="Id"
@@ -31,21 +31,21 @@
             <div fxFlex="10"></div>
             <div fxFlex="45">
                 <text-input
-                    [FormGroup]="formGroup"
+                    [FormGroup]="FormGroup"
                     FieldName="Hashtag"
                     Label="Тэг для соцсетей"
                 ></text-input>
             </div>
         </div>
         <cke-input
-            [FormGroup]="formGroup"
+            [FormGroup]="FormGroup"
             FieldName="ShortDescription"
             Label="Краткое описание"
         ></cke-input>
         <div fxLayout="row">
             <div fxFlex="45">
                 <upload-input
-                    [FormGroup]="formGroup"
+                    [FormGroup]="FormGroup"
                     FieldName="Logo"
                     Label="Большой логотип"
                     [Multiple]="false"
@@ -61,7 +61,7 @@
             <div fxFlex="10"></div>
             <div fxFlex="45">
                 <upload-input
-                    [FormGroup]="formGroup"
+                    [FormGroup]="FormGroup"
                     FieldName="LogoSmall"
                     Label="Маленький логотип"
                     [Multiple]="false"

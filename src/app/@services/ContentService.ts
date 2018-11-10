@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { BaseService } from '../@common/BaseService';
+import { BaseService, BaseServiceWithUpload } from '../@common/BaseService';
 import { RestClient } from '../@common/HttpClient';
 import { Post } from '../@models/Post';
-import { PostListResult } from '../@models/results/Post';
+import { PostListResult, SavePostResponse } from '../@models/results/Post';
 import { ClassType } from 'class-transformer/ClassTransformer';
 import { SaveModelResponse } from '../@common/SaveModelResponse';
 
 @Injectable()
-export class PostsService extends BaseService<Post> {
+export class PostsService extends BaseServiceWithUpload<Post> {
     constructor(httpClient: RestClient) {
         super(httpClient);
     }
@@ -21,7 +21,7 @@ export class PostsService extends BaseService<Post> {
     }
 
     protected getSaveType(): ClassType<SaveModelResponse<Post>> {
-        return null;
+        return SavePostResponse;
     }
 
     protected getType(): ClassType<Post> {

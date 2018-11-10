@@ -7,7 +7,9 @@ import {
     Input,
     OnInit,
     ViewChild,
-    EventEmitter
+    EventEmitter,
+    Pipe,
+    PipeTransform
 } from '@angular/core';
 import { BioFormControl } from './BioFormControl';
 import { plainToClass } from 'class-transformer';
@@ -35,6 +37,8 @@ import { Tag } from '../../@models/Tag';
 import { Site } from '../../@models/Site';
 import { SnackBarMessage } from '../snacks/SnackBarMessage';
 import { SnackBarService } from '../snacks/SnackBarService';
+import { PostBlock, BasePostBlock } from 'app/@models/Post';
+import { PostFormComponent } from 'app/posts/form/form.component';
 
 export abstract class FormPageComponent<
     TModel extends Model,
@@ -43,7 +47,6 @@ export abstract class FormPageComponent<
     @Input() public Model: TModel;
     protected modelId: number;
     protected isPublished: boolean;
-    protected isNew: boolean;
     @ViewChild('modelForm') protected Form: FormComponent<TModel, TResultModel>;
 
     ngOnInit(): void {
@@ -60,7 +63,6 @@ export abstract class FormPageComponent<
                         this.loadFormData();
                     });
             } else {
-                this.isNew = true;
                 this.getService()
                     .new()
                     .subscribe(model => {
@@ -100,18 +102,16 @@ export abstract class BaseFormComponent {
     public hasErrors = false;
     public hasChanges = false;
 
-    public isNew = false;
-
     public formLoaded = false;
 
     @Input()
-    public formGroup: FormGroup;
+    public FormGroup: FormGroup;
     protected controlsByProperty: { [p: string]: BioFormControl } = {};
 
     constructor(protected snackBarService: SnackBarService) {}
 
     initForm(): void {
-        this.formGroup = this.formGroup || new FormGroup({});
+        this.FormGroup = this.FormGroup || new FormGroup({});
         this.constructForm();
         this.formLoaded = true;
     }
@@ -145,15 +145,15 @@ export abstract class BaseFormComponent {
         if (property == null) {
             property = name;
         }
-        this.formGroup.controls[name] = this.controlsByProperty[
-            property
-        ] = new BioFormControl(
+        const control = new BioFormControl(
             <BaseFormComponent>this,
             name,
             this.getModel(),
             property,
             validatorOrOpts
         );
+        this.FormGroup.addControl(name, control);
+        this.controlsByProperty[property] = control;
     }
 
     protected abstract constructForm(): void;
@@ -213,6 +213,7 @@ export abstract class FormComponent<
     public onSuccessSave: EventEmitter<TResultModel> = new EventEmitter<
         TResultModel
     >();
+    private isNew = true;
     protected constructor(
         public servicesProvider: ServicesProvider,
         snackBarService: SnackBarService,
@@ -326,7 +327,7 @@ export abstract class FormComponent<
     }
 
     updateControlValue(name: string): void {
-        (this.formGroup.controls[name] as BioFormControl).reloadValue();
+        (this.FormGroup.controls[name] as BioFormControl).reloadValue();
     }
 
     protected doAdd(): Observable<SaveModelResponse<TModel>> {
@@ -334,11 +335,14 @@ export abstract class FormComponent<
     }
 
     protected doUpdate(): Observable<SaveModelResponse<TModel>> {
-        return this.service.update(this.modelId, this.model);
+        return this.service.update(this.model.Id, this.model);
     }
 
     public loadFormData(model: TModel = null): void {
         this.model = model;
+        if (this.model.Id > 0) {
+            this.isNew = false;
+        }
         this.initForm();
         this.buildPropertiesForm();
         this.afterInit();
@@ -419,8 +423,18 @@ export abstract class ContentFormComponent<
         this.registerFormControl('Url', [<any>Validators.required]);
         this.registerFormControl('SectionIds', [<any>Validators.required]);
         this.registerFormControl('TagIds', [<any>Validators.required]);
-        this.constructorDataFrom();
+        this.registerFormControl('Blocks', [<any>Validators.required]);
     }
+}
 
-    protected abstract constructorDataFrom(): void;
+@Pipe({ name: 'keys' })
+export class KeysPipe implements PipeTransform {
+    transform(value, args: string[]): any {
+        const keys = [];
+        // tslint:disable-next-line:forin
+        for (const key in value) {
+            keys.push({ key: key, value: value[key] });
+        }
+        return keys;
+    }
 }

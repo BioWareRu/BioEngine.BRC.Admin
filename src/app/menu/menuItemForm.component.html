@@ -1,6 +1,12 @@
-<form [formGroup]="formGroup" *ngIf="formLoaded">
-  <text-input [FormGroup]="formGroup" FieldName="Label"
-              Label="Название"></text-input>
-  <text-input [FormGroup]="formGroup" FieldName="Url"
-              Label="Адрес"></text-input>
+<form [formGroup]="FormGroup" *ngIf="formLoaded">
+    <text-input
+        [FormGroup]="FormGroup"
+        FieldName="Label"
+        Label="Название"
+    ></text-input>
+    <text-input
+        [FormGroup]="FormGroup"
+        FieldName="Url"
+        Label="Адрес"
+    ></text-input>
 </form>

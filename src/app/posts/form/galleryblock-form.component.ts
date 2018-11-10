@@ -1,17 +1,17 @@
-import { SimpleFormComponent } from 'app/@common/forms/FormComponent';
 import { Validators } from '@angular/forms';
 import { Component } from '@angular/core';
 import { GalleryBlock } from 'app/@models/GalleryBlock';
 import { PostsService } from 'app/@services/ContentService';
 import { ServicesProvider } from 'app/@services/ServicesProvider';
 import { SnackBarService } from 'app/@common/snacks/SnackBarService';
+import { PostBlockFormComponent } from './form.component';
 
 @Component({
     selector: 'gallery-block-form',
     template: `
         <upload-input
-            [FormGroup]="formGroup"
-            FieldName="Pictures"
+            [FormGroup]="FormGroup"
+            [FieldName]="getFieldName('Pictures')"
             Label="Картинки"
             [Multiple]="true"
             [Service]="getService()"
@@ -19,7 +19,7 @@ import { SnackBarService } from 'app/@common/snacks/SnackBarService';
         ></upload-input>
     `
 })
-export class GalleryBlockFormComponent extends SimpleFormComponent<
+export class GalleryBlockFormComponent extends PostBlockFormComponent<
     GalleryBlock
 > {
     constructor(
@@ -31,7 +31,7 @@ export class GalleryBlockFormComponent extends SimpleFormComponent<
 
     protected constructForm(): void {
         this.registerFormControl(
-            'Pictures',
+            this.getFieldName('Pictures'),
             [<any>Validators.required],
             'Data.Pictures'
         );

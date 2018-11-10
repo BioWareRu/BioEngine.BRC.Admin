@@ -1,17 +1,17 @@
 <div class="page-layout blank p-24">
     <form-layout *ngIf="formLoaded" [FormComponent]="this">
         <text-input
-            [FormGroup]="formGroup"
+            [FormGroup]="FormGroup"
             FieldName="Title"
             Label="Название"
         ></text-input>
         <text-input
-            [FormGroup]="formGroup"
+            [FormGroup]="FormGroup"
             FieldName="Url"
             Label="Адрес на сайте"
         ></text-input>
         <chips-input
-            [FormGroup]="formGroup"
+            [FormGroup]="FormGroup"
             FieldName="SectionIds"
             Label="Разделы"
             TitleField="Title"
@@ -19,7 +19,7 @@
             [Options]="Sections"
         ></chips-input>
         <chips-input
-            [FormGroup]="formGroup"
+            [FormGroup]="FormGroup"
             FieldName="TagIds"
             Label="Тэги"
             TitleField="Name"
@@ -35,21 +35,27 @@
                 class="blockElement"
                 cdkDrag
             >
+                <div class="delete" (click)="deleteBlock(block)">
+                    <mat-icon>delete</mat-icon>
+                </div>
                 <ng-container *ngSwitchCase="BlockTypes.Text">
                     <text-block-form
-                        [formGroup]="formGroup"
+                        [postFormComponent]="this"
+                        [FormGroup]="FormGroup"
                         [Model]="block"
                     ></text-block-form>
                 </ng-container>
                 <ng-container *ngSwitchCase="BlockTypes.Gallery">
                     <gallery-block-form
-                        [formGroup]="formGroup"
+                        [postFormComponent]="this"
+                        [FormGroup]="FormGroup"
                         [Model]="block"
                     ></gallery-block-form>
                 </ng-container>
                 <ng-container *ngSwitchCase="BlockTypes.File">
                     <file-block-form
-                        [formGroup]="formGroup"
+                        [postFormComponent]="this"
+                        [FormGroup]="FormGroup"
                         [Model]="block"
                     ></file-block-form>
                 </ng-container>

@@ -2,8 +2,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 import { ContentListComponent } from './list/list.component';
-import { PostFormComponent } from './posts/form/form.component';
-import { PostFormPageComponent } from './posts/form/form-page.component';
+import { PostFormPageComponent } from './form/form-page.component';
 
 const routes: Routes = [
     {
@@ -11,15 +10,11 @@ const routes: Routes = [
         component: ContentListComponent
     },
     {
-        path: 'list/:type',
-        component: ContentListComponent
-    },
-    {
-        path: 'posts/add',
+        path: 'add',
         component: PostFormPageComponent
     },
     {
-        path: 'posts/:id/edit',
+        path: ':id/edit',
         component: PostFormPageComponent
     },
     {
@@ -33,4 +28,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class ContentRoutingModule {}
+export class PostsRoutingModule {}

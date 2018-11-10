@@ -13,6 +13,15 @@
     display: block;
     margin-bottom: 10px;
     border-radius: 4px;
+    position: relative;
+
+    .delete {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        cursor: pointer;
+        z-index: 99;
+    }
 }
 
 .cdk-drag-preview {
