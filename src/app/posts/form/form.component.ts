@@ -96,7 +96,7 @@ export abstract class PostBlockFormComponent<TBlock extends BasePostBlock>
     public postFormComponent: PostFormComponent;
 
     public getFieldName(field: string): string {
-        return `File${this.Model.Position}`;
+        return `${field}${this.Model.Position}`;
     }
 
     public processChange(key: string, oldValue: any, newValue: any): void {
