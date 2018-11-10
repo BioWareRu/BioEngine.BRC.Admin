@@ -95,7 +95,7 @@ export abstract class PostBlockFormComponent<TBlock extends BasePostBlock>
     @Input()
     public postFormComponent: PostFormComponent;
 
-    protected getFieldName(field: string): string {
+    public getFieldName(field: string): string {
         return `File${this.Model.Position}`;
     }
 
