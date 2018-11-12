@@ -7,7 +7,6 @@ import { Menu, MenuItem } from '../@models/Menu';
 import { ITreeOptions, TreeComponent, TreeNode } from 'angular-tree-component';
 import { DialogService } from '../@common/modals/DialogService';
 import { MenuItemFormDialogComponent } from './menuItemForm.component';
-import { ConfirmationDialogService } from '../@common/modals/ConfirmationDialogService';
 import { SnackBarService } from 'app/@common/snacks/SnackBarService';
 
 @Component({
@@ -30,8 +29,7 @@ export class MenuFormComponent extends SingleSiteEntityFormComponent<
     public constructor(
         servicesProvider: ServicesProvider,
         snackBarService: SnackBarService,
-        private dialogService: DialogService,
-        private confirmationService: ConfirmationDialogService
+        private dialogService: DialogService
     ) {
         super(servicesProvider, snackBarService, servicesProvider.MenuService);
     }
@@ -48,18 +46,19 @@ export class MenuFormComponent extends SingleSiteEntityFormComponent<
     }
 
     public deleteMenuItem(currentNode: TreeNode): void {
-        const dialog = this.confirmationService.confirm(
-            'Удаление пункта меню',
-            'Вы точно хотите удалить это пункт меню?'
-        );
-        dialog.onConfirm.subscribe(() => {
-            const root = currentNode.parent
-                ? currentNode.parent.data.Items
-                : this.model.Items;
-            root.splice(root.indexOf(currentNode.data), 1);
-            this.tree.treeModel.update();
-            this.hasChanges = true;
-        });
+        this.dialogService
+            .confirm(
+                'Удаление пункта меню',
+                'Вы точно хотите удалить это пункт меню?'
+            )
+            .onConfirm.subscribe(() => {
+                const root = currentNode.parent
+                    ? currentNode.parent.data.Items
+                    : this.model.Items;
+                root.splice(root.indexOf(currentNode.data), 1);
+                this.tree.treeModel.update();
+                this.hasChanges = true;
+            });
     }
 
     public addMenuItem(currentNode: TreeNode = null): void {

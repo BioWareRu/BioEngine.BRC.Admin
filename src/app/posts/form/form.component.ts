@@ -11,13 +11,13 @@ import { GalleryBlock } from 'app/@models/GalleryBlock';
 import { FileBlock } from 'app/@models/FileBlock';
 import { moveItemInArray, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { SnackBarService } from 'app/@common/snacks/SnackBarService';
-import { ConfirmationDialogService } from 'app/@common/modals/ConfirmationDialogService';
 import { PageContext } from 'app/@common/PageComponent';
 import {
     ContentFormComponent,
     SimpleFormComponent
 } from 'app/@common/forms/FormComponent';
 import { ServicesProvider } from 'app/@services/ServicesProvider';
+import { DialogService } from 'app/@common/modals/DialogService';
 
 @Component({
     selector: 'post-form',
@@ -34,7 +34,7 @@ export class PostFormComponent extends ContentFormComponent<
     constructor(
         servicesProvider: ServicesProvider,
         snackBarService: SnackBarService,
-        private _confirmationService: ConfirmationDialogService
+        private _dialogService: DialogService
     ) {
         super(servicesProvider, snackBarService, servicesProvider.PostsService);
     }
@@ -58,15 +58,13 @@ export class PostFormComponent extends ContentFormComponent<
     }
 
     public deleteBlock(block: BasePostBlock): void {
-        const dialog = this._confirmationService.confirm(
-            'Удаление блока',
-            'Вы точно хотите удалить это блок?'
-        );
-        dialog.onConfirm.subscribe(() => {
-            this.model.Blocks.splice(block.Position, 1);
-            this.calculatePositions();
-            this.hasChanges = true;
-        });
+        this._dialogService
+            .confirm('Удаление блока', 'Вы точно хотите удалить это блок?')
+            .onConfirm.subscribe(() => {
+                this.model.Blocks.splice(block.Position, 1);
+                this.calculatePositions();
+                this.hasChanges = true;
+            });
     }
 
     public drop(event: CdkDragDrop<string[]>): void {
