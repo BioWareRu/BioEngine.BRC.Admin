@@ -1,11 +1,11 @@
 import { FormComponent } from '../../@common/forms/FormComponent';
 import { Site } from '../../@models/Site';
 import { SaveSiteResponse } from '../../@models/results/Site';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ServicesProvider } from '../../@services/ServicesProvider';
-import { CustomValidators } from 'ng4-validators';
 import { SnackBarService } from 'app/@common/snacks/SnackBarService';
+import { CustomValidators } from 'ngx-custom-validators';
 
 @Component({
     selector: 'site-form',

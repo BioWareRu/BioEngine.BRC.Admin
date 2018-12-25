@@ -23,7 +23,7 @@ import { ServicesProvider } from './@services/ServicesProvider';
 import { RestClient } from './@common/HttpClient';
 import { SitesService } from './@services/SitesService';
 import { FormsModule } from '@angular/forms';
-import { CustomFormsModule } from 'ng4-validators';
+import { CustomFormsModule } from 'ngx-custom-validators';
 import { DevelopersService } from './@services/DevelopersService';
 import { GamesService } from './@services/GamesService';
 import { TopicsService } from './@services/TopicsService';

@@ -31,14 +31,12 @@ import {
     Properties,
     PropertiesElementType
 } from '../../@models/base/Properties';
-import { CustomValidators } from 'ng4-validators';
 import { BaseSection } from '../../@models/Section';
 import { Tag } from '../../@models/Tag';
 import { Site } from '../../@models/Site';
 import { SnackBarMessage } from '../snacks/SnackBarMessage';
 import { SnackBarService } from '../snacks/SnackBarService';
-import { PostBlock, BasePostBlock } from 'app/@models/Post';
-import { PostFormComponent } from 'app/posts/form/form.component';
+import { CustomValidators } from 'ngx-custom-validators';
 
 export abstract class FormPageComponent<
     TModel extends Model,
