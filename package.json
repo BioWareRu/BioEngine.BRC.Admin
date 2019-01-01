@@ -45,7 +45,7 @@
         "moment": "2.23.0",
         "ng2-ckeditor": "^1.2.2",
         "ngx-custom-validators": "^7.0.0",
-        "ngx-input-file": "^7.0.0",
+        "ngx-input-file": "^7.0.1",
         "ngx-moment": "3.3.0",
         "object-path": "^0.11.4",
         "perfect-scrollbar": "^1.4.0",
