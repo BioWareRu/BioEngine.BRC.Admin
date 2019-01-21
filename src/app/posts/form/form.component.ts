@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import {
     Post,
     ContentBlockItemType,
@@ -18,6 +18,7 @@ import {
 } from 'app/@common/forms/FormComponent';
 import { ServicesProvider } from 'app/@services/ServicesProvider';
 import { DialogService } from 'app/@common/modals/DialogService';
+import { StateService } from 'app/@common/StateService';
 
 @Component({
     selector: 'post-form',
@@ -25,22 +26,42 @@ import { DialogService } from 'app/@common/modals/DialogService';
     styleUrls: ['./form.component.scss'],
     providers: [PageContext]
 })
-export class PostFormComponent extends ContentFormComponent<
-    Post,
-    SavePostResponse
-> {
-    public BlockTypes = ContentBlockItemType;
-
+export class PostFormComponent
+    extends ContentFormComponent<Post, SavePostResponse>
+    implements OnInit, OnDestroy {
     constructor(
         servicesProvider: ServicesProvider,
         snackBarService: SnackBarService,
-        private _dialogService: DialogService
+        private _dialogService: DialogService,
+        private _stateService: StateService
     ) {
         super(servicesProvider, snackBarService, servicesProvider.PostsService);
+    }
+    public BlockTypes = ContentBlockItemType;
+
+    public lastBlockType: ContentBlockItemType;
+    ngOnInit(): void {
+        this._stateService.hideToolbar();
+    }
+    ngOnDestroy(): void {
+        this._stateService.showToolbar();
+    }
+
+    protected afterInit(): void {
+        if (!this.modelId || !this.model.Blocks) {
+            this.addBlock(ContentBlockItemType.Text);
+        }
     }
 
     public addBlock(type: ContentBlockItemType): void {
         let block: PostBlock<any>;
+        const isText = type === ContentBlockItemType.Text;
+        if (!isText && this.lastBlockType === ContentBlockItemType.Text) {
+            const lastBlock = this.model.Blocks[this.model.Blocks.length - 1];
+            if (lastBlock.isEmpty()) {
+                this.model.Blocks.splice(this.model.Blocks.length - 1, 1);
+            }
+        }
         switch (type) {
             case ContentBlockItemType.Text:
                 block = new TextBlock();
@@ -55,6 +76,10 @@ export class PostFormComponent extends ContentFormComponent<
         block.Position = this.model.Blocks.length;
         this.model.Blocks.push(block);
         this.hasChanges = true;
+        this.lastBlockType = type;
+        if (!isText) {
+            this.addBlock(ContentBlockItemType.Text);
+        }
     }
 
     public deleteBlock(block: BasePostBlock): void {
@@ -64,6 +89,9 @@ export class PostFormComponent extends ContentFormComponent<
                 this.model.Blocks.splice(block.Position, 1);
                 this.calculatePositions();
                 this.hasChanges = true;
+                if (this.model.Blocks.length === 0) {
+                    this.addBlock(ContentBlockItemType.Text);
+                }
             });
     }
 
@@ -83,6 +111,7 @@ export class PostFormComponent extends ContentFormComponent<
         this.model.Blocks.forEach(block => {
             block.Position = index;
             index++;
+            this.lastBlockType = block.Type;
         });
     }
 }

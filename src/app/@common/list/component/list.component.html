@@ -5,7 +5,7 @@
     <mat-table [dataSource]="provider.items" matSort>
         <ng-container
             *ngFor="let column of provider.columns"
-            matColumnDef="{{column.Key}}"
+            matColumnDef="{{ column.Key }}"
         >
             <mat-header-cell
                 *matHeaderCellDef
@@ -18,7 +18,7 @@
                 *matCellDef="let row"
                 [ngClass]="{ actions: column.Type == columnTypes.Actions }"
             >
-                <ng-container ngSwitch="{{column.Type}}">
+                <ng-container ngSwitch="{{ column.Type }}">
                     <ng-container *ngSwitchCase="columnTypes.Text"
                         >{{ column.getValue(row) }}
                     </ng-container>
@@ -39,7 +39,11 @@
                     </ng-container>
                     <ng-container *ngSwitchCase="columnTypes.TimeAgo">
                         <span
-                            title="{{column.getValue(row)| amLocal | amDateFormat:'DD MMMM YYYY, HH:mm:ss'}}"
+                            title="{{
+                                column.getValue(row)
+                                    | amLocal
+                                    | amDateFormat: 'DD MMMM YYYY, HH:mm:ss'
+                            }}"
                             >{{ column.getValue(row) | amTimeAgo }}</span
                         >
                     </ng-container>
@@ -91,7 +95,7 @@
                         </button>
                         <mat-menu #menu="matMenu">
                             <ng-container *ngFor="let action of column.Actions">
-                                <ng-container ngSwitch="{{action.Type}}">
+                                <ng-container ngSwitch="{{ action.Type }}">
                                     <button
                                         mat-menu-item
                                         *ngSwitchCase="action.Types.Click"

@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { FormInput } from './FormInput';
 import './CKEInputComponent.loader';
-import 'ckeditor';
+import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { MatFormFieldControl } from '@angular/material';
 import { FormBuilder, FormGroup, NgControl } from '@angular/forms';
@@ -22,6 +22,7 @@ import { FocusMonitor } from '@angular/cdk/a11y';
     templateUrl: './CKEInputComponent.html'
 })
 export class CKEInputComponent extends FormInput {
+    public Editor = BalloonEditor;
     public config = {
         height: '300',
         extraAllowedContent: true,

@@ -1,10 +1,10 @@
-import {NgModule} from '@angular/core';
-import {ListTableComponent} from './list/component/list.component';
-import {CommonModule} from '@angular/common';
-import {RouterModule} from '@angular/router';
-import {MomentModule} from 'ngx-moment';
+import { NgModule } from '@angular/core';
+import { ListTableComponent } from './list/component/list.component';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { MomentModule } from 'ngx-moment';
 import 'moment/locale/ru';
-import {BioFormsModule} from './forms/FormsModule';
+import { BioFormsModule } from './forms/FormsModule';
 import {
     MatButtonModule,
     MatCardModule,
@@ -19,11 +19,17 @@ import {
     MatSortModule,
     MatTableModule
 } from '@angular/material';
-import {BrcPerfectScrollbarDirective} from './scroll/scrollbar.component';
-import {UserComponent} from './user/user.component';
-import {FlexLayoutModule} from '@angular/flex-layout';
-import {NotificationComponent} from './snacks/NotificationComponent';
-import {ConfirmationDialogComponent} from './modals/ConfirmationDialogService';
+import { BrcPerfectScrollbarDirective } from './scroll/scrollbar.component';
+import { UserComponent } from './user/user.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { NotificationComponent } from './snacks/NotificationComponent';
+import { ConfirmationDialogComponent } from './modals/ConfirmationDialogService';
+import {
+    StorageManagerComponent,
+    CreateFolderDialogComponent,
+    FileSizePipe
+} from './storage/StorageManagerComponent';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -31,7 +37,10 @@ import {ConfirmationDialogComponent} from './modals/ConfirmationDialogService';
         BrcPerfectScrollbarDirective,
         UserComponent,
         NotificationComponent,
-        ConfirmationDialogComponent
+        ConfirmationDialogComponent,
+        StorageManagerComponent,
+        CreateFolderDialogComponent,
+        FileSizePipe
     ],
     exports: [
         CommonModule,
@@ -47,7 +56,9 @@ import {ConfirmationDialogComponent} from './modals/ConfirmationDialogService';
         UserComponent,
         FlexLayoutModule,
         MatButtonModule,
-        MatDialogModule
+        MatDialogModule,
+        StorageManagerComponent,
+        FileSizePipe
     ],
     providers: [],
     imports: [
@@ -65,13 +76,13 @@ import {ConfirmationDialogComponent} from './modals/ConfirmationDialogService';
         MatSortModule,
         CommonModule,
         FlexLayoutModule,
-        MatDialogModule
+        MatDialogModule,
+        FormsModule
     ],
     entryComponents: [
         NotificationComponent,
-        ConfirmationDialogComponent
+        ConfirmationDialogComponent,
+        CreateFolderDialogComponent
     ]
 })
-export class BioCommonModule {
-
-}
+export class BioCommonModule {}

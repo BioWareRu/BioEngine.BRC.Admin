@@ -30,6 +30,7 @@ export abstract class BasePostBlock {
     public Id: number;
     public abstract Type: ContentBlockItemType;
     public Position: number;
+    public abstract isEmpty(): boolean;
 }
 
 export abstract class PostBlock<T extends PostBlockData> extends BasePostBlock {

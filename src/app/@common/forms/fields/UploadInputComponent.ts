@@ -48,7 +48,7 @@ export class UploadInputComponent extends FormInput implements OnInit {
 
     processFiles($event: InputFile): void {
         const queue = [];
-        queue.push(this.Service.upload($event));
+        queue.push(this.Service.upload($event.file));
         console.log(JSON.stringify(this.uploadControl.value));
         this.processUpload(queue);
     }

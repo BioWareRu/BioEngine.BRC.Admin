@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { ErrorsListComponent } from './ErrorsListComponent';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CKEditorModule } from 'ng2-ckeditor';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import {
     CKEFormFieldControlComponent,
     CKEInputComponent

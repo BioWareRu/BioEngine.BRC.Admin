@@ -10,12 +10,14 @@ import { TextBlockFormComponent } from './form/textblock-form.component';
 import { GalleryBlockFormComponent } from './form/galleryblock-form.component';
 import { FileBlockFormComponent } from './form/fileblock-form.component';
 import { PostFormPageComponent } from './form/form-page.component';
+import { MatSidenavModule } from '@angular/material';
 @NgModule({
     imports: [
         PostsRoutingModule,
         BioCommonModule,
         BioFormsModule,
-        DragDropModule
+        DragDropModule,
+        MatSidenavModule
     ],
     declarations: [
         ContentListComponent,

@@ -7,6 +7,7 @@ import { SitesModule } from './sites/sites.module';
 import { SectionsModule } from './sections/sections.module';
 import { TagsModule } from './tags/tags.module';
 import { PostsModule } from './posts/posts.module';
+import { StorageModule } from './storage/storage.module';
 
 const routes: Routes = [
     { path: 'dashboard', loadChildren: () => DashboardModule },
@@ -16,6 +17,7 @@ const routes: Routes = [
     { path: 'tags', loadChildren: () => TagsModule },
     { path: 'pages', loadChildren: () => PagesModule },
     { path: 'menu', loadChildren: () => MenuModule },
+    { path: 'storage', loadChildren: () => StorageModule },
     { path: '**', redirectTo: 'dashboard' }
 ];
 

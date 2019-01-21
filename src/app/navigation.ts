@@ -116,6 +116,13 @@ export const navigation: NavigationItem[] = [
         icon: 'poll'
     },
     {
+        id: 'storage',
+        type: 'item',
+        title: 'Хранилище',
+        icon: 'file',
+        url: '/storage'
+    },
+    {
         id: 'settings',
         type: 'item',
         title: 'Настройки',

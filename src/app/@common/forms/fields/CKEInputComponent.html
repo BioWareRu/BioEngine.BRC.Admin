@@ -1,11 +1,14 @@
-<mat-form-field [fxFlex]="FxFlex" [appearance]="Appearance">
-    <mat-label>{{ Label }}</mat-label>
-    <mat-ckeditor
+<!-- <mat-form-field [fxFlex]="FxFlex" [appearance]="Appearance">
+    <mat-label>{{ Label }}</mat-label> -->
+<!-- <mat-ckeditor
         [fieldName]="FieldName"
         [FormGroup]="FormGroup"
         [ckeConfig]="config"
-    ></mat-ckeditor>
-    <mat-error
+    ></mat-ckeditor> -->
+<div [formGroup]="FormGroup">
+    <ckeditor [editor]="Editor" [formControlName]="FieldName"></ckeditor>
+</div>
+<!-- <mat-error
         ><span *ngFor="let error of Errors">{{ error }}</span></mat-error
     >
-</mat-form-field>
+</mat-form-field> -->
