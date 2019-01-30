@@ -1,3 +1,4 @@
+import { DialogService } from './../../modals/DialogService';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormInput } from './FormInput';
 import { Observable } from 'rxjs/Observable';
@@ -8,6 +9,8 @@ import { InputFile } from 'ngx-input-file';
 import { FormControl } from '@angular/forms';
 import { SnackBarService } from '../../snacks/SnackBarService';
 import { SnackBarMessage } from '../../snacks/SnackBarMessage';
+import { StorageManagerDialogComponent } from 'app/@common/storage/StorageManagerDialogComponent';
+import { DialogConfig } from 'app/@common/modals/DialogConfig';
 
 @Component({
     selector: 'upload-input',
@@ -22,8 +25,18 @@ export class UploadInputComponent extends FormInput implements OnInit {
     protected items: StorageItem[] = [];
     private uploadControl: FormControl;
 
-    public constructor(private snackBarService: SnackBarService) {
+    public constructor(
+        private snackBarService: SnackBarService,
+        private dialogService: DialogService
+    ) {
         super();
+    }
+
+    public openStorageManager(): void {
+        this.dialogService.show(StorageManagerDialogComponent, '', (config: DialogConfig) => {
+            config.maxWidth = '90vw';
+            config.width = '90vw';
+        });
     }
 
     ngOnInit(): void {
@@ -69,10 +82,7 @@ export class UploadInputComponent extends FormInput implements OnInit {
             values.push({
                 link: item.PublicUri,
                 preview: this.DisplayMode === 'images' ? item.PublicUri : null,
-                file:
-                    this.DisplayMode !== 'images'
-                        ? { name: item.FileName }
-                        : null
+                file: this.DisplayMode !== 'images' ? { name: item.FileName } : null
             });
         });
         console.log(JSON.stringify(this.uploadControl.value));
@@ -93,10 +103,7 @@ export class UploadInputComponent extends FormInput implements OnInit {
                 this.Control.patchValue(item);
             }
             this.snackBarService.success(
-                new SnackBarMessage(
-                    'Загрузка файлов',
-                    'Загрузка файлов успешно завершена'
-                )
+                new SnackBarMessage('Загрузка файлов', 'Загрузка файлов успешно завершена')
             );
         });
     }

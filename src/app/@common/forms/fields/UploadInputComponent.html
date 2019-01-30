@@ -1,11 +1,8 @@
 <mat-form-field [formGroup]="FormGroup" [fxFlex]="FxFlex">
-    <mat-label>{{Label}}</mat-label>
-    <input-file [formControlName]="this.FieldName + 'upload'" [placeholder]="''"
-                (acceptedFile)="processFiles($event)" (deletedFile)="delete($event)" [fileLimit]="Multiple?100:1"
-                [fileAccept]="Types.join(',')">
-    </input-file>
-    <mat-error *ngFor="let error of Errors">{{error}}</mat-error>
-    <input style="width: 0; height: 0;" matInput [formControlName]="FieldName">
+    <mat-label>{{ Label }}</mat-label>
+    <mat-icon (click)="openStorageManager()">add</mat-icon>
+    <mat-error *ngFor="let error of Errors">{{ error }}</mat-error>
+    <input style="width: 0; height: 0;" matInput [formControlName]="FieldName" />
 </mat-form-field>
 <!--<mat-form-field [formGroup]="FormGroup" [fxFlex]="FxFlex" [appearance]="Appearance" floatLabel="always">
     <mat-label>{{Label}}</mat-label>-->

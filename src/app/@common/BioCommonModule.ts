@@ -31,6 +31,7 @@ import {
 } from './storage/StorageManagerComponent';
 import { FormsModule } from '@angular/forms';
 import { DynamicHostDirective } from './directives/DynamicHostDirective';
+import { StorageManagerDialogComponent } from './storage/StorageManagerDialogComponent';
 
 @NgModule({
     declarations: [
@@ -42,7 +43,8 @@ import { DynamicHostDirective } from './directives/DynamicHostDirective';
         StorageManagerComponent,
         CreateFolderDialogComponent,
         FileSizePipe,
-        DynamicHostDirective
+        DynamicHostDirective,
+        StorageManagerDialogComponent
     ],
     exports: [
         CommonModule,
@@ -85,7 +87,8 @@ import { DynamicHostDirective } from './directives/DynamicHostDirective';
     entryComponents: [
         NotificationComponent,
         ConfirmationDialogComponent,
-        CreateFolderDialogComponent
+        CreateFolderDialogComponent,
+        StorageManagerDialogComponent
     ]
 })
 export class BioCommonModule {}

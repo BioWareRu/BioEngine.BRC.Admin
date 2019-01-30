@@ -17,11 +17,11 @@ export class DialogService {
     public show<T extends DialogComponent<TData>, TData>(
         dialogComponent: ComponentType<T> | TemplateRef<T>,
         data: TData,
-        configure?: (config: DialogConfig) => void
+        configure: (config: DialogConfig) => void = null
     ): T {
         const config = new DialogConfig();
-        if (configure) {
-            configure.apply(this, config);
+        if (configure !== null) {
+            configure(config);
         }
         config.data = data;
         const dialogRef = this.dialog.open<T>(dialogComponent, config);
@@ -37,12 +37,7 @@ export class DialogService {
     ): ConfirmationDialogComponent {
         return this.show(
             ConfirmationDialogComponent,
-            new ConfirmationDialogComponentData(
-                title,
-                text,
-                confirmText,
-                cancelText
-            )
+            new ConfirmationDialogComponentData(title, text, confirmText, cancelText)
         );
     }
 }
