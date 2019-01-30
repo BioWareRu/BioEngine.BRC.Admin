@@ -30,6 +30,7 @@ import {
     FileSizePipe
 } from './storage/StorageManagerComponent';
 import { FormsModule } from '@angular/forms';
+import { DynamicHostDirective } from './directives/DynamicHostDirective';
 
 @NgModule({
     declarations: [
@@ -40,7 +41,8 @@ import { FormsModule } from '@angular/forms';
         ConfirmationDialogComponent,
         StorageManagerComponent,
         CreateFolderDialogComponent,
-        FileSizePipe
+        FileSizePipe,
+        DynamicHostDirective
     ],
     exports: [
         CommonModule,
@@ -58,7 +60,8 @@ import { FormsModule } from '@angular/forms';
         MatButtonModule,
         MatDialogModule,
         StorageManagerComponent,
-        FileSizePipe
+        FileSizePipe,
+        DynamicHostDirective
     ],
     providers: [],
     imports: [
