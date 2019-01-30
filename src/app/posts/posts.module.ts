@@ -6,11 +6,12 @@ import { BioCommonModule } from '../@common/BioCommonModule';
 import { BioFormsModule } from '../@common/forms/FormsModule';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { PostFormComponent } from './form/form.component';
-import { TextBlockFormComponent } from './form/textblock-form.component';
-import { GalleryBlockFormComponent } from './form/galleryblock-form.component';
-import { FileBlockFormComponent } from './form/fileblock-form.component';
+import { TextBlockFormComponent } from './form/blocks/textblock-form.component';
+import { GalleryBlockFormComponent } from './form/blocks/galleryblock-form.component';
+import { FileBlockFormComponent } from './form/blocks/fileblock-form.component';
 import { PostFormPageComponent } from './form/form-page.component';
 import { MatSidenavModule } from '@angular/material';
+import { BlockFormComponent } from './form/block-form.component';
 @NgModule({
     imports: [
         PostsRoutingModule,
@@ -25,7 +26,9 @@ import { MatSidenavModule } from '@angular/material';
         TextBlockFormComponent,
         GalleryBlockFormComponent,
         FileBlockFormComponent,
-        PostFormPageComponent
-    ]
+        PostFormPageComponent,
+        BlockFormComponent
+    ],
+    entryComponents: [TextBlockFormComponent, GalleryBlockFormComponent, FileBlockFormComponent]
 })
 export class PostsModule {}

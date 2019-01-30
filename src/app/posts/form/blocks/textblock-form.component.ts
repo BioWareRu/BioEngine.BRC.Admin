@@ -2,7 +2,7 @@ import { TextBlock } from 'app/@models/TextBlock';
 import { Validators } from '@angular/forms';
 import { Component } from '@angular/core';
 import { SnackBarService } from 'app/@common/snacks/SnackBarService';
-import { PostBlockFormComponent } from './form.component';
+import { PostBlockFormComponent } from '../form.component';
 
 @Component({
     selector: 'text-block-form',

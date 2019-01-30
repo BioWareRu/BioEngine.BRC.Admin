@@ -1,11 +1,7 @@
 <div class="page-layout blank p-24 bg-white" *ngIf="formLoaded">
     <div fxLayout="row" class="post-form">
         <div fxFlex="70" class="editor p-8 mat-elevation-z8 ">
-            <text-input
-                [FormGroup]="FormGroup"
-                FieldName="Title"
-                Label="Название"
-            ></text-input>
+            <text-input [FormGroup]="FormGroup" FieldName="Title" Label="Название"></text-input>
             <div class="blocks" cdkDropList (cdkDropListDropped)="drop($event)">
                 <div
                     *ngFor="let block of model.Blocks"
@@ -13,50 +9,23 @@
                     class="blockElement"
                     cdkDrag
                 >
-                    <div
-                        class="blockButton delete"
-                        (click)="deleteBlock(block)"
-                    >
+                    <div class="blockButton delete" (click)="deleteBlock(block)">
                         <mat-icon>delete</mat-icon>
                     </div>
                     <div class="blockButton handle" cdkDragHandle>
-                        <svg
-                            width="24px"
-                            fill="currentColor"
-                            viewBox="0 0 24 24"
-                        >
+                        <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
                             <path
                                 d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"
                             ></path>
                             <path d="M0 0h24v24H0z" fill="none"></path>
                         </svg>
                     </div>
-                    <ng-container *ngSwitchCase="BlockTypes.Text">
-                        <text-block-form
-                            [postFormComponent]="this"
-                            [FormGroup]="FormGroup"
-                            [Model]="block"
-                        ></text-block-form>
-                    </ng-container>
-                    <ng-container *ngSwitchCase="BlockTypes.Gallery">
-                        <gallery-block-form
-                            [postFormComponent]="this"
-                            [FormGroup]="FormGroup"
-                            [Model]="block"
-                        ></gallery-block-form>
-                    </ng-container>
-                    <ng-container *ngSwitchCase="BlockTypes.File">
-                        <file-block-form
-                            [postFormComponent]="this"
-                            [FormGroup]="FormGroup"
-                            [Model]="block"
-                        ></file-block-form>
-                    </ng-container>
-                    <button
-                        class="addBlock"
-                        mat-icon-button
-                        [matMenuTriggerFor]="menu"
-                    >
+                    <blockForm
+                        [postFormComponent]="this"
+                        [FormGroup]="FormGroup"
+                        [Model]="block"
+                    ></blockForm>
+                    <button class="addBlock" mat-icon-button [matMenuTriggerFor]="menu">
                         <mat-icon>add</mat-icon>
                     </button>
                 </div>
@@ -116,11 +85,7 @@
                     Спрятать
                 </button>
             </div>
-            <text-input
-                [FormGroup]="FormGroup"
-                FieldName="Url"
-                Label="Адрес на сайте"
-            ></text-input>
+            <text-input [FormGroup]="FormGroup" FieldName="Url" Label="Адрес на сайте"></text-input>
             <chips-input
                 [FormGroup]="FormGroup"
                 FieldName="SectionIds"
@@ -143,6 +108,6 @@
     </div>
 
     <!-- <form-layout *ngIf="formLoaded" [FormComponent]="this">
-        
+
     </form-layout> -->
 </div>

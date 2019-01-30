@@ -4,7 +4,7 @@ import { GalleryBlock } from 'app/@models/GalleryBlock';
 import { PostsService } from 'app/@services/ContentService';
 import { ServicesProvider } from 'app/@services/ServicesProvider';
 import { SnackBarService } from 'app/@common/snacks/SnackBarService';
-import { PostBlockFormComponent } from './form.component';
+import { PostBlockFormComponent } from '../form.component';
 
 @Component({
     selector: 'gallery-block-form',
@@ -19,13 +19,8 @@ import { PostBlockFormComponent } from './form.component';
         ></upload-input>
     `
 })
-export class GalleryBlockFormComponent extends PostBlockFormComponent<
-    GalleryBlock
-> {
-    constructor(
-        snackBarService: SnackBarService,
-        private servicesProvider: ServicesProvider
-    ) {
+export class GalleryBlockFormComponent extends PostBlockFormComponent<GalleryBlock> {
+    constructor(snackBarService: SnackBarService, private servicesProvider: ServicesProvider) {
         super(snackBarService);
     }
 
