@@ -119,7 +119,7 @@ export const navigation: NavigationItem[] = [
         id: 'storage',
         type: 'item',
         title: 'Хранилище',
-        icon: 'file',
+        icon: 'attachment',
         url: '/storage'
     },
     {
