@@ -24,7 +24,11 @@
     <mat-table [dataSource]="Items" matSort>
         <ng-container matColumnDef="select">
             <mat-header-cell *matHeaderCellDef></mat-header-cell>
-            <mat-cell *matCellDef="let element"> </mat-cell>
+            <mat-cell *matCellDef="let element">
+                <ng-container *ngIf="!element.IsDirectory && selectMode">
+                    <input type="checkbox" (click)="select($event.target.checked, element)" />
+                </ng-container>
+            </mat-cell>
         </ng-container>
         <ng-container matColumnDef="icon">
             <mat-header-cell *matHeaderCellDef></mat-header-cell>
@@ -76,4 +80,12 @@
         <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
         <mat-row *matRowDef="let row; columns: columnsToDisplay"></mat-row>
     </mat-table>
+    <button
+        mat-raised-button
+        (click)="confirmSelect()"
+        *ngIf="selectMode"
+        [disabled]="selection.Count() == 0"
+    >
+        Выбрать
+    </button>
 </div>

@@ -1,3 +1,4 @@
+import { IKeyedCollection, KeyedCollection } from 'app/@common/KeyedCollection';
 import {
     Component,
     OnInit,
@@ -5,13 +6,16 @@ import {
     ViewChild,
     ElementRef,
     Pipe,
-    PipeTransform
+    PipeTransform,
+    Input,
+    EventEmitter
 } from '@angular/core';
 import { StorageService, StorageNode } from 'app/@services/StorageService';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { DialogComponent } from '../modals/DialogComponent';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { DialogService } from '../modals/DialogService';
+import { StorageItem } from 'app/@models/results/StorageItem';
 
 @Component({
     selector: 'storage-manager',
@@ -26,6 +30,10 @@ export class StorageManagerComponent implements OnInit {
     public Items: StorageNode[] = [];
     public columnsToDisplay = ['select', 'icon', 'title', 'size', 'date'];
 
+    @Input()
+    public selectMode = false;
+    public onSelect = new EventEmitter<StorageNode[]>();
+
     public currentPath = '/';
     public breadcrumbs = [
         {
@@ -34,6 +42,8 @@ export class StorageManagerComponent implements OnInit {
         }
     ];
     @ViewChild('fileInput') fileInput: ElementRef;
+
+    public selection: IKeyedCollection<StorageNode> = new KeyedCollection<StorageNode>();
     ngOnInit(): void {
         let path = localStorage.getItem('beSMPath');
         if (!path) {
@@ -69,7 +79,20 @@ export class StorageManagerComponent implements OnInit {
         });
     }
 
-    public select(node: StorageNode): void {}
+    public select(isChecked: boolean, node: StorageNode): void {
+        if (isChecked) {
+            this.selection.Add(node.Item.FilePath, node);
+        } else {
+            if (this.selection.ContainsKey(node.Item.FilePath)) {
+                this.selection.Remove(node.Item.FilePath);
+            }
+        }
+    }
+
+    public confirmSelect(): void {
+        this.onSelect.emit(this.selection.Values());
+        this.selection = new KeyedCollection<StorageNode>();
+    }
 
     public enter(node: StorageNode): void {
         if (node.IsDirectory) {
@@ -79,28 +102,20 @@ export class StorageManagerComponent implements OnInit {
 
     public createFolder(): void {
         this._dialogService
-            .show<CreateFolderDialogComponent, string>(
-                CreateFolderDialogComponent,
-                ''
-            )
+            .show<CreateFolderDialogComponent, string>(CreateFolderDialogComponent, '')
             .dialogRef.afterClosed()
             .subscribe((res: string) => {
                 if (res !== '' && res !== null) {
                     let alreadyExists = false;
                     this.Items.forEach(item => {
-                        if (
-                            item.IsDirectory &&
-                            item.Name.toLowerCase() === res.toLowerCase()
-                        ) {
+                        if (item.IsDirectory && item.Name.toLowerCase() === res.toLowerCase()) {
                             alreadyExists = true;
                         }
                     });
                     if (alreadyExists) {
                         alert('folder already exists');
                     } else {
-                        this.load(
-                            (this.currentPath + '/' + res).replace('//', '/')
-                        );
+                        this.load((this.currentPath + '/' + res).replace('//', '/'));
                     }
                 }
             });
@@ -116,14 +131,12 @@ export class StorageManagerComponent implements OnInit {
         const items: StorageNode[] = [];
         for (let i = 0; i < lenght; i++) {
             const file = fileList[i];
-            this._storageService
-                .upload(file, this.currentPath)
-                .subscribe(item => {
-                    items.push(item);
-                    if (items.length === lenght) {
-                        this.load(this.currentPath);
-                    }
-                });
+            this._storageService.upload(file, this.currentPath).subscribe(item => {
+                items.push(item);
+                if (items.length === lenght) {
+                    this.load(this.currentPath);
+                }
+            });
         }
         console.log(fileList);
     }
@@ -133,13 +146,9 @@ export class StorageManagerComponent implements OnInit {
     selector: 'confirmation-dialog-component',
     template: `
         <h1 mat-dialog-title>Создать папку</h1>
-        <div mat-dialog-content>
-            <input type="text" required [(ngModel)]="folderName" />
-        </div>
+        <div mat-dialog-content><input type="text" required [(ngModel)]="folderName" /></div>
         <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end">
-            <button mat-raised-button color="warn" (click)="cancel()">
-                Отмена
-            </button>
+            <button mat-raised-button color="warn" (click)="cancel()">Отмена</button>
             <button
                 mat-raised-button
                 color="accent"

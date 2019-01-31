@@ -9,6 +9,17 @@ import { PostBlockFormComponent } from '../form.component';
 @Component({
     selector: 'gallery-block-form',
     template: `
+        <ng-container *ngFor="let picture of Model.Data.Pictures; index as index">
+            <div *ngIf="picture.PublicUri" class="uploadedImage">
+                <a class="img" href="{{ picture.PublicUri }}" target="_blank">
+                    <img
+                        style="max-width:100px"
+                        src="{{ picture.PublicUri }}"
+                        alt="{{ picture.FileName }}"
+                    />
+                </a>
+            </div>
+        </ng-container>
         <upload-input
             [FormGroup]="FormGroup"
             [FieldName]="getFieldName('Pictures')"

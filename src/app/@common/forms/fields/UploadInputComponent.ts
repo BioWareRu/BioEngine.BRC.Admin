@@ -11,6 +11,7 @@ import { SnackBarService } from '../../snacks/SnackBarService';
 import { SnackBarMessage } from '../../snacks/SnackBarMessage';
 import { StorageManagerDialogComponent } from 'app/@common/storage/StorageManagerDialogComponent';
 import { DialogConfig } from 'app/@common/modals/DialogConfig';
+import { StorageNode } from 'app/@services/StorageService';
 
 @Component({
     selector: 'upload-input',
@@ -33,10 +34,21 @@ export class UploadInputComponent extends FormInput implements OnInit {
     }
 
     public openStorageManager(): void {
-        this.dialogService.show(StorageManagerDialogComponent, '', (config: DialogConfig) => {
-            config.maxWidth = '90vw';
-            config.width = '90vw';
-        });
+        this.dialogService
+            .show(StorageManagerDialogComponent, '', (config: DialogConfig) => {
+                config.maxWidth = '90vw';
+                config.width = '90vw';
+            })
+            .dialogRef.afterClosed()
+            .subscribe((nodes: StorageNode[]) => {
+                const items = [];
+                nodes.forEach(node => {
+                    items.push(node.Item);
+                });
+
+                this.items = this.items.concat(items);
+                this.Control.patchValue(this.items);
+            });
     }
 
     ngOnInit(): void {
