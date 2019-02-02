@@ -1,8 +1,5 @@
 import { FormControl } from '@angular/forms';
-import {
-    AsyncValidatorFn,
-    ValidatorFn
-} from '@angular/forms/src/directives/validators';
+import { AsyncValidatorFn, ValidatorFn } from '@angular/forms/src/directives/validators';
 import { AbstractControlOptions } from '@angular/forms/src/model';
 import { BaseFormComponent } from './FormComponent';
 import * as objectPath from 'object-path';
@@ -17,11 +14,7 @@ export class BioFormControl extends FormControl {
         private _name: string,
         private _model: any,
         private _property: string,
-        validatorOrOpts?:
-            | ValidatorFn
-            | ValidatorFn[]
-            | AbstractControlOptions
-            | null,
+        validatorOrOpts?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null,
         asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null
     ) {
         super('', validatorOrOpts, asyncValidator);
@@ -39,7 +32,11 @@ export class BioFormControl extends FormControl {
         }
     }
 
-    reloadValue(): void {
+    public getValue(): any {
+        return objectPath.get(this._model, this._property);
+    }
+
+    public reloadValue(): void {
         this.setValue(objectPath.get(this._model, this._property));
     }
 

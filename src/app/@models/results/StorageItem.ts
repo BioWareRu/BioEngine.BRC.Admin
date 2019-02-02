@@ -1,4 +1,5 @@
 export class StorageItem {
+    public Id: number;
     public FileName: string;
     public FileSize = 0;
     public PublicUri: string;

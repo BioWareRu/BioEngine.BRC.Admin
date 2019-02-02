@@ -1,3 +1,4 @@
+import { BlocksManager } from './../../@common/blocks/BlocksManager';
 import { GalleryBlockFormComponent } from './blocks/galleryblock-form.component';
 import { DynamicHostDirective } from 'app/@common/directives/DynamicHostDirective';
 import { ViewChild, Component, Input, OnInit, ComponentFactoryResolver, Type } from '@angular/core';
@@ -21,7 +22,7 @@ export class BlockFormComponent<TModel extends BasePostBlock> implements OnInit 
     @ViewChild(DynamicHostDirective) adHost: DynamicHostDirective;
 
     @Input()
-    public postFormComponent: PostFormComponent;
+    public blocksManager: BlocksManager;
 
     @Input() public Model: TModel;
 
@@ -45,6 +46,6 @@ export class BlockFormComponent<TModel extends BasePostBlock> implements OnInit 
         const instance = <PostBlockFormComponent<TModel>>componentRef.instance;
         instance.Model = this.Model;
         instance.FormGroup = this.FormGroup;
-        instance.postFormComponent = this.postFormComponent;
+        instance.blocksManager = this.blocksManager;
     }
 }

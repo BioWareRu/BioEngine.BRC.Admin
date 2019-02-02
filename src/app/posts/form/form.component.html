@@ -2,7 +2,17 @@
     <div fxLayout="row" class="post-form">
         <div fxFlex="70" class="editor p-8 mat-elevation-z8 ">
             <text-input [FormGroup]="FormGroup" FieldName="Title" Label="Название"></text-input>
-            <div class="blocks" cdkDropList (cdkDropListDropped)="drop($event)">
+            <div *ngFor="let block of (BlocksManager.Blocks | async)" class="blockElement">
+                <blockForm
+                    [blocksManager]="BlocksManager"
+                    [FormGroup]="FormGroup"
+                    [Model]="block"
+                ></blockForm>
+            </div>
+            <!-- <div *ngFor="let block of model.Blocks" [ngSwitch]="block.Type" class="blockElement">
+
+            </div> -->
+            <!-- <div class="blocks" cdkDropList (cdkDropListDropped)="drop($event)">
                 <div
                     *ngFor="let block of model.Blocks"
                     [ngSwitch]="block.Type"
@@ -25,14 +35,14 @@
                         [FormGroup]="FormGroup"
                         [Model]="block"
                     ></blockForm>
-                    <button class="addBlock" mat-icon-button [matMenuTriggerFor]="menu">
+                    <button class="addBlock" mat-icon-button [m atMenuTriggerFor]="menu">
                         <mat-icon>add</mat-icon>
                     </button>
                 </div>
-            </div>
+            </div> -->
 
             <mat-menu #menu="matMenu">
-                <button
+                <!-- <button
                     *ngIf="lastBlockType !== BlockTypes.Text"
                     mat-menu-item
                     (click)="addBlock(BlockTypes.Text)"
@@ -47,7 +57,7 @@
                 <button mat-menu-item (click)="addBlock(BlockTypes.File)">
                     <mat-icon>attachment</mat-icon>
                     <span>Файл</span>
-                </button>
+                </button> -->
             </mat-menu>
         </div>
         <div fxFlex="20" class="side p-8">

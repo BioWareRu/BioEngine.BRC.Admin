@@ -3,7 +3,8 @@
     -webkit-tap-highlight-color: transparent;
     box-sizing: border-box;
 
-    &:before, &:after {
+    &:before,
+    &:after {
         box-sizing: border-box;
     }
 
@@ -13,12 +14,13 @@
     }
 }
 
-html, body {
+html,
+body {
     margin: 0;
     width: 100%;
     height: 100%;
     overflow: hidden;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
 html,
@@ -32,13 +34,13 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background: #F5F5F5;
+    background: #f5f5f5;
 }
 
 @import '~@angular/material/theming';
 @include mat-core();
 
-@import "app/@common/styles/theme";
+@import 'app/@common/styles/theme';
 
 @include angular-material-theme($brc-theme);
 
@@ -56,7 +58,6 @@ body {
 }
 
 @each $prop, $abbrev in (margin: m, padding: p) {
-
     @for $index from 0 through 64 {
         $size: $index * 4;
         $length: #{$size}px;
@@ -68,7 +69,7 @@ body {
 }
 
 .sidebar {
-    background-color: #415F8C;
+    background-color: #415f8c;
     display: flex;
     flex-direction: column;
     flex: 1 0 auto;
@@ -81,7 +82,7 @@ body {
     min-width: 280px;
     max-width: 280px;
     z-index: 1000;
-    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .35);
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.35);
     left: 0;
     position: relative !important;
 
@@ -93,11 +94,12 @@ body {
     }
 
     .nav-item a {
-        color: #FFF;
+        color: #fff;
     }
 }
 
-.input-file-container img.image-preview, .input-file-container .replace-button {
+.input-file-container img.image-preview,
+.input-file-container .replace-button {
     max-width: 10rem;
     max-height: 10rem;
     width: 100% !important;
@@ -129,5 +131,14 @@ snack-bar-container {
             color: mat-color($brc-accent, default-contrast);
             background: mat-color($brc-accent);
         }
+    }
+}
+
+text-block-form {
+    .ck.ck-editor__editable_inline > :last-child {
+        margin-bottom: 5px;
+    }
+    .ck.ck-editor__editable_inline > :first-child {
+        margin-top: 5px;
     }
 }

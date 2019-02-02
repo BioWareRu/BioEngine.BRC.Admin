@@ -1,3 +1,5 @@
+import { SelectGroup } from './AutocompleteInputComponent';
+import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import {
     Component,
     ElementRef,
@@ -5,11 +7,13 @@ import {
     Input,
     OnDestroy,
     OnInit,
-    ViewChild
+    ViewChild,
+    EventEmitter
 } from '@angular/core';
 import { FormInput } from './FormInput';
 import './CKEInputComponent.loader';
-import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
+// import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
+import * as InlineEditor from '@ckeditor/ckeditor5-build-inline';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { MatFormFieldControl } from '@angular/material';
 import { FormBuilder, FormGroup, NgControl } from '@angular/forms';
@@ -21,63 +25,61 @@ import { FocusMonitor } from '@angular/cdk/a11y';
     selector: 'cke-input',
     templateUrl: './CKEInputComponent.html'
 })
-export class CKEInputComponent extends FormInput {
-    public Editor = BalloonEditor;
-    public config = {
-        height: '300',
-        extraAllowedContent: true,
-        extraPlugins: 'divarea',
-        customConfig: '',
-        toolbar: [
-            { name: 'clipboard', items: ['Undo', 'Redo'] },
-            {
-                name: 'basicstyles',
-                items: [
-                    'Bold',
-                    'Italic',
-                    'Underline',
-                    'Strike',
-                    'RemoveFormat',
-                    'CopyFormatting'
-                ]
-            },
-            {
-                name: 'align',
-                items: [
-                    'JustifyLeft',
-                    'JustifyCenter',
-                    'JustifyRight',
-                    'JustifyBlock'
-                ]
-            },
-            { name: 'insert', items: ['Image', 'Iframe', 'Table'] },
-            { name: 'links', items: ['Link', 'Unlink'] },
-            {
-                name: 'paragraph',
-                items: [
-                    'NumberedList',
-                    'BulletedList',
-                    '-',
-                    'Outdent',
-                    'Indent',
-                    '-',
-                    'Blockquote'
-                ]
-            },
-            { name: 'styles', items: ['Format', 'Font', 'FontSize'] },
-            { name: 'colors', items: ['TextColor', 'BGColor'] },
-            { name: 'tools', items: ['Maximize', 'Source'] }
-        ],
-        filebrowserBrowseUrl: '',
-        filebrowserWindowWidth: '1000',
-        filebrowserWindowHeight: '700'
-    };
+export class CKEInputComponent extends FormInput implements OnInit {
+    view: any;
+    focusOnReady: boolean;
 
     public constructor(private oauthService: OAuthService) {
         super();
-        this.config.filebrowserBrowseUrl =
-            '/ckfinder/ckfinder.html?token=' +
-            this.oauthService.getAccessToken();
+    }
+    public Editor = InlineEditor;
+
+    @Input() public blockMode = false;
+    public onSplit = new EventEmitter<string>();
+    public onDelete = new EventEmitter();
+
+    splitSymbol = '‌‌\u200C';
+    focus(): void {
+        this.focusOnReady = true;
+    }
+
+    public ready(editor): void {
+        this.view = editor.editing.view;
+        if (this.focusOnReady) {
+            this.view.focus();
+        }
+        if (this.blockMode) {
+            const model = editor.model;
+            const doc = model.document;
+            this.view.document.on('enter', (eventInfo, data) => {
+                data.preventDefault();
+                if (!data.isSoft) {
+                    editor.model.change(writer => {
+                        const splitPos = doc.selection.getFirstRange().start;
+                        writer.split(splitPos);
+                        writer.setSelection(splitPos.parent.nextSibling, 'before');
+
+                        writer.insert(
+                            writer.createText(this.splitSymbol),
+                            doc.selection.getFirstRange().start
+                        );
+                    });
+                    eventInfo.stop();
+                    this.onSplit.emit(this.splitSymbol);
+                }
+            });
+            editor.keystrokes.set('backspace', (keyEvtData, cancel) => {
+                if (!this.Control.getValue() || this.Control.getValue() === '<p>&nbsp;</p>') {
+                    this.onDelete.emit();
+                }
+            });
+        }
+    }
+
+    public onChange({ editor }: ChangeEvent): void {
+        const data = editor.getData();
+
+        // console.log(editor);
     }
 }
 
@@ -106,10 +108,7 @@ export class CKEFormFieldControlValue {
     ]
 })
 export class CKEFormFieldControlComponent
-    implements
-        MatFormFieldControl<CKEFormFieldControlValue>,
-        OnInit,
-        OnDestroy {
+    implements MatFormFieldControl<CKEFormFieldControlValue>, OnInit, OnDestroy {
     static nextId = 0;
 
     stateChanges = new Subject<void>();
@@ -130,11 +129,7 @@ export class CKEFormFieldControlComponent
     readonly controlType: string;
     readonly ngControl: NgControl | null;
 
-    constructor(
-        fb: FormBuilder,
-        private fm: FocusMonitor,
-        private elRef: ElementRef
-    ) {
+    constructor(fb: FormBuilder, private fm: FocusMonitor, private elRef: ElementRef) {
         fm.monitor(elRef.nativeElement, true).subscribe(origin => {
             this.focused = !!origin;
             this.stateChanges.next();
@@ -193,9 +188,7 @@ export class CKEFormFieldControlComponent
     @Input()
     get value(): CKEFormFieldControlValue | null {
         if (this.FormGroup) {
-            const n: CKEFormFieldControlValue = this.FormGroup.get(
-                this.fieldName
-            ).value;
+            const n: CKEFormFieldControlValue = this.FormGroup.get(this.fieldName).value;
             if (n.Text.length > 0) {
                 return new CKEFormFieldControlValue(n.Text);
             }
