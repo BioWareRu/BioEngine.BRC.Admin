@@ -12,8 +12,8 @@ import {
 } from '@angular/core';
 import { FormInput } from './FormInput';
 import './CKEInputComponent.loader';
-// import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
-import * as InlineEditor from '@ckeditor/ckeditor5-build-inline';
+import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
+// import * as InlineEditor from '@ckeditor/ckeditor5-build-inline';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { MatFormFieldControl } from '@angular/material';
 import { FormBuilder, FormGroup, NgControl } from '@angular/forms';
@@ -32,7 +32,7 @@ export class CKEInputComponent extends FormInput implements OnInit {
     public constructor(private oauthService: OAuthService) {
         super();
     }
-    public Editor = InlineEditor;
+    public Editor = BalloonEditor;
 
     @Input() public blockMode = false;
     public onSplit = new EventEmitter<string>();

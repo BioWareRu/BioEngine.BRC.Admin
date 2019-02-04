@@ -7,6 +7,8 @@ export class FileBlockData extends PostBlockData {
 }
 
 export class FileBlock extends PostBlock<FileBlockData> {
+    public Title = 'Файл';
+    public Icon = 'attachment';
     public Type: ContentBlockItemType = ContentBlockItemType.File;
     @Type(() => FileBlockData)
     Data: FileBlockData = new FileBlockData();

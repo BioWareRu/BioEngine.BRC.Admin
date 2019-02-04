@@ -17,7 +17,7 @@ export class BlocksManager {
     private BlocksSubject: Subject<BasePostBlock[]> = new BehaviorSubject<BasePostBlock[]>([]);
     public Blocks: Observable<BasePostBlock[]>;
 
-    private _types: IKeyedCollection<Type<any>> = new KeyedCollection<Type<any>>();
+    public readonly Types: IKeyedCollection<BlockConfig> = new KeyedCollection<BlockConfig>();
 
     public Update(): void {
         this.BlocksSubject.next(this._blocks.slice());
@@ -53,12 +53,12 @@ export class BlocksManager {
     }
 
     public CreateBlock<TBlock extends BasePostBlock>(type: ContentBlockItemType): TBlock {
-        if (!this._types.ContainsKey(type)) {
+        if (!this.Types.ContainsKey(type)) {
             throw new Error(`type ${type} is not registered!`);
         }
 
-        const typeClass = this._types.Item(type);
-        const block = new typeClass() as TBlock;
+        const config = this.Types.Item(type);
+        const block = new config.typeClass() as TBlock;
         block.Id = uuid.v4();
         return block as TBlock;
     }
@@ -68,11 +68,27 @@ export class BlocksManager {
         this.SetPositions();
     }
 
+    public ReplaceBlock(oldBlock: BasePostBlock, newBlock: BasePostBlock): void {
+        this._blocks[oldBlock.Position] = newBlock;
+        this.Update();
+    }
+
     public RegisterBlockType(type: ContentBlockItemType, typeClass: Type<any>): void {
-        if (this._types.ContainsKey(type)) {
+        if (this.Types.ContainsKey(type)) {
             throw new Error(`type ${type} already registered!`);
         }
 
-        this._types.Add(type, typeClass);
+        const block = new typeClass() as BasePostBlock;
+
+        this.Types.Add(type, new BlockConfig(type, typeClass, block.Title, block.Icon));
     }
+}
+
+export class BlockConfig {
+    constructor(
+        public type: ContentBlockItemType,
+        public typeClass: Type<any>,
+        public title: string,
+        public icon: string
+    ) {}
 }

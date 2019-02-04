@@ -17,6 +17,28 @@ import { ContentBlockItemType } from 'app/@models/Post';
             Label="Текст"
             [blockMode]="true"
         ></cke-input>
+        <ng-container *ngIf="Model.isEmpty()">
+            <button class="addBlock" mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>add</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <ng-container *ngFor="let config of blocksManager.Types.Values()">
+                    <button
+                        *ngIf="config.type !== this.Model.Type"
+                        mat-menu-item
+                        (click)="
+                            blocksManager.ReplaceBlock(
+                                this.Model,
+                                blocksManager.CreateBlock(config.type)
+                            )
+                        "
+                    >
+                        <mat-icon>{{ config.icon }}</mat-icon>
+                        <span>{{ config.title }}</span>
+                    </button></ng-container
+                >
+            </mat-menu>
+        </ng-container>
     `,
     styles: [
         `
@@ -25,6 +47,11 @@ import { ContentBlockItemType } from 'app/@models/Post';
             }
             .ck.ck-editor__editable_inline > :first-child {
                 margin-top: 5px;
+            }
+            .addBlock {
+                position: absolute;
+                top: -6px;
+                left: -50px;
             }
         `
     ]

@@ -3,6 +3,8 @@ import { Type } from 'class-transformer';
 import { StorageItem } from './results/StorageItem';
 
 export class GalleryBlock extends PostBlock<GalleryBlockData> {
+    public Title = 'Галерея';
+    public Icon = 'images';
     public Type: ContentBlockItemType = ContentBlockItemType.Gallery;
     @Type(() => GalleryBlockData)
     Data: GalleryBlockData = new GalleryBlockData();

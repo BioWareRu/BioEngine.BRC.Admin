@@ -31,6 +31,8 @@ export abstract class BasePostBlock {
     public abstract Type: ContentBlockItemType;
     public Position: number;
     public InFocus = false;
+    public abstract Title: string;
+    public abstract Icon: string;
     public abstract isEmpty(): boolean;
 }
 
