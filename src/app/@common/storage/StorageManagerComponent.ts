@@ -43,7 +43,7 @@ export class StorageManagerComponent implements OnInit {
     ];
     @ViewChild('fileInput') fileInput: ElementRef;
 
-    public selection: IKeyedCollection<StorageNode> = new KeyedCollection<StorageNode>();
+    public selection: IKeyedCollection<StorageNode, string> = new KeyedCollection<StorageNode>();
     ngOnInit(): void {
         let path = localStorage.getItem('beSMPath');
         if (!path) {

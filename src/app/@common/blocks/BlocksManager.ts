@@ -17,7 +17,9 @@ export class BlocksManager {
     private BlocksSubject: Subject<BasePostBlock[]> = new BehaviorSubject<BasePostBlock[]>([]);
     public Blocks: Observable<BasePostBlock[]>;
 
-    public readonly Types: IKeyedCollection<BlockConfig> = new KeyedCollection<BlockConfig>();
+    public readonly Types: IKeyedCollection<BlockConfig, string> = new KeyedCollection<
+        BlockConfig
+    >();
 
     public Update(): void {
         this.BlocksSubject.next(this._blocks.slice());
@@ -45,6 +47,9 @@ export class BlocksManager {
             moveItemInArray(this._blocks, block.Position, toIndex);
             this.SetPositions();
         }
+        if (block.Id === this.Last().Id && block.Type !== ContentBlockItemType.Text) {
+            this.AddBlock(this.CreateBlock(ContentBlockItemType.Text));
+        }
     }
 
     public RemoveBlock(block: BasePostBlock): void {
@@ -70,6 +75,10 @@ export class BlocksManager {
 
     public ReplaceBlock(oldBlock: BasePostBlock, newBlock: BasePostBlock): void {
         this._blocks[oldBlock.Position] = newBlock;
+        this.SetPositions();
+        if (newBlock.Id === this.Last().Id && newBlock.Type !== ContentBlockItemType.Text) {
+            this.AddBlock(this.CreateBlock(ContentBlockItemType.Text));
+        }
         this.Update();
     }
 
@@ -81,6 +90,26 @@ export class BlocksManager {
         const block = new typeClass() as BasePostBlock;
 
         this.Types.Add(type, new BlockConfig(type, typeClass, block.Title, block.Icon));
+    }
+
+    public First(): BasePostBlock {
+        for (const i in this._blocks) {
+            if (this._blocks.hasOwnProperty(i)) {
+                return this._blocks[i];
+            }
+        }
+    }
+    public Last(): BasePostBlock {
+        let item: BasePostBlock;
+        const sorted = this._blocks.sort((a, b) => {
+            return a.Position - b.Position;
+        });
+        for (const i in sorted) {
+            if (sorted.hasOwnProperty(i)) {
+                item = sorted[i];
+            }
+        }
+        return item;
     }
 }
 

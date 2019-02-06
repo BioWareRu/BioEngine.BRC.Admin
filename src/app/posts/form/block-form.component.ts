@@ -17,7 +17,7 @@ import { FileBlockFormComponent } from './blocks/fileblock-form.component';
 })
 export class BlockFormComponent<TModel extends BasePostBlock> implements OnInit {
     constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
-    static forms: IKeyedCollection<Type<any>> = new KeyedCollection<Type<any>>();
+    static forms: IKeyedCollection<Type<any>, string> = new KeyedCollection<Type<any>>();
 
     @ViewChild(DynamicHostDirective) adHost: DynamicHostDirective;
 
