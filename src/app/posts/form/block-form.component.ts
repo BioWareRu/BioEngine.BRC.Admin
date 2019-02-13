@@ -1,13 +1,16 @@
+import { YoutubeBlockFormComponent } from './blocks/youtubeblock-form.component';
+import { CutBlockFormComponent } from './blocks/cutblock-form.component';
 import { BlocksManager } from './../../@common/blocks/BlocksManager';
 import { GalleryBlockFormComponent } from './blocks/galleryblock-form.component';
 import { DynamicHostDirective } from 'app/@common/directives/DynamicHostDirective';
 import { ViewChild, Component, Input, OnInit, ComponentFactoryResolver, Type } from '@angular/core';
 import { PostFormComponent, PostBlockFormComponent } from './form.component';
 import { FormGroup } from '@angular/forms';
-import { BasePostBlock, ContentBlockItemType } from 'app/@models/Post';
+import { BasePostBlock, ContentBlockItemType } from 'app/@models/posts/Post';
 import { IKeyedCollection, KeyedCollection } from 'app/@common/KeyedCollection';
 import { TextBlockFormComponent } from './blocks/textblock-form.component';
 import { FileBlockFormComponent } from './blocks/fileblock-form.component';
+import { TwitterBlockFormComponent } from './blocks/twitterblock-form.component';
 
 @Component({
     selector: 'blockForm',
@@ -33,6 +36,9 @@ export class BlockFormComponent<TModel extends BasePostBlock> implements OnInit 
             BlockFormComponent.forms.Add(ContentBlockItemType.Text, TextBlockFormComponent);
             BlockFormComponent.forms.Add(ContentBlockItemType.Gallery, GalleryBlockFormComponent);
             BlockFormComponent.forms.Add(ContentBlockItemType.File, FileBlockFormComponent);
+            BlockFormComponent.forms.Add(ContentBlockItemType.Cut, CutBlockFormComponent);
+            BlockFormComponent.forms.Add(ContentBlockItemType.Twitter, TwitterBlockFormComponent);
+            BlockFormComponent.forms.Add(ContentBlockItemType.Youtube, YoutubeBlockFormComponent);
         }
 
         const componentFactory = this.componentFactoryResolver.resolveComponentFactory(

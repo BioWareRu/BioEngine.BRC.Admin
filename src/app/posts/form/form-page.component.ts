@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
 import { TopicsService } from 'app/@services/TopicsService';
 import { Topic } from 'app/@models/Topic';
 import { SaveTopicResponse } from 'app/@models/results/Topic';
-import { Post } from 'app/@models/Post';
+import { Post } from 'app/@models/posts/Post';
 import { SavePostResponse } from 'app/@models/results/Post';
 import { PostsService } from 'app/@services/ContentService';
 
@@ -16,10 +16,7 @@ import { PostsService } from 'app/@services/ContentService';
     `,
     providers: [PageContext]
 })
-export class PostFormPageComponent extends FormPageComponent<
-    Post,
-    SavePostResponse
-> {
+export class PostFormPageComponent extends FormPageComponent<Post, SavePostResponse> {
     constructor(context: PageContext, protected postsService: PostsService) {
         super(context);
     }

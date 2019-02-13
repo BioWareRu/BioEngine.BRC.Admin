@@ -1,5 +1,5 @@
 import { KeyedCollection } from 'app/@common/KeyedCollection';
-import { Post, PostBlock, BasePostBlock, ContentBlockItemType } from 'app/@models/Post';
+import { Post, PostBlock, BasePostBlock, ContentBlockItemType } from 'app/@models/posts/Post';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { DialogService } from '../modals/DialogService';

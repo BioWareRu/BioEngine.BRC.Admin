@@ -1,6 +1,6 @@
 import { ListResult } from '../../@common/list/ListResult';
 import { Type } from 'class-transformer';
-import { Post } from '../Post';
+import { Post } from '../posts/Post';
 import { SaveModelResponse } from 'app/@common/SaveModelResponse';
 
 export class PostListResult extends ListResult<Post> {

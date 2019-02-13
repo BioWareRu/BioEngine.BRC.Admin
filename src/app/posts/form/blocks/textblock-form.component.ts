@@ -1,11 +1,11 @@
 import { CKEInputComponent } from './../../../@common/forms/fields/CKEInputComponent';
-import { TextBlock, TextBlockData } from 'app/@models/TextBlock';
+import { TextBlock, TextBlockData } from 'app/@models/posts/TextBlock';
 import { Validators } from '@angular/forms';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { SnackBarService } from 'app/@common/snacks/SnackBarService';
 import { PostBlockFormComponent } from '../form.component';
 import { Model } from 'app/@models/base/Model';
-import { ContentBlockItemType } from 'app/@models/Post';
+import { ContentBlockItemType } from 'app/@models/posts/Post';
 
 @Component({
     selector: 'text-block-form',

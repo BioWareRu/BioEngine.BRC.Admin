@@ -1,7 +1,7 @@
 import { DialogService } from './../../../@common/modals/DialogService';
 import { Validators } from '@angular/forms';
 import { Component } from '@angular/core';
-import { GalleryBlock } from 'app/@models/GalleryBlock';
+import { GalleryBlock } from 'app/@models/posts/GalleryBlock';
 import { PostsService } from 'app/@services/ContentService';
 import { ServicesProvider } from 'app/@services/ServicesProvider';
 import { SnackBarService } from 'app/@common/snacks/SnackBarService';

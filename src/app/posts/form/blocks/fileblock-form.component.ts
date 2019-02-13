@@ -1,6 +1,6 @@
 import { Validators } from '@angular/forms';
 import { Component } from '@angular/core';
-import { FileBlock } from 'app/@models/FileBlock';
+import { FileBlock } from 'app/@models/posts/FileBlock';
 import { ServicesProvider } from 'app/@services/ServicesProvider';
 import { PostsService } from 'app/@services/ContentService';
 import { SnackBarService } from 'app/@common/snacks/SnackBarService';

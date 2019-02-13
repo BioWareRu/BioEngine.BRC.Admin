@@ -12,7 +12,7 @@ import { ListTableColumnType } from '../../@common/list/ListEnums';
 import { ListTableColumnAction } from '../../@common/list/ListTableColumnAction';
 import { BaseSection } from '../../@models/Section';
 import { Site } from '../../@models/Site';
-import { Post } from '../../@models/Post';
+import { Post } from '../../@models/posts/Post';
 import { PageContext } from '../../@common/PageComponent';
 import { Tag } from '../../@models/Tag';
 import { forkJoin } from 'rxjs';
@@ -22,16 +22,12 @@ import { forkJoin } from 'rxjs';
     templateUrl: './list.component.html',
     providers: [PageContext]
 })
-export class ContentListComponent extends ListComponent<Post>
-    implements OnInit {
+export class ContentListComponent extends ListComponent<Post> implements OnInit {
     private sites: Site[];
     private sections: BaseSection[];
     private tags: Tag[];
 
-    constructor(
-        context: PageContext,
-        private servicesProvider: ServicesProvider
-    ) {
+    constructor(context: PageContext, private servicesProvider: ServicesProvider) {
         super(context, servicesProvider.PostsService);
 
         context.StateService.setTitle('Список постов');
@@ -54,36 +50,28 @@ export class ContentListComponent extends ListComponent<Post>
     protected GetColumns(): ListTableColumn<Post>[] {
         return [
             new ListTableColumn<Post>('Id', '#').setSortable(),
-            new ListTableColumn<Post>('Title', 'Заголовок')
-                .setSortable()
-                .setLinkGetter(content => {
-                    return ['/posts/', content.Id, 'edit'];
-                }),
+            new ListTableColumn<Post>('Title', 'Заголовок').setSortable().setLinkGetter(content => {
+                return ['/posts/', content.Id, 'edit'];
+            }),
             new ListTableColumn<Post>(
                 'DateAdded',
                 'Дата',
                 ListTableColumnType.TimeAgo
             ).setSortable(),
             new SitesTableColumn<Post>('SiteIds', 'Сайты', this.sites),
-            new SectionsTableColumn<Post>(
-                'SectionIds',
-                'Разделы',
-                this.sections
-            ),
+            new SectionsTableColumn<Post>('SectionIds', 'Разделы', this.sections),
             new TagsTableColumn<Post>('TagIds', 'Тэги', this.tags),
             new AuthorTableColumn<Post>('Author', 'Автор'),
             new ListTableColumn<Post>('Actions', '')
                 .AddAction(
-                    new ListTableColumnAction<Post>(
-                        'Просмотреть на сайте',
-                        'public'
-                    ).setExternal(content => content.Url)
+                    new ListTableColumnAction<Post>('Просмотреть на сайте', 'public').setExternal(
+                        content => content.Url
+                    )
                 )
                 .AddAction(
-                    new ListTableColumnAction<Post>(
-                        'Удалить',
-                        'delete'
-                    ).setClick(content => this.deleteItem(content))
+                    new ListTableColumnAction<Post>('Удалить', 'delete').setClick(content =>
+                        this.deleteItem(content)
+                    )
                 )
         ];
     }

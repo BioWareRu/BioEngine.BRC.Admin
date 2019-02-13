@@ -1,3 +1,5 @@
+import { YoutubeBlockFormComponent } from './form/blocks/youtubeblock-form.component';
+import { CutBlockFormComponent } from './form/blocks/cutblock-form.component';
 import { NgModule } from '@angular/core';
 
 import { ContentListComponent } from './list/list.component';
@@ -12,6 +14,7 @@ import { FileBlockFormComponent } from './form/blocks/fileblock-form.component';
 import { PostFormPageComponent } from './form/form-page.component';
 import { MatSidenavModule } from '@angular/material';
 import { BlockFormComponent } from './form/block-form.component';
+import { TwitterBlockFormComponent } from './form/blocks/twitterblock-form.component';
 @NgModule({
     imports: [
         PostsRoutingModule,
@@ -27,8 +30,18 @@ import { BlockFormComponent } from './form/block-form.component';
         GalleryBlockFormComponent,
         FileBlockFormComponent,
         PostFormPageComponent,
-        BlockFormComponent
+        BlockFormComponent,
+        CutBlockFormComponent,
+        TwitterBlockFormComponent,
+        YoutubeBlockFormComponent
     ],
-    entryComponents: [TextBlockFormComponent, GalleryBlockFormComponent, FileBlockFormComponent]
+    entryComponents: [
+        TextBlockFormComponent,
+        GalleryBlockFormComponent,
+        FileBlockFormComponent,
+        CutBlockFormComponent,
+        TwitterBlockFormComponent,
+        YoutubeBlockFormComponent
+    ]
 })
 export class PostsModule {}

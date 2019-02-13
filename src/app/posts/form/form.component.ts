@@ -1,3 +1,5 @@
+import { YoutubeBlock } from './../../@models/posts/YoutubeBlock';
+import { CutBlock } from 'app/@models/posts/CutBlock';
 import { BlocksManager } from './../../@common/blocks/BlocksManager';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import {
@@ -6,11 +8,11 @@ import {
     PostBlock,
     BasePostBlock,
     PostBlockData
-} from 'app/@models/Post';
+} from 'app/@models/posts/Post';
 import { SavePostResponse } from 'app/@models/results/Post';
-import { TextBlock, TextBlockData } from 'app/@models/TextBlock';
-import { GalleryBlock } from 'app/@models/GalleryBlock';
-import { FileBlock } from 'app/@models/FileBlock';
+import { TextBlock, TextBlockData } from 'app/@models/posts/TextBlock';
+import { GalleryBlock } from 'app/@models/posts/GalleryBlock';
+import { FileBlock } from 'app/@models/posts/FileBlock';
 import { moveItemInArray, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { SnackBarService } from 'app/@common/snacks/SnackBarService';
 import { PageContext } from 'app/@common/PageComponent';
@@ -19,6 +21,7 @@ import { ServicesProvider } from 'app/@services/ServicesProvider';
 import { DialogService } from 'app/@common/modals/DialogService';
 import { StateService } from 'app/@common/StateService';
 import * as uuid from 'uuid';
+import { TwitterBlock } from 'app/@models/posts/TwitterBlock';
 
 @Component({
     selector: 'post-form',
@@ -53,6 +56,9 @@ export class PostFormComponent extends ContentFormComponent<Post, SavePostRespon
         this.BlocksManager.RegisterBlockType(ContentBlockItemType.Text, TextBlock);
         this.BlocksManager.RegisterBlockType(ContentBlockItemType.File, FileBlock);
         this.BlocksManager.RegisterBlockType(ContentBlockItemType.Gallery, GalleryBlock);
+        this.BlocksManager.RegisterBlockType(ContentBlockItemType.Cut, CutBlock);
+        this.BlocksManager.RegisterBlockType(ContentBlockItemType.Twitter, TwitterBlock);
+        this.BlocksManager.RegisterBlockType(ContentBlockItemType.Youtube, YoutubeBlock);
 
         if (!this.modelId || !this.model.Blocks) {
             // this.addBlock(ContentBlockItemType.Text, new TextBlockData());
