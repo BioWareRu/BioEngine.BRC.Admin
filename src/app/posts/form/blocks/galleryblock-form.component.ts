@@ -24,8 +24,11 @@ import { StorageItem } from 'app/@models/results/StorageItem';
                 <div class="singlePicture">
                     <img [src]="Model.Data.Pictures[0].PublicUri" />
                     <div class="addOverlay">
-                        <mat-icon (click)="showStorageDialog(true)">add</mat-icon>
-                        <mat-icon (click)="deletePicture(Model.Data.Pictures[0])">delete</mat-icon>
+                        <icon (click)="showStorageDialog(true)" iconName="fa-plus"></icon>
+                        <icon
+                            (click)="deletePicture(Model.Data.Pictures[0])"
+                            iconName="fa-trash"
+                        ></icon>
                     </div>
                 </div>
             </ng-container>
@@ -35,12 +38,12 @@ import { StorageItem } from 'app/@models/results/StorageItem';
                         <div class="pic">
                             <img src="{{ picture.PublicUri }}" alt="{{ picture.FileName }}" />
                             <div (click)="deletePicture(picture)" class="deleteOverlay">
-                                <mat-icon>delete</mat-icon>
+                                <icon iconName="fa-trash"></icon>
                             </div>
                         </div>
                     </ng-container>
                     <div class="addButton">
-                        <mat-icon (click)="showStorageDialog(false)">add</mat-icon>
+                        <icon (click)="showStorageDialog(false)" iconName="fa-plus"></icon>
                     </div>
                 </div>
             </ng-container>

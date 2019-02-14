@@ -1,31 +1,32 @@
 import { NavigationItem } from './@common/navigation/NavigationItem';
+import { Icon } from './@common/shared/icon/Icon';
 
 export const navigation: NavigationItem[] = [
     {
         id: 'dash',
         type: 'item',
         title: 'Дашборд',
-        icon: 'home',
+        icon: new Icon('fa-home'),
         url: '/dashboard'
     },
     {
         id: 'posts',
         type: 'collapsable',
         title: 'Посты',
-        icon: 'create',
+        icon: new Icon('fa-newspaper', 'far'),
         children: [
             {
                 id: 'postsList',
                 type: 'item',
                 title: 'Список',
-                icon: 'view_list',
+                icon: new Icon('fa-list-ul'),
                 url: '/posts'
             },
             {
                 id: 'addPost',
                 type: 'item',
                 title: 'Добавить пост',
-                icon: 'import_contacts',
+                icon: new Icon('fa-pen'),
                 url: '/posts/add'
             }
         ]
@@ -34,34 +35,34 @@ export const navigation: NavigationItem[] = [
         id: 'sections',
         type: 'collapsable',
         title: 'Разделы',
-        icon: 'apps',
+        icon: new Icon('fa-th'),
         children: [
             {
                 id: 'sectionsList',
                 type: 'item',
                 title: 'Все',
-                icon: 'view_list',
+                icon: new Icon('fa-list-ul'),
                 url: '/sections/list'
             },
             {
                 id: 'developersList',
                 type: 'item',
                 title: 'Разработчики',
-                icon: 'people',
+                icon: new Icon('fa-users'),
                 url: '/sections/list/developers'
             },
             {
                 id: 'gamesList',
                 type: 'item',
                 title: 'Игры',
-                icon: 'games',
+                icon: new Icon('fa-gamepad'),
                 url: '/sections/list/games'
             },
             {
                 id: 'topicList',
                 type: 'item',
                 title: 'Темы',
-                icon: 'folder',
+                icon: new Icon('fa-folder'),
                 url: '/sections/list/topics'
             }
         ]
@@ -70,20 +71,20 @@ export const navigation: NavigationItem[] = [
         id: 'sites',
         type: 'collapsable',
         title: 'Сайты',
-        icon: 'public',
+        icon: new Icon('fa-globe'),
         children: [
             {
                 id: 'sitesList',
                 type: 'item',
                 title: 'Список',
-                icon: 'view_list',
+                icon: new Icon('fa-list-ul'),
                 url: '/sites/list'
             },
             {
                 id: 'addSite',
                 type: 'item',
                 title: 'Добавить сайт',
-                icon: 'add',
+                icon: new Icon('fa-plus'),
                 url: '/sites/add'
             }
         ]
@@ -92,40 +93,40 @@ export const navigation: NavigationItem[] = [
         id: 'tags',
         type: 'item',
         title: 'Тэги',
-        icon: 'labels',
+        icon: new Icon('fa-tags'),
         url: '/tags'
     },
     {
         id: 'pages',
         type: 'item',
         title: 'Страницы',
-        icon: 'note',
+        icon: new Icon('fa-file'),
         url: '/pages'
     },
     {
         id: 'menu',
         type: 'item',
         title: 'Меню',
-        icon: 'menu',
+        icon: new Icon('fa-bars'),
         url: '/menu'
     },
     {
         id: 'polls',
         type: 'item',
         title: 'Опросы',
-        icon: 'poll'
+        icon: new Icon('fa-poll')
     },
     {
         id: 'storage',
         type: 'item',
         title: 'Хранилище',
-        icon: 'attachment',
+        icon: new Icon('fa-hdd'),
         url: '/storage'
     },
     {
         id: 'settings',
         type: 'item',
         title: 'Настройки',
-        icon: 'settings'
+        icon: new Icon('fa-cog')
     }
 ];

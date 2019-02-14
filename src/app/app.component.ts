@@ -4,7 +4,6 @@ import { authConfig } from './auth.config';
 import { navigation } from './navigation';
 import { NavigationItem } from './@common/navigation/NavigationItem';
 import { MatIconRegistry } from '@angular/material';
-import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'ngx-app',
@@ -27,23 +26,15 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class AppComponent implements OnInit {
     public navigation: NavigationItem[];
 
-    constructor(
-        private oauthService: OAuthService,
-        private matIconRegistry: MatIconRegistry,
-        private domSanitizer: DomSanitizer
-    ) {
+    constructor(private oauthService: OAuthService, matIconRegistry: MatIconRegistry) {
         this.oauthService.configure(authConfig);
         this.oauthService.setupAutomaticSilentRefresh();
         this.navigation = navigation;
 
-        this.matIconRegistry.addSvgIcon(
-            'twitter',
-            this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/icons/twitter.svg')
-        );
-        this.matIconRegistry.addSvgIcon(
-            'youtube',
-            this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/icons/youtube.svg')
-        );
+        matIconRegistry.registerFontClassAlias('fa');
+        matIconRegistry.registerFontClassAlias('fas');
+        matIconRegistry.registerFontClassAlias('far');
+        matIconRegistry.registerFontClassAlias('fab');
     }
 
     ngOnInit(): void {

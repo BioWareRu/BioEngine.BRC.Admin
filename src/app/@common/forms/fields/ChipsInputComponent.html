@@ -1,40 +1,48 @@
 <mat-form-field [formGroup]="FormGroup" [fxFlex]="FxFlex" [appearance]="Appearance">
-    <mat-label>{{Label}}</mat-label>
+    <mat-label>{{ Label }}</mat-label>
     <mat-chip-list #chipList [formControlName]="FieldName" [errorStateMatcher]="matcher">
         <mat-chip
             *ngFor="let value of this.Control.value"
             [selectable]="Selectable"
             [removable]="Removable"
-            (removed)="remove(value)">
-            {{displayFn(value)}}
-            <mat-icon matChipRemove *ngIf="Removable">cancel</mat-icon>
+            (removed)="remove(value)"
+        >
+            {{ displayFn(value) }}
+            <icon matChipRemove *ngIf="Removable" iconName="fa-times"></icon>
         </mat-chip>
         <input
             #newInput
-            [placeholder]="Creatable?'Создать...':''"
+            [placeholder]="Creatable ? 'Создать...' : ''"
             (input)="onSearchChange($event.target.value)"
             [matAutocomplete]="autoGroup"
             [matChipInputFor]="chipList"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
             [matChipInputAddOnBlur]="false"
             (matChipInputTokenEnd)="add($event)"
-            [disabled]="addInProgress">
+            [disabled]="addInProgress"
+        />
     </mat-chip-list>
-    <mat-autocomplete #autoGroup="matAutocomplete" [displayWith]="displayFn.bind(this)"
-                      (optionSelected)="selected($event)" (closed)="inputClosed()">
-        <ng-container *ngIf="groups && groups.length>1">
-            <mat-optgroup *ngFor="let group of groups | async" [label]="group.title">
+    <mat-autocomplete
+        #autoGroup="matAutocomplete"
+        [displayWith]="displayFn.bind(this)"
+        (optionSelected)="selected($event)"
+        (closed)="inputClosed()"
+    >
+        <ng-container *ngIf="groups && groups.length > 1">
+            <mat-optgroup *ngFor="let group of (groups | async)" [label]="group.title">
                 <mat-option *ngFor="let option of group.options" [value]="option.value">
-                    {{option.title}}
+                    {{ option.title }}
                 </mat-option>
             </mat-optgroup>
         </ng-container>
-        <ng-container *ngIf="groups && groups.length===1">
+        <ng-container *ngIf="groups && groups.length === 1">
             <mat-option *ngFor="let option of groups[0].options" [value]="option.value">
-                {{option.title}}
+                {{ option.title }}
             </mat-option>
         </ng-container>
     </mat-autocomplete>
-    <mat-icon matSuffix *ngIf="Icon">{{Icon}}</mat-icon>
-    <mat-error><span *ngFor="let error of Errors">{{error}}</span></mat-error>
+    <icon matSuffix *ngIf="Icon" [icon]="Icon"></icon>
+    <mat-error
+        ><span *ngFor="let error of Errors">{{ error }}</span></mat-error
+    >
 </mat-form-field>

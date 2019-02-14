@@ -1,7 +1,8 @@
-import {Input, OnInit} from '@angular/core';
-import {FormGroup} from '@angular/forms';
-import {MatFormFieldAppearance} from '@angular/material';
-import {BioFormControl} from '../BioFormControl';
+import { Icon } from 'app/@common/shared/icon/Icon';
+import { Input, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { MatFormFieldAppearance } from '@angular/material';
+import { BioFormControl } from '../BioFormControl';
 
 export abstract class FormInput implements OnInit {
     public Control: BioFormControl;
@@ -12,7 +13,7 @@ export abstract class FormInput implements OnInit {
     @Input() public Appearance: MatFormFieldAppearance = 'standard';
     @Input() public FxFlex = 100;
     @Input() public Placeholder: string = null;
-    @Input() public Icon: string = null;
+    @Input() public Icon: Icon = null;
     public Errors: string[] = [];
 
     ngOnInit(): void {

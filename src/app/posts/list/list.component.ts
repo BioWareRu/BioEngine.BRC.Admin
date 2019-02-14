@@ -16,6 +16,7 @@ import { Post } from '../../@models/posts/Post';
 import { PageContext } from '../../@common/PageComponent';
 import { Tag } from '../../@models/Tag';
 import { forkJoin } from 'rxjs';
+import { Icon } from 'app/@common/shared/icon/Icon';
 
 @Component({
     selector: 'posts-list',
@@ -64,13 +65,14 @@ export class ContentListComponent extends ListComponent<Post> implements OnInit 
             new AuthorTableColumn<Post>('Author', 'Автор'),
             new ListTableColumn<Post>('Actions', '')
                 .AddAction(
-                    new ListTableColumnAction<Post>('Просмотреть на сайте', 'public').setExternal(
-                        content => content.Url
-                    )
+                    new ListTableColumnAction<Post>(
+                        'Просмотреть на сайте',
+                        new Icon('fa-globe')
+                    ).setExternal(content => content.Url)
                 )
                 .AddAction(
-                    new ListTableColumnAction<Post>('Удалить', 'delete').setClick(content =>
-                        this.deleteItem(content)
+                    new ListTableColumnAction<Post>('Удалить', new Icon('fa-trash')).setClick(
+                        content => this.deleteItem(content)
                     )
                 )
         ];

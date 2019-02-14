@@ -1,43 +1,39 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+    <head>
+        <title>BRC Games</title>
+        <base href="/" />
 
-<head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
+        <link href="assets/css/please-wait.css" rel="stylesheet" />
+        <link rel="icon" type="image/png" href="favicon.png" />
+        <link rel="icon" type="image/x-icon" href="favicon.ico" />
+        <link
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&amp;subset=cyrillic,cyrillic-ext"
+            rel="stylesheet"
+        />
+    </head>
 
-    <title>BRC Games</title>
-    <base href="/">
+    <body>
+        <script type="text/javascript" src="assets/js/please-wait.min.js"></script>
+        <script type="text/javascript">
+            window.loading_screen = window.pleaseWait({
+                logo: 'assets/images/logos/logo.png',
+                backgroundColor: '#415f8c',
+                loadingHtml:
+                    '<div class="sk-folding-cube">\n' +
+                    '  <div class="sk-cube1 sk-cube"></div>\n' +
+                    '  <div class="sk-cube2 sk-cube"></div>\n' +
+                    '  <div class="sk-cube4 sk-cube"></div>\n' +
+                    '  <div class="sk-cube3 sk-cube"></div>\n' +
+                    "</div><p class='loading-message'>We are in the middle of some calibrations...</p>"
+            });
+        </script>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link href="assets/css/please-wait.css" rel="stylesheet">
-    <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&amp;subset=cyrillic,cyrillic-ext"
-          rel="stylesheet">
-    <link rel="stylesheet" href="//cdn.materialdesignicons.com/3.0.39/css/materialdesignicons.min.css">
-
-</head>
-
-<body>
-
-<script type="text/javascript" src="assets/js/please-wait.min.js"></script>
-<script type="text/javascript">
-    window.loading_screen = window.pleaseWait({
-        logo: "assets/images/logos/logo.png",
-        backgroundColor: '#415f8c',
-        loadingHtml: "<div class=\"sk-folding-cube\">\n" +
-            "  <div class=\"sk-cube1 sk-cube\"></div>\n" +
-            "  <div class=\"sk-cube2 sk-cube\"></div>\n" +
-            "  <div class=\"sk-cube4 sk-cube\"></div>\n" +
-            "  <div class=\"sk-cube3 sk-cube\"></div>\n" +
-            "</div><p class='loading-message'>We are in the middle of some calibrations...</p>"
-    });
-</script>
-
-<ngx-app>
-
-</ngx-app>
-
-</body>
-
+        <ngx-app> </ngx-app>
+    </body>
 </html>

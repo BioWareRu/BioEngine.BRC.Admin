@@ -2,6 +2,7 @@ import { Model } from '../base/Model';
 import { ISiteEntity } from '../interfaces/ISiteEntity';
 import { ISectionEntity } from '../interfaces/ISectionEntity';
 import { User } from '../User';
+import { Icon } from 'app/@common/shared/icon/Icon';
 
 export class Post extends Model implements ISiteEntity, ISectionEntity {
     public Id: number;
@@ -32,7 +33,7 @@ export abstract class BasePostBlock {
     public Position: number;
     public InFocus = false;
     public abstract Title: string;
-    public abstract Icon: string;
+    public abstract Icon: Icon;
     public abstract isEmpty(): boolean;
 }
 

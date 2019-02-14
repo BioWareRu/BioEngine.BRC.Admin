@@ -1,10 +1,6 @@
 <div class="page-layout blank p-24">
     <form-layout *ngIf="formLoaded" [FormComponent]="this">
-        <text-input
-            [FormGroup]="FormGroup"
-            FieldName="Title"
-            Label="Название"
-        ></text-input>
+        <text-input [FormGroup]="FormGroup" FieldName="Title" Label="Название"></text-input>
         <autocomplete-input
             [FormGroup]="FormGroup"
             FieldName="SiteId"
@@ -22,11 +18,9 @@
             [options]="options"
         >
             <ng-template #treeNodeTemplate let-node let-index="index">
-                <span (dblclick)="openEditDialog(node)" node="node">{{
-                    node.data.Label
-                }}</span>
-                <mat-icon (click)="addMenuItem(node)">add</mat-icon>
-                <mat-icon (click)="deleteMenuItem(node)">delete</mat-icon>
+                <span (dblclick)="openEditDialog(node)" node="node">{{ node.data.Label }}</span>
+                <icon (click)="addMenuItem(node)" iconName="fa-plus"></icon>
+                <icon (click)="deleteMenuItem(node)" iconName="fa-trash"></icon>
             </ng-template>
         </tree-root>
         <button mat-raised-button color="primary" (click)="addMenuItem()">

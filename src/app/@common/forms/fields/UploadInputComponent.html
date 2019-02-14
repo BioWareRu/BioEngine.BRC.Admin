@@ -1,52 +1,6 @@
 <mat-form-field [formGroup]="FormGroup" [fxFlex]="FxFlex">
     <mat-label>{{ Label }}</mat-label>
-    <mat-icon (click)="openStorageManager()">add</mat-icon>
+    <icon (click)="openStorageManager()" iconName="add"></icon>
     <mat-error *ngFor="let error of Errors">{{ error }}</mat-error>
     <input style="width: 0; height: 0;" matInput [formControlName]="FieldName" />
 </mat-form-field>
-<!--<mat-form-field [formGroup]="FormGroup" [fxFlex]="FxFlex" [appearance]="Appearance" floatLabel="always">
-    <mat-label>{{Label}}</mat-label>-->
-<!--<div class="imagesList" *ngIf="DisplayMode=='images'">
-    <ng-container *ngFor="let picture of items; index as index;">
-        <div *ngIf="picture.PublicUri" class="uploadedImage">
-            <a (click)="delete(index)" class="delete">
-                <mat-icon>times</mat-icon>
-            </a>
-            <a class="img" href="{{picture.PublicUri}}" target="_blank">
-                <img src="{{picture.PublicUri}}" alt="{{picture.FileName}}"/>
-            </a>
-        </div>
-    </ng-container>
-</div>
-<ul class="filesList" *ngIf="DisplayMode=='files'">
-    <li *ngFor="let file of items; index as index;">
-        <a href="{{file.PublicUri}}" target="_blank">{{file.FileName}}</a> ({{file.FileSize}}) <a
-        (click)="delete(index)"
-        class="delete">
-        <mat-icon>times</mat-icon>
-    </a>
-    </li>
-</ul>-->
-<!--<file-drop (click)="openFileChooseDialog()"
-
-           [headertext]=""
-           (onFileDrop)="processFiles($event.files)"></file-drop>-->
-
-<!--<div
-    class="mat-elevation-z8 dropZone"
-    ngxFileDropzone
-    (click)="openFileChooseDialog()"
-    (fileDrop)="processFiles($event)">
-    <span>
-    {{Multiple?'Перенесите файлы сюда или нажмите для выбора':'Перенесите файл сюда или нажмите для выбора'}}
-        </span>
-</div>-->
-<!--<input style="width: 0; height: 0;" matInput [formControlName]="FieldName">-->
-<!---->
-<!--<input style="visibility:hidden;
-"
-       [attr.multiple]="Multiple==true?'multiple':null" (change)="onValueChange($event)"
-       type="file" #fileInput
-       accept="{{Types.join(', ')}}"/>-->
-
-<!--</mat-form-field>-->

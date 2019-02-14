@@ -6,6 +6,7 @@ import { DialogService } from '../modals/DialogService';
 import { Type } from '@angular/core';
 import { IKeyedCollection } from '../KeyedCollection';
 import * as uuid from 'uuid';
+import { Icon } from '../shared/icon/Icon';
 export class BlocksManager {
     constructor(private post: Post, private _dialogService: DialogService) {
         this._blocks = post.Blocks;
@@ -118,6 +119,6 @@ export class BlockConfig {
         public type: ContentBlockItemType,
         public typeClass: Type<any>,
         public title: string,
-        public icon: string
+        public icon: Icon
     ) {}
 }

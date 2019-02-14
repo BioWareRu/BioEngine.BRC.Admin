@@ -9,56 +9,6 @@
                     [Model]="block"
                 ></blockForm>
             </div>
-            <!-- <div *ngFor="let block of model.Blocks" [ngSwitch]="block.Type" class="blockElement">
-
-            </div> -->
-            <!-- <div class="blocks" cdkDropList (cdkDropListDropped)="drop($event)">
-                <div
-                    *ngFor="let block of model.Blocks"
-                    [ngSwitch]="block.Type"
-                    class="blockElement"
-                    cdkDrag
-                >
-                    <div class="blockButton delete" (click)="deleteBlock(block)">
-                        <mat-icon>delete</mat-icon>
-                    </div>
-                    <div class="blockButton handle" cdkDragHandle>
-                        <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
-                            <path
-                                d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"
-                            ></path>
-                            <path d="M0 0h24v24H0z" fill="none"></path>
-                        </svg>
-                    </div>
-                    <blockForm
-                        [postFormComponent]="this"
-                        [FormGroup]="FormGroup"
-                        [Model]="block"
-                    ></blockForm>
-                    <button class="addBlock" mat-icon-button [m atMenuTriggerFor]="menu">
-                        <mat-icon>add</mat-icon>
-                    </button>
-                </div>
-            </div> -->
-
-            <mat-menu #menu="matMenu">
-                <!-- <button
-                    *ngIf="lastBlockType !== BlockTypes.Text"
-                    mat-menu-item
-                    (click)="addBlock(BlockTypes.Text)"
-                >
-                    <mat-icon>import_contacts</mat-icon>
-                    <span>Текст</span>
-                </button>
-                <button mat-menu-item (click)="addBlock(BlockTypes.Gallery)">
-                    <mat-icon>images</mat-icon>
-                    <span>Галерея</span>
-                </button>
-                <button mat-menu-item (click)="addBlock(BlockTypes.File)">
-                    <mat-icon>attachment</mat-icon>
-                    <span>Файл</span>
-                </button> -->
-            </mat-menu>
         </div>
         <div fxFlex="20" class="side p-8">
             <div>
@@ -116,8 +66,4 @@
             ></chips-input>
         </div>
     </div>
-
-    <!-- <form-layout *ngIf="formLoaded" [FormComponent]="this">
-
-    </form-layout> -->
 </div>

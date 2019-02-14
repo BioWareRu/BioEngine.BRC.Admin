@@ -32,6 +32,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import { DynamicHostDirective } from './directives/DynamicHostDirective';
 import { StorageManagerDialogComponent } from './storage/StorageManagerDialogComponent';
+import { BioSharedModule } from './shared/BioSharedModule';
 
 @NgModule({
     declarations: [
@@ -63,7 +64,8 @@ import { StorageManagerDialogComponent } from './storage/StorageManagerDialogCom
         MatDialogModule,
         StorageManagerComponent,
         FileSizePipe,
-        DynamicHostDirective
+        DynamicHostDirective,
+        BioSharedModule
     ],
     providers: [],
     imports: [
@@ -82,7 +84,8 @@ import { StorageManagerDialogComponent } from './storage/StorageManagerDialogCom
         CommonModule,
         FlexLayoutModule,
         MatDialogModule,
-        FormsModule
+        FormsModule,
+        BioSharedModule
     ],
     entryComponents: [
         NotificationComponent,

@@ -1,12 +1,10 @@
+import { BioSharedModule } from './../shared/BioSharedModule';
 import { NgModule } from '@angular/core';
 import { ErrorsListComponent } from './ErrorsListComponent';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import {
-    CKEFormFieldControlComponent,
-    CKEInputComponent
-} from './fields/CKEInputComponent';
+import { CKEFormFieldControlComponent, CKEInputComponent } from './fields/CKEInputComponent';
 import { UploadInputComponent } from './fields/UploadInputComponent';
 import { FormLayoutComponent } from './FormLayoutComponent';
 import {
@@ -87,7 +85,8 @@ const config: InputFileConfig = {};
 
         MatTabsModule,
         MatButtonModule,
-        InputFileModule.forRoot(config)
+        InputFileModule.forRoot(config),
+        BioSharedModule
     ]
 })
 export class BioFormsModule {}

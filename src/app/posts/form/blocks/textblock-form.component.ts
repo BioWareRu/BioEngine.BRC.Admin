@@ -19,7 +19,7 @@ import { ContentBlockItemType } from 'app/@models/posts/Post';
         ></cke-input>
         <ng-container *ngIf="Model.isEmpty()">
             <button class="addBlock" mat-icon-button [matMenuTriggerFor]="menu">
-                <mat-icon>add</mat-icon>
+                <icon iconName="fa-plus"></icon>
             </button>
             <mat-menu #menu="matMenu">
                 <ng-container *ngFor="let config of blocksManager.Types.Values()">
@@ -33,7 +33,7 @@ import { ContentBlockItemType } from 'app/@models/posts/Post';
                             )
                         "
                     >
-                        <mat-icon>{{ config.icon }}</mat-icon>
+                        <icon [icon]="config.icon"></icon>
                         <span>{{ config.title }}</span>
                     </button></ng-container
                 >

@@ -1,14 +1,19 @@
-import {ListTableColumnActionType} from './ListEnums';
+import { ListTableColumnActionType } from './ListEnums';
+import { Icon } from '../shared/icon/Icon';
 
 export class ListTableColumnAction<T> {
-    public Icon: string;
+    public Icon: Icon;
     public Title: string;
     public Type: ListTableColumnActionType;
     public Types = ListTableColumnActionType;
     public GenerateUrl: (model: T) => string;
     public DoClick: (model: T) => any;
 
-    constructor(title: string, icon: string, type: ListTableColumnActionType = ListTableColumnActionType.Click) {
+    constructor(
+        title: string,
+        icon: Icon,
+        type: ListTableColumnActionType = ListTableColumnActionType.Click
+    ) {
         this.Title = title;
         this.Icon = icon;
         this.Type = type;
