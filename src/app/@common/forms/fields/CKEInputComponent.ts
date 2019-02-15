@@ -11,7 +11,6 @@ import {
     EventEmitter
 } from '@angular/core';
 import { FormInput } from './FormInput';
-import './CKEInputComponent.loader';
 import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 // import * as InlineEditor from '@ckeditor/ckeditor5-build-inline';
 import { OAuthService } from 'angular-oauth2-oidc';
