@@ -5,7 +5,7 @@
             "label": "ng start",
             "type": "shell",
             "command": "npm",
-            "args": ["start"],
+            "args": ["run", "start-hmr"],
             "isBackground": true,
             "group": {
                 "kind": "build",

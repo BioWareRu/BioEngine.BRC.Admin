@@ -1,7 +1,7 @@
-import {baseEnvironment} from './environment.base';
+import { baseEnvironment } from './environment.base';
 
 baseEnvironment.hmr = true;
 baseEnvironment.oauth.clientId = 'admin';
-baseEnvironment.apiUrl = 'https://localhost:5031/v1/';
+baseEnvironment.apiUrl = 'https://localhost:5001/v1/';
 
 export const environment = baseEnvironment;
