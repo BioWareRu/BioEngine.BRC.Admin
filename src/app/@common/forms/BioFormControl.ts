@@ -4,13 +4,14 @@ import { AbstractControlOptions } from '@angular/forms/src/model';
 import { BaseFormComponent } from './FormComponent';
 import * as objectPath from 'object-path';
 import { EventEmitter } from '@angular/core';
+import { Form, FieldInputChange } from './Form';
 
 export class BioFormControl extends FormControl {
     public ServerErrors: string[] = [];
     public OnErrorsChanged: EventEmitter<void> = new EventEmitter<void>();
 
     constructor(
-        private _form: BaseFormComponent,
+        private _form: Form,
         private _name: string,
         private _model: any,
         private _property: string,
@@ -28,7 +29,7 @@ export class BioFormControl extends FormControl {
             objectPath.set(this._model, this._property, value);
             this.ServerErrors = [];
             this.OnErrorsChanged.emit();
-            this._form.registerChange(this._name, oldValue, value);
+            this._form.registerChange(new FieldInputChange(this._name, oldValue, value));
         }
     }
 

@@ -4,13 +4,13 @@ import { BlocksManager } from './../../@common/blocks/BlocksManager';
 import { GalleryBlockFormComponent } from './blocks/galleryblock-form.component';
 import { DynamicHostDirective } from 'app/@common/directives/DynamicHostDirective';
 import { ViewChild, Component, Input, OnInit, ComponentFactoryResolver, Type } from '@angular/core';
-import { PostFormComponent, PostBlockFormComponent } from './form.component';
-import { FormGroup } from '@angular/forms';
+import { PostBlockFormComponent } from './form.component';
 import { BasePostBlock, ContentBlockItemType } from 'app/@models/posts/Post';
 import { IKeyedCollection, KeyedCollection } from 'app/@common/KeyedCollection';
 import { TextBlockFormComponent } from './blocks/textblock-form.component';
 import { FileBlockFormComponent } from './blocks/fileblock-form.component';
 import { TwitterBlockFormComponent } from './blocks/twitterblock-form.component';
+import { Form } from 'app/@common/forms/Form';
 
 @Component({
     selector: 'blockForm',
@@ -30,7 +30,7 @@ export class BlockFormComponent<TModel extends BasePostBlock> implements OnInit 
     @Input() public Model: TModel;
 
     @Input()
-    public FormGroup: FormGroup;
+    public Form: Form;
     ngOnInit(): void {
         if (BlockFormComponent.forms.Count() === 0) {
             BlockFormComponent.forms.Add(ContentBlockItemType.Text, TextBlockFormComponent);
@@ -51,7 +51,7 @@ export class BlockFormComponent<TModel extends BasePostBlock> implements OnInit 
         const componentRef = viewContainerRef.createComponent(componentFactory);
         const instance = <PostBlockFormComponent<TModel>>componentRef.instance;
         instance.Model = this.Model;
-        instance.FormGroup = this.FormGroup;
+        instance.Form = this.Form;
         instance.blocksManager = this.blocksManager;
     }
 }

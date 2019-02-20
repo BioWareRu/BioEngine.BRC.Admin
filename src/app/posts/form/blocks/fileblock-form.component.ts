@@ -10,7 +10,7 @@ import { PostBlockFormComponent, BlockFieldDescriptor } from '../form.component'
     selector: 'file-block-form',
     template: `
         <upload-input
-            [FormGroup]="FormGroup"
+            [FormGroup]="Form.FormGroup"
             [FieldName]="getFieldName('File')"
             Label="Файл"
             DisplayMode="files"

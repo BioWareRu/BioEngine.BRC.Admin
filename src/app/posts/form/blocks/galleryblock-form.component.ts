@@ -15,7 +15,7 @@ import { StorageItem } from 'app/@models/results/StorageItem';
 @Component({
     selector: 'gallery-block-form',
     template: `
-        <div [formGroup]="FormGroup">
+        <div [formGroup]="Form.FormGroup">
             <div *ngIf="Items.Count() > 0">
                 <ng-container *ngIf="Items.Count() == 1">
                     <div class="singlePicture">
@@ -109,15 +109,8 @@ export class GalleryBlockFormComponent extends PostBlockFormComponent<GalleryBlo
                     this.Items.Add(node.Item.Id, node.Item);
                 });
 
-                const control = this.FormGroup.get(this.getFieldName('Pictures'));
+                const control = this.Form.FormGroup.get(this.getFieldName('Pictures'));
                 control.patchValue(this.Items.Values());
-                console.log(control.errors);
-                console.log(control.invalid);
-                for (let i in this.FormGroup.controls) {
-                    console.log(i);
-                    console.log(this.FormGroup.controls[i].invalid);
-                    console.log(this.FormGroup.controls[i].errors);
-                }
             });
     }
 }

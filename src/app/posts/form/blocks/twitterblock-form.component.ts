@@ -8,7 +8,7 @@ import { TwitterBlock } from 'app/@models/posts/TwitterBlock';
     selector: 'twitter-block-form',
     template: `
         <text-input
-            [FormGroup]="FormGroup"
+            [FormGroup]="Form.FormGroup"
             [FieldName]="getFieldName('TwitID')"
             Label="Номер твита"
         ></text-input>

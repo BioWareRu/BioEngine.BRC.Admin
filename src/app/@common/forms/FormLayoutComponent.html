@@ -1,7 +1,7 @@
 <div style="position: relative;" class="mat-elevation-z8 p-24">
     <form
         class="form-horizontal"
-        [formGroup]="FormComponent.FormGroup"
+        [formGroup]="FormComponent.Form.FormGroup"
         *ngIf="FormComponent.formLoaded"
     >
         <mat-tab-group>
@@ -14,82 +14,54 @@
             >
                 <div class="p-12" *ngFor="let prop of propertiesSet.Properties">
                     <div [ngSwitch]="prop.Type">
-                        <div
-                            *ngSwitchCase="
-                                FormComponent.PropertiesElementTypes.Dropdown
-                            "
-                        >
+                        <div *ngSwitchCase="FormComponent.PropertiesElementTypes.Dropdown">
                             <autocomplete-input
-                                [FormGroup]="FormComponent.FormGroup"
-                                FieldName="{{propertiesSet.Key+prop.Key}}"
+                                [FormGroup]="FormComponent.Form.FormGroup"
+                                FieldName="{{ propertiesSet.Key + prop.Key }}"
                                 [Options]="
-                                    FormComponent.PropertiesOptions(
-                                        propertiesSet.Key,
-                                        prop.Key
-                                    )
+                                    FormComponent.PropertiesOptions(propertiesSet.Key, prop.Key)
                                 "
                                 TitleField="Title"
                                 GroupField="Group"
                                 ValueField="Value"
-                                Label="{{prop.Name}}"
+                                Label="{{ prop.Name }}"
                             ></autocomplete-input>
                         </div>
-                        <div
-                            *ngSwitchCase="
-                                FormComponent.PropertiesElementTypes.String
-                            "
-                        >
+                        <div *ngSwitchCase="FormComponent.PropertiesElementTypes.String">
                             <text-input
-                                [FormGroup]="FormComponent.FormGroup"
-                                FieldName="{{propertiesSet.Key+prop.Key}}"
-                                Label="{{prop.Name}}"
+                                [FormGroup]="FormComponent.Form.FormGroup"
+                                FieldName="{{ propertiesSet.Key + prop.Key }}"
+                                Label="{{ prop.Name }}"
                             ></text-input>
                         </div>
-                        <div
-                            *ngSwitchCase="
-                                FormComponent.PropertiesElementTypes
-                                    .PasswordString
-                            "
-                        >
+                        <div *ngSwitchCase="FormComponent.PropertiesElementTypes.PasswordString">
                             <text-input
-                                [FormGroup]="FormComponent.FormGroup"
+                                [FormGroup]="FormComponent.Form.FormGroup"
                                 Type="password"
-                                FieldName="{{propertiesSet.Key+prop.Key}}"
-                                Label="{{prop.Name}}"
+                                FieldName="{{ propertiesSet.Key + prop.Key }}"
+                                Label="{{ prop.Name }}"
                             ></text-input>
                         </div>
-                        <div
-                            *ngSwitchCase="
-                                FormComponent.PropertiesElementTypes.LongString
-                            "
-                        >
+                        <div *ngSwitchCase="FormComponent.PropertiesElementTypes.LongString">
                             <textarea-input
-                                [FormGroup]="FormComponent.FormGroup"
-                                FieldName="{{propertiesSet.Key+prop.Key}}"
-                                Label="{{prop.Name}}"
+                                [FormGroup]="FormComponent.Form.FormGroup"
+                                FieldName="{{ propertiesSet.Key + prop.Key }}"
+                                Label="{{ prop.Name }}"
                             ></textarea-input>
                         </div>
-                        <div
-                            *ngSwitchCase="
-                                FormComponent.PropertiesElementTypes.Url
-                            "
-                        >
+                        <div *ngSwitchCase="FormComponent.PropertiesElementTypes.Url">
                             <text-input
-                                [FormGroup]="FormComponent.FormGroup"
+                                [FormGroup]="FormComponent.Form.FormGroup"
                                 Type="url"
-                                FieldName="{{propertiesSet.Key+prop.Key}}"
-                                Label="{{prop.Name}}"
+                                FieldName="{{ propertiesSet.Key + prop.Key }}"
+                                Label="{{ prop.Name }}"
                             ></text-input>
                         </div>
-                        <div
-                            *ngSwitchCase="
-                                FormComponent.PropertiesElementTypes.Checkbox
-                            "
-                        >
+                        <div *ngSwitchCase="FormComponent.PropertiesElementTypes.Checkbox">
                             <checkbox-input
-                                [FormGroup]="FormComponent.FormGroup"
-                                FieldName="{{propertiesSet.Key+prop.Key}}"
-                                Label="{{prop.Name}}"
+                                [FormGroup]="FormComponent.Form.FormGroup"
+                                FieldName="{{ propertiesSet.Key + prop.Key }}"
+                                Label="{{ prop.Name }}"
                             ></checkbox-input>
                         </div>
                         <div *ngSwitchDefault>Unknown field</div>
@@ -98,8 +70,9 @@
             </mat-tab>
             <mat-tab label="<>">
                 <pre>
-          {{FormComponent.model|json}}
-            </pre>
+          {{ FormComponent.model | json }}
+            </pre
+                >
             </mat-tab>
         </mat-tab-group>
         <div class="p-12">
@@ -109,13 +82,13 @@
                 type="submit"
                 (click)="save()"
                 [ngClass]="{
-                    invalid: FormComponent.FormGroup.invalid,
-                    'no-changes': !FormComponent.hasChanges
+                    invalid: FormComponent.Form.FormGroup.invalid,
+                    'no-changes': !FormComponent.Form.hasChanges
                 }"
                 [disabled]="
-                    FormComponent.FormGroup.invalid ||
-                    !FormComponent.hasChanges ||
-                    FormComponent.inProgress
+                    FormComponent.Form.FormGroup.invalid ||
+                    !FormComponent.Form.hasChanges ||
+                    FormComponent.Form.inProgress
                 "
             >
                 Сохранить
@@ -127,9 +100,9 @@
                 (click)="FormComponent.changePublishState()"
                 *ngIf="!FormComponent.model.IsPublished"
                 [disabled]="
-                    FormComponent.FormGroup.invalid ||
-                    FormComponent.hasChanges ||
-                    FormComponent.inProgress
+                    FormComponent.Form.FormGroup.invalid ||
+                    FormComponent.Form.hasChanges ||
+                    FormComponent.Form.inProgress
                 "
             >
                 Опубликовать
@@ -140,9 +113,9 @@
                 (click)="FormComponent.changePublishState()"
                 *ngIf="FormComponent.model.IsPublished"
                 [disabled]="
-                    FormComponent.FormGroup.invalid ||
-                    FormComponent.hasChanges ||
-                    FormComponent.inProgress
+                    FormComponent.Form.FormGroup.invalid ||
+                    FormComponent.Form.hasChanges ||
+                    FormComponent.Form.inProgress
                 "
             >
                 Спрятать

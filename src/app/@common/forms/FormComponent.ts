@@ -31,6 +31,7 @@ import { Site } from '../../@models/Site';
 import { SnackBarMessage } from '../snacks/SnackBarMessage';
 import { SnackBarService } from '../snacks/SnackBarService';
 import { CustomValidators } from 'ngx-custom-validators';
+import { Form } from './Form';
 
 export abstract class FormPageComponent<
     TModel extends Model,
@@ -83,40 +84,23 @@ export abstract class FormPageComponent<
 }
 
 export abstract class BaseFormComponent {
-    public success = false;
-    public inProgress = false;
-    public hasErrors = false;
-    public hasChanges = false;
-
+    @Input() Form: Form;
     public formLoaded = false;
-
-    @Input()
-    public FormGroup: FormGroup;
-    protected controlsByProperty: { [p: string]: BioFormControl } = {};
 
     constructor(protected snackBarService: SnackBarService) {}
 
     initForm(): void {
-        this.FormGroup = this.FormGroup || new FormGroup({});
+        this.Form = this.Form || new Form();
         this.constructForm();
         this.formLoaded = true;
     }
 
     @HostListener('window:beforeunload', ['$event'])
     checkChanges($event): void {
-        if (this.hasChanges) {
+        if (this.Form.hasChanges) {
             $event.returnValue = 'Форма не была сохранена. Данные будут потеряны!';
         }
     }
-
-    public registerChange(key: string, oldValue: any, newValue: any): void {
-        this.hasChanges = true;
-        this.hasErrors = false;
-        this.success = false;
-        this.processChange(key, oldValue, newValue);
-    }
-
-    public processChange(key: string, oldValue: any, newValue: any): void {}
 
     registerFormControl(
         name: string,
@@ -127,14 +111,13 @@ export abstract class BaseFormComponent {
             property = name;
         }
         const control = new BioFormControl(
-            <BaseFormComponent>this,
+            this.Form,
             name,
             this.getModel(),
             property,
             validatorOrOpts
         );
-        this.FormGroup.addControl(name, control);
-        this.controlsByProperty[property] = control;
+        this.Form.addControl(name, control, property);
     }
 
     protected abstract constructForm(): void;
@@ -143,7 +126,7 @@ export abstract class BaseFormComponent {
         if (response.status === 422) {
             const data: RestResult = plainToClass(RestResult, response.error as RestResult);
             data.Errors.forEach(error => {
-                const control = this.controlsByProperty[error.Field];
+                const control = this.Form.getControlByProperty(error.Field);
                 control.setServerError(error.Message);
             });
             this.snackBarService.error(
@@ -232,8 +215,8 @@ export abstract class FormComponent<
     }
 
     public save(): void {
-        this.success = false;
-        this.inProgress = true;
+        this.Form.success = false;
+        this.Form.inProgress = true;
         let result;
         if (this.isNew) {
             result = this.doAdd();
@@ -242,25 +225,25 @@ export abstract class FormComponent<
         }
         result.subscribe(
             (saveResult: TResultModel) => {
-                this.hasChanges = false;
-                this.success = true;
+                this.Form.hasChanges = false;
+                this.Form.success = true;
                 this.onSuccessSave.emit(saveResult);
                 this.snackBarService.success(
                     new SnackBarMessage('Успех!', 'Сохранение прошло успешно.')
                 );
-                this.inProgress = false;
+                this.Form.inProgress = false;
             },
             e => {
-                this.hasErrors = true;
+                this.Form.hasErrors = true;
                 this.handleSubmitError(e);
-                this.inProgress = false;
+                this.Form.inProgress = false;
             }
         );
     }
 
     public changePublishState(): void {
-        this.success = false;
-        this.inProgress = true;
+        this.Form.success = false;
+        this.Form.inProgress = true;
         let result;
         if (this.model.IsPublished) {
             result = this.service.unpublish(this.model.Id);
@@ -269,8 +252,8 @@ export abstract class FormComponent<
         }
         result.subscribe(
             (saveResult: TModel) => {
-                this.hasChanges = false;
-                this.success = true;
+                this.Form.hasChanges = false;
+                this.Form.success = true;
                 this.model = saveResult;
                 if (saveResult.IsPublished) {
                     this.snackBarService.success(new SnackBarMessage('Успех!', 'Опубликовано.'));
@@ -279,18 +262,18 @@ export abstract class FormComponent<
                         new SnackBarMessage('Успех!', 'Публикация снята.')
                     );
                 }
-                this.inProgress = false;
+                this.Form.inProgress = false;
             },
             e => {
-                this.hasErrors = true;
+                this.Form.hasErrors = true;
                 this.handleSubmitError(e);
-                this.inProgress = false;
+                this.Form.inProgress = false;
             }
         );
     }
 
     updateControlValue(name: string): void {
-        (this.FormGroup.controls[name] as BioFormControl).reloadValue();
+        this.Form.updateControlValue(name);
     }
 
     protected doAdd(): Observable<SaveModelResponse<TModel>> {

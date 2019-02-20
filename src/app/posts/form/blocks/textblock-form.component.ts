@@ -11,7 +11,7 @@ import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 @Component({
     selector: 'text-block-form',
     template: `
-        <div [formGroup]="FormGroup">
+        <div [formGroup]="Form.FormGroup">
             <ckeditor
                 #editor
                 [editor]="Editor"
@@ -84,7 +84,7 @@ export class TextBlockFormComponent extends PostBlockFormComponent<TextBlock> {
     private onSplit(): void {
         const parts = this.Model.Data.Text.split(this.splitSymbol);
         const id = this.getFieldName('Text');
-        this.FormGroup.get(id).setValue(parts[0]);
+        this.Form.FormGroup.get(id).setValue(parts[0]);
         const nextBlock = this.blocksManager.CreateBlock<TextBlock>(ContentBlockItemType.Text);
         nextBlock.Data.Text = parts[1];
         nextBlock.InFocus = true;

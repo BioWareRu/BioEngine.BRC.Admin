@@ -2,12 +2,16 @@
     <form-layout *ngIf="formLoaded" [FormComponent]="this">
         <div fxLayout="row">
             <div fxFlex="45">
-                <text-input [FormGroup]="FormGroup" FieldName="Title" Label="Название"></text-input>
+                <text-input
+                    [FormGroup]="Form.FormGroup"
+                    FieldName="Title"
+                    Label="Название"
+                ></text-input>
             </div>
             <div fxFlex="10"></div>
             <div fxFlex="45">
                 <text-input
-                    [FormGroup]="FormGroup"
+                    [FormGroup]="Form.FormGroup"
                     FieldName="Url"
                     Label="Адрес на сайте"
                 ></text-input>
@@ -16,7 +20,7 @@
         <div fxLayout="row">
             <div fxFlex="45">
                 <chips-input
-                    [FormGroup]="FormGroup"
+                    [FormGroup]="Form.FormGroup"
                     FieldName="SiteIds"
                     Label="Сайты"
                     ValueField="Id"
@@ -27,21 +31,21 @@
             <div fxFlex="10"></div>
             <div fxFlex="45">
                 <text-input
-                    [FormGroup]="FormGroup"
+                    [FormGroup]="Form.FormGroup"
                     FieldName="Hashtag"
                     Label="Тэг для соцсетей"
                 ></text-input>
             </div>
         </div>
         <cke-input
-            [FormGroup]="FormGroup"
+            [FormGroup]="Form.FormGroup"
             FieldName="ShortDescription"
             Label="Краткое описание"
         ></cke-input>
         <div fxLayout="row">
             <div fxFlex="45">
                 <upload-input
-                    [FormGroup]="FormGroup"
+                    [FormGroup]="Form.FormGroup"
                     FieldName="Logo"
                     Label="Большой логотип"
                     [Multiple]="false"
@@ -52,7 +56,7 @@
             <div fxFlex="10"></div>
             <div fxFlex="45">
                 <upload-input
-                    [FormGroup]="FormGroup"
+                    [FormGroup]="Form.FormGroup"
                     FieldName="LogoSmall"
                     Label="Маленький логотип"
                     [Multiple]="false"

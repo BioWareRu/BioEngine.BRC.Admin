@@ -1,8 +1,8 @@
 <div class="page-layout blank p-24">
     <form-layout *ngIf="formLoaded" [FormComponent]="this">
-        <text-input [FormGroup]="FormGroup" FieldName="Title" Label="Название"></text-input>
+        <text-input [FormGroup]="Form.FormGroup" FieldName="Title" Label="Название"></text-input>
         <autocomplete-input
-            [FormGroup]="FormGroup"
+            [FormGroup]="Form.FormGroup"
             FieldName="SiteId"
             Label="Сайт"
             TitleField="Title"

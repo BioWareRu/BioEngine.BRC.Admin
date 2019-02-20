@@ -3,7 +3,7 @@
         <div fxLayout="row">
             <div fxFlex="45">
                 <text-input
-                    [FormGroup]="FormGroup"
+                    [FormGroup]="Form.FormGroup"
                     FieldName="Title"
                     Label="Название"
                 ></text-input>
@@ -11,14 +11,14 @@
             <div fxFlex="10"></div>
             <div fxFlex="45">
                 <text-input
-                    [FormGroup]="FormGroup"
+                    [FormGroup]="Form.FormGroup"
                     FieldName="Url"
                     Label="Адрес на сайте"
                 ></text-input>
             </div>
         </div>
         <chips-input
-            [FormGroup]="FormGroup"
+            [FormGroup]="Form.FormGroup"
             FieldName="SiteIds"
             Label="Сайты"
             TitleField="Title"
@@ -26,7 +26,7 @@
             [Options]="Sites"
         ></chips-input>
         <cke-input
-            [FormGroup]="FormGroup"
+            [FormGroup]="Form.FormGroup"
             FieldName="Text"
             Label="Содержимое страницы"
         ></cke-input>

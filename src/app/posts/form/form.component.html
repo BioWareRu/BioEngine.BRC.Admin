@@ -1,14 +1,18 @@
 <div class="page-layout blank p-24 bg-white" *ngIf="formLoaded">
     <div fxLayout="row" class="post-form">
         <div fxFlex="70" class="editor p-8 mat-elevation-z8 ">
-            <text-input [FormGroup]="FormGroup" FieldName="Title" Label="Название"></text-input>
+            <text-input
+                [FormGroup]="Form.FormGroup"
+                FieldName="Title"
+                Label="Название"
+            ></text-input>
             <div
                 *ngFor="let block of (BlocksManager.Blocks | async); trackBy: block?.Id"
                 class="blockElement"
             >
                 <blockForm
                     [blocksManager]="BlocksManager"
-                    [FormGroup]="FormGroup"
+                    [Form]="Form"
                     [Model]="block"
                 ></blockForm>
             </div>
@@ -21,10 +25,10 @@
                     type="submit"
                     (click)="save()"
                     [ngClass]="{
-                        invalid: FormGroup.invalid,
-                        'no-changes': !hasChanges
+                        invalid: Form.FormGroup.invalid,
+                        'no-changes': !Form.hasChanges
                     }"
-                    [disabled]="FormGroup.invalid || !hasChanges || inProgress"
+                    [disabled]="Form.FormGroup.invalid || !Form.hasChanges || Form.inProgress"
                 >
                     Сохранить
                 </button>
@@ -34,7 +38,7 @@
                     color="accent"
                     (click)="changePublishState()"
                     *ngIf="!model.IsPublished"
-                    [disabled]="FormGroup.invalid || hasChanges || inProgress"
+                    [disabled]="Form.FormGroup.invalid || Form.hasChanges || Form.inProgress"
                 >
                     Опубликовать
                 </button>
@@ -43,14 +47,18 @@
                     color="warn"
                     (click)="changePublishState()"
                     *ngIf="model.IsPublished"
-                    [disabled]="FormGroup.invalid || hasChanges || inProgress"
+                    [disabled]="Form.FormGroup.invalid || Form.hasChanges || Form.inProgress"
                 >
                     Спрятать
                 </button>
             </div>
-            <text-input [FormGroup]="FormGroup" FieldName="Url" Label="Адрес на сайте"></text-input>
+            <text-input
+                [FormGroup]="Form.FormGroup"
+                FieldName="Url"
+                Label="Адрес на сайте"
+            ></text-input>
             <chips-input
-                [FormGroup]="FormGroup"
+                [FormGroup]="Form.FormGroup"
                 FieldName="SectionIds"
                 Label="Разделы"
                 TitleField="Title"
@@ -58,7 +66,7 @@
                 [Options]="Sections"
             ></chips-input>
             <chips-input
-                [FormGroup]="FormGroup"
+                [FormGroup]="Form.FormGroup"
                 FieldName="TagIds"
                 Label="Тэги"
                 TitleField="Name"

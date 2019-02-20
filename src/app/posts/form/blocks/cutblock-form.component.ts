@@ -8,7 +8,7 @@ import { CutBlock } from 'app/@models/posts/CutBlock';
     selector: 'cut-block-form',
     template: `
         <text-input
-            [FormGroup]="FormGroup"
+            [FormGroup]="Form.FormGroup"
             [FieldName]="getFieldName('ButtonText')"
             Label="Текст кнопки"
         ></text-input>

@@ -85,7 +85,7 @@ export abstract class PostBlockFormComponent<TBlock extends BasePostBlock>
     public blocksManager: BlocksManager;
     ngOnDestroy(): void {
         this.getFields().forEach(field => {
-            this.FormGroup.removeControl(this.getFieldName(field.name));
+            this.Form.FormGroup.removeControl(this.getFieldName(field.name));
         });
     }
 

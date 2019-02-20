@@ -15,10 +15,7 @@ import { SnackBarService } from 'app/@common/snacks/SnackBarService';
     styleUrls: ['./form.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class MenuFormComponent extends SingleSiteEntityFormComponent<
-    Menu,
-    SaveMenuResponse
-> {
+export class MenuFormComponent extends SingleSiteEntityFormComponent<Menu, SaveMenuResponse> {
     public options: ITreeOptions = {
         allowDrag: true,
         displayField: 'Label',
@@ -47,17 +44,12 @@ export class MenuFormComponent extends SingleSiteEntityFormComponent<
 
     public deleteMenuItem(currentNode: TreeNode): void {
         this.dialogService
-            .confirm(
-                'Удаление пункта меню',
-                'Вы точно хотите удалить это пункт меню?'
-            )
+            .confirm('Удаление пункта меню', 'Вы точно хотите удалить это пункт меню?')
             .onConfirm.subscribe(() => {
-                const root = currentNode.parent
-                    ? currentNode.parent.data.Items
-                    : this.model.Items;
+                const root = currentNode.parent ? currentNode.parent.data.Items : this.model.Items;
                 root.splice(root.indexOf(currentNode.data), 1);
                 this.tree.treeModel.update();
-                this.hasChanges = true;
+                this.Form.hasChanges = true;
             });
     }
 
@@ -66,15 +58,13 @@ export class MenuFormComponent extends SingleSiteEntityFormComponent<
         node.Label = 'Новый пункт';
         node.Url = '/';
         node.Items = [];
-        const root = !currentNode
-            ? this.model.Items
-            : (currentNode.data.Items as MenuItem[]);
+        const root = !currentNode ? this.model.Items : (currentNode.data.Items as MenuItem[]);
         root.push(node);
         this.tree.treeModel.update();
         if (currentNode) {
             this.tree.treeModel.getNodeById(currentNode.id).toggleExpanded();
         }
-        this.hasChanges = true;
+        this.Form.hasChanges = true;
     }
 
     public openEditDialog(currentNode: TreeNode): void {
@@ -82,7 +72,7 @@ export class MenuFormComponent extends SingleSiteEntityFormComponent<
             .show(MenuItemFormDialogComponent, currentNode)
             .dialogRef.afterClosed()
             .subscribe(() => {
-                this.hasChanges = true;
+                this.Form.hasChanges = true;
             });
     }
 

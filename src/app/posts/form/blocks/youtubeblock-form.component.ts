@@ -9,7 +9,7 @@ import { YoutubeBlock } from 'app/@models/posts/YoutubeBlock';
     selector: 'youtube-block-form',
     template: `
         <text-input
-            [FormGroup]="FormGroup"
+            [FormGroup]="Form.FormGroup"
             [FieldName]="getFieldName('Url')"
             Label="Адрес видео"
         ></text-input>
