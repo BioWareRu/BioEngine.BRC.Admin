@@ -148,3 +148,17 @@ text-block-form {
         margin-top: 5px;
     }
 }
+
+mat-chip {
+    icon {
+        font-size: 18px !important;
+    }
+
+    mat-icon.mat-icon {
+        color: rgba(0, 0, 0, 0.4);
+        margin-left: 5px;
+        height: 18px;
+        width: 18px;
+        font-size: 18px;
+    }
+}
