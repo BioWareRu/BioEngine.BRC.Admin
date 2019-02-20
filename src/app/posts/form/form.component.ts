@@ -51,9 +51,7 @@ export class PostFormComponent extends ContentFormComponent<Post, SavePostRespon
         this.BlocksManager.RegisterBlockType(ContentBlockItemType.Twitter, TwitterBlock);
         this.BlocksManager.RegisterBlockType(ContentBlockItemType.Youtube, YoutubeBlock);
 
-        if (!this.model.Blocks) {
-            console.log(this);
-            // this.addBlock(ContentBlockItemType.Text, new TextBlockData());
+        if (this.model.Blocks.length === 0) {
             this.BlocksManager.AddBlock(this.BlocksManager.CreateBlock(ContentBlockItemType.Text));
             this.BlocksManager.Update();
         }

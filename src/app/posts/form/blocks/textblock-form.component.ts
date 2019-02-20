@@ -1,21 +1,25 @@
 import { CKEInputComponent } from './../../../@common/forms/fields/CKEInputComponent';
 import { TextBlock } from 'app/@models/posts/TextBlock';
 import { Validators } from '@angular/forms';
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, EventEmitter } from '@angular/core';
 import { SnackBarService } from 'app/@common/snacks/SnackBarService';
 import { PostBlockFormComponent, BlockFieldDescriptor } from '../form.component';
 import { ContentBlockItemType } from 'app/@models/posts/Post';
+import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
+import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 
 @Component({
     selector: 'text-block-form',
     template: `
-        <cke-input
-            #editor
-            [FormGroup]="FormGroup"
-            [FieldName]="getFieldName('Text')"
-            Label="Текст"
-            [blockMode]="true"
-        ></cke-input>
+        <div [formGroup]="FormGroup">
+            <ckeditor
+                #editor
+                [editor]="Editor"
+                [formControlName]="getFieldName('Text')"
+                (change)="onChange($event)"
+                (ready)="ready($event)"
+            ></ckeditor>
+        </div>
         <ng-container *ngIf="isEmpty()">
             <button class="addBlock" mat-icon-button [matMenuTriggerFor]="menu">
                 <icon iconName="fa-plus"></icon>
@@ -59,6 +63,11 @@ export class TextBlockFormComponent extends PostBlockFormComponent<TextBlock> {
     constructor(snackBarService: SnackBarService) {
         super(snackBarService);
     }
+    public Editor = BalloonEditor;
+    view: any;
+    focusOnReady: boolean;
+
+    splitSymbol = '‌‌\u200C';
 
     @ViewChild(CKEInputComponent) cke: CKEInputComponent;
     @ViewChild('editor') editor: ElementRef<HTMLElement>;
@@ -67,31 +76,20 @@ export class TextBlockFormComponent extends PostBlockFormComponent<TextBlock> {
         return [new BlockFieldDescriptor('Text', [Validators.required], 'Data.Text')];
     }
 
-    protected afterInit(): void {
-        super.afterInit();
-        this.cke.onDelete.subscribe(() => {
-            this.blocksManager.RemoveBlock(this.Model);
-            this.blocksManager.Update();
-        });
-        this.cke.onSplit.subscribe((splitSymbol: string) => {
-            const parts = this.Model.Data.Text.split(splitSymbol);
-            const id = this.getFieldName('Text');
-            this.FormGroup.get(id).setValue(parts[0]);
-            const nextBlock = this.blocksManager.CreateBlock<TextBlock>(ContentBlockItemType.Text);
-            nextBlock.Data.Text = parts[1];
-            nextBlock.InFocus = true;
-            this.blocksManager.AddBlock(nextBlock, this.Model);
-            // this.blocksManager.AddBlock(
-            //     this.blocksManager.CreateBlock(ContentBlockItemType.Text),
-            //     this.Model
-            // );
-            this.blocksManager.Update();
-            // this.postFormComponent.addBlock(ContentBlockItemType.Text, new TextBlockData());
-            // data.Text = parts[1];
-            // this.postFormComponent.addBlock(ContentBlockItemType.Text, data);
-            // this.Model.Data.Text = parts[0];
-            // console.log('split', parts);
-        });
+    private onDelete(): void {
+        this.blocksManager.RemoveBlock(this.Model);
+        this.blocksManager.Update();
+    }
+
+    private onSplit(): void {
+        const parts = this.Model.Data.Text.split(this.splitSymbol);
+        const id = this.getFieldName('Text');
+        this.FormGroup.get(id).setValue(parts[0]);
+        const nextBlock = this.blocksManager.CreateBlock<TextBlock>(ContentBlockItemType.Text);
+        nextBlock.Data.Text = parts[1];
+        nextBlock.InFocus = true;
+        this.blocksManager.AddBlock(nextBlock, this.Model);
+        this.blocksManager.Update();
     }
 
     public isEmpty(): boolean {
@@ -99,6 +97,45 @@ export class TextBlockFormComponent extends PostBlockFormComponent<TextBlock> {
     }
 
     protected setFocus(): void {
-        this.cke.focus();
+        this.focus();
+    }
+
+    public ready(editor): void {
+        this.view = editor.editing.view;
+        if (this.focusOnReady) {
+            this.view.focus();
+        }
+        const model = editor.model;
+        const doc = model.document;
+        this.view.document.on('enter', (eventInfo, data) => {
+            data.preventDefault();
+            if (!data.isSoft) {
+                editor.model.change(writer => {
+                    const splitPos = doc.selection.getFirstRange().start;
+                    writer.split(splitPos);
+                    writer.setSelection(splitPos.parent.nextSibling, 'before');
+
+                    writer.insert(
+                        writer.createText(this.splitSymbol),
+                        doc.selection.getFirstRange().start
+                    );
+                });
+                eventInfo.stop();
+                this.onSplit();
+            }
+        });
+        editor.keystrokes.set('backspace', (keyEvtData, cancel) => {
+            if (this.isEmpty) {
+                this.onDelete();
+            }
+        });
+    }
+
+    public onChange({ editor }: ChangeEvent): void {
+        const data = editor.getData();
+    }
+
+    focus(): void {
+        this.focusOnReady = true;
     }
 }

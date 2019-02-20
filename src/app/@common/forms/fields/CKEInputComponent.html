@@ -1,9 +1,4 @@
 <div [formGroup]="FormGroup">
-    <mat-label *ngIf="!blockMode">{{ Label }}</mat-label>
-    <ckeditor
-        [editor]="Editor"
-        [formControlName]="FieldName"
-        (change)="onChange($event)"
-        (ready)="ready($event)"
-    ></ckeditor>
+    <mat-label>{{ Label }}</mat-label>
+    <ckeditor [editor]="Editor" [formControlName]="FieldName"></ckeditor>
 </div>

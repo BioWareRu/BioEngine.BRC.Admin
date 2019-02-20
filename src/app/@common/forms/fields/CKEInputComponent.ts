@@ -1,4 +1,3 @@
-import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import {
     Component,
     ElementRef,
@@ -6,11 +5,10 @@ import {
     Input,
     OnDestroy,
     OnInit,
-    ViewChild,
-    EventEmitter
+    ViewChild
 } from '@angular/core';
 import { FormInput } from './FormInput';
-import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
+
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { MatFormFieldControl } from '@angular/material';
 import { FormBuilder, FormGroup, NgControl } from '@angular/forms';
@@ -27,61 +25,10 @@ export class CKEInputComponent extends FormInput implements OnInit {
     public constructor() {
         super();
     }
-    view: any;
-    focusOnReady: boolean;
-    public Editor = null;
 
-    @Input() @HostBinding('class.blockMode') public blockMode = false;
-
-    public onSplit = new EventEmitter<string>();
-    public onDelete = new EventEmitter();
-
-    splitSymbol = '‌‌\u200C';
-
+    public Editor = ClassicEditor;
     ngOnInit(): void {
         super.ngOnInit();
-
-        this.Editor = this.blockMode ? BalloonEditor : ClassicEditor;
-    }
-    focus(): void {
-        this.focusOnReady = true;
-    }
-
-    public ready(editor): void {
-        this.view = editor.editing.view;
-        if (this.focusOnReady) {
-            this.view.focus();
-        }
-        if (this.blockMode) {
-            const model = editor.model;
-            const doc = model.document;
-            this.view.document.on('enter', (eventInfo, data) => {
-                data.preventDefault();
-                if (!data.isSoft) {
-                    editor.model.change(writer => {
-                        const splitPos = doc.selection.getFirstRange().start;
-                        writer.split(splitPos);
-                        writer.setSelection(splitPos.parent.nextSibling, 'before');
-
-                        writer.insert(
-                            writer.createText(this.splitSymbol),
-                            doc.selection.getFirstRange().start
-                        );
-                    });
-                    eventInfo.stop();
-                    this.onSplit.emit(this.splitSymbol);
-                }
-            });
-            editor.keystrokes.set('backspace', (keyEvtData, cancel) => {
-                if (!this.Control.getValue() || this.Control.getValue() === '<p>&nbsp;</p>') {
-                    this.onDelete.emit();
-                }
-            });
-        }
-    }
-
-    public onChange({ editor }: ChangeEvent): void {
-        const data = editor.getData();
     }
 }
 
