@@ -14,5 +14,5 @@ export class CutBlock extends PostBlock<CutBlockData> {
 }
 
 export class CutBlockData extends PostBlockData {
-    public Title = '';
+    public Title = 'Читать дальше';
 }

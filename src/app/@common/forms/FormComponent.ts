@@ -14,10 +14,7 @@ import {
 import { BioFormControl } from './BioFormControl';
 import { plainToClass } from 'class-transformer';
 import { ServicesProvider } from '../../@services/ServicesProvider';
-import {
-    ISiteEntity,
-    ISingleSiteEntity
-} from '../../@models/interfaces/ISiteEntity';
+import { ISiteEntity, ISingleSiteEntity } from '../../@models/interfaces/ISiteEntity';
 import { ISectionEntity } from '../../@models/interfaces/ISectionEntity';
 import { AbstractControlOptions } from '@angular/forms/src/model';
 import { ValidatorFn } from '@angular/forms/src/directives/validators';
@@ -27,10 +24,7 @@ import { SaveModelResponse } from '../SaveModelResponse';
 import { BaseService } from '../BaseService';
 import { map } from 'rxjs/operators';
 import { Model } from '../../@models/base/Model';
-import {
-    Properties,
-    PropertiesElementType
-} from '../../@models/base/Properties';
+import { Properties, PropertiesElementType } from '../../@models/base/Properties';
 import { BaseSection } from '../../@models/Section';
 import { Tag } from '../../@models/Tag';
 import { Site } from '../../@models/Site';
@@ -74,18 +68,12 @@ export abstract class FormPageComponent<
 
     loadFormData(): void {
         this.Form.loadFormData(this.Model);
-        this.Form.onSuccessSave.subscribe(result =>
-            this.processSuccessSave(result)
-        );
+        this.Form.onSuccessSave.subscribe(result => this.processSuccessSave(result));
     }
 
     protected processSuccessSave(saveResult: SaveModelResponse<TModel>): void {
         if (!this.modelId) {
-            this.Router.navigate([
-                this.getRoute(),
-                saveResult.Model.Id,
-                'edit'
-            ]);
+            this.Router.navigate([this.getRoute(), saveResult.Model.Id, 'edit']);
         }
     }
 
@@ -117,8 +105,7 @@ export abstract class BaseFormComponent {
     @HostListener('window:beforeunload', ['$event'])
     checkChanges($event): void {
         if (this.hasChanges) {
-            $event.returnValue =
-                'Форма не была сохранена. Данные будут потеряны!';
+            $event.returnValue = 'Форма не была сохранена. Данные будут потеряны!';
         }
     }
 
@@ -133,11 +120,7 @@ export abstract class BaseFormComponent {
 
     registerFormControl(
         name: string,
-        validatorOrOpts?:
-            | ValidatorFn
-            | ValidatorFn[]
-            | AbstractControlOptions
-            | null,
+        validatorOrOpts?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null,
         property: string = null
     ): void {
         if (property == null) {
@@ -158,10 +141,7 @@ export abstract class BaseFormComponent {
 
     protected handleSubmitError(response: HttpErrorResponse): void {
         if (response.status === 422) {
-            const data: RestResult = plainToClass(
-                RestResult,
-                response.error as RestResult
-            );
+            const data: RestResult = plainToClass(RestResult, response.error as RestResult);
             data.Errors.forEach(error => {
                 const control = this.controlsByProperty[error.Field];
                 control.setServerError(error.Message);
@@ -185,8 +165,7 @@ export abstract class BaseFormComponent {
     protected abstract getModel(): any;
 }
 
-export abstract class SimpleFormComponent<TModel> extends BaseFormComponent
-    implements OnInit {
+export abstract class SimpleFormComponent<TModel> extends BaseFormComponent implements OnInit {
     @Input() public Model: TModel;
     ngOnInit(): void {
         this.loadFormData();
@@ -208,9 +187,7 @@ export abstract class FormComponent<
     protected modelId: number;
     protected isPublished: boolean;
 
-    public onSuccessSave: EventEmitter<TResultModel> = new EventEmitter<
-        TResultModel
-    >();
+    public onSuccessSave: EventEmitter<TResultModel> = new EventEmitter<TResultModel>();
     private isNew = true;
     protected constructor(
         public servicesProvider: ServicesProvider,
@@ -242,11 +219,7 @@ export abstract class FormComponent<
                                 validators.push(CustomValidators.url);
                                 break;
                         }
-                        this.registerFormControl(
-                            fieldName,
-                            validators,
-                            fieldProperty
-                        );
+                        this.registerFormControl(fieldName, validators, fieldProperty);
                     });
                 });
                 this.ModelProperties.push(propertiesSet);
@@ -254,14 +227,8 @@ export abstract class FormComponent<
         }
     }
 
-    public PropertiesOptions(
-        groupKey: string,
-        propertyKey: string
-    ): Observable<any> {
-        return this.servicesProvider.PropertiesService.getOptions(
-            groupKey,
-            propertyKey
-        );
+    public PropertiesOptions(groupKey: string, propertyKey: string): Observable<any> {
+        return this.servicesProvider.PropertiesService.getOptions(groupKey, propertyKey);
     }
 
     public save(): void {
@@ -306,9 +273,7 @@ export abstract class FormComponent<
                 this.success = true;
                 this.model = saveResult;
                 if (saveResult.IsPublished) {
-                    this.snackBarService.success(
-                        new SnackBarMessage('Успех!', 'Опубликовано.')
-                    );
+                    this.snackBarService.success(new SnackBarMessage('Успех!', 'Опубликовано.'));
                 } else {
                     this.snackBarService.success(
                         new SnackBarMessage('Успех!', 'Публикация снята.')
@@ -390,9 +355,7 @@ export abstract class SectionFormComponent<
     protected constructForm(): void {
         this.registerFormControl('Title', [<any>Validators.required]);
         this.registerFormControl('Url', [<any>Validators.required]);
-        this.registerFormControl('ShortDescription', [
-            <any>Validators.required
-        ]);
+        this.registerFormControl('ShortDescription', [<any>Validators.required]);
         this.registerFormControl('Hashtag', [<any>Validators.required]);
         this.registerFormControl('Logo', [<any>Validators.required]);
         this.registerFormControl('LogoSmall', [<any>Validators.required]);
@@ -411,9 +374,7 @@ export abstract class ContentFormComponent<
     }
 
     protected get Tags(): Observable<Tag[]> {
-        return this.servicesProvider.TagsService.getAll(1, 1000, 'id').pipe(
-            map(list => list.Data)
-        );
+        return this.servicesProvider.TagsService.getAll(1, 1000, 'id').pipe(map(list => list.Data));
     }
 
     protected constructForm(): void {

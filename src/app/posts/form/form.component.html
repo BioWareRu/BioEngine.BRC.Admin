@@ -2,7 +2,10 @@
     <div fxLayout="row" class="post-form">
         <div fxFlex="70" class="editor p-8 mat-elevation-z8 ">
             <text-input [FormGroup]="FormGroup" FieldName="Title" Label="Название"></text-input>
-            <div *ngFor="let block of (BlocksManager.Blocks | async)" class="blockElement">
+            <div
+                *ngFor="let block of (BlocksManager.Blocks | async); trackBy: block?.Id"
+                class="blockElement"
+            >
                 <blockForm
                     [blocksManager]="BlocksManager"
                     [FormGroup]="FormGroup"

@@ -2,11 +2,7 @@
     <form-layout *ngIf="formLoaded" [FormComponent]="this">
         <div fxLayout="row">
             <div fxFlex="45">
-                <text-input
-                    [FormGroup]="FormGroup"
-                    FieldName="Title"
-                    Label="Название"
-                ></text-input>
+                <text-input [FormGroup]="FormGroup" FieldName="Title" Label="Название"></text-input>
             </div>
             <div fxFlex="10"></div>
             <div fxFlex="45">
@@ -50,12 +46,7 @@
                     Label="Большой логотип"
                     [Multiple]="false"
                     [Service]="service"
-                    [Types]="[
-                        'image/png',
-                        'image/jpeg',
-                        'image/jpg',
-                        'image/gif'
-                    ]"
+                    [Types]="['image/png', 'image/jpeg', 'image/jpg', 'image/gif']"
                 ></upload-input>
             </div>
             <div fxFlex="10"></div>
@@ -66,12 +57,7 @@
                     Label="Маленький логотип"
                     [Multiple]="false"
                     [Service]="service"
-                    [Types]="[
-                        'image/png',
-                        'image/jpeg',
-                        'image/jpg',
-                        'image/gif'
-                    ]"
+                    [Types]="['image/png', 'image/jpeg', 'image/jpg', 'image/gif']"
                 ></upload-input>
             </div>
         </div>

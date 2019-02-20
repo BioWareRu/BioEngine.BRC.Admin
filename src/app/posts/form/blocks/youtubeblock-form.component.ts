@@ -1,3 +1,4 @@
+import { CustomValidators } from 'ngx-custom-validators';
 import { Validators } from '@angular/forms';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { SnackBarService } from 'app/@common/snacks/SnackBarService';
@@ -6,7 +7,13 @@ import { YoutubeBlock } from 'app/@models/posts/YoutubeBlock';
 
 @Component({
     selector: 'youtube-block-form',
-    template: ``,
+    template: `
+        <text-input
+            [FormGroup]="FormGroup"
+            [FieldName]="getFieldName('Url')"
+            Label="Адрес видео"
+        ></text-input>
+    `,
     styles: [``]
 })
 export class YoutubeBlockFormComponent extends PostBlockFormComponent<YoutubeBlock> {
@@ -15,6 +22,10 @@ export class YoutubeBlockFormComponent extends PostBlockFormComponent<YoutubeBlo
     }
 
     protected constructForm(): void {
-        this.registerFormControl(this.getFieldName('Url'), [<any>Validators.required], 'Data.Url');
+        this.registerFormControl(
+            this.getFieldName('Url'),
+            [Validators.required, CustomValidators.url],
+            'Data.Url'
+        );
     }
 }

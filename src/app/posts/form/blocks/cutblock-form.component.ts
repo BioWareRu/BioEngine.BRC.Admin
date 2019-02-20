@@ -6,7 +6,13 @@ import { CutBlock } from 'app/@models/posts/CutBlock';
 
 @Component({
     selector: 'cut-block-form',
-    template: ``,
+    template: `
+        <text-input
+            [FormGroup]="FormGroup"
+            [FieldName]="getFieldName('Title')"
+            Label="Текст кнопки"
+        ></text-input>
+    `,
     styles: [``]
 })
 export class CutBlockFormComponent extends PostBlockFormComponent<CutBlock> {

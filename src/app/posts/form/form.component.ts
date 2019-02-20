@@ -62,9 +62,7 @@ export class PostFormComponent extends ContentFormComponent<Post, SavePostRespon
 
         if (!this.modelId || !this.model.Blocks) {
             // this.addBlock(ContentBlockItemType.Text, new TextBlockData());
-            this.BlocksManager.AddBlock(
-                this.BlocksManager.CreateBlock(ContentBlockItemType.Gallery)
-            );
+            this.BlocksManager.AddBlock(this.BlocksManager.CreateBlock(ContentBlockItemType.Text));
             this.BlocksManager.Update();
         }
     }

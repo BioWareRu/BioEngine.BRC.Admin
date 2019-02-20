@@ -73,11 +73,11 @@ export class GalleryBlockFormComponent extends PostBlockFormComponent<GalleryBlo
     >();
 
     protected constructForm(): void {
-        // this.registerFormControl(
-        //     this.getFieldName('Pictures'),
-        //     [<any>Validators.required],
-        //     'Data.Pictures'
-        // );
+        this.registerFormControl(
+            this.getFieldName('Pictures'),
+            [<any>Validators.required],
+            'Data.Pictures'
+        );
     }
 
     protected afterInit(): void {
@@ -112,9 +112,6 @@ export class GalleryBlockFormComponent extends PostBlockFormComponent<GalleryBlo
                 });
 
                 this.Model.Data.Pictures = this.Items.Values();
-
-                // this.items = this.items.concat(items);
-                // this.Control.patchValue(this.items);
             });
     }
 }

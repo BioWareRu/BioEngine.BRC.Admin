@@ -6,7 +6,13 @@ import { TwitterBlock } from 'app/@models/posts/TwitterBlock';
 
 @Component({
     selector: 'twitter-block-form',
-    template: ``,
+    template: `
+        <text-input
+            [FormGroup]="FormGroup"
+            [FieldName]="getFieldName('TwitID')"
+            Label="Номер твита"
+        ></text-input>
+    `,
     styles: [``]
 })
 export class TwitterBlockFormComponent extends PostBlockFormComponent<TwitterBlock> {
