@@ -8,9 +8,6 @@ export class TwitterBlock extends PostBlock<TwitterBlockData> {
     public Type: ContentBlockItemType = ContentBlockItemType.Twitter;
     @Type(() => TwitterBlockData)
     Data: TwitterBlockData = new TwitterBlockData();
-    public isEmpty(): boolean {
-        return this.Data.TwitId > 0;
-    }
 }
 
 export class TwitterBlockData extends PostBlockData {

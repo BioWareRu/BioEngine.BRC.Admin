@@ -2,25 +2,18 @@ import { YoutubeBlock } from './../../@models/posts/YoutubeBlock';
 import { CutBlock } from 'app/@models/posts/CutBlock';
 import { BlocksManager } from './../../@common/blocks/BlocksManager';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import {
-    Post,
-    ContentBlockItemType,
-    PostBlock,
-    BasePostBlock,
-    PostBlockData
-} from 'app/@models/posts/Post';
+import { Post, ContentBlockItemType, BasePostBlock } from 'app/@models/posts/Post';
 import { SavePostResponse } from 'app/@models/results/Post';
-import { TextBlock, TextBlockData } from 'app/@models/posts/TextBlock';
+import { TextBlock } from 'app/@models/posts/TextBlock';
 import { GalleryBlock } from 'app/@models/posts/GalleryBlock';
 import { FileBlock } from 'app/@models/posts/FileBlock';
-import { moveItemInArray, CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { SnackBarService } from 'app/@common/snacks/SnackBarService';
 import { PageContext } from 'app/@common/PageComponent';
 import { ContentFormComponent, SimpleFormComponent } from 'app/@common/forms/FormComponent';
 import { ServicesProvider } from 'app/@services/ServicesProvider';
 import { DialogService } from 'app/@common/modals/DialogService';
 import { StateService } from 'app/@common/StateService';
-import * as uuid from 'uuid';
 import { TwitterBlock } from 'app/@models/posts/TwitterBlock';
 
 @Component({
@@ -40,9 +33,7 @@ export class PostFormComponent extends ContentFormComponent<Post, SavePostRespon
     ) {
         super(servicesProvider, snackBarService, servicesProvider.PostsService);
     }
-    // public BlockTypes = ContentBlockItemType;
 
-    // public lastBlockType: ContentBlockItemType;
     ngOnInit(): void {
         this._stateService.hideToolbar();
     }
@@ -60,7 +51,8 @@ export class PostFormComponent extends ContentFormComponent<Post, SavePostRespon
         this.BlocksManager.RegisterBlockType(ContentBlockItemType.Twitter, TwitterBlock);
         this.BlocksManager.RegisterBlockType(ContentBlockItemType.Youtube, YoutubeBlock);
 
-        if (!this.modelId || !this.model.Blocks) {
+        if (!this.model.Blocks) {
+            console.log(this);
             // this.addBlock(ContentBlockItemType.Text, new TextBlockData());
             this.BlocksManager.AddBlock(this.BlocksManager.CreateBlock(ContentBlockItemType.Text));
             this.BlocksManager.Update();
@@ -71,34 +63,6 @@ export class PostFormComponent extends ContentFormComponent<Post, SavePostRespon
         const block = this.BlocksManager.CreateBlock(type);
         this.BlocksManager.AddBlock(block);
         this.BlocksManager.Update();
-        // let block: PostBlock<any>;
-        // const isText = type === ContentBlockItemType.Text;
-        // if (!isText && this.lastBlockType === ContentBlockItemType.Text) {
-        //     const lastBlock = this.model.Blocks[this.model.Blocks.length - 1];
-        //     if (lastBlock.isEmpty()) {
-        //         this.model.Blocks.splice(this.model.Blocks.length - 1, 1);
-        //     }
-        // }
-        // switch (type) {
-        //     case ContentBlockItemType.Text:
-        //         block = new TextBlock();
-        //         block.Data = data;
-        //         break;
-        //     case ContentBlockItemType.Gallery:
-        //         block = new GalleryBlock();
-        //         break;
-        //     case ContentBlockItemType.File:
-        //         block = new FileBlock();
-        //         break;
-        // }
-        // block.Id = uuid.v4();
-        // block.Position = this.model.Blocks.length;
-        // this.model.Blocks.push(block);
-        // this.hasChanges = true;
-        // this.lastBlockType = type;
-        // if (!isText) {
-        //     this.addBlock(ContentBlockItemType.Text, new TextBlockData());
-        // }
     }
 
     public deleteBlock(block: BasePostBlock): void {
@@ -118,13 +82,31 @@ export class PostFormComponent extends ContentFormComponent<Post, SavePostRespon
 
 export abstract class PostBlockFormComponent<TBlock extends BasePostBlock>
     extends SimpleFormComponent<TBlock>
-    implements OnInit {
+    implements OnInit, OnDestroy {
     @Input()
     public blocksManager: BlocksManager;
+    ngOnDestroy(): void {
+        this.getFields().forEach(field => {
+            this.FormGroup.removeControl(this.getFieldName(field.name));
+        });
+    }
 
     public getFieldName(field: string): string {
         return `${field}${this.Model.Id}`;
     }
+
+    protected constructForm(): void {
+        this.getFields().forEach(element => {
+            this.registerFormControl(
+                this.getFieldName(element.name),
+                element.validators,
+                element.property
+            );
+        });
+    }
+
+    protected abstract getFields(): BlockFieldDescriptor[];
+    public abstract isEmpty(): boolean;
 
     protected afterInit(): void {
         if (this.Model.InFocus) {
@@ -136,4 +118,12 @@ export abstract class PostBlockFormComponent<TBlock extends BasePostBlock>
     }
 
     public processChange(key: string, oldValue: any, newValue: any): void {}
+}
+
+export class BlockFieldDescriptor {
+    public constructor(
+        public name: string,
+        public validators: any[],
+        public property: string = null
+    ) {}
 }

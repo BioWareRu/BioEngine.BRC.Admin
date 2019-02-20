@@ -1,4 +1,3 @@
-import { SelectGroup } from './AutocompleteInputComponent';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import {
     Component,
@@ -12,8 +11,7 @@ import {
 } from '@angular/core';
 import { FormInput } from './FormInput';
 import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
-// import * as InlineEditor from '@ckeditor/ckeditor5-build-inline';
-import { OAuthService } from 'angular-oauth2-oidc';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { MatFormFieldControl } from '@angular/material';
 import { FormBuilder, FormGroup, NgControl } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -22,22 +20,29 @@ import { FocusMonitor } from '@angular/cdk/a11y';
 
 @Component({
     selector: 'cke-input',
-    templateUrl: './CKEInputComponent.html'
+    templateUrl: './CKEInputComponent.html',
+    styleUrls: [`./CKEInputComponent.scss`]
 })
 export class CKEInputComponent extends FormInput implements OnInit {
-    view: any;
-    focusOnReady: boolean;
-
-    public constructor(private oauthService: OAuthService) {
+    public constructor() {
         super();
     }
-    public Editor = BalloonEditor;
+    view: any;
+    focusOnReady: boolean;
+    public Editor = null;
 
-    @Input() public blockMode = false;
+    @Input() @HostBinding('class.blockMode') public blockMode = false;
+
     public onSplit = new EventEmitter<string>();
     public onDelete = new EventEmitter();
 
     splitSymbol = '‌‌\u200C';
+
+    ngOnInit(): void {
+        super.ngOnInit();
+
+        this.Editor = this.blockMode ? BalloonEditor : ClassicEditor;
+    }
     focus(): void {
         this.focusOnReady = true;
     }
@@ -77,8 +82,6 @@ export class CKEInputComponent extends FormInput implements OnInit {
 
     public onChange({ editor }: ChangeEvent): void {
         const data = editor.getData();
-
-        // console.log(editor);
     }
 }
 

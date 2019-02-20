@@ -1,10 +1,9 @@
 import { CKEInputComponent } from './../../../@common/forms/fields/CKEInputComponent';
-import { TextBlock, TextBlockData } from 'app/@models/posts/TextBlock';
+import { TextBlock } from 'app/@models/posts/TextBlock';
 import { Validators } from '@angular/forms';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { SnackBarService } from 'app/@common/snacks/SnackBarService';
-import { PostBlockFormComponent } from '../form.component';
-import { Model } from 'app/@models/base/Model';
+import { PostBlockFormComponent, BlockFieldDescriptor } from '../form.component';
 import { ContentBlockItemType } from 'app/@models/posts/Post';
 
 @Component({
@@ -17,7 +16,7 @@ import { ContentBlockItemType } from 'app/@models/posts/Post';
             Label="Текст"
             [blockMode]="true"
         ></cke-input>
-        <ng-container *ngIf="Model.isEmpty()">
+        <ng-container *ngIf="isEmpty()">
             <button class="addBlock" mat-icon-button [matMenuTriggerFor]="menu">
                 <icon iconName="fa-plus"></icon>
             </button>
@@ -64,12 +63,8 @@ export class TextBlockFormComponent extends PostBlockFormComponent<TextBlock> {
     @ViewChild(CKEInputComponent) cke: CKEInputComponent;
     @ViewChild('editor') editor: ElementRef<HTMLElement>;
 
-    protected constructForm(): void {
-        this.registerFormControl(
-            this.getFieldName('Text'),
-            [<any>Validators.required],
-            'Data.Text'
-        );
+    protected getFields(): BlockFieldDescriptor[] {
+        return [new BlockFieldDescriptor('Text', [Validators.required], 'Data.Text')];
     }
 
     protected afterInit(): void {
@@ -97,6 +92,10 @@ export class TextBlockFormComponent extends PostBlockFormComponent<TextBlock> {
             // this.Model.Data.Text = parts[0];
             // console.log('split', parts);
         });
+    }
+
+    public isEmpty(): boolean {
+        return this.Model.Data.Text === '' || this.Model.Data.Text === '<p>&nbsp;</p>';
     }
 
     protected setFocus(): void {

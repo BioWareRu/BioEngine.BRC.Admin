@@ -13,7 +13,4 @@ export class FileBlock extends PostBlock<FileBlockData> {
     public Type: ContentBlockItemType = ContentBlockItemType.File;
     @Type(() => FileBlockData)
     Data: FileBlockData = new FileBlockData();
-    public isEmpty(): boolean {
-        return this.Data.File.FileSize === 0;
-    }
 }

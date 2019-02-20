@@ -8,11 +8,8 @@ export class CutBlock extends PostBlock<CutBlockData> {
     public Type: ContentBlockItemType = ContentBlockItemType.Cut;
     @Type(() => CutBlockData)
     Data: CutBlockData = new CutBlockData();
-    public isEmpty(): boolean {
-        return false;
-    }
 }
 
 export class CutBlockData extends PostBlockData {
-    public Title = 'Читать дальше';
+    public ButtonText = 'Читать дальше';
 }

@@ -1,4 +1,3 @@
-import { DialogService } from './../../modals/DialogService';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormInput } from './FormInput';
 import { Observable } from 'rxjs/Observable';
@@ -9,9 +8,6 @@ import { InputFile } from 'ngx-input-file';
 import { FormControl } from '@angular/forms';
 import { SnackBarService } from '../../snacks/SnackBarService';
 import { SnackBarMessage } from '../../snacks/SnackBarMessage';
-import { StorageManagerDialogComponent } from 'app/@common/storage/StorageManagerDialogComponent';
-import { DialogConfig } from 'app/@common/modals/DialogConfig';
-import { StorageNode } from 'app/@services/StorageService';
 
 @Component({
     selector: 'upload-input',
@@ -26,29 +22,8 @@ export class UploadInputComponent extends FormInput implements OnInit {
     protected items: StorageItem[] = [];
     private uploadControl: FormControl;
 
-    public constructor(
-        private snackBarService: SnackBarService,
-        private dialogService: DialogService
-    ) {
+    public constructor(private snackBarService: SnackBarService) {
         super();
-    }
-
-    public openStorageManager(): void {
-        this.dialogService
-            .show(StorageManagerDialogComponent, '', (config: DialogConfig) => {
-                config.maxWidth = '90vw';
-                config.width = '90vw';
-            })
-            .dialogRef.afterClosed()
-            .subscribe((nodes: StorageNode[]) => {
-                const items = [];
-                nodes.forEach(node => {
-                    items.push(node.Item);
-                });
-
-                this.items = this.items.concat(items);
-                this.Control.patchValue(this.items);
-            });
     }
 
     ngOnInit(): void {
@@ -74,7 +49,6 @@ export class UploadInputComponent extends FormInput implements OnInit {
     processFiles($event: InputFile): void {
         const queue = [];
         queue.push(this.Service.upload($event.file));
-        console.log(JSON.stringify(this.uploadControl.value));
         this.processUpload(queue);
     }
 
@@ -97,7 +71,6 @@ export class UploadInputComponent extends FormInput implements OnInit {
                 file: this.DisplayMode !== 'images' ? { name: item.FileName } : null
             });
         });
-        console.log(JSON.stringify(this.uploadControl.value));
         this.uploadControl.setValue(values);
     }
 

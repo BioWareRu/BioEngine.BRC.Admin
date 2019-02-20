@@ -1,8 +1,8 @@
 import { CustomValidators } from 'ngx-custom-validators';
 import { Validators } from '@angular/forms';
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { SnackBarService } from 'app/@common/snacks/SnackBarService';
-import { PostBlockFormComponent } from '../form.component';
+import { PostBlockFormComponent, BlockFieldDescriptor } from '../form.component';
 import { YoutubeBlock } from 'app/@models/posts/YoutubeBlock';
 
 @Component({
@@ -21,11 +21,13 @@ export class YoutubeBlockFormComponent extends PostBlockFormComponent<YoutubeBlo
         super(snackBarService);
     }
 
-    protected constructForm(): void {
-        this.registerFormControl(
-            this.getFieldName('Url'),
-            [Validators.required, CustomValidators.url],
-            'Data.Url'
-        );
+    protected getFields(): BlockFieldDescriptor[] {
+        return [
+            new BlockFieldDescriptor('Url', [Validators.required, CustomValidators.url], 'Data.Url')
+        ];
+    }
+
+    public isEmpty(): boolean {
+        return this.Model.Data.Url === '';
     }
 }

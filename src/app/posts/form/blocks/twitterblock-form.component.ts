@@ -1,7 +1,7 @@
 import { Validators } from '@angular/forms';
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { SnackBarService } from 'app/@common/snacks/SnackBarService';
-import { PostBlockFormComponent } from '../form.component';
+import { PostBlockFormComponent, BlockFieldDescriptor } from '../form.component';
 import { TwitterBlock } from 'app/@models/posts/TwitterBlock';
 
 @Component({
@@ -20,11 +20,11 @@ export class TwitterBlockFormComponent extends PostBlockFormComponent<TwitterBlo
         super(snackBarService);
     }
 
-    protected constructForm(): void {
-        this.registerFormControl(
-            this.getFieldName('TwitID'),
-            [<any>Validators.required],
-            'Data.TwitId'
-        );
+    protected getFields(): BlockFieldDescriptor[] {
+        return [new BlockFieldDescriptor('TwitID', [Validators.required], 'Data.TwitId')];
+    }
+
+    public isEmpty(): boolean {
+        return this.Model.Data.TwitId > 0;
     }
 }

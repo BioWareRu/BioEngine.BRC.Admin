@@ -1,11 +1,5 @@
-<!-- <mat-form-field [fxFlex]="FxFlex" [appearance]="Appearance">
-    <mat-label>{{ Label }}</mat-label> -->
-<!-- <mat-ckeditor
-        [fieldName]="FieldName"
-        [FormGroup]="FormGroup"
-        [ckeConfig]="config"
-    ></mat-ckeditor> -->
 <div [formGroup]="FormGroup">
+    <mat-label *ngIf="!blockMode">{{ Label }}</mat-label>
     <ckeditor
         [editor]="Editor"
         [formControlName]="FieldName"
@@ -13,7 +7,3 @@
         (ready)="ready($event)"
     ></ckeditor>
 </div>
-<!-- <mat-error
-        ><span *ngFor="let error of Errors">{{ error }}</span></mat-error
-    >
-</mat-form-field> -->

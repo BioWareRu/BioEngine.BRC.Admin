@@ -1,7 +1,7 @@
 import { Validators } from '@angular/forms';
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { SnackBarService } from 'app/@common/snacks/SnackBarService';
-import { PostBlockFormComponent } from '../form.component';
+import { PostBlockFormComponent, BlockFieldDescriptor } from '../form.component';
 import { CutBlock } from 'app/@models/posts/CutBlock';
 
 @Component({
@@ -9,7 +9,7 @@ import { CutBlock } from 'app/@models/posts/CutBlock';
     template: `
         <text-input
             [FormGroup]="FormGroup"
-            [FieldName]="getFieldName('Title')"
+            [FieldName]="getFieldName('ButtonText')"
             Label="Текст кнопки"
         ></text-input>
     `,
@@ -20,11 +20,11 @@ export class CutBlockFormComponent extends PostBlockFormComponent<CutBlock> {
         super(snackBarService);
     }
 
-    protected constructForm(): void {
-        this.registerFormControl(
-            this.getFieldName('Title'),
-            [<any>Validators.required],
-            'Data.Title'
-        );
+    protected getFields(): BlockFieldDescriptor[] {
+        return [new BlockFieldDescriptor('ButtonText', [Validators.required], 'Data.ButtonText')];
+    }
+
+    public isEmpty(): boolean {
+        return false;
     }
 }

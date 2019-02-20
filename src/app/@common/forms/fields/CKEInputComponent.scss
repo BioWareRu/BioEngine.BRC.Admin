@@ -1,0 +1,8 @@
+:host {
+    margin-bottom: 20px;
+    display: block;
+
+    &.blockMode {
+        margin-bottom: 0;
+    }
+}

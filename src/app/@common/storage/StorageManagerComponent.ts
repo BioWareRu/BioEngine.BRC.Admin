@@ -125,7 +125,6 @@ export class StorageManagerComponent implements OnInit {
     }
 
     public fileChange($event): void {
-        console.log($event);
         const fileList: FileList = $event.target.files;
         const lenght = fileList.length;
         const items: StorageNode[] = [];
@@ -138,7 +137,6 @@ export class StorageManagerComponent implements OnInit {
                 }
             });
         }
-        console.log(fileList);
     }
 }
 

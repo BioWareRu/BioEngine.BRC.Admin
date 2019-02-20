@@ -34,7 +34,6 @@ export abstract class BasePostBlock {
     public InFocus = false;
     public abstract Title: string;
     public abstract Icon: Icon;
-    public abstract isEmpty(): boolean;
 }
 
 export abstract class PostBlock<T extends PostBlockData> extends BasePostBlock {

@@ -8,9 +8,6 @@ export class YoutubeBlock extends PostBlock<YoutubeBlockData> {
     public Type: ContentBlockItemType = ContentBlockItemType.Youtube;
     @Type(() => YoutubeBlockData)
     Data: YoutubeBlockData = new YoutubeBlockData();
-    public isEmpty(): boolean {
-        return this.Data.Url === '';
-    }
 }
 
 export class YoutubeBlockData extends PostBlockData {
