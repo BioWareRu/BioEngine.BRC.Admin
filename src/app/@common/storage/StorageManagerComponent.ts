@@ -7,15 +7,12 @@ import {
     ElementRef,
     Pipe,
     PipeTransform,
-    Input,
-    EventEmitter
+    Input
 } from '@angular/core';
 import { StorageService, StorageNode } from 'app/@services/StorageService';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { DialogComponent } from '../modals/DialogComponent';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { DialogService } from '../modals/DialogService';
-import { StorageItem } from 'app/@models/results/StorageItem';
 
 @Component({
     selector: 'storage-manager',
@@ -32,7 +29,6 @@ export class StorageManagerComponent implements OnInit {
 
     @Input()
     public selectMode = false;
-    public onSelect = new EventEmitter<StorageNode[]>();
 
     public currentPath = '/';
     public breadcrumbs = [
@@ -89,9 +85,10 @@ export class StorageManagerComponent implements OnInit {
         }
     }
 
-    public confirmSelect(): void {
-        this.onSelect.emit(this.selection.Values());
+    public confirmSelect(): StorageNode[] {
+        const items = this.selection.Values();
         this.selection = new KeyedCollection<StorageNode>();
+        return items;
     }
 
     public enter(node: StorageNode): void {

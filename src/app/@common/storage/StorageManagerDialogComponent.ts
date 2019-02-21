@@ -8,6 +8,11 @@ import { MAT_DIALOG_DATA } from '@angular/material';
     template: `
         <h1 mat-dialog-title>Хранилище</h1>
         <div mat-dialog-content><storage-manager [selectMode]="true"></storage-manager></div>
+        <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end">
+            <button mat-raised-button color="warn" (click)="select()">
+                Выбрать
+            </button>
+        </div>
     `
 })
 export class StorageManagerDialogComponent extends DialogComponent<any> implements OnInit {
@@ -15,9 +20,10 @@ export class StorageManagerDialogComponent extends DialogComponent<any> implemen
         super(data);
     }
     @ViewChild(StorageManagerComponent) storageManager: StorageManagerComponent;
-    ngOnInit(): void {
-        this.storageManager.onSelect.subscribe(items => {
-            this.dialogRef.close(items);
-        });
+    ngOnInit(): void {}
+
+    public select(): void {
+        const items = this.storageManager.confirmSelect();
+        this.dialogRef.close(items);
     }
 }

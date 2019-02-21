@@ -80,12 +80,4 @@
         <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
         <mat-row *matRowDef="let row; columns: columnsToDisplay"></mat-row>
     </mat-table>
-    <button
-        mat-raised-button
-        (click)="confirmSelect()"
-        *ngIf="selectMode"
-        [disabled]="selection.Count() == 0"
-    >
-        Выбрать
-    </button>
 </div>
