@@ -16,12 +16,23 @@
     margin-right: 30px;
     border: solid 1px transparent;
 
+    icon.handle {
+        position: absolute;
+        right: -30px;
+        top: 0;
+        opacity: 0;
+    }
+
     &:hover {
         border: solid 1px #ccc;
         border-radius: 4px;
 
         .blockButton {
             opacity: 1;
+        }
+
+        icon.handle {
+            opacity: 0.3;
         }
     }
 

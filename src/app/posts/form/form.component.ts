@@ -75,6 +75,7 @@ export class PostFormComponent extends ContentFormComponent<Post, SavePostRespon
     public drop(event: CdkDragDrop<string[]>): void {
         this.BlocksManager.MoveBlock(event.previousIndex, event.currentIndex);
         this.BlocksManager.Update();
+        this.Form.hasChanges = true;
     }
 }
 

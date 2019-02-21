@@ -6,15 +6,19 @@
                 FieldName="Title"
                 Label="Название"
             ></text-input>
-            <div
-                *ngFor="let block of (BlocksManager.Blocks | async); trackBy: block?.Id"
-                class="blockElement"
-            >
-                <blockForm
-                    [blocksManager]="BlocksManager"
-                    [Form]="Form"
-                    [Model]="block"
-                ></blockForm>
+            <div cdkDropList (cdkDropListDropped)="drop($event)">
+                <div
+                    *ngFor="let block of (BlocksManager.Blocks | async); trackBy: block?.Id"
+                    class="blockElement"
+                    cdkDrag
+                >
+                    <icon classes="handle" iconName="fa-grip-lines" cdkDragHandle></icon>
+                    <blockForm
+                        [blocksManager]="BlocksManager"
+                        [Form]="Form"
+                        [Model]="block"
+                    ></blockForm>
+                </div>
             </div>
         </div>
         <div fxFlex="20" class="side p-8">
