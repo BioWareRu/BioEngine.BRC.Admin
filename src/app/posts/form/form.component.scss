@@ -114,6 +114,31 @@
     padding-left: 10px;
 }
 
-.editor {
-    height: 100%;
+mat-sidenav-container {
+    flex: 1 1 auto;
+    display: flex;
+}
+
+mat-sidenav {
+    width: 20%;
+
+    chips-input {
+        width: 98%;
+    }
+}
+mat-sidenav-content {
+    overflow: hidden;
+    display: flex;
+
+    .editor {
+        flex: 1 1 auto;
+        background: white;
+    }
+}
+
+.page-layout {
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    flex: 1 1 auto;
 }

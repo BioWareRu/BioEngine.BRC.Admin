@@ -1,27 +1,29 @@
-<div class="page-layout blank p-24 bg-white" *ngIf="formLoaded">
-    <div fxLayout="row" class="post-form">
-        <div fxFlex="70" class="editor p-8 mat-elevation-z8 ">
-            <text-input
-                [FormGroup]="Form.FormGroup"
-                FieldName="Title"
-                Label="Название"
-            ></text-input>
-            <div cdkDropList (cdkDropListDropped)="drop($event)">
-                <div
-                    *ngFor="let block of (BlocksManager.Blocks | async); trackBy: block?.Id"
-                    class="blockElement"
-                    cdkDrag
-                >
-                    <icon classes="handle" iconName="fa-grip-lines" cdkDragHandle></icon>
-                    <blockForm
-                        [blocksManager]="BlocksManager"
-                        [Form]="Form"
-                        [Model]="block"
-                    ></blockForm>
+<div class="page-layout blank bg-white inner-scroll" *ngIf="formLoaded">
+    <mat-sidenav-container>
+        <mat-sidenav-content fxFlex>
+            <div class="editor p-24" brcPerfectScrollbar>
+                <text-input
+                    [FormGroup]="Form.FormGroup"
+                    FieldName="Title"
+                    Label="Название"
+                ></text-input>
+                <div cdkDropList (cdkDropListDropped)="drop($event)">
+                    <div
+                        *ngFor="let block of (BlocksManager.Blocks | async); trackBy: block?.Id"
+                        class="blockElement"
+                        cdkDrag
+                    >
+                        <icon classes="handle" iconName="fa-grip-lines" cdkDragHandle></icon>
+                        <blockForm
+                            [blocksManager]="BlocksManager"
+                            [Form]="Form"
+                            [Model]="block"
+                        ></blockForm>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div fxFlex="20" class="side p-8">
+        </mat-sidenav-content>
+        <mat-sidenav #sidenav mode="side" opened class="p-24" position="end">
             <div>
                 <button
                     mat-raised-button
@@ -79,6 +81,6 @@
                 [EntitiesService]="servicesProvider.TagsService"
                 [Options]="Tags"
             ></chips-input>
-        </div>
-    </div>
+        </mat-sidenav>
+    </mat-sidenav-container>
 </div>
