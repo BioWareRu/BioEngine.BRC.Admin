@@ -41,7 +41,7 @@
         "@fortawesome/fontawesome-free": "^5.7.2",
         "@types/uuid": "^3.4.4",
         "angular-oauth2-oidc": "5.0.2",
-        "angular-tree-component": "^8.2.0",
+        "angular-tree-component": "^8.3.0",
         "class-transformer": "^0.2.0",
         "classlist.js": "^1.1.20150312",
         "core-js": "^2.6.5",
