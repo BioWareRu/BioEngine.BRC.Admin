@@ -11,5 +11,6 @@ export class YoutubeBlock extends PostBlock<YoutubeBlockData> {
 }
 
 export class YoutubeBlockData extends PostBlockData {
-    public Url = '';
+    public YoutubeId = '';
+    public YoutubeUrl = '';
 }
