@@ -39,7 +39,7 @@ export class ContentListComponent extends ListComponent<Post> implements OnInit 
         forkJoin(
             this.servicesProvider.SitesService.getAll(1, 100, 'id'),
             this.servicesProvider.SectionsService.getAll(1, 100, 'id'),
-            this.servicesProvider.TagsService.getAll(1, 100, 'id')
+            this.servicesProvider.TagsService.getAll(1, 1000, 'id')
         ).subscribe(res => {
             this.sites = res[0].Data;
             this.sections = res[1].Data;
@@ -50,7 +50,7 @@ export class ContentListComponent extends ListComponent<Post> implements OnInit 
 
     protected GetColumns(): ListTableColumn<Post>[] {
         return [
-            new ListTableColumn<Post>('Id', '#').setSortable(),
+            // new ListTableColumn<Post>('Id', '#').setSortable(),
             new ListTableColumn<Post>('Title', 'Заголовок').setSortable().setLinkGetter(content => {
                 return ['/posts/', content.Id, 'edit'];
             }),

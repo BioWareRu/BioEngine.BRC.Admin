@@ -32,20 +32,21 @@ import { SnackBarMessage } from '../snacks/SnackBarMessage';
 import { SnackBarService } from '../snacks/SnackBarService';
 import { CustomValidators } from 'ngx-custom-validators';
 import { Form } from './Form';
+import * as uuid from 'uuid';
 
 export abstract class FormPageComponent<
     TModel extends Model,
     TResultModel extends SaveModelResponse<TModel>
 > extends PageComponent implements OnInit {
     @Input() public Model: TModel;
-    protected modelId: number;
+    protected modelId: string;
     protected isPublished: boolean;
     @ViewChild('modelForm') protected Form: FormComponent<TModel, TResultModel>;
 
     ngOnInit(): void {
-        const id: Observable<number> = this.Route.params.pipe(map(p => p.id));
+        const id: Observable<string> = this.Route.params.pipe(map(p => p.id));
         id.subscribe(modelId => {
-            if (modelId > 0) {
+            if (modelId && modelId !== '') {
                 this.modelId = modelId;
                 this.getService()
                     .get(modelId)
@@ -286,7 +287,7 @@ export abstract class FormComponent<
 
     public loadFormData(model: TModel = null): void {
         this.model = model;
-        if (this.model.Id > 0) {
+        if (this.model.Id !== this.model.EmptyId) {
             this.isNew = false;
         }
         this.initForm();

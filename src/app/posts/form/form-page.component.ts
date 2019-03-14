@@ -26,7 +26,7 @@ export class PostFormPageComponent extends FormPageComponent<Post, SavePostRespo
     }
 
     protected getRoute(): string {
-        return '/content/list/posts';
+        return '/posts';
     }
 
     protected getService(): BaseService<Post> {

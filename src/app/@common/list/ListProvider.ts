@@ -16,7 +16,7 @@ export class ListProvider<T extends Model> {
     public sorter: MatSort;
     public dataLoaded = false;
     private currentPage = 0;
-    private sort = '-id';
+    private sort = '-dateAdded';
 
     constructor(
         private service: BaseService<T>,
@@ -49,8 +49,7 @@ export class ListProvider<T extends Model> {
             if (sort != null) {
                 this.sort = sort;
                 const key = this.sort.replace('-', '');
-                const sortDirection: SortDirection =
-                    this.sort.indexOf('-') > -1 ? 'desc' : 'asc';
+                const sortDirection: SortDirection = this.sort.indexOf('-') > -1 ? 'desc' : 'asc';
                 this.sorter.active = key;
                 this.sorter.direction = sortDirection;
             }

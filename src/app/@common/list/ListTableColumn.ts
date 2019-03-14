@@ -16,11 +16,7 @@ export class ListTableColumn<T = Model> {
     private getter: (model: T) => {};
     private linkGetter: (model: T) => {};
 
-    constructor(
-        key: string,
-        title: string,
-        type: ListTableColumnType = ListTableColumnType.Text
-    ) {
+    constructor(key: string, title: string, type: ListTableColumnType = ListTableColumnType.Text) {
         this.Key = key;
         this.Title = title;
         this.Type = type;

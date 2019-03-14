@@ -25,14 +25,10 @@ export abstract class BaseService<T> {
                 order: sort,
                 filter: filter == null ? null : filter.toString()
             })
-            .pipe(
-                map(res =>
-                    plainToClass(this.getListType(), res as ListResult<T>)
-                )
-            );
+            .pipe(map(res => plainToClass(this.getListType(), res as ListResult<T>)));
     }
 
-    public get(id: number): Observable<T> {
+    public get(id: string): Observable<T> {
         return this.httpClient
             .get(this.getResource() + '/' + id, {})
             .pipe(map(res => plainToClass(this.getType(), res as T)));
@@ -47,25 +43,13 @@ export abstract class BaseService<T> {
     public add(item: T): Observable<SaveModelResponse<T>> {
         return this.httpClient
             .post(this.getResource(), item)
-            .pipe(
-                map(res =>
-                    plainToClass(this.getSaveType(), res as SaveModelResponse<
-                        T
-                    >)
-                )
-            );
+            .pipe(map(res => plainToClass(this.getSaveType(), res as SaveModelResponse<T>)));
     }
 
     public update(id: number, item: T): Observable<SaveModelResponse<T>> {
         return this.httpClient
             .put(this.getResource() + '/' + id, item)
-            .pipe(
-                map(res =>
-                    plainToClass(this.getSaveType(), res as SaveModelResponse<
-                        T
-                    >)
-                )
-            );
+            .pipe(map(res => plainToClass(this.getSaveType(), res as SaveModelResponse<T>)));
     }
 
     public publish(id: number): Observable<T> {
@@ -81,9 +65,7 @@ export abstract class BaseService<T> {
     }
 
     public delete(id: number): Observable<boolean> {
-        return this.httpClient
-            .delete(this.getResource() + '/' + id)
-            .pipe(map(() => true));
+        return this.httpClient.delete(this.getResource() + '/' + id).pipe(map(() => true));
     }
 
     public count(): Observable<number> {

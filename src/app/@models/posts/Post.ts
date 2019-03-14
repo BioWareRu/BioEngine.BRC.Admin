@@ -5,7 +5,7 @@ import { User } from '../User';
 import { Icon } from 'app/@common/shared/icon/Icon';
 
 export class Post extends Model implements ISiteEntity, ISectionEntity {
-    public Id: number;
+    public Id = '';
     public AuthorId: number;
     public Author: User;
     public Url: string;
@@ -16,9 +16,9 @@ export class Post extends Model implements ISiteEntity, ISectionEntity {
     public ForumTopicId: number;
     public ForumPostId: number;
     public CommentsCount: number;
-    public SectionIds: number[];
-    public SiteIds: number[];
-    TagIds: number[];
+    public SectionIds: string[];
+    public SiteIds: string[];
+    TagIds: string[];
 
     public Blocks: BasePostBlock[];
 

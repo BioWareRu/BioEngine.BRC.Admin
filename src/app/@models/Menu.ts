@@ -10,11 +10,11 @@ export class MenuItem {
 }
 
 export class Menu extends Model implements ISingleSiteEntity {
-    public Id: number;
+    public Id: string;
     public Title: string;
     public Url: string;
     public Text: string;
-    public SiteId: number;
+    public SiteId: string;
 
     @Type(() => MenuItem)
     public Items: MenuItem[] = [];
