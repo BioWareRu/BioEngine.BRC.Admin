@@ -5,6 +5,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class TruncatePipe implements PipeTransform {
     public transform(value: string, limit = 25, completeWords = false, ellipsis = '...'): string {
+        if (value.length < limit) {
+            ellipsis = '';
+        }
         if (completeWords) {
             limit = value.substr(0, limit).lastIndexOf(' ');
         }

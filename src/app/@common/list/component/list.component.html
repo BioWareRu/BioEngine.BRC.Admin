@@ -58,8 +58,9 @@
                                 color="warn"
                                 selected
                                 *ngFor="let sectionId of column.getValue(row)"
+                                title="{{ column.Sections[sectionId].Title }}"
                             >
-                                {{ column.Sections[sectionId].Title }}
+                                {{ column.Sections[sectionId].Title | truncate: 30 }}
                             </mat-chip>
                         </mat-chip-list>
                     </ng-container>
@@ -69,8 +70,9 @@
                                 color="accent"
                                 selected
                                 *ngFor="let tagId of column.getValue(row)"
+                                title="{{ column.Tags[tagId].Name }}"
                             >
-                                {{ column.Tags[tagId].Name }}
+                                {{ column.Tags[tagId].Name | truncate: 30 }}
                             </mat-chip>
                         </mat-chip-list>
                     </ng-container>
