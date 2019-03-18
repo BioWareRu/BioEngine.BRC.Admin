@@ -34,6 +34,7 @@ import { DynamicHostDirective } from './directives/DynamicHostDirective';
 import { StorageManagerDialogComponent } from './storage/StorageManagerDialogComponent';
 import { BioSharedModule } from './shared/BioSharedModule';
 import { SafePipe } from './pipes/SafePipe';
+import { TruncatePipe } from './pipes/TruncatePipe';
 
 @NgModule({
     declarations: [
@@ -46,6 +47,7 @@ import { SafePipe } from './pipes/SafePipe';
         CreateFolderDialogComponent,
         FileSizePipe,
         SafePipe,
+        TruncatePipe,
         DynamicHostDirective,
         StorageManagerDialogComponent
     ],
@@ -67,6 +69,7 @@ import { SafePipe } from './pipes/SafePipe';
         StorageManagerComponent,
         FileSizePipe,
         SafePipe,
+        TruncatePipe,
         DynamicHostDirective,
         BioSharedModule
     ],
