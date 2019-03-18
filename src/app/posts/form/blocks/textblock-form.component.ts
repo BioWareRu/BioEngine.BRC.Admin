@@ -125,7 +125,7 @@ export class TextBlockFormComponent extends PostBlockFormComponent<TextBlock> {
             }
         });
         editor.keystrokes.set('backspace', (keyEvtData, cancel) => {
-            if (this.isEmpty) {
+            if (this.isEmpty()) {
                 this.onDelete();
             }
         });
