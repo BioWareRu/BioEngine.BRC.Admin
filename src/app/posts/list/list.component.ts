@@ -10,12 +10,8 @@ import {
 } from '../../@common/list/ListTableColumn';
 import { ListTableColumnType } from '../../@common/list/ListEnums';
 import { ListTableColumnAction } from '../../@common/list/ListTableColumnAction';
-import { BaseSection } from '../../@models/Section';
-import { Site } from '../../@models/Site';
 import { Post } from '../../@models/posts/Post';
 import { PageContext } from '../../@common/PageComponent';
-import { Tag } from '../../@models/Tag';
-import { forkJoin } from 'rxjs';
 import { Icon } from 'app/@common/shared/icon/Icon';
 
 @Component({
@@ -24,10 +20,6 @@ import { Icon } from 'app/@common/shared/icon/Icon';
     providers: [PageContext]
 })
 export class ContentListComponent extends ListComponent<Post> implements OnInit {
-    private sites: Site[];
-    private sections: BaseSection[];
-    private tags: Tag[];
-
     constructor(context: PageContext, private servicesProvider: ServicesProvider) {
         super(context, servicesProvider.PostsService);
 
@@ -36,16 +28,7 @@ export class ContentListComponent extends ListComponent<Post> implements OnInit 
     }
 
     ngOnInit(): void {
-        forkJoin(
-            this.servicesProvider.SitesService.getAll(1, 100, 'id'),
-            this.servicesProvider.SectionsService.getAll(1, 100, 'id'),
-            this.servicesProvider.TagsService.getAll(1, 1000, 'id')
-        ).subscribe(res => {
-            this.sites = res[0].Data;
-            this.sections = res[1].Data;
-            this.tags = res[2].Data;
-            this.Init();
-        });
+        this.Init();
     }
 
     protected GetColumns(): ListTableColumn<Post>[] {
@@ -59,9 +42,9 @@ export class ContentListComponent extends ListComponent<Post> implements OnInit 
                 'Дата',
                 ListTableColumnType.TimeAgo
             ).setSortable(),
-            new SitesTableColumn<Post>('SiteIds', 'Сайты', this.sites),
-            new SectionsTableColumn<Post>('SectionIds', 'Разделы', this.sections),
-            new TagsTableColumn<Post>('TagIds', 'Тэги', this.tags),
+            new SitesTableColumn<Post>('SiteIds', 'Сайты'),
+            new SectionsTableColumn<Post>('SectionIds', 'Разделы'),
+            new TagsTableColumn<Post>('TagIds', 'Тэги'),
             new AuthorTableColumn<Post>('Author', 'Автор'),
             new ListTableColumn<Post>('Actions', '')
                 .AddAction(

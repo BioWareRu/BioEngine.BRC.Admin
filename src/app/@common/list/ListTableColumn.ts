@@ -1,9 +1,13 @@
+import { CacheProvider } from './../CacheProvider';
 import { Model } from '../../@models/base/Model';
 import { ListTableColumnType } from './ListEnums';
 import { ListTableColumnAction } from './ListTableColumnAction';
 import { Site } from '../../@models/Site';
 import { BaseSection } from '../../@models/Section';
 import { Tag } from '../../@models/Tag';
+import { Observable } from 'rxjs';
+import { KeyedCollection } from '../KeyedCollection';
+import { map } from 'rxjs/operators';
 
 export class ListTableColumn<T = Model> {
     public Title: string;
@@ -75,46 +79,28 @@ export class ListTableColumn<T = Model> {
 }
 
 export class SitesTableColumn<T = Model> extends ListTableColumn<T> {
-    public Sites: Site[] = [];
-
-    constructor(key: string, title: string, sites: Site[]) {
+    constructor(key: string, title: string) {
         super(key, title, ListTableColumnType.SitesList);
-        sites.forEach(site => {
-            this.Sites[site.Id] = site;
-        });
     }
 }
 
 export class SiteTableColumn<T = Model> extends ListTableColumn<T> {
-    public Sites: Site[] = [];
-
-    constructor(key: string, title: string, sites: Site[]) {
+    constructor(key: string, title: string) {
         super(key, title, ListTableColumnType.Site);
-        sites.forEach(site => {
-            this.Sites[site.Id] = site;
-        });
     }
 }
 
 export class SectionsTableColumn<T = Model> extends ListTableColumn<T> {
     public Sections: BaseSection[] = [];
 
-    constructor(key: string, title: string, sections: BaseSection[]) {
+    constructor(key: string, title: string) {
         super(key, title, ListTableColumnType.SectionsList);
-        sections.forEach(section => {
-            this.Sections[section.Id] = section;
-        });
     }
 }
 
 export class TagsTableColumn<T = Model> extends ListTableColumn<T> {
-    public Tags: Tag[] = [];
-
-    constructor(key: string, title: string, tags: Tag[]) {
+    constructor(key: string, title: string) {
         super(key, title, ListTableColumnType.TagsList);
-        tags.forEach(tag => {
-            this.Tags[tag.Id] = tag;
-        });
     }
 }
 

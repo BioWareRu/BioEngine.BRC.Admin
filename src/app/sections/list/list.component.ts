@@ -17,8 +17,6 @@ import { Icon } from 'app/@common/shared/icon/Icon';
     providers: [PageContext]
 })
 export class SectionsListComponent extends ListComponent<BaseSection> implements OnInit {
-    private sites: Site[];
-
     constructor(context: PageContext, private servicesProvider: ServicesProvider) {
         super(context, servicesProvider.SectionsService);
 
@@ -53,10 +51,7 @@ export class SectionsListComponent extends ListComponent<BaseSection> implements
                 default:
                     break;
             }
-            this.servicesProvider.SitesService.getAll(1, 100, 'id').subscribe(res => {
-                this.sites = res.Data;
-                this.Init();
-            });
+            this.Init();
         });
     }
 
@@ -81,7 +76,7 @@ export class SectionsListComponent extends ListComponent<BaseSection> implements
                 'Дата',
                 ListTableColumnType.TimeAgo
             ).setSortable(),
-            new SitesTableColumn<BaseSection>('SiteIds', 'Сайты', this.sites),
+            new SitesTableColumn<BaseSection>('SiteIds', 'Сайты'),
             new ListTableColumn<BaseSection>('Actions', '')
                 .AddAction(
                     new ListTableColumnAction<BaseSection>(

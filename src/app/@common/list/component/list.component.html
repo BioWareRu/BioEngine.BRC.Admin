@@ -39,42 +39,16 @@
                         >
                     </ng-container>
                     <ng-container *ngSwitchCase="columnTypes.SitesList">
-                        <mat-chip-list>
-                            <mat-chip selected *ngFor="let siteId of column.getValue(row)">
-                                {{ column.Sites[siteId].Title }}
-                            </mat-chip>
-                        </mat-chip-list>
+                        <sitesList [Ids]="column.getValue(row)"></sitesList>
                     </ng-container>
                     <ng-container *ngSwitchCase="columnTypes.Site">
-                        <mat-chip-list>
-                            <mat-chip selected>
-                                {{ column.Sites[column.getValue(row)].Title }}
-                            </mat-chip>
-                        </mat-chip-list>
+                        <sitesList [Ids]="column.getValue(row)"></sitesList>
                     </ng-container>
                     <ng-container *ngSwitchCase="columnTypes.SectionsList">
-                        <mat-chip-list>
-                            <mat-chip
-                                color="warn"
-                                selected
-                                *ngFor="let sectionId of column.getValue(row)"
-                                title="{{ column.Sections[sectionId].Title }}"
-                            >
-                                {{ column.Sections[sectionId].Title | truncate: 30 }}
-                            </mat-chip>
-                        </mat-chip-list>
+                        <sectionsList [Ids]="column.getValue(row)"></sectionsList>
                     </ng-container>
                     <ng-container *ngSwitchCase="columnTypes.TagsList">
-                        <mat-chip-list>
-                            <mat-chip
-                                color="accent"
-                                selected
-                                *ngFor="let tagId of column.getValue(row)"
-                                title="{{ column.Tags[tagId].Name }}"
-                            >
-                                {{ column.Tags[tagId].Name | truncate: 30 }}
-                            </mat-chip>
-                        </mat-chip-list>
+                        <tagsList [Ids]="column.getValue(row)"></tagsList>
                     </ng-container>
                     <ng-container *ngSwitchCase="columnTypes.Author">
                         <brc-user [user]="column.getValue(row)"></brc-user>

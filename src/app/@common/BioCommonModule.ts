@@ -35,10 +35,16 @@ import { StorageManagerDialogComponent } from './storage/StorageManagerDialogCom
 import { BioSharedModule } from './shared/BioSharedModule';
 import { SafePipe } from './pipes/SafePipe';
 import { TruncatePipe } from './pipes/TruncatePipe';
+import { SitesLabelsListComponent } from './list/component/sites-list.component';
+import { SectionsLabelsListComponent } from './list/component/sections-list.component';
+import { TagsLabelsListComponent } from './list/component/tags-list.component';
 
 @NgModule({
     declarations: [
         ListTableComponent,
+        SitesLabelsListComponent,
+        TagsLabelsListComponent,
+        SectionsLabelsListComponent,
         BrcPerfectScrollbarDirective,
         UserComponent,
         NotificationComponent,

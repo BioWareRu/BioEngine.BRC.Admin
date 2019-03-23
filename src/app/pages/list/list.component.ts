@@ -6,7 +6,6 @@ import { ListTableColumnAction } from '../../@common/list/ListTableColumnAction'
 import { PageContext } from '../../@common/PageComponent';
 import { ServicesProvider } from '../../@services/ServicesProvider';
 import { Page } from '../../@models/Page';
-import { Site } from '../../@models/Site';
 import { Icon } from 'app/@common/shared/icon/Icon';
 
 @Component({
@@ -15,8 +14,6 @@ import { Icon } from 'app/@common/shared/icon/Icon';
     providers: [PageContext]
 })
 export class PagesListComponent extends ListComponent<Page> implements OnInit {
-    private sites: Site[];
-
     constructor(context: PageContext, private servicesProvider: ServicesProvider) {
         super(context, servicesProvider.PagesService);
 
@@ -26,10 +23,7 @@ export class PagesListComponent extends ListComponent<Page> implements OnInit {
     }
 
     ngOnInit(): void {
-        this.servicesProvider.SitesService.getAll(1, 100, 'id').subscribe(res => {
-            this.sites = res.Data;
-            this.Init();
-        });
+        this.Init();
     }
 
     protected GetColumns(): ListTableColumn<Page>[] {
@@ -43,7 +37,7 @@ export class PagesListComponent extends ListComponent<Page> implements OnInit {
                 'Дата',
                 ListTableColumnType.TimeAgo
             ).setSortable(),
-            new SitesTableColumn<Page>('SiteIds', 'Сайты', this.sites),
+            new SitesTableColumn<Page>('SiteIds', 'Сайты'),
             new ListTableColumn<Page>('Actions', '')
                 .AddAction(
                     new ListTableColumnAction<Page>(
