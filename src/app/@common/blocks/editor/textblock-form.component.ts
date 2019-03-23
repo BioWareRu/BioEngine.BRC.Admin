@@ -1,12 +1,12 @@
-import { CKEInputComponent } from './../../../@common/forms/fields/CKEInputComponent';
-import { TextBlock } from 'app/@models/posts/TextBlock';
+import { TextBlock } from 'app/@models/blocks/TextBlock';
 import { Validators } from '@angular/forms';
 import { Component, ViewChild, ElementRef, EventEmitter } from '@angular/core';
 import { SnackBarService } from 'app/@common/snacks/SnackBarService';
-import { PostBlockFormComponent, BlockFieldDescriptor } from '../form.component';
-import { ContentBlockItemType } from 'app/@models/posts/Post';
 import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
+import { ContentBlockItemType } from 'app/@models/blocks/ContentBlock';
+import { ContentBlockFormComponent, BlockFieldDescriptor } from './ContentBlockFormComponent';
+import { CKEInputComponent } from 'app/@common/forms/fields/CKEInputComponent';
 
 @Component({
     selector: 'text-block-form',
@@ -20,28 +20,6 @@ import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
                 (ready)="ready($event)"
             ></ckeditor>
         </div>
-        <ng-container *ngIf="isEmpty()">
-            <button class="addBlock" mat-icon-button [matMenuTriggerFor]="menu">
-                <icon iconName="fa-plus"></icon>
-            </button>
-            <mat-menu #menu="matMenu">
-                <ng-container *ngFor="let config of blocksManager.Types.Values()">
-                    <button
-                        *ngIf="config.type !== this.Model.Type"
-                        mat-menu-item
-                        (click)="
-                            blocksManager.ReplaceBlock(
-                                this.Model,
-                                blocksManager.CreateBlock(config.type)
-                            )
-                        "
-                    >
-                        <icon [icon]="config.icon"></icon>
-                        <span>{{ config.title }}</span>
-                    </button></ng-container
-                >
-            </mat-menu>
-        </ng-container>
     `,
     styles: [
         `
@@ -51,15 +29,10 @@ import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
             .ck.ck-editor__editable_inline > :first-child {
                 margin-top: 5px;
             }
-            .addBlock {
-                position: absolute;
-                top: -6px;
-                left: -50px;
-            }
         `
     ]
 })
-export class TextBlockFormComponent extends PostBlockFormComponent<TextBlock> {
+export class TextBlockFormComponent extends ContentBlockFormComponent<TextBlock> {
     constructor(snackBarService: SnackBarService) {
         super(snackBarService);
     }

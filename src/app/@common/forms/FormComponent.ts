@@ -1,4 +1,4 @@
-import { FormGroup, Validators } from '@angular/forms';
+import { Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RestResult } from '../RestResult';
@@ -15,24 +15,31 @@ import { BioFormControl } from './BioFormControl';
 import { plainToClass } from 'class-transformer';
 import { ServicesProvider } from '../../@services/ServicesProvider';
 import { ISiteEntity, ISingleSiteEntity } from '../../@models/interfaces/ISiteEntity';
-import { ISectionEntity } from '../../@models/interfaces/ISectionEntity';
 import { AbstractControlOptions } from '@angular/forms/src/model';
 import { ValidatorFn } from '@angular/forms/src/directives/validators';
-import { PageComponent, PageContext } from '../PageComponent';
+import { PageComponent } from '../PageComponent';
 import { Utils } from '../Utils';
 import { SaveModelResponse } from '../SaveModelResponse';
 import { BaseService } from '../BaseService';
 import { map } from 'rxjs/operators';
 import { Model } from '../../@models/base/Model';
 import { Properties, PropertiesElementType } from '../../@models/base/Properties';
-import { BaseSection } from '../../@models/Section';
-import { Tag } from '../../@models/Tag';
 import { Site } from '../../@models/Site';
 import { SnackBarMessage } from '../snacks/SnackBarMessage';
 import { SnackBarService } from '../snacks/SnackBarService';
 import { CustomValidators } from 'ngx-custom-validators';
 import { Form } from './Form';
-import * as uuid from 'uuid';
+import { IContentEntity } from 'app/@models/interfaces/IContentEntity';
+import { BlocksManager } from '../blocks/BlocksManager';
+import { ContentBlockItemType, BaseContentBlock } from 'app/@models/blocks/ContentBlock';
+import { TextBlock } from 'app/@models/blocks/TextBlock';
+import { FileBlock } from 'app/@models/blocks/FileBlock';
+import { GalleryBlock } from 'app/@models/blocks/GalleryBlock';
+import { CutBlock } from 'app/@models/blocks/CutBlock';
+import { TwitterBlock } from 'app/@models/blocks/TwitterBlock';
+import { YoutubeBlock } from 'app/@models/blocks/YoutubeBlock';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { DialogService } from '../modals/DialogService';
 
 export abstract class FormPageComponent<
     TModel extends Model,
@@ -348,26 +355,26 @@ export abstract class SectionFormComponent<
 }
 
 export abstract class ContentFormComponent<
-    TModel extends ISectionEntity,
+    TModel extends IContentEntity,
     TSaveModel extends SaveModelResponse<TModel>
 > extends SiteEntityFormComponent<TModel, TSaveModel> {
-    protected get Sections(): Observable<BaseSection[]> {
-        return this.servicesProvider.SectionsService.getAll(1, 1000, 'id').pipe(
-            map(list => list.Data)
-        );
-    }
-
-    protected get Tags(): Observable<Tag[]> {
-        return this.servicesProvider.TagsService.getAll(1, 1000, 'id').pipe(map(list => list.Data));
+    protected constructor(
+        servicesProvider: ServicesProvider,
+        snackBarService: SnackBarService,
+        modelService: BaseService<TModel>,
+        private _dialogService: DialogService
+    ) {
+        super(servicesProvider, snackBarService, modelService);
     }
 
     protected constructForm(): void {
         this.registerFormControl('Title', [<any>Validators.required]);
         this.registerFormControl('Url', [<any>Validators.required]);
-        this.registerFormControl('SectionIds', [<any>Validators.required]);
-        this.registerFormControl('TagIds', [<any>Validators.required]);
         this.registerFormControl('Blocks', [<any>Validators.required]);
+        this.registerFormControl('SiteIds', [<any>Validators.required]);
     }
+
+    protected afterInit(): void {}
 }
 
 @Pipe({ name: 'keys' })

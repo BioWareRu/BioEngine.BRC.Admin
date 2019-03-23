@@ -1,8 +1,8 @@
 import { Validators } from '@angular/forms';
 import { Component } from '@angular/core';
 import { SnackBarService } from 'app/@common/snacks/SnackBarService';
-import { PostBlockFormComponent, BlockFieldDescriptor } from '../form.component';
-import { CutBlock } from 'app/@models/posts/CutBlock';
+import { CutBlock } from 'app/@models/blocks/CutBlock';
+import { ContentBlockFormComponent, BlockFieldDescriptor } from './ContentBlockFormComponent';
 
 @Component({
     selector: 'cut-block-form',
@@ -15,7 +15,7 @@ import { CutBlock } from 'app/@models/posts/CutBlock';
     `,
     styles: [``]
 })
-export class CutBlockFormComponent extends PostBlockFormComponent<CutBlock> {
+export class CutBlockFormComponent extends ContentBlockFormComponent<CutBlock> {
     constructor(snackBarService: SnackBarService) {
         super(snackBarService);
     }

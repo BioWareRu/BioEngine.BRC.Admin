@@ -7,20 +7,7 @@
                     FieldName="Title"
                     Label="Название"
                 ></text-input>
-                <div cdkDropList (cdkDropListDropped)="drop($event)">
-                    <div
-                        *ngFor="let block of (BlocksManager.Blocks | async); trackBy: block?.Id"
-                        class="blockElement"
-                        cdkDrag
-                    >
-                        <icon classes="handle" iconName="fa-grip-lines" cdkDragHandle></icon>
-                        <blockForm
-                            [blocksManager]="BlocksManager"
-                            [Form]="Form"
-                            [Model]="block"
-                        ></blockForm>
-                    </div>
-                </div>
+                <blocksForm [Model]="model" [Form]="Form"></blocksForm>
             </div>
         </mat-sidenav-content>
         <mat-sidenav #sidenav mode="side" opened class="p-24" position="end">

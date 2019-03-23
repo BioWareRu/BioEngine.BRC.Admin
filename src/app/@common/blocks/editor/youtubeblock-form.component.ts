@@ -2,10 +2,10 @@ import { CustomValidators } from 'ngx-custom-validators';
 import { Validators } from '@angular/forms';
 import { Component } from '@angular/core';
 import { SnackBarService } from 'app/@common/snacks/SnackBarService';
-import { PostBlockFormComponent, BlockFieldDescriptor } from '../form.component';
-import { YoutubeBlock } from 'app/@models/posts/YoutubeBlock';
+import { YoutubeBlock } from 'app/@models/blocks/YoutubeBlock';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FieldInputChange } from 'app/@common/forms/Form';
+import { ContentBlockFormComponent, BlockFieldDescriptor } from './ContentBlockFormComponent';
 
 @Component({
     selector: 'youtube-block-form',
@@ -28,7 +28,7 @@ import { FieldInputChange } from 'app/@common/forms/Form';
     `,
     styleUrls: [`./youtubeblock-form.component.scss`]
 })
-export class YoutubeBlockFormComponent extends PostBlockFormComponent<YoutubeBlock> {
+export class YoutubeBlockFormComponent extends ContentBlockFormComponent<YoutubeBlock> {
     constructor(snackBarService: SnackBarService, private sanitizer: DomSanitizer) {
         super(snackBarService);
     }
@@ -54,7 +54,6 @@ export class YoutubeBlockFormComponent extends PostBlockFormComponent<YoutubeBlo
         this.Form.onChange.subscribe((change: FieldInputChange) => {
             if (change.key === this.getFieldName('YoutubeUrl')) {
                 const id = this.YouTubeGetID(change.newValue);
-                console.log(id);
                 if (id) {
                     this.Model.Data.YoutubeId = id;
                     this.updateUrl();

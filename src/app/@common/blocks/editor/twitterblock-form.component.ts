@@ -1,8 +1,8 @@
 import { Validators } from '@angular/forms';
 import { Component } from '@angular/core';
 import { SnackBarService } from 'app/@common/snacks/SnackBarService';
-import { PostBlockFormComponent, BlockFieldDescriptor } from '../form.component';
-import { TwitterBlock } from 'app/@models/posts/TwitterBlock';
+import { TwitterBlock } from 'app/@models/blocks/TwitterBlock';
+import { ContentBlockFormComponent, BlockFieldDescriptor } from './ContentBlockFormComponent';
 
 @Component({
     selector: 'twitter-block-form',
@@ -15,7 +15,7 @@ import { TwitterBlock } from 'app/@models/posts/TwitterBlock';
     `,
     styles: [``]
 })
-export class TwitterBlockFormComponent extends PostBlockFormComponent<TwitterBlock> {
+export class TwitterBlockFormComponent extends ContentBlockFormComponent<TwitterBlock> {
     constructor(snackBarService: SnackBarService) {
         super(snackBarService);
     }

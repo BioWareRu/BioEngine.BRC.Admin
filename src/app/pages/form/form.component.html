@@ -25,10 +25,6 @@
             ValueField="Id"
             [Options]="Sites"
         ></chips-input>
-        <cke-input
-            [FormGroup]="Form.FormGroup"
-            FieldName="Text"
-            Label="Содержимое страницы"
-        ></cke-input>
+        <blocksForm [Model]="model" [Form]="Form"></blocksForm>
     </form-layout>
 </div>

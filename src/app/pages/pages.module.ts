@@ -1,17 +1,12 @@
+import { BlocksModule } from 'app/@common/blocks/blocks.module';
 import { NgModule } from '@angular/core';
 
-import { BioCommonModule } from '../@common/BioCommonModule';
 import { PagesListComponent } from './list/list.component';
 import { PageFormComponent } from './form/form.component';
-import { BioFormsModule } from '../@common/forms/FormsModule';
 import { RouterModule, Routes } from '@angular/router';
 import { PageFormPageComponent } from './form/form-page.component';
 
-const PAGES_COMPONENTS = [
-    PagesListComponent,
-    PageFormComponent,
-    PageFormPageComponent
-];
+const PAGES_COMPONENTS = [PagesListComponent, PageFormComponent, PageFormPageComponent];
 const routes: Routes = [
     {
         path: 'list',
@@ -33,7 +28,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [BioCommonModule, BioFormsModule, RouterModule.forChild(routes)],
+    imports: [BlocksModule, RouterModule.forChild(routes)],
     declarations: [...PAGES_COMPONENTS]
 })
 export class PagesModule {}

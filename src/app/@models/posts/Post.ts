@@ -2,9 +2,11 @@ import { Model } from '../base/Model';
 import { ISiteEntity } from '../interfaces/ISiteEntity';
 import { ISectionEntity } from '../interfaces/ISectionEntity';
 import { User } from '../User';
-import { Icon } from 'app/@common/shared/icon/Icon';
+import { BaseContentBlock } from '../blocks/ContentBlock';
+import { IContentEntity } from '../interfaces/IContentEntity';
+import { Type } from 'class-transformer';
 
-export class Post extends Model implements ISiteEntity, ISectionEntity {
+export class Post extends Model implements ISiteEntity, ISectionEntity, IContentEntity {
     public Id = '';
     public AuthorId: number;
     public Author: User;
@@ -20,33 +22,10 @@ export class Post extends Model implements ISiteEntity, ISectionEntity {
     public SiteIds: string[];
     TagIds: string[];
 
-    public Blocks: BasePostBlock[];
+    @Type(() => BaseContentBlock)
+    public Blocks: BaseContentBlock[];
 
     public Sections: any[];
     public Sites: any[];
     Tags: any[];
 }
-
-export abstract class BasePostBlock {
-    public Id: string;
-    public abstract Type: ContentBlockItemType;
-    public Position: number;
-    public InFocus = false;
-    public abstract Title: string;
-    public abstract Icon: Icon;
-}
-
-export abstract class PostBlock<T extends PostBlockData> extends BasePostBlock {
-    public abstract Data: T;
-}
-
-export enum ContentBlockItemType {
-    Text = 'BioEngine.Core.Entities.Blocks.TextBlock',
-    File = 'BioEngine.Core.Entities.Blocks.FileBlock',
-    Gallery = 'BioEngine.Core.Entities.Blocks.GalleryBlock',
-    Cut = 'BioEngine.Core.Entities.Blocks.CutBlock',
-    Twitter = 'BioEngine.Core.Entities.Blocks.TwitterBlock',
-    Youtube = 'BioEngine.Core.Entities.Blocks.YoutubeBlock'
-}
-
-export abstract class PostBlockData {}

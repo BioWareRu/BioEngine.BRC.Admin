@@ -1,5 +1,4 @@
 import { KeyedCollection } from 'app/@common/KeyedCollection';
-import { Post, PostBlock, BasePostBlock, ContentBlockItemType } from 'app/@models/posts/Post';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { DialogService } from '../modals/DialogService';
@@ -7,16 +6,20 @@ import { Type } from '@angular/core';
 import { IKeyedCollection } from '../KeyedCollection';
 import * as uuid from 'uuid';
 import { Icon } from '../shared/icon/Icon';
+import { BaseContentBlock, ContentBlockItemType } from 'app/@models/blocks/ContentBlock';
+import { IContentEntity } from 'app/@models/interfaces/IContentEntity';
 export class BlocksManager {
-    constructor(private post: Post, private _dialogService: DialogService) {
-        this._blocks = post.Blocks;
+    constructor(private contentItem: IContentEntity, private _dialogService: DialogService) {
+        this._blocks = contentItem.Blocks;
         this.Blocks = this.BlocksSubject.asObservable();
         this.Update();
     }
 
-    private _blocks: BasePostBlock[] = [];
-    private BlocksSubject: Subject<BasePostBlock[]> = new BehaviorSubject<BasePostBlock[]>([]);
-    public Blocks: Observable<BasePostBlock[]>;
+    private _blocks: BaseContentBlock[] = [];
+    private BlocksSubject: Subject<BaseContentBlock[]> = new BehaviorSubject<BaseContentBlock[]>(
+        []
+    );
+    public Blocks: Observable<BaseContentBlock[]>;
 
     public readonly Types: IKeyedCollection<BlockConfig, string> = new KeyedCollection<
         BlockConfig
@@ -24,7 +27,7 @@ export class BlocksManager {
 
     public Update(): void {
         this.BlocksSubject.next(this._blocks.slice());
-        this.post.Blocks = this._blocks;
+        this.contentItem.Blocks = this._blocks;
     }
 
     private SetPositions(): void {
@@ -37,8 +40,8 @@ export class BlocksManager {
     }
 
     public AddBlock(
-        block: BasePostBlock,
-        neighbor: BasePostBlock = null,
+        block: BaseContentBlock,
+        neighbor: BaseContentBlock = null,
         direction = 'after'
     ): void {
         this._blocks.push(block);
@@ -48,17 +51,14 @@ export class BlocksManager {
             moveItemInArray(this._blocks, block.Position, toIndex);
             this.SetPositions();
         }
-        if (block.Id === this.Last().Id && block.Type !== ContentBlockItemType.Text) {
-            this.AddBlock(this.CreateBlock(ContentBlockItemType.Text));
-        }
     }
 
-    public RemoveBlock(block: BasePostBlock): void {
+    public RemoveBlock(block: BaseContentBlock): void {
         this._blocks.splice(block.Position, 1);
         this.SetPositions();
     }
 
-    public CreateBlock<TBlock extends BasePostBlock>(type: ContentBlockItemType): TBlock {
+    public CreateBlock<TBlock extends BaseContentBlock>(type: ContentBlockItemType): TBlock {
         if (!this.Types.ContainsKey(type)) {
             throw new Error(`type ${type} is not registered!`);
         }
@@ -74,12 +74,9 @@ export class BlocksManager {
         this.SetPositions();
     }
 
-    public ReplaceBlock(oldBlock: BasePostBlock, newBlock: BasePostBlock): void {
+    public ReplaceBlock(oldBlock: BaseContentBlock, newBlock: BaseContentBlock): void {
         this._blocks[oldBlock.Position] = newBlock;
         this.SetPositions();
-        if (newBlock.Id === this.Last().Id && newBlock.Type !== ContentBlockItemType.Text) {
-            this.AddBlock(this.CreateBlock(ContentBlockItemType.Text));
-        }
         this.Update();
     }
 
@@ -88,20 +85,20 @@ export class BlocksManager {
             throw new Error(`type ${type} already registered!`);
         }
 
-        const block = new typeClass() as BasePostBlock;
+        const block = new typeClass() as BaseContentBlock;
 
         this.Types.Add(type, new BlockConfig(type, typeClass, block.Title, block.Icon));
     }
 
-    public First(): BasePostBlock {
+    public First(): BaseContentBlock {
         for (const i in this._blocks) {
             if (this._blocks.hasOwnProperty(i)) {
                 return this._blocks[i];
             }
         }
     }
-    public Last(): BasePostBlock {
-        let item: BasePostBlock;
+    public Last(): BaseContentBlock {
+        let item: BaseContentBlock;
         const sorted = this._blocks.sort((a, b) => {
             return a.Position - b.Position;
         });

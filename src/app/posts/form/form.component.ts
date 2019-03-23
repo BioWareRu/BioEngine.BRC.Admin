@@ -1,12 +1,11 @@
-import { YoutubeBlock } from './../../@models/posts/YoutubeBlock';
-import { CutBlock } from 'app/@models/posts/CutBlock';
+import { YoutubeBlock } from '../../@models/blocks/YoutubeBlock';
+import { CutBlock } from 'app/@models/blocks/CutBlock';
 import { BlocksManager } from './../../@common/blocks/BlocksManager';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { Post, ContentBlockItemType, BasePostBlock } from 'app/@models/posts/Post';
 import { SavePostResponse } from 'app/@models/results/Post';
-import { TextBlock } from 'app/@models/posts/TextBlock';
-import { GalleryBlock } from 'app/@models/posts/GalleryBlock';
-import { FileBlock } from 'app/@models/posts/FileBlock';
+import { TextBlock } from 'app/@models/blocks/TextBlock';
+import { GalleryBlock } from 'app/@models/blocks/GalleryBlock';
+import { FileBlock } from 'app/@models/blocks/FileBlock';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { SnackBarService } from 'app/@common/snacks/SnackBarService';
 import { PageContext } from 'app/@common/PageComponent';
@@ -14,7 +13,14 @@ import { ContentFormComponent, SimpleFormComponent } from 'app/@common/forms/For
 import { ServicesProvider } from 'app/@services/ServicesProvider';
 import { DialogService } from 'app/@common/modals/DialogService';
 import { StateService } from 'app/@common/StateService';
-import { TwitterBlock } from 'app/@models/posts/TwitterBlock';
+import { TwitterBlock } from 'app/@models/blocks/TwitterBlock';
+import { Post } from 'app/@models/posts/Post';
+import { ContentBlockItemType, BaseContentBlock } from 'app/@models/blocks/ContentBlock';
+import { Observable } from 'rxjs';
+import { BaseSection } from 'app/@models/Section';
+import { map } from 'rxjs/operators';
+import { Tag } from 'app/@models/Tag';
+import { Validators } from '@angular/forms';
 
 @Component({
     selector: 'post-form',
@@ -24,14 +30,13 @@ import { TwitterBlock } from 'app/@models/posts/TwitterBlock';
 })
 export class PostFormComponent extends ContentFormComponent<Post, SavePostResponse>
     implements OnInit, OnDestroy {
-    public BlocksManager: BlocksManager;
     constructor(
         servicesProvider: ServicesProvider,
         snackBarService: SnackBarService,
-        private _dialogService: DialogService,
+        dialogService: DialogService,
         private _stateService: StateService
     ) {
-        super(servicesProvider, snackBarService, servicesProvider.PostsService);
+        super(servicesProvider, snackBarService, servicesProvider.PostsService, dialogService);
     }
 
     ngOnInit(): void {
@@ -41,88 +46,19 @@ export class PostFormComponent extends ContentFormComponent<Post, SavePostRespon
         this._stateService.showToolbar();
     }
 
-    protected afterInit(): void {
-        this.BlocksManager = new BlocksManager(this.model, this._dialogService);
-
-        this.BlocksManager.RegisterBlockType(ContentBlockItemType.Text, TextBlock);
-        this.BlocksManager.RegisterBlockType(ContentBlockItemType.File, FileBlock);
-        this.BlocksManager.RegisterBlockType(ContentBlockItemType.Gallery, GalleryBlock);
-        this.BlocksManager.RegisterBlockType(ContentBlockItemType.Cut, CutBlock);
-        this.BlocksManager.RegisterBlockType(ContentBlockItemType.Twitter, TwitterBlock);
-        this.BlocksManager.RegisterBlockType(ContentBlockItemType.Youtube, YoutubeBlock);
-
-        if (this.model.Blocks.length === 0) {
-            this.BlocksManager.AddBlock(this.BlocksManager.CreateBlock(ContentBlockItemType.Text));
-            this.BlocksManager.Update();
-        }
-    }
-
-    public addBlock(type: ContentBlockItemType): void {
-        const block = this.BlocksManager.CreateBlock(type);
-        this.BlocksManager.AddBlock(block);
-        this.BlocksManager.Update();
-    }
-
-    public deleteBlock(block: BasePostBlock): void {
-        this._dialogService
-            .confirm('Удаление блока', 'Вы точно хотите удалить это блок?')
-            .onConfirm.subscribe(() => {
-                this.BlocksManager.RemoveBlock(block);
-                this.BlocksManager.Update();
-            });
-    }
-
-    public drop(event: CdkDragDrop<string[]>): void {
-        this.BlocksManager.MoveBlock(event.previousIndex, event.currentIndex);
-        this.BlocksManager.Update();
-        this.Form.hasChanges = true;
-    }
-}
-
-export abstract class PostBlockFormComponent<TBlock extends BasePostBlock>
-    extends SimpleFormComponent<TBlock>
-    implements OnInit, OnDestroy {
-    @Input()
-    public blocksManager: BlocksManager;
-    ngOnDestroy(): void {
-        this.getFields().forEach(field => {
-            this.Form.FormGroup.removeControl(this.getFieldName(field.name));
-        });
-    }
-
-    public getFieldName(field: string): string {
-        return `${field}${this.Model.Id}`;
-    }
-
     protected constructForm(): void {
-        this.getFields().forEach(element => {
-            this.registerFormControl(
-                this.getFieldName(element.name),
-                element.validators,
-                element.property
-            );
-        });
+        super.constructForm();
+        this.registerFormControl('SectionIds', [<any>Validators.required]);
+        this.registerFormControl('TagIds', [<any>Validators.required]);
     }
 
-    protected abstract getFields(): BlockFieldDescriptor[];
-    public abstract isEmpty(): boolean;
-
-    protected afterInit(): void {
-        if (this.Model.InFocus) {
-            this.setFocus();
-        }
-    }
-    protected setFocus(): void {
-        return;
+    protected get Sections(): Observable<BaseSection[]> {
+        return this.servicesProvider.SectionsService.getAll(1, 1000, 'id').pipe(
+            map(list => list.Data)
+        );
     }
 
-    public processChange(key: string, oldValue: any, newValue: any): void {}
-}
-
-export class BlockFieldDescriptor {
-    public constructor(
-        public name: string,
-        public validators: any[],
-        public property: string = null
-    ) {}
+    protected get Tags(): Observable<Tag[]> {
+        return this.servicesProvider.TagsService.getAll(1, 1000, 'id').pipe(map(list => list.Data));
+    }
 }

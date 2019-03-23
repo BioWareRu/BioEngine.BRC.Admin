@@ -1,0 +1,11 @@
+<div cdkDropList (cdkDropListDropped)="drop($event)" *ngIf="BlocksManager">
+    <div
+        *ngFor="let block of (BlocksManager.Blocks | async); trackBy: block?.Id"
+        class="blockElement"
+        cdkDrag
+    >
+        <icon classes="handle" iconName="fa-grip-lines" cdkDragHandle></icon>
+        <icon classes="delete" iconName="fa-trash" (click)="deleteBlock(block)"></icon>
+        <blockForm [blocksManager]="BlocksManager" [Form]="Form" [Model]="block"></blockForm>
+    </div>
+</div>

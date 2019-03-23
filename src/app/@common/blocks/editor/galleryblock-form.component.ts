@@ -1,16 +1,16 @@
-import { DialogService } from './../../../@common/modals/DialogService';
 import { Validators } from '@angular/forms';
 import { Component } from '@angular/core';
-import { GalleryBlock } from 'app/@models/posts/GalleryBlock';
 import { PostsService } from 'app/@services/ContentService';
 import { ServicesProvider } from 'app/@services/ServicesProvider';
 import { SnackBarService } from 'app/@common/snacks/SnackBarService';
-import { PostBlockFormComponent, BlockFieldDescriptor } from '../form.component';
 import { StorageManagerDialogComponent } from 'app/@common/storage/StorageManagerDialogComponent';
 import { DialogConfig } from 'app/@common/modals/DialogConfig';
 import { StorageNode } from 'app/@services/StorageService';
 import { IKeyedCollection, NumberKeyedCollection } from 'app/@common/KeyedCollection';
 import { StorageItem } from 'app/@models/results/StorageItem';
+import { GalleryBlock } from 'app/@models/blocks/GalleryBlock';
+import { ContentBlockFormComponent, BlockFieldDescriptor } from './ContentBlockFormComponent';
+import { DialogService } from 'app/@common/modals/DialogService';
 
 @Component({
     selector: 'gallery-block-form',
@@ -57,7 +57,7 @@ import { StorageItem } from 'app/@models/results/StorageItem';
     `,
     styleUrls: ['./galleryblock-form.component.scss']
 })
-export class GalleryBlockFormComponent extends PostBlockFormComponent<GalleryBlock> {
+export class GalleryBlockFormComponent extends ContentBlockFormComponent<GalleryBlock> {
     constructor(
         snackBarService: SnackBarService,
         private servicesProvider: ServicesProvider,
