@@ -11,6 +11,9 @@
         </div>
         <div id="container-2" class="container">
             <mat-toolbar color="primary">
+                <span *ngIf="!showSidebar"
+                    ><a class="nav-link" [routerLink]="['/']">Главная</a>&nbsp;>&nbsp;</span
+                >
                 <span>{{ title }}</span> <span class="fill-space"></span>
                 <brc-user color="fff" [user]="user"></brc-user>
             </mat-toolbar>
