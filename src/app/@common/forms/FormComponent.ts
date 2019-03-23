@@ -371,7 +371,6 @@ export abstract class ContentFormComponent<
         this.registerFormControl('Title', [<any>Validators.required]);
         this.registerFormControl('Url', [<any>Validators.required]);
         this.registerFormControl('Blocks', [<any>Validators.required]);
-        this.registerFormControl('SiteIds', [<any>Validators.required]);
     }
 
     protected afterInit(): void {}

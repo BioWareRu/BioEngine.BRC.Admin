@@ -14,6 +14,6 @@ export class FileBlock extends ContentBlock<FileBlockData> {
     @Type(() => FileBlockData)
     Data: FileBlockData = new FileBlockData();
     static IsEmpty(block: FileBlock): boolean {
-        return !block.Data.File;
+        return !block.Data.File || block.Data.File.FileSize < 1;
     }
 }

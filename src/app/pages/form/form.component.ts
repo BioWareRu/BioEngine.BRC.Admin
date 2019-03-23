@@ -5,6 +5,7 @@ import { ServicesProvider } from '../../@services/ServicesProvider';
 import { Page } from '../../@models/Page';
 import { SnackBarService } from 'app/@common/snacks/SnackBarService';
 import { DialogService } from 'app/@common/modals/DialogService';
+import { Validators } from '@angular/forms';
 
 @Component({
     selector: 'page-form',
@@ -17,5 +18,10 @@ export class PageFormComponent extends ContentFormComponent<Page, SavePageRespon
         dialogsService: DialogService
     ) {
         super(servicesProvider, snackBarService, servicesProvider.PagesService, dialogsService);
+    }
+
+    protected constructForm(): void {
+        super.constructForm();
+        this.registerFormControl('SiteIds', [<any>Validators.required]);
     }
 }
