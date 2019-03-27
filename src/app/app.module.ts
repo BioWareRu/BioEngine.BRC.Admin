@@ -12,7 +12,7 @@ import {
 } from '@angular/material';
 import 'hammerjs';
 
-import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
+import { OAuthModule, OAuthStorage, OAuthModuleConfig } from 'angular-oauth2-oidc';
 
 import { APP_BASE_HREF } from '@angular/common';
 
@@ -65,12 +65,7 @@ import { LayoutModule } from './layout/layout.module';
         HttpClientModule,
         AppRoutingModule,
         CustomFormsModule,
-        OAuthModule.forRoot({
-            resourceServer: {
-                allowedUrls: [environment.apiUrl],
-                sendAccessToken: true
-            }
-        }),
+        OAuthModule.forRoot(),
 
         MatIconModule,
         FormsModule,
@@ -83,7 +78,14 @@ import { LayoutModule } from './layout/layout.module';
     bootstrap: [AppComponent],
     providers: [
         { provide: APP_BASE_HREF, useValue: '/' },
-        { provide: OAuthStorage, useValue: localStorage },
+        {
+            provide: OAuthModuleConfig,
+            useFactory: authConfigFactory
+        },
+        {
+            provide: OAuthStorage,
+            useFactory: storageFactory
+        },
         RestClient,
         SitesService,
         DevelopersService,
@@ -99,4 +101,17 @@ import { LayoutModule } from './layout/layout.module';
         ServicesProvider
     ]
 })
-export class AppModule {}
+export class AppModule { }
+
+export function authConfigFactory(): OAuthModuleConfig {
+    return {
+        resourceServer: {
+            allowedUrls: [environment.apiUrl],
+            sendAccessToken: true
+        }
+    };
+}
+
+export function storageFactory(): OAuthStorage {
+    return localStorage;
+}
