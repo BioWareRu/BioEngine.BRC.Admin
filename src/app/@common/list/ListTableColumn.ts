@@ -1,13 +1,7 @@
-import { CacheProvider } from './../CacheProvider';
 import { Model } from '../../@models/base/Model';
 import { ListTableColumnType } from './ListEnums';
 import { ListTableColumnAction } from './ListTableColumnAction';
-import { Site } from '../../@models/Site';
 import { BaseSection } from '../../@models/Section';
-import { Tag } from '../../@models/Tag';
-import { Observable } from 'rxjs';
-import { KeyedCollection } from '../KeyedCollection';
-import { map } from 'rxjs/operators';
 
 export class ListTableColumn<T = Model> {
     public Title: string;
@@ -15,6 +9,7 @@ export class ListTableColumn<T = Model> {
     public Sortable: boolean;
     public Type: ListTableColumnType;
     public Disabled: boolean;
+    public Hidden = false;
     public Actions: ListTableColumnAction<T>[] = [];
     public DoClick: (model: T) => any;
     private getter: (model: T) => {};
@@ -74,6 +69,11 @@ export class ListTableColumn<T = Model> {
     public setClick(click: (model: T) => any): ListTableColumn<T> {
         this.Type = ListTableColumnType.ActionLink;
         this.DoClick = click;
+        return this;
+    }
+
+    public setHidden(hidden: boolean): ListTableColumn<T> {
+        this.Hidden = hidden;
         return this;
     }
 }

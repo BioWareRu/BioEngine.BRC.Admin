@@ -28,7 +28,6 @@ export class PagesListComponent extends ListComponent<Page> implements OnInit {
 
     protected GetColumns(): ListTableColumn<Page>[] {
         return [
-            new ListTableColumn<Page>('Id', '#').setSortable(),
             new ListTableColumn<Page>('Title', 'Заголовок').setSortable().setLinkGetter(page => {
                 return ['/pages', page.Id, 'edit'];
             }),

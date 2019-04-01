@@ -10,9 +10,10 @@ import { TopicFormComponent } from './topics/form/form.component';
 import { DeveloperFormPageComponent } from './developers/form/form-page.component';
 import { GameFormPageComponent } from './games/form/form-page.component';
 import { TopicFormPageComponent } from './topics/form/form-page.component';
+import { BlocksModule } from 'app/@common/blocks/blocks.module';
 
 @NgModule({
-    imports: [BioCommonModule, BioFormsModule, SectionsRoutingModule],
+    imports: [BioCommonModule, BioFormsModule, SectionsRoutingModule, BlocksModule],
     declarations: [
         DeveloperFormComponent,
         SectionsListComponent,
@@ -23,4 +24,4 @@ import { TopicFormPageComponent } from './topics/form/form-page.component';
         TopicFormPageComponent
     ]
 })
-export class SectionsModule {}
+export class SectionsModule { }

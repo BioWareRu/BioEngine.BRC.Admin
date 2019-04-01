@@ -5,7 +5,6 @@ import { ListTableColumn, SitesTableColumn } from '../../@common/list/ListTableC
 import { ListTableColumnType } from '../../@common/list/ListEnums';
 import { ListTableColumnAction } from '../../@common/list/ListTableColumnAction';
 import { BaseSection, SectionType } from '../../@models/Section';
-import { Site } from '../../@models/Site';
 import { map } from 'rxjs/operators';
 import { PageContext } from '../../@common/PageComponent';
 import { Filter, FilterOperator } from '../../@common/Filter';
@@ -17,6 +16,7 @@ import { Icon } from 'app/@common/shared/icon/Icon';
     providers: [PageContext]
 })
 export class SectionsListComponent extends ListComponent<BaseSection> implements OnInit {
+    _showType = true;
     constructor(context: PageContext, private servicesProvider: ServicesProvider) {
         super(context, servicesProvider.SectionsService);
 
@@ -26,6 +26,7 @@ export class SectionsListComponent extends ListComponent<BaseSection> implements
 
     ngOnInit(): void {
         this.Route.params.pipe(map(p => p.type)).subscribe(type => {
+            this._showType = false;
             switch (type) {
                 case 'developers':
                     this.provider.applyFilter(
@@ -49,6 +50,7 @@ export class SectionsListComponent extends ListComponent<BaseSection> implements
                     this.addUrl = '/sections/topics/add';
                     break;
                 default:
+                    this._showType = true;
                     break;
             }
             this.Init();
@@ -57,8 +59,6 @@ export class SectionsListComponent extends ListComponent<BaseSection> implements
 
     protected GetColumns(): ListTableColumn<BaseSection>[] {
         return [
-            new ListTableColumn<BaseSection>('Id', '#').setSortable(),
-            new ListTableColumn<BaseSection>('TypeTitle', 'Тип'),
             new ListTableColumn<BaseSection>('Title', 'Заголовок')
                 .setSortable()
                 .setLinkGetter(section => {
@@ -71,6 +71,7 @@ export class SectionsListComponent extends ListComponent<BaseSection> implements
                             return ['/sections/topics', section.Id, 'edit'];
                     }
                 }),
+            new ListTableColumn<BaseSection>('TypeTitle', 'Тип').setHidden(!this._showType),
             /*.setDisabled(!this.can(UserRights.AddNews))*/ new ListTableColumn<BaseSection>(
                 'DateAdded',
                 'Дата',
@@ -88,7 +89,7 @@ export class SectionsListComponent extends ListComponent<BaseSection> implements
                     new ListTableColumnAction<BaseSection>(
                         'Удалить',
                         new Icon('fa-trash')
-                    ).setClick(Developer => this.deleteItem(Developer))
+                    ).setClick(section => this.deleteItem(section))
                 )
         ];
     }

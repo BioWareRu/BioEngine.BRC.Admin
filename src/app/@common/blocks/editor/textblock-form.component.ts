@@ -1,12 +1,11 @@
 import { TextBlock } from 'app/@models/blocks/TextBlock';
 import { Validators } from '@angular/forms';
-import { Component, ViewChild, ElementRef, EventEmitter } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { SnackBarService } from 'app/@common/snacks/SnackBarService';
 import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import { ContentBlockItemType } from 'app/@models/blocks/ContentBlock';
 import { ContentBlockFormComponent, BlockFieldDescriptor } from './ContentBlockFormComponent';
-import { CKEInputComponent } from 'app/@common/forms/fields/CKEInputComponent';
 
 @Component({
     selector: 'text-block-form',
@@ -42,7 +41,6 @@ export class TextBlockFormComponent extends ContentBlockFormComponent<TextBlock>
 
     splitSymbol = '‌‌\u200C';
 
-    @ViewChild(CKEInputComponent) cke: CKEInputComponent;
     @ViewChild('editor') editor: ElementRef<HTMLElement>;
 
     protected getFields(): BlockFieldDescriptor[] {

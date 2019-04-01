@@ -1,10 +1,10 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {Model} from '../../../@models/base/Model';
-import {ListProvider} from '../ListProvider';
-import {StateService} from '../../StateService';
-import {ListTableColumnType} from '../ListEnums';
-import {MatPaginator, MatSort} from '@angular/material';
-import {ListTableColumn} from '../ListTableColumn';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Model } from '../../../@models/base/Model';
+import { ListProvider } from '../ListProvider';
+import { StateService } from '../../StateService';
+import { ListTableColumnType } from '../ListEnums';
+import { MatPaginator, MatSort } from '@angular/material';
+import { ListTableColumn } from '../ListTableColumn';
 
 @Component({
     selector: 'ngx-list-table',
@@ -60,7 +60,11 @@ export class ListTableComponent<T extends Model = Model> implements OnInit {
         this.provider.columns = this.columns;
         this.provider.paginator = this.paginator;
         this.provider.sorter = this.sorter;
-        this.columns.forEach(column => this.columnsToDisplay.push(column.Key));
+        this.columns.forEach(column => {
+            if (!column.Hidden) {
+                this.columnsToDisplay.push(column.Key);
+            }
+        });
         this.provider.init();
     }
 }

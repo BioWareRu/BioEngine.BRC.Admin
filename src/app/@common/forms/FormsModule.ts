@@ -4,7 +4,6 @@ import { ErrorsListComponent } from './ErrorsListComponent';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import { CKEFormFieldControlComponent, CKEInputComponent } from './fields/CKEInputComponent';
 import { UploadInputComponent } from './fields/UploadInputComponent';
 import { FormLayoutComponent } from './FormLayoutComponent';
 import {
@@ -38,13 +37,11 @@ const config: InputFileConfig = {};
         ErrorsListComponent,
         TextInputComponent,
         TextAreaInputComponent,
-        CKEInputComponent,
         UploadInputComponent,
         CheckboxInputComponent,
         SelectInputComponent,
         FormLayoutComponent,
         ChipsInputComponent,
-        CKEFormFieldControlComponent,
         AutocompleteInputComponent,
         DatePickerInputComponent,
         KeysPipe
@@ -56,7 +53,6 @@ const config: InputFileConfig = {};
         TextInputComponent,
         TextAreaInputComponent,
         SelectInputComponent,
-        CKEInputComponent,
         UploadInputComponent,
         CheckboxInputComponent,
         FormLayoutComponent,
@@ -90,4 +86,4 @@ const config: InputFileConfig = {};
         BioSharedModule
     ]
 })
-export class BioFormsModule {}
+export class BioFormsModule { }

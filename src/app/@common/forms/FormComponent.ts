@@ -44,7 +44,7 @@ import { DialogService } from '../modals/DialogService';
 export abstract class FormPageComponent<
     TModel extends Model,
     TResultModel extends SaveModelResponse<TModel>
-> extends PageComponent implements OnInit {
+    > extends PageComponent implements OnInit {
     @Input() public Model: TModel;
     protected modelId: string;
     protected isPublished: boolean;
@@ -95,7 +95,7 @@ export abstract class BaseFormComponent {
     @Input() Form: Form;
     public formLoaded = false;
 
-    constructor(protected snackBarService: SnackBarService) {}
+    constructor(protected snackBarService: SnackBarService) { }
 
     initForm(): void {
         this.Form = this.Form || new Form();
@@ -146,7 +146,7 @@ export abstract class BaseFormComponent {
         }
     }
 
-    protected afterInit(): void {}
+    protected afterInit(): void { }
 
     public loadFormData(): void {
         this.initForm();
@@ -170,7 +170,7 @@ export abstract class SimpleFormComponent<TModel> extends BaseFormComponent impl
 export abstract class FormComponent<
     TModel extends Model,
     TResultModel extends SaveModelResponse<TModel>
-> extends BaseFormComponent {
+    > extends BaseFormComponent {
     @Input()
     public model: TModel;
     public PropertiesElementTypes = PropertiesElementType;
@@ -310,7 +310,7 @@ export abstract class FormComponent<
 export abstract class SiteEntityFormComponent<
     TModel extends ISiteEntity,
     TSaveModel extends SaveModelResponse<TModel>
-> extends FormComponent<TModel, TSaveModel> {
+    > extends FormComponent<TModel, TSaveModel> {
     protected get Sites(): Observable<Site[]> {
         return this.servicesProvider.SitesService.getAll(1, 1000, 'id').pipe(
             map(list => list.Data)
@@ -321,7 +321,7 @@ export abstract class SiteEntityFormComponent<
 export abstract class SingleSiteEntityFormComponent<
     TModel extends ISingleSiteEntity,
     TSaveModel extends SaveModelResponse<TModel>
-> extends FormComponent<TModel, TSaveModel> {
+    > extends FormComponent<TModel, TSaveModel> {
     protected get Sites(): Observable<Site[]> {
         return this.servicesProvider.SitesService.getAll(1, 1000, 'id').pipe(
             map(list => list.Data)
@@ -332,7 +332,7 @@ export abstract class SingleSiteEntityFormComponent<
 export abstract class SectionFormComponent<
     TModel extends ISiteEntity,
     TSaveModel extends SaveModelResponse<TModel>
-> extends SiteEntityFormComponent<TModel, TSaveModel> {
+    > extends SiteEntityFormComponent<TModel, TSaveModel> {
     public processChange(key: string, oldValue: any, newValue: any): void {
         if (key === 'Title') {
             const origSlug = Utils.slugifyUrl(oldValue);
@@ -346,7 +346,7 @@ export abstract class SectionFormComponent<
     protected constructForm(): void {
         this.registerFormControl('Title', [<any>Validators.required]);
         this.registerFormControl('Url', [<any>Validators.required]);
-        this.registerFormControl('ShortDescription', [<any>Validators.required]);
+        this.registerFormControl('Blocks', [<any>Validators.required]);
         this.registerFormControl('Hashtag', [<any>Validators.required]);
         this.registerFormControl('Logo', [<any>Validators.required]);
         this.registerFormControl('LogoSmall', [<any>Validators.required]);
@@ -357,7 +357,7 @@ export abstract class SectionFormComponent<
 export abstract class ContentFormComponent<
     TModel extends IContentEntity,
     TSaveModel extends SaveModelResponse<TModel>
-> extends SiteEntityFormComponent<TModel, TSaveModel> {
+    > extends SiteEntityFormComponent<TModel, TSaveModel> {
     protected constructor(
         servicesProvider: ServicesProvider,
         snackBarService: SnackBarService,
@@ -373,7 +373,7 @@ export abstract class ContentFormComponent<
         this.registerFormControl('Blocks', [<any>Validators.required]);
     }
 
-    protected afterInit(): void {}
+    protected afterInit(): void { }
 }
 
 @Pipe({ name: 'keys' })
