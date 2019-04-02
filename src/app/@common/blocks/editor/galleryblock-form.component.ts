@@ -18,7 +18,7 @@ import { BlockFieldDescriptor, AbstractContentBlockFormComponent } from './abstr
             <div *ngIf="items.size() > 0">
                 <ng-container *ngIf="items.size() == 1">
                     <div class="singlePicture">
-                        <img [src]="model.data.pictures[0].publicUri"/>
+                        <img [src]="model.data.pictures[0].publicUri" alt="model.data.pictures[0].fileName"/>
                         <div class="addOverlay">
                             <icon (click)="showStorageDialog(true)" iconName="fa-plus"></icon>
                             <icon
@@ -32,7 +32,7 @@ import { BlockFieldDescriptor, AbstractContentBlockFormComponent } from './abstr
                     <div class="picturesList">
                         <ng-container *ngFor="let picture of items.values()">
                             <div class="pic">
-                                <img src="{{ picture.publicUri }}" alt="{{ picture.fileName }}"/>
+                                <img [src]="picture.publicUri" alt="{{ picture.fileName }}"/>
                                 <div (click)="deletePicture(picture)" class="deleteOverlay">
                                     <icon iconName="fa-trash"></icon>
                                 </div>

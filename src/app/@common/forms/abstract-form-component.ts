@@ -369,6 +369,9 @@ export class KeysPipe implements PipeTransform {
         const keys: any[] = [];
         // tslint:disable-next-line:forin
         for (const key in value) {
+            if (!value.hasOwnProperty(key)) {
+                continue;
+            }
             keys.push({key, value: value[key]});
         }
 

@@ -34,6 +34,13 @@ export class YoutubeBlockFormComponent extends AbstractContentBlockFormComponent
 
     public editMode = true;
 
+    private static _youTubeGetID(url: string): string | null {
+        const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+        const match = url.match(regExp);
+
+        return match && match[7].length === 11 ? match[7] : null;
+    }
+
     protected _getFields(): Array<BlockFieldDescriptor> {
         return [
             new BlockFieldDescriptor(
@@ -52,7 +59,7 @@ export class YoutubeBlockFormComponent extends AbstractContentBlockFormComponent
         }
         this.form.onChange.subscribe((change: FieldInputChange) => {
             if (change.key === this.getFieldName('youtubeUrl')) {
-                const id = this._youTubeGetID(change.newValue);
+                const id = YoutubeBlockFormComponent._youTubeGetID(change.newValue);
                 if (id) {
                     this.model.data.youtubeId = id;
                     this._updateUrl();
@@ -64,13 +71,6 @@ export class YoutubeBlockFormComponent extends AbstractContentBlockFormComponent
 
     private _updateUrl(): void {
         this.form.getControlByProperty('data.youtubeUrl').patchValue(this._getUrl());
-    }
-
-    private _youTubeGetID(url: string): string | null {
-        const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
-        const match = url.match(regExp);
-
-        return match && match[7].length === 11 ? match[7] : null;
     }
 
     private _getUrl(): string {

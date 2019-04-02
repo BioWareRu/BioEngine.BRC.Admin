@@ -1,5 +1,5 @@
 import { HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { tap } from 'rxjs/operators';
 import { ENV } from '../../environments/environment';
@@ -52,9 +52,6 @@ export class RestClient {
 @Injectable()
 export class ErrorsInterceptor implements HttpInterceptor {
     private readonly _terminateErrorCodes = [400, 403, 404, 500, 502, 504];
-
-    constructor(private readonly _inj: Injector /*, private _appState: AppState*/) {
-    }
 
     intercept(
         req: HttpRequest<any>,
