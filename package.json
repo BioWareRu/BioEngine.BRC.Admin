@@ -64,7 +64,7 @@
         "@angular/language-service": "^7.2.11",
         "@angularclass/hmr": "^2.1.3",
         "angular-tslint-rules": "^1.12.1",
-        "@types/node": "^11.12.2",
+        "@types/node": "^11.13.0",
         "@types/object-path": "0.11.0",
         "codelyzer": "^5.0.0",
         "node-sass": "^4.11.0",
