@@ -10,13 +10,11 @@ import { Icon } from '../shared/icon/Icon';
 export class BlocksManager {
     constructor(private readonly _contentItem: IContentEntity) {
         this.blocks = this._blocksSubject.asObservable();
-        this._contentItem.blocks.forEach(block => {
-            this._blocks.set(block.id, block);
-        });
+        this._blocks = _contentItem.blocks;
         this.update();
     }
 
-    private readonly _blocks = new Dictionary<string, AbstractBaseContentBlock>();
+    private readonly _blocks: AbstractBaseContentBlock[] = [];
     private readonly _blocksSubject: Subject<Array<AbstractBaseContentBlock>> = new BehaviorSubject<Array<AbstractBaseContentBlock>>(
         []
     );
@@ -25,14 +23,14 @@ export class BlocksManager {
     public readonly types = new Dictionary<string, BlockConfig>();
 
     public update(): void {
-        this._blocksSubject.next(this._blocks.values());
-        this._contentItem.blocks = this._blocks.values();
+        this._blocksSubject.next(this._blocks.slice());
+        this._contentItem.blocks = this._blocks;
     }
 
-    private _setPositions(blocks: AbstractBaseContentBlock[]): void {
+    private _setPositions(): void {
         let index = 0;
 
-        blocks.forEach((block) => {
+        this._blocks.forEach(block => {
             block.position = index;
             index++;
         });
@@ -43,32 +41,18 @@ export class BlocksManager {
         neighbor: AbstractBaseContentBlock | null = null,
         direction = 'after'
     ): void {
-        block.position = this._blocks.size() + 1;
-        this._blocks.set(block.id, block);
-        this._setPositions(this.getSorted());
+        this._blocks.push(block);
+        this._setPositions();
         if (neighbor) {
             const toIndex = direction === 'after' ? neighbor.position + 1 : neighbor.position - 1;
-            const blocks = this.getSorted();
-            moveItemInArray(blocks, block.position, toIndex);
-            this._setPositions(blocks);
+            moveItemInArray(this._blocks, block.position, toIndex);
+            this._setPositions();
         }
     }
 
-    public getSorted(): AbstractBaseContentBlock[] {
-        return this._blocks.values().sort((a, b) => {
-            if (a.position < b.position) {
-                return -1;
-            }
-            if (a.position > b.position) {
-                return 1;
-            }
-            return 0;
-        });
-    }
-
     public removeBlock(block: AbstractBaseContentBlock): void {
-        this._blocks.remove(block.id);
-        this._setPositions(this.getSorted());
+        this._blocks.splice(block.position, 1);
+        this._setPositions();
     }
 
     public createBlock<TBlock extends AbstractBaseContentBlock>(type: ContentBlockItemType): TBlock {
@@ -87,16 +71,13 @@ export class BlocksManager {
     }
 
     moveBlock(previousIndex: number, currentIndex: number): any {
-        const blocks = this.getSorted();
-        moveItemInArray(blocks, previousIndex, currentIndex);
-        this._setPositions(blocks);
+        moveItemInArray(this._blocks, previousIndex, currentIndex);
+        this._setPositions();
     }
 
     public replaceBlock(oldBlock: AbstractBaseContentBlock, newBlock: AbstractBaseContentBlock): void {
-        newBlock.position = oldBlock.position;
-        this._blocks.remove(oldBlock.id);
-        this._blocks.set(newBlock.id, newBlock);
-        this._setPositions(this.getSorted());
+        this._blocks[oldBlock.position] = newBlock;
+        this._setPositions();
         this.update();
     }
 
