@@ -1,12 +1,10 @@
-import {Model} from './base/Model';
+import { AbstractModel } from './base/abstract-model';
 
-export class Forum extends Model {
-  Id: number;
-  Name: string;
-  Topics: number;
-  Url: string;
-  parent_id: number;
-  Children: any[];
-  FullName: string;
-  Category: string;
+export class Forum extends AbstractModel {
+  name: string;
+  topics: number;
+  parentId: number;
+  children: Array<any>;
+  fullName: string;
+  category: string;
 }

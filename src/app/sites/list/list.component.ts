@@ -1,45 +1,44 @@
 import { Component } from '@angular/core';
-import { ListComponent } from '../../@common/list/ListComponent';
-import { Site } from '../../@models/Site';
-import { ListTableColumn } from '../../@common/list/ListTableColumn';
-import { ListTableColumnType } from '../../@common/list/ListEnums';
-import { ListTableColumnAction } from '../../@common/list/ListTableColumnAction';
-import { PageContext } from '../../@common/PageComponent';
-import { ServicesProvider } from '../../@services/ServicesProvider';
-import { Icon } from 'app/@common/shared/icon/Icon';
+import { Icon } from '@common/shared/icon/Icon';
+import { AbstractListComponent } from '@common/list/abstract-list-component';
+import { ListTableColumnType } from '@common/list/ListEnums';
+import { ListTableColumn } from '@common/list/ListTableColumn';
+import { ListTableColumnAction } from '@common/list/ListTableColumnAction';
+import { PageContext } from '@common/abstract-page-component';
+import { Site } from '@models/Site';
+import { ServicesProvider } from '@services/ServicesProvider';
 
 @Component({
     selector: 'ngx-dashboard',
     templateUrl: './list.component.html',
     providers: [PageContext]
 })
-export class SitesListComponent extends ListComponent<Site> {
+export class SitesListComponent extends AbstractListComponent<Site> {
     constructor(context: PageContext, servicesProvider: ServicesProvider) {
-        super(context, servicesProvider.SitesService);
+        super(servicesProvider.sitesService, context);
 
-        this.setTitle('Список сайтов');
+        this._setTitle('Список сайтов');
         this.provider.itemsPerPage = 20;
     }
 
-    protected GetColumns(): ListTableColumn<Site>[] {
+    protected _getColumns(): Array<ListTableColumn<Site>> {
         return [
-            new ListTableColumn<Site>('Id', '#').setSortable(),
-            new ListTableColumn<Site>('Title', 'Заголовок')
+            new ListTableColumn<Site>('title', 'Заголовок')
                 .setSortable()
-                .setLinkGetter(site => ['/sites', site.Id, 'edit']),
+                .setLinkGetter(site => ['/sites', site.id, 'edit']),
             /*.setDisabled(!this.can(UserRights.AddNews))*/ new ListTableColumn<Site>(
-                'DateAdded',
+                'dateAdded',
                 'Дата',
                 ListTableColumnType.TimeAgo
             ).setSortable(),
-            new ListTableColumn<Site>('Actions', '')
-                .AddAction(
+            new ListTableColumn<Site>('actions', '')
+                .addAction(
                     new ListTableColumnAction<Site>(
                         'Просмотреть на сайте',
                         new Icon('fa-globe')
-                    ).setExternal(site => site.Url)
+                    ).setExternal(site => site.url)
                 )
-                .AddAction(
+                .addAction(
                     new ListTableColumnAction<Site>('Удалить пост', new Icon('fa-trash')).setClick(
                         site => this.deleteItem(site)
                     )

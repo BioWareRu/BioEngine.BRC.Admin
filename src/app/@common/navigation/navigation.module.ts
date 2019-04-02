@@ -1,12 +1,12 @@
-import { BioSharedModule } from './../shared/BioSharedModule';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
 import { MatIconModule, MatRippleModule } from '@angular/material';
+import { RouterModule } from '@angular/router';
+import { BioSharedModule } from './../shared/BioSharedModule';
 
+import { NavigationCollapsableComponent } from './collapsable.component';
 import { NavigationGroupComponent } from './group.component';
 import { NavigationItemComponent } from './item.component';
-import { NavigationCollapsableComponent } from './collapsable.component';
 import { NavigationComponent } from './navigation.component';
 
 @NgModule({

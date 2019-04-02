@@ -1,16 +1,16 @@
 import { Type } from 'class-transformer';
 
 export class PropertiesElementValue {
-    public SiteId: string;
-    public Value: any;
+    public siteId: string;
+    public value: any;
 }
 
 export class PropertiesElement {
-    public Name: string;
-    public Key: string;
-    public Values: PropertiesElementValue[];
-    public Type: PropertiesElementType;
-    public IsRequired: boolean;
+    public name: string;
+    public key: string;
+    public values: Array<PropertiesElementValue>;
+    public type: PropertiesElementType;
+    public isRequired: boolean;
 }
 
 export enum PropertiesElementType {
@@ -32,17 +32,17 @@ export enum PropertiesFrequency {
 }
 
 export class PropertiesOption {
-    public Title: string;
-    public Value: any;
-    public Group: string;
+    public title: string;
+    public value: any;
+    public group: string;
 }
 
 export class Properties {
-    public Name: string;
-    public Key: string;
-    public IsEditable: boolean;
-    public Frequency: PropertiesFrequency;
+    public name: string;
+    public key: string;
+    public isEditable: boolean;
+    public frequency: PropertiesFrequency;
 
     @Type(() => PropertiesElement)
-    public Properties: PropertiesElement[] = [];
+    public properties: Array<PropertiesElement> = [];
 }

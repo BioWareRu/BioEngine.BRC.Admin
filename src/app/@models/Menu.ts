@@ -1,21 +1,18 @@
-import { Model } from './base/Model';
-import { ISingleSiteEntity } from './interfaces/ISiteEntity';
 import { Type } from 'class-transformer';
+import { AbstractModel } from './base/abstract-model';
+import { ISingleSiteEntity } from './interfaces/ISiteEntity';
 
 export class MenuItem {
-    public Label: string;
-    public Url: string;
+    public label: string;
+    public url: string;
     @Type(() => MenuItem)
-    public Items: MenuItem[] = [];
+    public items: Array<MenuItem> = [];
 }
 
-export class Menu extends Model implements ISingleSiteEntity {
-    public Id: string;
-    public Title: string;
-    public Url: string;
-    public Text: string;
-    public SiteId: string;
+export class Menu extends AbstractModel implements ISingleSiteEntity {
+    public text: string;
+    public siteId: string;
 
     @Type(() => MenuItem)
-    public Items: MenuItem[] = [];
+    public items: Array<MenuItem> = [];
 }

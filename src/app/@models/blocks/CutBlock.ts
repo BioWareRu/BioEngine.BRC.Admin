@@ -1,19 +1,19 @@
+import { Icon } from '@common/shared/icon/Icon';
 import { Type } from 'class-transformer';
-import { Icon } from 'app/@common/shared/icon/Icon';
-import { ContentBlock, ContentBlockItemType, ContentBlockData } from './ContentBlock';
+import { AbstractContentBlock, AbstractContentBlockData, ContentBlockItemType } from './abstract-content-block';
 
-export class CutBlock extends ContentBlock<CutBlockData> {
-    public Title = 'Кат';
-    public Icon = new Icon('fa-cut');
-    public Type: ContentBlockItemType = ContentBlockItemType.Cut;
+export class CutBlock extends AbstractContentBlock<CutBlockData> {
+    public title = 'Кат';
+    public icon = new Icon('fa-cut');
+    public type: ContentBlockItemType = ContentBlockItemType.Cut;
     @Type(() => CutBlockData)
-    Data: CutBlockData = new CutBlockData();
+    data: CutBlockData = new CutBlockData();
 
-    static IsEmpty(block: CutBlock): boolean {
+    static isEmpty(_block: CutBlock): boolean {
         return false;
     }
 }
 
-export class CutBlockData extends ContentBlockData {
-    public ButtonText = 'Читать дальше';
+export class CutBlockData extends AbstractContentBlockData {
+    public buttonText = 'Читать дальше';
 }

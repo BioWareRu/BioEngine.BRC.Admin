@@ -1,26 +1,17 @@
-import { YoutubeBlock } from '../../@models/blocks/YoutubeBlock';
-import { CutBlock } from 'app/@models/blocks/CutBlock';
-import { BlocksManager } from './../../@common/blocks/BlocksManager';
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { SavePostResponse } from 'app/@models/results/Post';
-import { TextBlock } from 'app/@models/blocks/TextBlock';
-import { GalleryBlock } from 'app/@models/blocks/GalleryBlock';
-import { FileBlock } from 'app/@models/blocks/FileBlock';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { SnackBarService } from 'app/@common/snacks/SnackBarService';
-import { PageContext } from 'app/@common/PageComponent';
-import { ContentFormComponent, SimpleFormComponent } from 'app/@common/forms/FormComponent';
-import { ServicesProvider } from 'app/@services/ServicesProvider';
-import { DialogService } from 'app/@common/modals/DialogService';
-import { StateService } from 'app/@common/StateService';
-import { TwitterBlock } from 'app/@models/blocks/TwitterBlock';
-import { Post } from 'app/@models/posts/Post';
-import { ContentBlockItemType, BaseContentBlock } from 'app/@models/blocks/ContentBlock';
-import { Observable } from 'rxjs';
-import { BaseSection } from 'app/@models/Section';
-import { map } from 'rxjs/operators';
-import { Tag } from 'app/@models/Tag';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { AbstractContentFormComponent } from '@common/forms/abstract-form-component';
+import { DialogService } from '@common/modals/DialogService';
+import { PageContext } from '@common/abstract-page-component';
+import { SnackBarService } from '@common/snacks/SnackBarService';
+import { StateService } from '@common/StateService';
+import { Post } from '@models/posts/Post';
+import { SavePostResponse } from '@models/results/Post';
+import { BaseSection } from '@models/abstract-section';
+import { Tag } from '@models/Tag';
+import { ServicesProvider } from '@services/ServicesProvider';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'post-form',
@@ -28,37 +19,38 @@ import { Validators } from '@angular/forms';
     styleUrls: ['./form.component.scss'],
     providers: [PageContext]
 })
-export class PostFormComponent extends ContentFormComponent<Post, SavePostResponse>
+export class PostFormComponent extends AbstractContentFormComponent<Post, SavePostResponse>
     implements OnInit, OnDestroy {
     constructor(
+        private readonly _stateService: StateService,
         servicesProvider: ServicesProvider,
         snackBarService: SnackBarService,
-        dialogService: DialogService,
-        private _stateService: StateService
+        dialogService: DialogService
     ) {
-        super(servicesProvider, snackBarService, servicesProvider.PostsService, dialogService);
+        super(dialogService, servicesProvider, snackBarService, servicesProvider.postsService);
     }
 
     ngOnInit(): void {
         this._stateService.hideToolbar();
     }
+
     ngOnDestroy(): void {
         this._stateService.showToolbar();
     }
 
-    protected constructForm(): void {
-        super.constructForm();
-        this.registerFormControl('SectionIds', [<any>Validators.required]);
-        this.registerFormControl('TagIds', [<any>Validators.required]);
+    protected _constructForm(): void {
+        super._constructForm();
+        this.registerFormControl('sectionIds', [Validators.required]);
+        this.registerFormControl('tagIds', [Validators.required]);
     }
 
-    protected get Sections(): Observable<BaseSection[]> {
-        return this.servicesProvider.SectionsService.getAll(1, 1000, 'id').pipe(
-            map(list => list.Data)
+    public get sections(): Observable<Array<BaseSection>> {
+        return this.servicesProvider.sectionsService.getAll(1, 1000, 'id').pipe(
+            map(list => list.data)
         );
     }
 
-    protected get Tags(): Observable<Tag[]> {
-        return this.servicesProvider.TagsService.getAll(1, 1000, 'id').pipe(map(list => list.Data));
+    public get tags(): Observable<Array<Tag>> {
+        return this.servicesProvider.tagsService.getAll(1, 1000, 'id').pipe(map(list => list.data));
     }
 }

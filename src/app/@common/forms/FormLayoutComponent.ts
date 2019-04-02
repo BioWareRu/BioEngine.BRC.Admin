@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { FormComponent } from './FormComponent';
-import { Model } from '../../@models/base/Model';
+import { AbstractModel } from '@models/base/abstract-model';
 import { SaveModelResponse } from '../SaveModelResponse';
+import { AbstractFormComponent } from './abstract-form-component';
 
 @Component({
     selector: 'form-layout',
@@ -15,13 +15,13 @@ import { SaveModelResponse } from '../SaveModelResponse';
     ]
 })
 export class FormLayoutComponent<
-    TModel extends Model,
+    TModel extends AbstractModel,
     TResultModel extends SaveModelResponse<TModel>
 > {
-    @Input() public FormComponent: FormComponent<TModel, TResultModel>;
-    public ObjectKeys = Object.keys;
+    @Input() public formComponent: AbstractFormComponent<TModel, TResultModel>;
+    public objectKeys = Object.keys;
 
     public save(): void {
-        this.FormComponent.save();
+        this.formComponent.save();
     }
 }

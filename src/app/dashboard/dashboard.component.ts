@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { map } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { PageComponent, PageContext } from 'app/@common/PageComponent';
+import { Component } from '@angular/core';
+import { AbstractPageComponent, PageContext } from '@common/abstract-page-component';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'app-dashboard',
@@ -9,9 +9,9 @@ import { PageComponent, PageContext } from 'app/@common/PageComponent';
     styleUrls: ['./dashboard.component.scss'],
     providers: [PageContext]
 })
-export class DashboardComponent extends PageComponent {
+export class DashboardComponent extends AbstractPageComponent {
     /** Based on the screen size, switch from standard to one column per row */
-    cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
+    cards = this._breakpointObserver.observe(Breakpoints.Handset).pipe(
         map(({ matches }) => {
             if (matches) {
                 return [
@@ -31,8 +31,8 @@ export class DashboardComponent extends PageComponent {
         })
     );
 
-    constructor(context: PageContext, private breakpointObserver: BreakpointObserver) {
+    constructor(private readonly _breakpointObserver: BreakpointObserver, context: PageContext) {
         super(context);
-        this.StateService.setTitle('Главная');
+        this._stateService.setTitle('Главная');
     }
 }

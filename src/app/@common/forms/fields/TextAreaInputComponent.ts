@@ -1,11 +1,11 @@
-import {Component, Input} from '@angular/core';
-import {FormInput} from './FormInput';
+import { Component, Input } from '@angular/core';
+import { AbstractFormInput } from './abstract-form-input';
 
 @Component({
     selector: 'textarea-input',
-    templateUrl: './TextAreaInputComponent.html',
+    templateUrl: './TextAreaInputComponent.html'
 })
-export class TextAreaInputComponent extends FormInput {
-    @Input() public AutoResize = true;
-    @Input() public Rows = 6;
+export class TextAreaInputComponent extends AbstractFormInput {
+    @Input() public autoResize = true;
+    @Input() public rows = 6;
 }

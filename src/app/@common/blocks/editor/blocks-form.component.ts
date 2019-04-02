@@ -1,16 +1,16 @@
-import { DialogService } from 'app/@common/modals/DialogService';
-import { IContentEntity } from './../../../@models/interfaces/IContentEntity';
-import { ContentBlockItemType, BaseContentBlock } from 'app/@models/blocks/ContentBlock';
-import { Form } from './../../forms/Form';
-import { Input, OnInit, Component, ViewEncapsulation } from '@angular/core';
-import { BlocksManager } from '../BlocksManager';
-import { TextBlock } from 'app/@models/blocks/TextBlock';
-import { FileBlock } from 'app/@models/blocks/FileBlock';
-import { GalleryBlock } from 'app/@models/blocks/GalleryBlock';
-import { CutBlock } from 'app/@models/blocks/CutBlock';
-import { TwitterBlock } from 'app/@models/blocks/TwitterBlock';
-import { YoutubeBlock } from 'app/@models/blocks/YoutubeBlock';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { DialogService } from '@common/modals/DialogService';
+import { AbstractBaseContentBlock, ContentBlockItemType } from '@models/blocks/abstract-content-block';
+import { CutBlock } from '@models/blocks/CutBlock';
+import { FileBlock } from '@models/blocks/FileBlock';
+import { GalleryBlock } from '@models/blocks/GalleryBlock';
+import { TextBlock } from '@models/blocks/TextBlock';
+import { TwitterBlock } from '@models/blocks/TwitterBlock';
+import { YoutubeBlock } from '@models/blocks/YoutubeBlock';
+import { BlocksManager } from '../BlocksManager';
+import { IContentEntity } from '@models/interfaces/IContentEntity';
+import { Form } from './../../forms/Form';
 
 @Component({
     selector: 'blocksForm',
@@ -20,48 +20,54 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 })
 export class BlocksFormComponent implements OnInit {
     @Input()
-    public Form: Form;
+    public form: Form;
 
     @Input()
-    public Model: IContentEntity;
-    BlocksManager: any;
+    public model: IContentEntity;
+    blocksManager: BlocksManager;
 
-    public constructor(private _dialogsService: DialogService) {}
+    public constructor(private readonly _dialogsService: DialogService) {
+    }
 
     ngOnInit(): void {
-        this.BlocksManager = new BlocksManager(this.Model, this._dialogsService);
+        this.blocksManager = new BlocksManager(this.model);
 
-        this.BlocksManager.RegisterBlockType(ContentBlockItemType.Text, TextBlock);
-        this.BlocksManager.RegisterBlockType(ContentBlockItemType.File, FileBlock);
-        this.BlocksManager.RegisterBlockType(ContentBlockItemType.Gallery, GalleryBlock);
-        this.BlocksManager.RegisterBlockType(ContentBlockItemType.Cut, CutBlock);
-        this.BlocksManager.RegisterBlockType(ContentBlockItemType.Twitter, TwitterBlock);
-        this.BlocksManager.RegisterBlockType(ContentBlockItemType.Youtube, YoutubeBlock);
+        this.blocksManager.registerBlockType(ContentBlockItemType.Text, TextBlock);
+        this.blocksManager.registerBlockType(ContentBlockItemType.File, FileBlock);
+        this.blocksManager.registerBlockType(ContentBlockItemType.Gallery, GalleryBlock);
+        this.blocksManager.registerBlockType(ContentBlockItemType.Cut, CutBlock);
+        this.blocksManager.registerBlockType(ContentBlockItemType.Twitter, TwitterBlock);
+        this.blocksManager.registerBlockType(ContentBlockItemType.Youtube, YoutubeBlock);
 
-        if (this.Model.Blocks.length === 0) {
-            this.BlocksManager.AddBlock(this.BlocksManager.CreateBlock(ContentBlockItemType.Text));
-            this.BlocksManager.Update();
+        this.blocksManager.blocks.subscribe(blocks => {
+            this.form.getControlByProperty('blocks').patchValue(blocks);
+        });
+
+        if (this.model.blocks.length === 0) {
+            this.blocksManager.addBlock(this.blocksManager.createBlock(ContentBlockItemType.Text));
+            this.blocksManager.update();
         }
+
     }
 
     public addBlock(type: ContentBlockItemType): void {
-        const block = this.BlocksManager.CreateBlock(type);
-        this.BlocksManager.AddBlock(block);
-        this.BlocksManager.Update();
+        const block = this.blocksManager.createBlock(type);
+        this.blocksManager.addBlock(block);
+        this.blocksManager.update();
     }
 
-    public deleteBlock(block: BaseContentBlock): void {
+    public deleteBlock(block: AbstractBaseContentBlock): void {
         this._dialogsService
             .confirm('Удаление блока', 'Вы точно хотите удалить это блок?')
             .onConfirm.subscribe(() => {
-                this.BlocksManager.RemoveBlock(block);
-                this.BlocksManager.Update();
-            });
+            this.blocksManager.removeBlock(block);
+            this.blocksManager.update();
+        });
     }
 
-    public drop(event: CdkDragDrop<string[]>): void {
-        this.BlocksManager.MoveBlock(event.previousIndex, event.currentIndex);
-        this.BlocksManager.Update();
-        this.Form.hasChanges = true;
+    public drop(event: CdkDragDrop<Array<string>>): void {
+        this.blocksManager.moveBlock(event.previousIndex, event.currentIndex);
+        this.blocksManager.update();
+        this.form.hasChanges = true;
     }
 }

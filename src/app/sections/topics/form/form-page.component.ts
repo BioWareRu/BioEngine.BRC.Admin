@@ -1,35 +1,35 @@
-import { FormPageComponent } from 'app/@common/forms/FormComponent';
-import { BaseService } from 'app/@common/BaseService';
-import { PageContext } from 'app/@common/PageComponent';
 import { Component } from '@angular/core';
-import { TopicsService } from 'app/@services/TopicsService';
-import { Topic } from 'app/@models/Topic';
-import { SaveTopicResponse } from 'app/@models/results/Topic';
+import { AbstractBaseService } from '@common/abstract-base-service';
+import { AbstractFormPageComponent } from '@common/forms/abstract-form-component';
+import { PageContext } from '@common/abstract-page-component';
+import { SaveTopicResponse } from '@models/results/Topic';
+import { Topic } from '@models/Topic';
+import { TopicsService } from '@services/TopicsService';
 
 @Component({
     selector: 'topic-form-page',
     template: `
-        <topic-form class="model-form" #modelForm [model]="Model"></topic-form>
+        <topic-form class="model-form" #modelForm [model]="model"></topic-form>
     `,
     providers: [PageContext]
 })
-export class TopicFormPageComponent extends FormPageComponent<
+export class TopicFormPageComponent extends AbstractFormPageComponent<
     Topic,
     SaveTopicResponse
 > {
-    constructor(context: PageContext, protected topicsService: TopicsService) {
+    constructor(protected _topicsService: TopicsService, context: PageContext) {
         super(context);
     }
 
-    protected getNewModelTitle(): string {
+    protected _getNewModelTitle(): string {
         return 'Создание темы';
     }
 
-    protected getRoute(): string {
+    protected _getRoute(): string {
         return '/sections/topics';
     }
 
-    protected getService(): BaseService<Topic> {
-        return this.topicsService;
+    protected _getService(): AbstractBaseService<Topic> {
+        return this._topicsService;
     }
 }

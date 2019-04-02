@@ -7,5 +7,5 @@ export class NavigationItem {
     icon?: Icon;
     url?: string;
     exactMatch?: boolean;
-    children?: NavigationItem[];
+    children?: Array<NavigationItem>;
 }

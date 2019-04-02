@@ -1,41 +1,41 @@
-import {BaseService} from '../@common/BaseService';
-import {RestClient} from '../@common/HttpClient';
-import {ClassType} from 'class-transformer/ClassTransformer';
-import {SaveModelResponse} from '../@common/SaveModelResponse';
-import {ListResult} from '../@common/list/ListResult';
-import {Injectable} from '@angular/core';
-import {PropertiesOption} from '../@models/base/Properties';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { ClassType } from 'class-transformer/ClassTransformer';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { AbstractBaseService } from '@common/abstract-base-service';
+import { RestClient } from '@common/HttpClient';
+import { AbstractListResult } from '@common/list/abstract-list-result';
+import { SaveModelResponse } from '@common/SaveModelResponse';
+import { PropertiesOption } from '@models/base/Properties';
 
 @Injectable()
-export class PropertiesService extends BaseService<PropertiesOption> {
+export class PropertiesService extends AbstractBaseService<PropertiesOption> {
     constructor(httpClient: RestClient) {
         super(httpClient);
     }
 
-    public getOptions(groupKey: string, propertyKey: string): Observable<PropertiesOption[]> {
-        return this.httpClient.get(this.getResource(), {
+    public getOptions(groupKey: string, propertyKey: string): Observable<Array<PropertiesOption>> {
+        return this._httpClient.get(this._getResource(), {
             setKey: groupKey,
-            propertyKey: propertyKey,
-        }).pipe(map((result: ListResult<PropertiesOption>) => {
-            return result.Data;
+            propertyKey
+        }).pipe(map((result: AbstractListResult<PropertiesOption>) => {
+            return result.data;
         }));
     }
 
-    protected getResource(): string {
+    protected _getResource(): string {
         return 'properties';
     }
 
-    protected getListType(): ClassType<ListResult<PropertiesOption>> {
+    protected _getListType(): ClassType<AbstractListResult<PropertiesOption>> | null {
         return null;
     }
 
-    protected getSaveType(): ClassType<SaveModelResponse<PropertiesOption>> {
+    protected _getSaveType(): ClassType<SaveModelResponse<PropertiesOption>> | null {
         return null;
     }
 
-    protected getType(): ClassType<PropertiesOption> {
+    protected _getType(): ClassType<PropertiesOption> {
         return PropertiesOption;
     }
 }

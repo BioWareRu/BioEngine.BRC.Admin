@@ -1,22 +1,22 @@
-import { Input, Component } from '@angular/core';
-import { SectionsCacheProvider } from 'app/@services/cache/SectionsCacheProvider';
+import { Component, Input } from '@angular/core';
+import { SectionsCacheProvider } from '@services/cache/SectionsCacheProvider';
 
 @Component({
     selector: 'sectionsList',
     template: `
-        <mat-chip-list *ngIf="Ids">
+        <mat-chip-list *ngIf="ids">
             <mat-chip
-                selected
-                *ngFor="let section of (provider.Get(Ids) | async).Values()"
-                title="{{ section.Title }}"
+                    selected
+                    *ngFor="let section of (provider.get(ids) | async).values()"
+                    title="{{ section.title }}"
             >
-                {{ section.Title | truncate: 30 }}
+                {{ section.title | truncate: 30 }}
             </mat-chip>
         </mat-chip-list>
     `
 })
 export class SectionsLabelsListComponent {
     @Input()
-    public Ids: string[];
+    public ids: Array<string>;
     constructor(public provider: SectionsCacheProvider) {}
 }

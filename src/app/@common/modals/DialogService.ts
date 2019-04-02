@@ -1,23 +1,21 @@
+import { ComponentType } from '@angular/cdk/portal';
 import { Injectable, TemplateRef } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { ComponentType } from '@angular/cdk/portal';
-import { DialogComponent } from './DialogComponent';
+import { ConfirmationDialogComponent, ConfirmationDialogComponentData } from './ConfirmationDialogService';
+import { AbstractDialogComponent } from './abstract-dialog-component';
 import { DialogConfig } from './DialogConfig';
-import {
-    ConfirmationDialogComponent,
-    ConfirmationDialogComponentData
-} from './ConfirmationDialogService';
 
 @Injectable({
     providedIn: 'root'
 })
 export class DialogService {
-    constructor(public dialog: MatDialog) {}
+    constructor(public dialog: MatDialog) {
+    }
 
-    public show<T extends DialogComponent<TData>, TData>(
+    public show<T extends AbstractDialogComponent<TData>, TData>(
         dialogComponent: ComponentType<T> | TemplateRef<T>,
         data: TData,
-        configure: (config: DialogConfig) => void = null
+        configure: ((config: DialogConfig) => void) | null = null
     ): T {
         const config = new DialogConfig();
         if (configure !== null) {
@@ -26,6 +24,7 @@ export class DialogService {
         config.data = data;
         const dialogRef = this.dialog.open<T>(dialogComponent, config);
         dialogRef.componentInstance.dialogRef = dialogRef;
+
         return dialogRef.componentInstance;
     }
 

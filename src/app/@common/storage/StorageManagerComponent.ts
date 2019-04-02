@@ -1,17 +1,8 @@
-import { IKeyedCollection, KeyedCollection } from 'app/@common/KeyedCollection';
-import {
-    Component,
-    OnInit,
-    Inject,
-    ViewChild,
-    ElementRef,
-    Pipe,
-    PipeTransform,
-    Input
-} from '@angular/core';
-import { StorageService, StorageNode } from 'app/@services/StorageService';
-import { DialogComponent } from '../modals/DialogComponent';
+import { Component, ElementRef, Inject, Input, OnInit, Pipe, PipeTransform, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
+import { StorageNode, StorageService } from '@services/StorageService';
+import Dictionary from '../Dictionary';
+import { AbstractDialogComponent } from '../modals/abstract-dialog-component';
 import { DialogService } from '../modals/DialogService';
 
 @Component({
@@ -21,10 +12,12 @@ import { DialogService } from '../modals/DialogService';
 })
 export class StorageManagerComponent implements OnInit {
     public constructor(
-        private _storageService: StorageService,
-        private _dialogService: DialogService
-    ) {}
-    public Items: StorageNode[] = [];
+        private readonly _storageService: StorageService,
+        private readonly _dialogService: DialogService
+    ) {
+    }
+
+    public items: Array<StorageNode> = [];
     public columnsToDisplay = ['select', 'icon', 'title', 'size', 'date'];
 
     @Input()
@@ -39,7 +32,8 @@ export class StorageManagerComponent implements OnInit {
     ];
     @ViewChild('fileInput') fileInput: ElementRef;
 
-    public selection: IKeyedCollection<StorageNode, string> = new KeyedCollection<StorageNode>();
+    public selection = new Dictionary<string, StorageNode>();
+
     ngOnInit(): void {
         let path = localStorage.getItem('beSMPath');
         if (!path) {
@@ -50,7 +44,7 @@ export class StorageManagerComponent implements OnInit {
 
     public load(path: string): void {
         this._storageService.get(path).subscribe(items => {
-            this.Items = items;
+            this.items = items;
             this.currentPath = path;
             localStorage.setItem('beSMPath', this.currentPath);
             const parts = path.split('/');
@@ -75,25 +69,25 @@ export class StorageManagerComponent implements OnInit {
         });
     }
 
-    public select(isChecked: boolean, node: StorageNode): void {
-        if (isChecked) {
-            this.selection.Add(node.Item.FilePath, node);
-        } else {
-            if (this.selection.ContainsKey(node.Item.FilePath)) {
-                this.selection.Remove(node.Item.FilePath);
-            }
+    public select(target: EventTarget, node: StorageNode): void {
+        if ((<HTMLInputElement>target).checked) {
+            this.selection.set(node.item.filePath, node);
+        } else if (this.selection.hasKey(node.item.filePath)) {
+            this.selection.remove(node.item.filePath);
+
         }
     }
 
-    public confirmSelect(): StorageNode[] {
-        const items = this.selection.Values();
-        this.selection = new KeyedCollection<StorageNode>();
+    public confirmSelect(): Array<StorageNode> {
+        const items = this.selection.values();
+        this.selection.clear();
+
         return items;
     }
 
     public enter(node: StorageNode): void {
-        if (node.IsDirectory) {
-            this.load(node.Path);
+        if (node.isDirectory) {
+            this.load(node.path);
         }
     }
 
@@ -104,8 +98,8 @@ export class StorageManagerComponent implements OnInit {
             .subscribe((res: string) => {
                 if (res !== '' && res !== null) {
                     let alreadyExists = false;
-                    this.Items.forEach(item => {
-                        if (item.IsDirectory && item.Name.toLowerCase() === res.toLowerCase()) {
+                    this.items.forEach(item => {
+                        if (item.isDirectory && item.name.toLowerCase() === res.toLowerCase()) {
                             alreadyExists = true;
                         }
                     });
@@ -117,6 +111,7 @@ export class StorageManagerComponent implements OnInit {
                 }
             });
     }
+
     public upload(): void {
         this.fileInput.nativeElement.click();
     }
@@ -124,7 +119,7 @@ export class StorageManagerComponent implements OnInit {
     public fileChange($event): void {
         const fileList: FileList = $event.target.files;
         const lenght = fileList.length;
-        const items: StorageNode[] = [];
+        const items: Array<StorageNode> = [];
         for (let i = 0; i < lenght; i++) {
             const file = fileList[i];
             this._storageService.upload(file, this.currentPath).subscribe(item => {
@@ -141,24 +136,25 @@ export class StorageManagerComponent implements OnInit {
     selector: 'confirmation-dialog-component',
     template: `
         <h1 mat-dialog-title>Создать папку</h1>
-        <div mat-dialog-content><input type="text" required [(ngModel)]="folderName" /></div>
+        <div mat-dialog-content><input type="text" required [(ngModel)]="folderName"/></div>
         <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end">
             <button mat-raised-button color="warn" (click)="cancel()">Отмена</button>
             <button
-                mat-raised-button
-                color="accent"
-                cdkFocusInitial
-                [disabled]="folderName === null || folderName === ''"
-                (keydown.enter)="confirm()"
-                (click)="confirm()"
+                    mat-raised-button
+                    color="accent"
+                    cdkFocusInitial
+                    [disabled]="folderName === null || folderName === ''"
+                    (keydown.enter)="confirm()"
+                    (click)="confirm()"
             >
                 Создать
             </button>
         </div>
     `
 })
-export class CreateFolderDialogComponent extends DialogComponent<string> {
+export class CreateFolderDialogComponent extends AbstractDialogComponent<string> {
     public folderName: string;
+
     public constructor(@Inject(MAT_DIALOG_DATA) data: string) {
         super(data);
     }
@@ -172,9 +168,9 @@ export class CreateFolderDialogComponent extends DialogComponent<string> {
     }
 }
 
-@Pipe({ name: 'fileSize' })
+@Pipe({name: 'fileSize'})
 export class FileSizePipe implements PipeTransform {
-    private units = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB'];
+    private readonly _units = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB'];
 
     transform(bytes: number = 0, precision: number = 2): string {
         if (isNaN(parseFloat(String(bytes))) || !isFinite(bytes)) {
@@ -188,6 +184,6 @@ export class FileSizePipe implements PipeTransform {
             unit++;
         }
 
-        return bytes.toFixed(+precision) + ' ' + this.units[unit];
+        return bytes.toFixed(+precision) + ' ' + this._units[unit];
     }
 }

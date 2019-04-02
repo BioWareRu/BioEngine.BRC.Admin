@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {MatSnackBar} from '@angular/material';
-import {SnackBarMessage} from './SnackBarMessage';
-import {NotificationComponent} from './NotificationComponent';
+import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
+import { NotificationComponent } from './NotificationComponent';
+import { SnackBarMessage } from './SnackBarMessage';
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +14,7 @@ export class SnackBarService {
         const ref = this.snackBar.openFromComponent(NotificationComponent, {
             data: snackBarMessage,
             duration: snackBarMessage.duration,
-            panelClass: panelClass,
+            panelClass,
             verticalPosition: snackBarMessage.verticalPosition,
             horizontalPosition: snackBarMessage.horizontalPosition
         });

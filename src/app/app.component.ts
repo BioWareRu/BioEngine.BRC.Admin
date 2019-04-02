@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { OAuthService } from 'angular-oauth2-oidc';
-import { authConfig } from './auth.config';
-import { navigation } from './navigation';
-import { NavigationItem } from './@common/navigation/NavigationItem';
 import { MatIconRegistry } from '@angular/material';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { NavigationItem } from '@common/navigation/NavigationItem';
+import { AUTH_CONFIG } from './auth.config';
+import { NAVIGATION } from './navigation';
 
 @Component({
     selector: 'ngx-app',
@@ -24,12 +24,12 @@ import { MatIconRegistry } from '@angular/material';
     ]
 })
 export class AppComponent implements OnInit {
-    public navigation: NavigationItem[];
+    public navigation: Array<NavigationItem>;
 
-    constructor(private oauthService: OAuthService, matIconRegistry: MatIconRegistry) {
-        this.oauthService.configure(authConfig);
-        this.oauthService.setupAutomaticSilentRefresh();
-        this.navigation = navigation;
+    constructor(private readonly _oauthService: OAuthService, matIconRegistry: MatIconRegistry) {
+        this._oauthService.configure(AUTH_CONFIG);
+        this._oauthService.setupAutomaticSilentRefresh();
+        this.navigation = NAVIGATION;
 
         matIconRegistry.registerFontClassAlias('fa');
         matIconRegistry.registerFontClassAlias('fas');
@@ -38,11 +38,11 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.oauthService.tryLogin().then(
+        this._oauthService.tryLogin().then(
             () => {
-                if (this.oauthService.hasValidAccessToken()) {
+                if (this._oauthService.hasValidAccessToken()) {
                 } else {
-                    this.oauthService.initImplicitFlow();
+                    this._oauthService.initImplicitFlow();
                 }
             },
             () => {

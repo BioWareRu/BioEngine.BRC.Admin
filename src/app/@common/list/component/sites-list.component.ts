@@ -1,18 +1,18 @@
-import { SitesCacheProvider } from 'app/@services/cache/SitesCacheProvider';
-import { Input, Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { SitesCacheProvider } from '@services/cache/SitesCacheProvider';
 
 @Component({
     selector: 'sitesList',
     template: `
-        <mat-chip-list *ngIf="Ids">
-            <mat-chip selected *ngFor="let site of (provider.Get(Ids) | async).Values()">
-                {{ site.Title }}
+        <mat-chip-list *ngIf="ids">
+            <mat-chip selected *ngFor="let site of (provider.get(ids) | async).values()">
+                {{ site.title }}
             </mat-chip>
         </mat-chip-list>
     `
 })
 export class SitesLabelsListComponent {
     @Input()
-    public Ids: string[];
+    public ids: Array<string>;
     constructor(public provider: SitesCacheProvider) {}
 }

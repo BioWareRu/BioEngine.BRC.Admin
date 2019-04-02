@@ -1,11 +1,11 @@
-import { Component, Input } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { NavigationItem } from '../@common/navigation/NavigationItem';
-import { UsersService } from '../@services/UsersService';
-import { User } from '../@models/User';
-import { StateService } from '../@common/StateService';
+import { NavigationItem } from '@common/navigation/NavigationItem';
+import { StateService } from '@common/StateService';
+import { User } from '@models/User';
+import { UsersService } from '@services/UsersService';
 
 @Component({
     selector: 'app-layout',
@@ -13,20 +13,20 @@ import { StateService } from '../@common/StateService';
     styleUrls: ['./layout.component.scss']
 })
 export class LayoutComponent {
-    isHandset$: Observable<boolean> = this.breakpointObserver
+    isHandset$: Observable<boolean> = this._breakpointObserver
         .observe(Breakpoints.Handset)
         .pipe(map(result => result.matches));
-    @Input() navigation: NavigationItem[];
+    @Input() navigation: Array<NavigationItem>;
     public user: User;
     public title: string;
     public showSidebar = true;
 
     constructor(
-        private breakpointObserver: BreakpointObserver,
-        private usersService: UsersService,
+        private readonly _breakpointObserver: BreakpointObserver,
+        private readonly _usersService: UsersService,
         public stateService: StateService
     ) {
-        this.usersService.getUser().subscribe(user => (this.user = user));
+        this._usersService.getUser().subscribe(user => (this.user = user));
         this.stateService.onTitleChange().subscribe(title =>
             setTimeout(() => {
                 this.title = title;

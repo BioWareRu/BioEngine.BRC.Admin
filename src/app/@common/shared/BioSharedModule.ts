@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { IconComponent } from './icon/Icon';
-import { MatIconModule } from '@angular/material';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { MatIconModule } from '@angular/material';
+import { IconComponent } from './icon/Icon';
 
 @NgModule({
     declarations: [IconComponent],

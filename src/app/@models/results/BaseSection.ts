@@ -1,9 +1,9 @@
-import {ListResult} from "../../@common/list/ListResult";
-import {Type} from "class-transformer";
-import {BaseSection} from "../Section";
+import { Type } from 'class-transformer';
+import { AbstractListResult } from '@common/list/abstract-list-result';
+import { BaseSection } from '../abstract-section';
 
-export class SectionsListResult extends ListResult<BaseSection> {
+export class SectionsListResult extends AbstractListResult<BaseSection> {
 
   @Type(() => BaseSection)
-  public Data: BaseSection[];
+  public data: Array<BaseSection>;
 }

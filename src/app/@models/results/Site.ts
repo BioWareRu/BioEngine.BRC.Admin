@@ -1,12 +1,12 @@
-import {ListResult} from '../../@common/list/ListResult';
-import {Site} from '../Site';
-import {SaveModelResponse} from '../../@common/SaveModelResponse';
-import {Type} from "class-transformer";
+import { Type } from 'class-transformer';
+import { AbstractListResult } from '@common/list/abstract-list-result';
+import { SaveModelResponse } from '@common/SaveModelResponse';
+import { Site } from '../Site';
 
-export class SiteListResult extends ListResult<Site> {
+export class SiteListResult extends AbstractListResult<Site> {
 
   @Type(() => Site)
-  public Data: Site[];
+  public data: Array<Site>;
 }
 
 export class SaveSiteResponse extends SaveModelResponse<Site> {

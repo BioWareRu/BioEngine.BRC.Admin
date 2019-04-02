@@ -1,32 +1,32 @@
-import { Model } from '../../@models/base/Model';
-import { Subject } from 'rxjs/Subject';
-import { BaseService } from '../BaseService';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ListTableColumn } from './ListTableColumn';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-
-import { Filter } from '../Filter';
 import { MatPaginator, MatSort, SortDirection } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subject } from 'rxjs/Subject';
+import { AbstractModel } from '@models/base/abstract-model';
+import { AbstractBaseService } from '../abstract-base-service';
+import { Filter } from '../Filter';
+import { ListTableColumn } from './ListTableColumn';
 
-export class ListProvider<T extends Model> {
-    public items: Subject<T[]>;
+export class ListProvider<T extends AbstractModel> {
+    public items: Subject<Array<T>>;
     public itemsPerPage = 10;
-    public columns: ListTableColumn<T>[];
+    public columns: Array<ListTableColumn<T>>;
     public paginator: MatPaginator;
     public sorter: MatSort;
     public dataLoaded = false;
-    private currentPage = 0;
-    private sort = '-dateAdded';
+    private _currentPage = 0;
+    private _sort = '-dateAdded';
 
     constructor(
-        private service: BaseService<T>,
-        private router: Router,
-        private route: ActivatedRoute,
-        private filter: Filter = null
-    ) {}
+        private readonly _service: AbstractBaseService<T>,
+        private readonly _router: Router,
+        private readonly _route: ActivatedRoute,
+        private _filter: Filter | null = null
+    ) {
+    }
 
     public init(): void {
-        this.items = new BehaviorSubject<T[]>([]);
+        this.items = new BehaviorSubject<Array<T>>([]);
 
         this.paginator.page.subscribe(e => {
             this.itemsPerPage = e.pageSize;
@@ -35,48 +35,48 @@ export class ListProvider<T extends Model> {
         this.sorter.sortChange.subscribe(e => {
             this.applySort(e.active, e.direction);
         });
-        this.route.queryParamMap.subscribe(params => {
-            const pageNumber = parseInt(params.get('page'), 10);
-            const perPage = parseInt(params.get('perPage'), 10);
+        this._route.queryParamMap.subscribe(params => {
+            const pageNumber = parseInt(params.get('page') || '0', 10);
+            const perPage = parseInt(params.get('perPage') || '0', 10);
             if (pageNumber >= 1) {
-                this.currentPage = pageNumber;
+                this._currentPage = pageNumber;
             }
             if (perPage >= 1) {
                 this.itemsPerPage = perPage;
             }
             this.paginator.pageSize = this.itemsPerPage;
-            const sort = params.get('sort') || this.sort;
-            if (sort != null) {
-                this.sort = sort;
-                const key = this.sort.replace('-', '');
-                const sortDirection: SortDirection = this.sort.indexOf('-') > -1 ? 'desc' : 'asc';
+            const sort = params.get('sort') || this._sort;
+            if (sort !== null) {
+                this._sort = sort;
+                const key = this._sort.replace('-', '');
+                const sortDirection: SortDirection = this._sort.indexOf('-') > -1 ? 'desc' : 'asc';
                 this.sorter.active = key;
                 this.sorter.direction = sortDirection;
             }
             const filter = params.get('filter');
-            if (filter != null && filter !== '') {
-                this.filter = Filter.fromString(filter);
+            if (filter !== null && filter !== '') {
+                this._filter = Filter.fromString(filter);
             }
-            this.load(this.currentPage);
+            this.load(this._currentPage);
         });
     }
 
     public load(page?: number): void {
         this.dataLoaded = false;
-        page = page ? page : this.currentPage;
-        this.service
-            .getAll(page, this.paginator.pageSize, this.sort, this.filter)
+        page = page ? page : this._currentPage;
+        this._service
+            .getAll(page, this.paginator.pageSize, this._sort, this._filter)
             .subscribe(res => {
-                this.items.next(res.Data);
-                this.paginator.pageIndex = page;
-                this.paginator.length = res.TotalItems;
+                this.items.next(res.data);
+                this.paginator.pageIndex = <number>page;
+                this.paginator.length = res.totalItems;
                 this.dataLoaded = true;
             });
     }
 
     public changePage(page: number): void {
-        this.currentPage = page;
-        this.reload();
+        this._currentPage = page;
+        this._reload();
     }
 
     public applySort(column: string, direction: SortDirection): void {
@@ -91,24 +91,24 @@ export class ListProvider<T extends Model> {
             case '':
                 break;
         }
-        this.sort = sortKey;
-        this.reload();
+        this._sort = sortKey;
+        this._reload();
     }
 
     public applyFilter(filter: Filter): void {
-        this.filter = filter;
-        this.reload();
+        this._filter = filter;
+        this._reload();
     }
 
-    private reload(): void {
-        this.router.navigate([], {
+    private _reload(): void {
+        this._router.navigate([], {
             queryParams: {
-                page: this.currentPage,
+                page: this._currentPage,
                 perPage: this.itemsPerPage,
-                sort: this.sort,
-                filter: this.filter ? this.filter.toString() : ''
+                sort: this._sort,
+                filter: this._filter ? this._filter.toString() : ''
             },
-            relativeTo: this.route
+            relativeTo: this._route
         });
     }
 }

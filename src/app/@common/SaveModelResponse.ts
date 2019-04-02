@@ -1,5 +1,5 @@
-import {RestResult} from './RestResult';
+import { RestResult } from './RestResult';
 
 export class SaveModelResponse<T> extends RestResult {
-  public Model: T = undefined;
+  public model: T;
 }

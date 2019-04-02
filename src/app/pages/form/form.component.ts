@@ -1,27 +1,27 @@
-import { ContentFormComponent } from 'app/@common/forms/FormComponent';
-import { Component, OnInit } from '@angular/core';
-import { SavePageResponse } from '../../@models/results/Page';
-import { ServicesProvider } from '../../@services/ServicesProvider';
-import { Page } from '../../@models/Page';
-import { SnackBarService } from 'app/@common/snacks/SnackBarService';
-import { DialogService } from 'app/@common/modals/DialogService';
+import { Component } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { AbstractContentFormComponent } from '@common/forms/abstract-form-component';
+import { DialogService } from '@common/modals/DialogService';
+import { SnackBarService } from '@common/snacks/SnackBarService';
+import { Page } from '@models/Page';
+import { SavePageResponse } from '@models/results/Page';
+import { ServicesProvider } from '@services/ServicesProvider';
 
 @Component({
     selector: 'page-form',
     templateUrl: './form.component.html'
 })
-export class PageFormComponent extends ContentFormComponent<Page, SavePageResponse> {
+export class PageFormComponent extends AbstractContentFormComponent<Page, SavePageResponse> {
     public constructor(
         snackBarService: SnackBarService,
         servicesProvider: ServicesProvider,
         dialogsService: DialogService
     ) {
-        super(servicesProvider, snackBarService, servicesProvider.PagesService, dialogsService);
+        super(dialogsService, servicesProvider, snackBarService, servicesProvider.pagesService);
     }
 
-    protected constructForm(): void {
-        super.constructForm();
-        this.registerFormControl('SiteIds', [<any>Validators.required]);
+    protected _constructForm(): void {
+        super._constructForm();
+        this.registerFormControl('siteIds', [Validators.required]);
     }
 }

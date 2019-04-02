@@ -1,35 +1,35 @@
-import { Menu } from 'app/@models/Menu';
-import { SaveMenuResponse } from 'app/@models/results/Menu';
-import { FormPageComponent } from 'app/@common/forms/FormComponent';
-import { PageContext } from 'app/@common/PageComponent';
-import { MenuService } from 'app/@services/MenuService';
-import { BaseService } from 'app/@common/BaseService';
 import { Component } from '@angular/core';
+import { AbstractBaseService } from '@common/abstract-base-service';
+import { AbstractFormPageComponent } from '@common/forms/abstract-form-component';
+import { PageContext } from '@common/abstract-page-component';
+import { Menu } from '@models/Menu';
+import { SaveMenuResponse } from '@models/results/Menu';
+import { MenuService } from '@services/MenuService';
 
 @Component({
     selector: 'menu-form-page',
     template: `
-        <menu-form class="model-form" #modelForm [model]="Model"></menu-form>
+        <menu-form class="model-form" #modelForm [model]="model"></menu-form>
     `,
     providers: [PageContext]
 })
-export class MenuFormPageComponent extends FormPageComponent<
+export class MenuFormPageComponent extends AbstractFormPageComponent<
     Menu,
     SaveMenuResponse
 > {
-    constructor(pageContext: PageContext, protected menuService: MenuService) {
+    constructor(protected _menuService: MenuService, pageContext: PageContext) {
         super(pageContext);
     }
 
-    protected getRoute(): string {
+    protected _getRoute(): string {
         return '/menu';
     }
 
-    protected getService(): BaseService<Menu> {
-        return this.menuService;
+    protected _getService(): AbstractBaseService<Menu> {
+        return this._menuService;
     }
 
-    protected getNewModelTitle(): string {
+    protected _getNewModelTitle(): string {
         return 'Создание меню';
     }
 }

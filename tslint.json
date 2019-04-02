@@ -1,6 +1,7 @@
 {
     "rulesDirectory": [
-        "node_modules/codelyzer"
+        "node_modules/codelyzer",
+        "tslint-consistent-codestyle"
     ],
     "rules": {
         "arrow-return-shorthand": true,
@@ -105,7 +106,6 @@
                 "variable-declaration": "nospace"
             }
         ],
-        "typeof-compare": true,
         "unified-signatures": true,
         "variable-name": false,
         "whitespace": [
@@ -117,14 +117,130 @@
             "check-type"
         ],
         "no-output-on-prefix": true,
-        "use-input-property-decorator": true,
-        "use-output-property-decorator": true,
-        "use-host-property-decorator": true,
         "no-input-rename": true,
         "no-output-rename": true,
         "use-life-cycle-interface": true,
         "use-pipe-transform-interface": true,
         "component-class-suffix": true,
-        "directive-class-suffix": true
-    }
+        "directive-class-suffix": true,
+        "no-as-type-assertion": true,
+        "no-accessor-recursion": true,
+        "no-collapsible-if": true,
+        "no-else-after-return": true,
+        "no-return-undefined": true,
+        "no-static-this": true,
+        "no-unnecessary-else": true,
+        "no-unnecessary-type-annotation": true,
+        "no-unused": true,
+        "no-var-before-return": true,
+        "parameter-properties": [
+            true,
+            "leading"
+        ],
+        "prefer-const-enum": true,
+        "naming-convention": [
+            true,
+            {
+                "type": "default",
+                "format": "camelCase",
+                "leadingUnderscore": "forbid",
+                "trailingUnderscore": "forbid"
+            },
+            {
+                "type": "variable",
+                "modifiers": [
+                    "global",
+                    "const"
+                ],
+                "format": [
+                    "camelCase",
+                    "UPPER_CASE"
+                ]
+            },
+            {
+                "type": "variable",
+                "modifiers": [
+                    "export",
+                    "const"
+                ],
+                "format": "UPPER_CASE"
+            },
+            {
+                "type": "functionVariable",
+                "modifiers": [
+                    "export",
+                    "const"
+                ],
+                "format": "camelCase"
+            },
+            {
+                "type": "parameter",
+                "modifiers": "unused",
+                "leadingUnderscore": "allow"
+            },
+            {
+                "type": "member",
+                "modifiers": "private",
+                "leadingUnderscore": "require"
+            },
+            {
+                "type": "member",
+                "modifiers": "protected",
+                "leadingUnderscore": "require"
+            },
+            {
+                "type": "method",
+                "filter": "^toJSON$",
+                "format": null
+            },
+            {
+                "type": "property",
+                "modifiers": [
+                    "public",
+                    "static",
+                    "const"
+                ],
+                "format": "UPPER_CASE"
+            },
+            {
+                "type": "type",
+                "format": "PascalCase"
+            },
+            {
+                "type": "class",
+                "modifiers": "abstract",
+                "prefix": "Abstract"
+            },
+            {
+                "type": "interface",
+                "prefix": "I"
+            },
+            {
+                "type": "genericTypeParameter",
+                "prefix": "T"
+            },
+            {
+                "type": "enumMember",
+                "format": "PascalCase"
+            }
+        ]
+    },
+    "adjacent-overload-signatures": true,
+    "unified-signatures": true,
+    "ordered-imports": [
+        true,
+        {
+            "import-sources-order": "case-insensitive",
+            "named-imports-order": "case-insensitive",
+            "grouped-imports": false
+        }
+    ],
+    "no-duplicate-imports": true,
+    "no-require-imports": true,
+    "no-reference": true,
+    "file-name-casing": [
+        true,
+        "kebab-case"
+    ],
+    "no-null-keyword": false
 }

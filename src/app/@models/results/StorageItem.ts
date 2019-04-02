@@ -1,11 +1,11 @@
 export class StorageItem {
-    public Id: number;
-    public FileName: string;
-    public FileSize = 0;
-    public PublicUri: string;
-    public FilePath: string;
-    public Type: StorageItemType;
-    public PictureInfo: StorageItemPictureInfo;
+    public id: number;
+    public fileName: string;
+    public fileSize = 0;
+    public publicUri: string;
+    public filePath: string;
+    public type: StorageItemType;
+    public pictureInfo: StorageItemPictureInfo;
 }
 
 export enum StorageItemType {
@@ -14,6 +14,6 @@ export enum StorageItemType {
 }
 
 export class StorageItemPictureInfo {
-    public VerticalResolution: number;
-    public HorizontalResolution: number;
+    public verticalResolution: number;
+    public horizontalResolution: number;
 }

@@ -1,44 +1,43 @@
 import { Component, OnInit } from '@angular/core';
-import { ListComponent } from '../@common/list/ListComponent';
-import { ListTableColumn, SiteTableColumn } from '../@common/list/ListTableColumn';
-import { ListTableColumnType } from '../@common/list/ListEnums';
-import { ListTableColumnAction } from '../@common/list/ListTableColumnAction';
-import { PageContext } from '../@common/PageComponent';
-import { ServicesProvider } from '../@services/ServicesProvider';
-import { Menu } from '../@models/Menu';
-import { Icon } from 'app/@common/shared/icon/Icon';
+import { Icon } from '@common/shared/icon/Icon';
+import { AbstractListComponent } from '@common/list/abstract-list-component';
+import { ListTableColumnType } from '@common/list/ListEnums';
+import { ListTableColumn, SiteTableColumn } from '@common/list/ListTableColumn';
+import { ListTableColumnAction } from '@common/list/ListTableColumnAction';
+import { PageContext } from '@common/abstract-page-component';
+import { Menu } from '@models/Menu';
+import { ServicesProvider } from '@services/ServicesProvider';
 
 @Component({
     selector: 'ngx-dashboard',
     templateUrl: './list.component.html',
     providers: [PageContext]
 })
-export class MenuListComponent extends ListComponent<Menu> implements OnInit {
-    constructor(context: PageContext, private servicesProvider: ServicesProvider) {
-        super(context, servicesProvider.MenuService);
+export class MenuListComponent extends AbstractListComponent<Menu> implements OnInit {
+    constructor(private readonly _servicesProvider: ServicesProvider, context: PageContext) {
+        super(_servicesProvider.menuService, context);
 
-        this.setTitle('Список меню');
+        this._setTitle('Список меню');
         this.provider.itemsPerPage = 20;
         this.addUrl = '/menu/add';
     }
 
     ngOnInit(): void {
-        this.Init();
+        this._init();
     }
 
-    protected GetColumns(): ListTableColumn<Menu>[] {
+    protected _getColumns(): Array<ListTableColumn<Menu>> {
         return [
-            new ListTableColumn<Menu>('Id', '#').setSortable(),
-            new ListTableColumn<Menu>('Title', 'Название').setSortable().setLinkGetter(menu => {
-                return ['/menu', menu.Id, 'edit'];
+            new ListTableColumn<Menu>('title', 'Название').setSortable().setLinkGetter(menu => {
+                return ['/menu', menu.id, 'edit'];
             }),
             /*.setDisabled(!this.can(UserRights.AddNews))*/ new ListTableColumn<Menu>(
-                'DateAdded',
+                'dateAdded',
                 'Дата',
                 ListTableColumnType.TimeAgo
             ).setSortable(),
-            new SiteTableColumn<Menu>('SiteId', 'Сайт'),
-            new ListTableColumn<Menu>('Actions', '').AddAction(
+            new SiteTableColumn<Menu>('siteId', 'Сайт'),
+            new ListTableColumn<Menu>('actions', '').addAction(
                 new ListTableColumnAction<Menu>('Удалить', new Icon('fa-trash')).setClick(menu =>
                     this.deleteItem(menu)
                 )

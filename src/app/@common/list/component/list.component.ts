@@ -1,9 +1,9 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { Model } from '../../../@models/base/Model';
-import { ListProvider } from '../ListProvider';
+import { MatPaginator, MatSort } from '@angular/material';
+import { AbstractModel } from '@models/base/abstract-model';
 import { StateService } from '../../StateService';
 import { ListTableColumnType } from '../ListEnums';
-import { MatPaginator, MatSort } from '@angular/material';
+import { ListProvider } from '../ListProvider';
 import { ListTableColumn } from '../ListTableColumn';
 
 @Component({
@@ -41,19 +41,19 @@ import { ListTableColumn } from '../ListTableColumn';
         }
     `]
 })
-export class ListTableComponent<T extends Model = Model> implements OnInit {
+export class ListTableComponent<T extends AbstractModel = AbstractModel> implements OnInit {
     @Input() public provider: ListProvider<T>;
-    @Input() public columns: ListTableColumn<T>[];
+    @Input() public columns: Array<ListTableColumn<T>>;
     @Input() public addUrl = '';
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sorter: MatSort;
-    public Title: string;
+    public title: string;
 
-    public columnsToDisplay: string[] = [];
+    public columnsToDisplay: Array<string> = [];
     public columnTypes = ListTableColumnType;
 
     constructor(stateService: StateService) {
-        stateService.onTitleChange().subscribe(title => this.Title = title);
+        stateService.onTitleChange().subscribe(title => this.title = title);
     }
 
     ngOnInit(): void {
@@ -61,8 +61,8 @@ export class ListTableComponent<T extends Model = Model> implements OnInit {
         this.provider.paginator = this.paginator;
         this.provider.sorter = this.sorter;
         this.columns.forEach(column => {
-            if (!column.Hidden) {
-                this.columnsToDisplay.push(column.Key);
+            if (!column.hidden) {
+                this.columnsToDisplay.push(column.key);
             }
         });
         this.provider.init();

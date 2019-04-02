@@ -1,12 +1,12 @@
-import {ListResult} from '../../@common/list/ListResult';
-import {SaveModelResponse} from '../../@common/SaveModelResponse';
-import {Type} from 'class-transformer';
-import {Forum} from '../Forum';
+import { Type } from 'class-transformer';
+import { AbstractListResult } from '@common/list/abstract-list-result';
+import { SaveModelResponse } from '@common/SaveModelResponse';
+import { Forum } from '../Forum';
 
-export class ForumListResult extends ListResult<Forum> {
+export class ForumListResult extends AbstractListResult<Forum> {
 
   @Type(() => Forum)
-  public Data: Forum[];
+  public data: Array<Forum>;
 }
 
 export class SaveForumResponse extends SaveModelResponse<Forum> {

@@ -1,31 +1,35 @@
-import { BaseService } from 'app/@common/BaseService';
-import { KeyedCollection } from './KeyedCollection';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { AbstractModel } from '@models/base/abstract-model';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { AbstractBaseService } from './abstract-base-service';
+import Dictionary from './Dictionary';
 import { Filter, FilterOperator } from './Filter';
-import { map } from 'rxjs/operators';
-import { Model } from 'app/@models/base/Model';
-export class CacheProvider<TModel extends Model> {
-    public constructor(private _service: BaseService<TModel>) {}
-    private readonly _cache = new KeyedCollection<TModel>();
-    private readonly _queue = new KeyedCollection<BehaviorSubject<KeyedCollection<TModel>>>();
 
-    public Get(ids: string[]): Observable<KeyedCollection<TModel>> {
-        const models = new KeyedCollection<TModel>();
-        const result = new BehaviorSubject<KeyedCollection<TModel>>(models);
+export class CacheProvider<TModel extends AbstractModel> {
+    public constructor(private readonly _service: AbstractBaseService<TModel>) {
+    }
+    
+    private readonly _cache = new Dictionary<string, TModel>();
+    private readonly _queue = new Dictionary<string, BehaviorSubject<Dictionary<string, TModel>>>();
+
+    public get(ids: Array<string>): Observable<Dictionary<string, TModel>> {
+        const models = new Dictionary<string, TModel>();
+        const result = new BehaviorSubject<Dictionary<string, TModel>>(models);
         if (!ids) {
             return result.asObservable();
         }
         const key = ids.join('|');
-        if (this._queue.ContainsKey(key)) {
-            return this._queue.Item(key).asObservable();
+        if (this._queue.hasKey(key)) {
+            // @ts-ignore
+            return this._queue.get(key).asObservable();
         }
 
-        this._queue.Add(key, result);
-        const toLoad = [];
+        this._queue.set(key, result);
+        const toLoad: string[] = [];
         if (ids) {
             ids.forEach(id => {
-                if (this._cache.ContainsKey(id)) {
-                    models.Add(id, this._cache.Item(id));
+                if (this._cache.hasKey(id)) {
+                    // @ts-ignore
+                    models.set(id, this._cache.get(id));
                 } else {
                     toLoad.push(id);
                 }
@@ -35,17 +39,18 @@ export class CacheProvider<TModel extends Model> {
         if (toLoad.length > 0) {
             const filter = Filter.simple('id', FilterOperator.In, ids);
             this._service.getAll(null, null, null, filter).subscribe(res => {
-                res.Data.forEach(model => {
-                    this._cache.Add(model.Id, model);
-                    models.Add(model.Id, model);
+                res.data.forEach(model => {
+                    this._cache.set(model.id, model);
+                    models.set(model.id, model);
                 });
                 result.next(models);
-                this._queue.Remove(key);
+                this._queue.remove(key);
             });
         } else {
             result.next(models);
-            this._queue.Remove(key);
+            this._queue.remove(key);
         }
+
         return result;
     }
 }

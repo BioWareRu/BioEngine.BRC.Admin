@@ -1,11 +1,7 @@
-import { BioSharedModule } from './../shared/BioSharedModule';
-import { NgModule } from '@angular/core';
-import { ErrorsListComponent } from './ErrorsListComponent';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import { UploadInputComponent } from './fields/UploadInputComponent';
-import { FormLayoutComponent } from './FormLayoutComponent';
 import {
     MatAutocompleteModule,
     MatButtonModule,
@@ -19,16 +15,20 @@ import {
     MatSelectModule,
     MatTabsModule
 } from '@angular/material';
-import { TextInputComponent } from './fields/TextInputComponent';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { TextAreaInputComponent } from './fields/TextAreaInputComponent';
-import { CheckboxInputComponent } from './fields/CheckboxInputComponent';
-import { SelectInputComponent } from './fields/SelectInputComponent';
-import { ChipsInputComponent } from './fields/ChipsInputComponent';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { InputFileConfig, InputFileModule } from 'ngx-input-file';
+import { BioSharedModule } from './../shared/BioSharedModule';
+import { ErrorsListComponent } from './ErrorsListComponent';
 import { AutocompleteInputComponent } from './fields/AutocompleteInputComponent';
+import { CheckboxInputComponent } from './fields/CheckboxInputComponent';
+import { ChipsInputComponent } from './fields/ChipsInputComponent';
 import { DatePickerInputComponent } from './fields/DatePickerInputComponent';
-import { KeysPipe } from './FormComponent';
+import { SelectInputComponent } from './fields/SelectInputComponent';
+import { TextAreaInputComponent } from './fields/TextAreaInputComponent';
+import { TextInputComponent } from './fields/TextInputComponent';
+import { UploadInputComponent } from './fields/UploadInputComponent';
+import { KeysPipe } from './abstract-form-component';
+import { FormLayoutComponent } from './FormLayoutComponent';
 
 const config: InputFileConfig = {};
 

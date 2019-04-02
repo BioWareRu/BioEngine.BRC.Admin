@@ -1,5 +1,5 @@
-import { Component, ViewEncapsulation, HostBinding } from '@angular/core';
-import { StateService } from 'app/@common/StateService';
+import { Component, HostBinding, ViewEncapsulation } from '@angular/core';
+import { StateService } from '@common/StateService';
 
 @Component({
     selector: 'content',
@@ -11,7 +11,7 @@ export class ContentComponent {
     @HostBinding('class.inner-scroll')
     public innerScroll = false;
 
-    constructor(private _stateService: StateService) {
+    constructor(private readonly _stateService: StateService) {
         this._stateService.onSidebarStateChange().subscribe(hidden => {
             this.innerScroll = !hidden;
         });

@@ -1,10 +1,10 @@
-import { BlocksModule } from 'app/@common/blocks/blocks.module';
 import { NgModule } from '@angular/core';
 
-import { PagesListComponent } from './list/list.component';
-import { PageFormComponent } from './form/form.component';
 import { RouterModule, Routes } from '@angular/router';
+import { BlocksModule } from '@common/blocks/blocks.module';
 import { PageFormPageComponent } from './form/form-page.component';
+import { PageFormComponent } from './form/form.component';
+import { PagesListComponent } from './list/list.component';
 
 const PAGES_COMPONENTS = [PagesListComponent, PageFormComponent, PageFormPageComponent];
 const routes: Routes = [

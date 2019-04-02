@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 
-import { BioCommonModule } from '../@common/BioCommonModule';
-import { StorageRoutingModule } from './storage-routing.module';
+import { BioCommonModule } from '@common/BioCommonModule';
 import { StorageManagerPageComponent } from './page/StorageManagerPageComponent';
+import { StorageRoutingModule } from './storage-routing.module';
 
 const STORAGE_COMPONENTS = [StorageManagerPageComponent];
 

@@ -1,6 +1,6 @@
-import {Component, ViewEncapsulation} from '@angular/core';
-import {NavigationEnd, NavigationStart, Router} from '@angular/router';
-import {filter} from 'rxjs/operators';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
     selector: 'loading-bar',
@@ -13,24 +13,24 @@ import {filter} from 'rxjs/operators';
 })
 export class LoadingBarComponent {
     public visible = false;
-    private firstLoad = true;
+    private _firstLoad = true;
 
-    constructor(private _router: Router) {
+    constructor(private readonly _router: Router) {
         this._router.events
-            .pipe(filter((event) => event instanceof NavigationStart))
+            .pipe(filter(event => event instanceof NavigationStart))
             .subscribe(() => {
                 this.visible = true;
             });
 
         this._router.events
-            .pipe(filter((event) => event instanceof NavigationEnd))
+            .pipe(filter(event => event instanceof NavigationEnd))
             .subscribe(() => {
                 this.visible = false;
-                if (this.firstLoad) {
+                if (this._firstLoad) {
                     if (window.hasOwnProperty('loading_screen')) {
                         window['loading_screen'].finish();
                     }
-                    this.firstLoad = false;
+                    this._firstLoad = false;
                 }
             });
 

@@ -3,28 +3,26 @@
         <mat-spinner></mat-spinner>
     </div>
     <mat-table [dataSource]="provider.items" matSort>
-        <ng-container *ngFor="let column of provider.columns" matColumnDef="{{ column.Key }}">
-            <mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="!column.Sortable">
-                {{ column.Title }}</mat-header-cell
+        <ng-container *ngFor="let column of provider.columns" matColumnDef="{{ column.key }}">
+            <mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="!column.sortable">
+                {{ column.title }}</mat-header-cell
             >
             <mat-cell
                 *matCellDef="let row"
-                [ngClass]="{ actions: column.Type == columnTypes.Actions }"
+                [ngClass]="{ actions: column.type == columnTypes.Actions }"
             >
-                <ng-container ngSwitch="{{ column.Type }}">
+                <ng-container ngSwitch="{{ column.type }}">
                     <ng-container *ngSwitchCase="columnTypes.Text"
                         >{{ column.getValue(row) }}
                     </ng-container>
                     <ng-container *ngSwitchCase="columnTypes.Link">
-                        <a [routerLink]="column.getLink(row)" [class.disabled]="column.Disabled">{{
-                            column.getValue(row)
-                        }}</a>
+                        <a [routerLink]="column.getLink(row)" [class.disabled]="column.disabled">{{ column.getValue(row) }}</a>
                     </ng-container>
                     <ng-container *ngSwitchCase="columnTypes.ActionLink">
                         <a
                             href="javascript:"
-                            (click)="column.Click(row)"
-                            [class.disabled]="column.Disabled"
+                            (click)="column.click(row)"
+                            [class.disabled]="column.disabled"
                             >{{ column.getValue(row) }}</a
                         >
                     </ng-container>
@@ -39,16 +37,16 @@
                         >
                     </ng-container>
                     <ng-container *ngSwitchCase="columnTypes.SitesList">
-                        <sitesList [Ids]="column.getValue(row)"></sitesList>
+                        <sitesList [ids]="column.getValue(row)"></sitesList>
                     </ng-container>
                     <ng-container *ngSwitchCase="columnTypes.Site">
-                        <sitesList [Ids]="column.getValue(row)"></sitesList>
+                        <sitesList [ids]="column.getValue(row)"></sitesList>
                     </ng-container>
                     <ng-container *ngSwitchCase="columnTypes.SectionsList">
-                        <sectionsList [Ids]="column.getValue(row)"></sectionsList>
+                        <sectionsList [ids]="column.getValue(row)"></sectionsList>
                     </ng-container>
                     <ng-container *ngSwitchCase="columnTypes.TagsList">
-                        <tagsList [Ids]="column.getValue(row)"></tagsList>
+                        <tagsList [ids]="column.getValue(row)"></tagsList>
                     </ng-container>
                     <ng-container *ngSwitchCase="columnTypes.Author">
                         <brc-user [user]="column.getValue(row)"></brc-user>
@@ -58,29 +56,29 @@
                             <icon iconName="fa-ellipsis-v"></icon>
                         </button>
                         <mat-menu #menu="matMenu">
-                            <ng-container *ngFor="let action of column.Actions">
-                                <ng-container ngSwitch="{{ action.Type }}">
+                            <ng-container *ngFor="let action of column.actions">
+                                <ng-container ngSwitch="{{ action.type }}">
                                     <button
                                         mat-menu-item
-                                        *ngSwitchCase="action.Types.Click"
-                                        (click)="action.DoClick(row)"
+                                        *ngSwitchCase="action.types.Click"
+                                        (click)="action.doClick(row)"
                                     >
-                                        <icon [icon]="action.Icon"></icon>
-                                        <span>{{ action.Title }}</span>
+                                        <icon [icon]="action.icon"></icon>
+                                        <span>{{ action.title }}</span>
                                     </button>
                                     <a
                                         mat-menu-item
-                                        *ngSwitchCase="action.Types.ExternalLink"
-                                        [href]="action.GenerateUrl(row)"
+                                        *ngSwitchCase="action.types.ExternalLink"
+                                        [href]="action.generateUrl(row)"
                                     >
-                                        <icon [icon]="action.Icon"></icon>
-                                        <span>{{ action.Title }}</span>
+                                        <icon [icon]="action.icon"></icon>
+                                        <span>{{ action.title }}</span>
                                     </a>
                                 </ng-container>
                             </ng-container>
                         </mat-menu>
                     </ng-container>
-                    <ng-container *ngSwitchDefault="">
+                    <ng-container *ngSwitchDefault>
                         {{ column.getValue(row) }}
                     </ng-container>
                 </ng-container>

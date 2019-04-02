@@ -1,33 +1,33 @@
-import {Injectable} from "@angular/core";
-import {BaseService} from "../@common/BaseService";
-import {RestClient} from "../@common/HttpClient";
-import {BaseSection} from "../@models/Section";
-import {SectionsListResult} from "../@models/results/BaseSection";
-import {ClassType} from "class-transformer/ClassTransformer";
-import {SaveModelResponse} from "../@common/SaveModelResponse";
-import {ListResult} from "../@common/list/ListResult";
+import { Injectable } from '@angular/core';
+import { ClassType } from 'class-transformer/ClassTransformer';
+import { AbstractBaseService } from '@common/abstract-base-service';
+import { RestClient } from '@common/HttpClient';
+import { AbstractListResult } from '@common/list/abstract-list-result';
+import { SaveModelResponse } from '@common/SaveModelResponse';
+import { SectionsListResult } from '@models/results/BaseSection';
+import { BaseSection } from '@models/abstract-section';
 
 @Injectable()
-export class SectionsService extends BaseService<BaseSection> {
+export class SectionsService extends AbstractBaseService<BaseSection> {
 
-  constructor(httpClient: RestClient) {
-    super(httpClient);
-  }
+    constructor(httpClient: RestClient) {
+        super(httpClient);
+    }
 
-  protected getResource(): string {
-    return "sections";
-  }
+    protected _getResource(): string {
+        return 'sections';
+    }
 
-  protected getListType(): ClassType<ListResult<BaseSection>> {
-    return SectionsListResult;
-  }
+    protected _getListType(): ClassType<AbstractListResult<BaseSection>> {
+        return SectionsListResult;
+    }
 
-  protected getSaveType(): ClassType<SaveModelResponse<BaseSection>> {
-    return undefined;
-  }
+    protected _getSaveType(): ClassType<SaveModelResponse<BaseSection>> {
+        throw new Error('Not implemented');
+    }
 
-  protected getType(): ClassType<BaseSection> {
-    return BaseSection;
-  }
+    protected _getType(): ClassType<BaseSection> {
+        return BaseSection;
+    }
 
 }

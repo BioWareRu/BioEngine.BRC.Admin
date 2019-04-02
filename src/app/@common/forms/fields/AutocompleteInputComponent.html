@@ -1,17 +1,17 @@
 <mat-form-field
     *ngIf="isInitialized"
-    [formGroup]="FormGroup"
-    [fxFlex]="FxFlex"
-    [appearance]="Appearance"
+    [formGroup]="inputFormGroup"
+    [fxFlex]="inputFxFlex"
+    [appearance]="inputAppearance"
 >
-    <mat-label>{{ Label }}</mat-label>
+    <mat-label>{{ inputLabel }}</mat-label>
     <input
         type="text"
         matInput
-        [formControlName]="FieldName"
+        [formControlName]="inputFieldName"
         [matAutocomplete]="autoGroup"
-        [placeholder]="Placeholder"
-        (input)="onSearchChange($event.target.value)"
+        [placeholder]="inputPlaceholder"
+        (input)="onSearchChange($event.target)"
     />
     <mat-autocomplete #autoGroup="matAutocomplete" [displayWith]="displayFn.bind(this)">
         <ng-container *ngIf="groups && groups.length > 1">
@@ -27,6 +27,6 @@
             </mat-option>
         </ng-container>
     </mat-autocomplete>
-    <icon matSuffix *ngIf="Icon" [icon]="Icon"></icon>
-    <mat-error *ngFor="let error of Errors">{{ error }}</mat-error>
+    <icon matSuffix *ngIf="inputIcon" [icon]="inputIcon"></icon>
+    <mat-error *ngFor="let error of errors">{{ error }}</mat-error>
 </mat-form-field>

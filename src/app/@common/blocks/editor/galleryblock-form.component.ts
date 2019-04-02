@@ -1,39 +1,38 @@
-import { Validators } from '@angular/forms';
 import { Component } from '@angular/core';
-import { PostsService } from 'app/@services/ContentService';
-import { ServicesProvider } from 'app/@services/ServicesProvider';
-import { SnackBarService } from 'app/@common/snacks/SnackBarService';
-import { StorageManagerDialogComponent } from 'app/@common/storage/StorageManagerDialogComponent';
-import { DialogConfig } from 'app/@common/modals/DialogConfig';
-import { StorageNode } from 'app/@services/StorageService';
-import { IKeyedCollection, NumberKeyedCollection } from 'app/@common/KeyedCollection';
-import { StorageItem } from 'app/@models/results/StorageItem';
-import { GalleryBlock } from 'app/@models/blocks/GalleryBlock';
-import { ContentBlockFormComponent, BlockFieldDescriptor } from './ContentBlockFormComponent';
-import { DialogService } from 'app/@common/modals/DialogService';
+import { Validators } from '@angular/forms';
+import { DialogService } from '@common/modals/DialogService';
+import { SnackBarService } from '@common/snacks/SnackBarService';
+import { StorageManagerDialogComponent } from '@common/storage/StorageManagerDialogComponent';
+import { GalleryBlock } from '@models/blocks/GalleryBlock';
+import { StorageItem } from '@models/results/StorageItem';
+import { PostsService } from '@services/ContentService';
+import { ServicesProvider } from '@services/ServicesProvider';
+import { StorageNode } from '@services/StorageService';
+import Dictionary from '../../Dictionary';
+import { BlockFieldDescriptor, AbstractContentBlockFormComponent } from './abstract-content-block-form-component';
 
 @Component({
     selector: 'gallery-block-form',
     template: `
-        <div [formGroup]="Form.FormGroup">
-            <div *ngIf="Items.Count() > 0">
-                <ng-container *ngIf="Items.Count() == 1">
+        <div [formGroup]="form.formGroup">
+            <div *ngIf="items.size() > 0">
+                <ng-container *ngIf="items.size() == 1">
                     <div class="singlePicture">
-                        <img [src]="Model.Data.Pictures[0].PublicUri" />
+                        <img [src]="model.data.pictures[0].publicUri"/>
                         <div class="addOverlay">
                             <icon (click)="showStorageDialog(true)" iconName="fa-plus"></icon>
                             <icon
-                                (click)="deletePicture(Model.Data.Pictures[0])"
-                                iconName="fa-trash"
+                                    (click)="deletePicture(model.data.pictures[0])"
+                                    iconName="fa-trash"
                             ></icon>
                         </div>
                     </div>
                 </ng-container>
-                <ng-container *ngIf="Items.Count() > 1">
+                <ng-container *ngIf="items.size() > 1">
                     <div class="picturesList">
-                        <ng-container *ngFor="let picture of Items.Values()">
+                        <ng-container *ngFor="let picture of items.values()">
                             <div class="pic">
-                                <img src="{{ picture.PublicUri }}" alt="{{ picture.FileName }}" />
+                                <img src="{{ picture.publicUri }}" alt="{{ picture.fileName }}"/>
                                 <div (click)="deletePicture(picture)" class="deleteOverlay">
                                     <icon iconName="fa-trash"></icon>
                                 </div>
@@ -45,7 +44,7 @@ import { DialogService } from 'app/@common/modals/DialogService';
                     </div>
                 </ng-container>
             </div>
-            <div *ngIf="Items.Count() == 0">
+            <div *ngIf="items.size() == 0">
                 <p style="text-align:center">Выберите одно или несколько изображений</p>
                 <p style="text-align:center">
                     <button mat-raised-button color="accent" (click)="showStorageDialog()">
@@ -57,60 +56,60 @@ import { DialogService } from 'app/@common/modals/DialogService';
     `,
     styleUrls: ['./galleryblock-form.component.scss']
 })
-export class GalleryBlockFormComponent extends ContentBlockFormComponent<GalleryBlock> {
+export class GalleryBlockFormComponent extends AbstractContentBlockFormComponent<GalleryBlock> {
     constructor(
-        snackBarService: SnackBarService,
-        private servicesProvider: ServicesProvider,
-        protected dialogService: DialogService
+        private readonly _servicesProvider: ServicesProvider,
+        protected _dialogService: DialogService,
+        snackBarService: SnackBarService
     ) {
         super(snackBarService);
     }
 
-    public readonly Items: IKeyedCollection<StorageItem, number> = new NumberKeyedCollection<
-        StorageItem
-    >();
+    public readonly items = new Dictionary<number, StorageItem>();
 
-    protected getFields(): BlockFieldDescriptor[] {
-        return [new BlockFieldDescriptor('Pictures', [Validators.required], 'Data.Pictures')];
+    protected _getFields(): Array<BlockFieldDescriptor> {
+        return [new BlockFieldDescriptor('pictures', [Validators.required], 'data.pictures')];
     }
 
     public isEmpty(): boolean {
-        return this.Model.Data.Pictures.length === 0;
+        return this.model.data.pictures.length === 0;
     }
 
-    protected afterInit(): void {
-        super.afterInit();
-        this.Model.Data.Pictures.forEach(item => {
-            this.Items.Add(item.Id, item);
+    protected _afterInit(): void {
+        super._afterInit();
+        this.model.data.pictures.forEach(item => {
+            this.items.set(item.id, item);
         });
     }
 
     public getService(): PostsService {
-        return this.servicesProvider.PostsService;
+        return this._servicesProvider.postsService;
     }
 
     public deletePicture(pic: StorageItem): void {
-        this.Items.Remove(pic.Id);
-        this.Model.Data.Pictures = this.Items.Values();
+        this.items.remove(pic.id);
+        this.model.data.pictures = this.items.values();
     }
 
     public showStorageDialog(replace = false): void {
-        this.dialogService
-            .show(StorageManagerDialogComponent, '', (config: DialogConfig) => {
+        this._dialogService
+            .show(StorageManagerDialogComponent, '', (config) => {
                 config.maxWidth = '90vw';
                 config.width = '90vw';
             })
             .dialogRef.afterClosed()
-            .subscribe((nodes: StorageNode[]) => {
+            .subscribe((nodes: Array<StorageNode>) => {
                 if (replace) {
-                    this.Items.Clear();
+                    this.items.clear();
                 }
                 nodes.forEach(node => {
-                    this.Items.Add(node.Item.Id, node.Item);
+                    this.items.set(node.item.id, node.item);
                 });
 
-                const control = this.Form.FormGroup.get(this.getFieldName('Pictures'));
-                control.patchValue(this.Items.Values());
+                const control = this.form.formGroup.get(this.getFieldName('pictures'));
+                if (control) {
+                    control.patchValue(this.items.values());
+                }
             });
     }
 }

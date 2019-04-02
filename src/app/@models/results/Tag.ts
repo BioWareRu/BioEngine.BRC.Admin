@@ -1,12 +1,12 @@
-import {ListResult} from '../../@common/list/ListResult';
-import {Tag} from '../Tag';
-import {SaveModelResponse} from '../../@common/SaveModelResponse';
-import {Type} from "class-transformer";
+import { Type } from 'class-transformer';
+import { AbstractListResult } from '@common/list/abstract-list-result';
+import { SaveModelResponse } from '@common/SaveModelResponse';
+import { Tag } from '../Tag';
 
-export class TagListResult extends ListResult<Tag> {
+export class TagListResult extends AbstractListResult<Tag> {
 
   @Type(() => Tag)
-  public Data: Tag[];
+  public data: Array<Tag>;
 }
 
 export class SaveTagResponse extends SaveModelResponse<Tag> {

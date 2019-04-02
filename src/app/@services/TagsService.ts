@@ -1,15 +1,15 @@
-import {BaseService, IBaseServiceCreatable} from '../@common/BaseService';
-import {Tag} from '../@models/Tag';
-import {ListResult} from '../@common/list/ListResult';
-import {ClassType} from 'class-transformer/ClassTransformer';
-import {SaveModelResponse} from '../@common/SaveModelResponse';
-import {SaveTagResponse, TagListResult} from '../@models/results/Tag';
-import {RestClient} from '../@common/HttpClient';
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { ClassType } from 'class-transformer/ClassTransformer';
+import { Observable } from 'rxjs';
+import { AbstractBaseService, IBaseServiceCreatable } from '@common/abstract-base-service';
+import { RestClient } from '@common/HttpClient';
+import { AbstractListResult } from '@common/list/abstract-list-result';
+import { SaveModelResponse } from '@common/SaveModelResponse';
+import { SaveTagResponse, TagListResult } from '@models/results/Tag';
+import { Tag } from '@models/Tag';
 
 @Injectable()
-export class TagsService extends BaseService<Tag> implements IBaseServiceCreatable<Tag> {
+export class TagsService extends AbstractBaseService<Tag> implements IBaseServiceCreatable<Tag> {
 
     constructor(httpClient: RestClient) {
         super(httpClient);
@@ -17,23 +17,24 @@ export class TagsService extends BaseService<Tag> implements IBaseServiceCreatab
 
     public create(name: string): Observable<SaveModelResponse<Tag>> {
         const tag = new Tag();
-        tag.Name = name;
+        tag.name = name;
+
         return this.add(tag);
     }
 
-    protected getListType(): ClassType<ListResult<Tag>> {
+    protected _getListType(): ClassType<AbstractListResult<Tag>> {
         return TagListResult;
     }
 
-    protected getSaveType(): ClassType<SaveModelResponse<Tag>> {
+    protected _getSaveType(): ClassType<SaveModelResponse<Tag>> {
         return SaveTagResponse;
     }
 
-    protected getType(): ClassType<Tag> {
+    protected _getType(): ClassType<Tag> {
         return Tag;
     }
 
-    protected getResource(): string {
+    protected _getResource(): string {
         return 'tags';
     }
 }

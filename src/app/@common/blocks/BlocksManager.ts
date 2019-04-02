@@ -1,113 +1,113 @@
-import { KeyedCollection } from 'app/@common/KeyedCollection';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
-import { DialogService } from '../modals/DialogService';
 import { Type } from '@angular/core';
-import { IKeyedCollection } from '../KeyedCollection';
+import { AbstractBaseContentBlock, ContentBlockItemType } from '@models/blocks/abstract-content-block';
+import { IContentEntity } from '@models/interfaces/IContentEntity';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import * as uuid from 'uuid';
+import Dictionary from '../Dictionary';
 import { Icon } from '../shared/icon/Icon';
-import { BaseContentBlock, ContentBlockItemType } from 'app/@models/blocks/ContentBlock';
-import { IContentEntity } from 'app/@models/interfaces/IContentEntity';
+
 export class BlocksManager {
-    constructor(private contentItem: IContentEntity, private _dialogService: DialogService) {
-        this._blocks = contentItem.Blocks;
-        this.Blocks = this.BlocksSubject.asObservable();
-        this.Update();
+    constructor(private readonly _contentItem: IContentEntity) {
+        this.blocks = this._blocksSubject.asObservable();
+        this._contentItem.blocks.forEach(block => {
+            this._blocks.set(block.id, block);
+        });
+        this.update();
     }
 
-    private _blocks: BaseContentBlock[] = [];
-    private BlocksSubject: Subject<BaseContentBlock[]> = new BehaviorSubject<BaseContentBlock[]>(
+    private readonly _blocks = new Dictionary<string, AbstractBaseContentBlock>();
+    private readonly _blocksSubject: Subject<Array<AbstractBaseContentBlock>> = new BehaviorSubject<Array<AbstractBaseContentBlock>>(
         []
     );
-    public Blocks: Observable<BaseContentBlock[]>;
+    public blocks: Observable<Array<AbstractBaseContentBlock>>;
 
-    public readonly Types: IKeyedCollection<BlockConfig, string> = new KeyedCollection<
-        BlockConfig
-    >();
+    public readonly types = new Dictionary<string, BlockConfig>();
 
-    public Update(): void {
-        this.BlocksSubject.next(this._blocks.slice());
-        this.contentItem.Blocks = this._blocks;
+    public update(): void {
+        this._blocksSubject.next(this._blocks.values());
+        this._contentItem.blocks = this._blocks.values();
     }
 
-    private SetPositions(): void {
+    private _setPositions(blocks: AbstractBaseContentBlock[]): void {
         let index = 0;
 
-        this._blocks.forEach(block => {
-            block.Position = index;
+        blocks.forEach((block) => {
+            block.position = index;
             index++;
         });
     }
 
-    public AddBlock(
-        block: BaseContentBlock,
-        neighbor: BaseContentBlock = null,
+    public addBlock(
+        block: AbstractBaseContentBlock,
+        neighbor: AbstractBaseContentBlock | null = null,
         direction = 'after'
     ): void {
-        this._blocks.push(block);
-        this.SetPositions();
+        block.position = this._blocks.size() + 1;
+        this._blocks.set(block.id, block);
+        this._setPositions(this.getSorted());
         if (neighbor) {
-            const toIndex = direction === 'after' ? neighbor.Position + 1 : neighbor.Position - 1;
-            moveItemInArray(this._blocks, block.Position, toIndex);
-            this.SetPositions();
+            const toIndex = direction === 'after' ? neighbor.position + 1 : neighbor.position - 1;
+            const blocks = this.getSorted();
+            moveItemInArray(blocks, block.position, toIndex);
+            this._setPositions(blocks);
         }
     }
 
-    public RemoveBlock(block: BaseContentBlock): void {
-        this._blocks.splice(block.Position, 1);
-        this.SetPositions();
+    public getSorted(): AbstractBaseContentBlock[] {
+        return this._blocks.values().sort((a, b) => {
+            if (a.position < b.position) {
+                return -1;
+            }
+            if (a.position > b.position) {
+                return 1;
+            }
+            return 0;
+        });
     }
 
-    public CreateBlock<TBlock extends BaseContentBlock>(type: ContentBlockItemType): TBlock {
-        if (!this.Types.ContainsKey(type)) {
+    public removeBlock(block: AbstractBaseContentBlock): void {
+        this._blocks.remove(block.id);
+        this._setPositions(this.getSorted());
+    }
+
+    public createBlock<TBlock extends AbstractBaseContentBlock>(type: ContentBlockItemType): TBlock {
+        if (!this.types.hasKey(type)) {
             throw new Error(`type ${type} is not registered!`);
         }
 
-        const config = this.Types.Item(type);
-        const block = new config.typeClass() as TBlock;
-        block.Id = uuid.v4();
-        return block as TBlock;
+        const config = this.types.get(type);
+        if (config) {
+            const block = <TBlock>new config.typeClass();
+            block.id = uuid.v4();
+
+            return block;
+        }
+        throw new Error('Can\'t find block with type ' + type);
     }
 
-    MoveBlock(previousIndex: number, currentIndex: number): any {
-        moveItemInArray(this._blocks, previousIndex, currentIndex);
-        this.SetPositions();
+    moveBlock(previousIndex: number, currentIndex: number): any {
+        const blocks = this.getSorted();
+        moveItemInArray(blocks, previousIndex, currentIndex);
+        this._setPositions(blocks);
     }
 
-    public ReplaceBlock(oldBlock: BaseContentBlock, newBlock: BaseContentBlock): void {
-        this._blocks[oldBlock.Position] = newBlock;
-        this.SetPositions();
-        this.Update();
+    public replaceBlock(oldBlock: AbstractBaseContentBlock, newBlock: AbstractBaseContentBlock): void {
+        newBlock.position = oldBlock.position;
+        this._blocks.remove(oldBlock.id);
+        this._blocks.set(newBlock.id, newBlock);
+        this._setPositions(this.getSorted());
+        this.update();
     }
 
-    public RegisterBlockType(type: ContentBlockItemType, typeClass: Type<any>): void {
-        if (this.Types.ContainsKey(type)) {
+    public registerBlockType(type: ContentBlockItemType, typeClass: Type<any>): void {
+        if (this.types.hasKey(type)) {
             throw new Error(`type ${type} already registered!`);
         }
 
-        const block = new typeClass() as BaseContentBlock;
+        const block = <AbstractBaseContentBlock>new typeClass();
 
-        this.Types.Add(type, new BlockConfig(type, typeClass, block.Title, block.Icon));
-    }
-
-    public First(): BaseContentBlock {
-        for (const i in this._blocks) {
-            if (this._blocks.hasOwnProperty(i)) {
-                return this._blocks[i];
-            }
-        }
-    }
-    public Last(): BaseContentBlock {
-        let item: BaseContentBlock;
-        const sorted = this._blocks.sort((a, b) => {
-            return a.Position - b.Position;
-        });
-        for (const i in sorted) {
-            if (sorted.hasOwnProperty(i)) {
-                item = sorted[i];
-            }
-        }
-        return item;
+        this.types.set(type, new BlockConfig(type, typeClass, block.title, block.icon));
     }
 }
 
@@ -117,5 +117,6 @@ export class BlockConfig {
         public typeClass: Type<any>,
         public title: string,
         public icon: Icon
-    ) {}
+    ) {
+    }
 }

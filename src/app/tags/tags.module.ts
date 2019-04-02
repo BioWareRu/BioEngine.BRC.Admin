@@ -1,8 +1,8 @@
-import {NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 
-import {TagsListComponent} from './list.component';
-import {BioCommonModule} from '../@common/BioCommonModule';
-import {RouterModule, Routes} from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+import { BioCommonModule } from '@common/BioCommonModule';
+import { TagsListComponent } from './list.component';
 
 const routes: Routes = [{
     path: '',

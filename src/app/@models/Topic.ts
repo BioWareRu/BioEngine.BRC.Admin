@@ -1,8 +1,8 @@
-import {Section, TypedData} from "./Section";
+import { AbstractSection, AbstractTypedData } from './abstract-section';
 
-export class TopicData extends TypedData {
+export class TopicData extends AbstractTypedData {
 }
 
-export class Topic extends Section<TopicData> {
-  Data: TopicData;
+export class Topic extends AbstractSection<TopicData> {
+  data: TopicData;
 }

@@ -1,12 +1,12 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build ---prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-import { baseEnvironment } from './environment.base';
+import { BASE_ENV } from './environment.base';
 
-baseEnvironment.oauth.clientId = '97c774ef826a0b642f3d4fc9c802fe84';
-baseEnvironment.apiUrl = 'https://localhost:5001/v1/';
+BASE_ENV.oauth.clientId = '97c774ef826a0b642f3d4fc9c802fe84';
+BASE_ENV.apiUrl = 'https://localhost:5001/v1/';
 
-export const environment = baseEnvironment;
+export const ENV = BASE_ENV;
 
 /*
  * In development mode, to ignore zone related error stack frames such as

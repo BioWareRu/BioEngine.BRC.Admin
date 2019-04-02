@@ -1,23 +1,18 @@
-import {Section, TypedData} from "./Section";
-import {Type} from "class-transformer";
+import { Type } from 'class-transformer';
+import { AbstractSection, AbstractTypedData } from './abstract-section';
 
-export class DeveloperData extends TypedData {
+export class DeveloperData extends AbstractTypedData {
   @Type(() => Person)
-  public Persons: Person[];
+  public persons: Array<Person>;
 }
 
-export class Developer extends Section<DeveloperData> {
-  Data: DeveloperData;
-
-  public Test()
-  {
-    return "bla";
-  }
+export class Developer extends AbstractSection<DeveloperData> {
+  data: DeveloperData;
 }
 
 export class Person {
-  public Name: string;
-  public Position: string;
-  public DateStart: string;
-  public DateEnd: string;
+  public name: string;
+  public position: string;
+  public dateStart: string;
+  public dateEnd: string;
 }

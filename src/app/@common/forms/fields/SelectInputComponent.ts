@@ -1,45 +1,43 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormInput} from './FormInput';
-import {Observable} from 'rxjs';
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { AbstractFormInput } from './abstract-form-input';
 
 @Component({
     selector: 'select-input',
-    templateUrl: './SelectInputComponent.html',
+    templateUrl: './SelectInputComponent.html'
 })
-export class SelectInputComponent extends FormInput implements OnInit {
-    public groups: SelectGroup[] = [];
-    @Input() public Options: any[] | Observable<any>;
-    @Input() public GroupField: string = null;
-    @Input() public TitleField = 'title';
-    @Input() public ValueField = 'value';
-    @Input() public IsMultiple = false;
+export class SelectInputComponent extends AbstractFormInput implements OnInit {
+    public groups: Array<SelectGroup> = [];
+    @Input() public options: Array<any> | Observable<any>;
+    @Input() public groupField: string | null = '';
+    @Input() public titleField = 'title';
+    @Input() public valueField = 'value';
+    @Input() public isMultiple = false;
 
     public ngOnInit(): void {
         super.ngOnInit();
-        if (this.GroupField === null) {
+        if (this.groupField === null) {
             this.groups.push(new SelectGroup());
         }
-        if (Array.isArray(this.Options)) {
-            this.buildGroups(this.Options);
-        }
-        else {
-            this.Options.subscribe(data => {
-                this.buildGroups(data);
+        if (Array.isArray(this.options)) {
+            this._buildGroups(this.options);
+        } else {
+            this.options.subscribe(data => {
+                this._buildGroups(data);
             });
         }
     }
 
-    private buildGroups(options: any[]): void {
+    private _buildGroups(options: Array<any>): void {
         options.forEach(option => {
             const selectOption = new SelectOption();
-            selectOption.title = option[this.TitleField];
-            selectOption.value = option[this.ValueField];
-            if (this.GroupField === null) {
+            selectOption.title = option[this.titleField];
+            selectOption.value = option[this.valueField];
+            if (this.groupField === null) {
                 this.groups[0].options.push(selectOption);
-            }
-            else {
-                let group: SelectGroup = null;
-                const groupTitle = option[this.GroupField];
+            } else {
+                let group: SelectGroup | null = null;
+                const groupTitle = option[this.groupField];
                 this.groups.forEach(selectGroup => {
                     if (selectGroup.title === groupTitle) {
                         group = selectGroup;
@@ -57,8 +55,8 @@ export class SelectInputComponent extends FormInput implements OnInit {
 }
 
 export class SelectGroup {
-    public options: SelectOption[] = [];
-    public title: string = null;
+    public options: Array<SelectOption> = [];
+    public title: string | null = '';
 }
 
 export class SelectOption {

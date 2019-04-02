@@ -1,27 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { ServicesProvider } from '../../../@services/ServicesProvider';
-import { SectionFormComponent } from '../../../@common/forms/FormComponent';
-import { SaveTopicResponse } from '../../../@models/results/Topic';
-import { Topic } from '../../../@models/Topic';
-import { BaseService } from '../../../@common/BaseService';
-import { SnackBarService } from 'app/@common/snacks/SnackBarService';
+import { Component } from '@angular/core';
+import { SnackBarService } from '@common/snacks/SnackBarService';
+import { AbstractSectionFormComponent } from '@common/forms/abstract-form-component';
+import { SaveTopicResponse } from '@models/results/Topic';
+import { Topic } from '@models/Topic';
+import { ServicesProvider } from '@services/ServicesProvider';
 
 @Component({
     selector: 'topic-form',
     templateUrl: './form.component.html'
 })
-export class TopicFormComponent extends SectionFormComponent<
-    Topic,
-    SaveTopicResponse
-> {
+export class TopicFormComponent extends AbstractSectionFormComponent<Topic,
+    SaveTopicResponse> {
     constructor(
         snackBarService: SnackBarService,
         servicesProvider: ServicesProvider
     ) {
         super(
             servicesProvider,
-            snackBarService,
-            servicesProvider.TopicsService
+            servicesProvider.topicsService,
+            snackBarService
         );
     }
 }

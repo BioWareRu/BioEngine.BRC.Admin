@@ -1,17 +1,4 @@
-import {
-    animate,
-    animateChild,
-    animation,
-    group,
-    query,
-    sequence,
-    stagger,
-    state,
-    style,
-    transition,
-    trigger,
-    useAnimation
-} from '@angular/animations';
+import { animate, animateChild, animation, group, query, sequence, stagger, state, style, transition, trigger, useAnimation } from '@angular/animations';
 
 const customAnimation = animation([
     style({
@@ -31,8 +18,7 @@ const customAnimation = animation([
     }
 });
 
-
-export const brcAnimations = [
+export const BRC_ANIMATIONS = [
 
     trigger('animate', [transition('void => *', [useAnimation(customAnimation)])]),
 
@@ -134,7 +120,7 @@ export const brcAnimations = [
                     })
                 )
             ]
-        ),
+        )
     ]),
 
     trigger('slideInLeft', [

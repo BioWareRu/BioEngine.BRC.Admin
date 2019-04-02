@@ -1,7 +1,8 @@
-import { BaseSection } from './../../@models/Section';
 import { Injectable } from '@angular/core';
-import { CacheProvider } from 'app/@common/CacheProvider';
+import { CacheProvider } from '@common/CacheProvider';
 import { SectionsService } from '../SectionsService';
+import { BaseSection } from '@models/abstract-section';
+
 @Injectable({
     providedIn: 'root'
 })

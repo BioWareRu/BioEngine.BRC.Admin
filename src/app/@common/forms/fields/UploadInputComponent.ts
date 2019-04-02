@@ -1,93 +1,95 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FormInput } from './FormInput';
-import { Observable } from 'rxjs/Observable';
-import { forkJoin } from 'rxjs';
-import { StorageItem } from '../../../@models/results/StorageItem';
-import { IBaseServiceWithUpload } from '../../BaseService';
-import { InputFile } from 'ngx-input-file';
 import { FormControl } from '@angular/forms';
-import { SnackBarService } from '../../snacks/SnackBarService';
+import { InputFile } from 'ngx-input-file';
+import { forkJoin } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import { StorageItem } from '@models/results/StorageItem';
+import { IBaseServiceWithUpload } from '../../abstract-base-service';
 import { SnackBarMessage } from '../../snacks/SnackBarMessage';
+import { SnackBarService } from '../../snacks/SnackBarService';
+import { AbstractFormInput } from './abstract-form-input';
 
 @Component({
     selector: 'upload-input',
     templateUrl: './UploadInputComponent.html'
 })
-export class UploadInputComponent extends FormInput implements OnInit {
-    @Input() public Types: string[] = [];
-    @Input() public Multiple: boolean;
-    @Input() public DisplayMode = 'images';
-    @Input() public Service: IBaseServiceWithUpload;
+export class UploadInputComponent extends AbstractFormInput implements OnInit {
+    @Input() public types: Array<string> = [];
+    @Input() public multiple: boolean;
+    @Input() public displayMode = 'images';
+    @Input() public service: IBaseServiceWithUpload;
     @ViewChild('fileInput') fileInput;
-    protected items: StorageItem[] = [];
-    private uploadControl: FormControl;
+    protected _items: Array<StorageItem> = [];
+    private _uploadControl: FormControl;
 
-    public constructor(private snackBarService: SnackBarService) {
+    public constructor(private readonly _snackBarService: SnackBarService) {
         super();
     }
 
     ngOnInit(): void {
         super.ngOnInit();
-        this.uploadControl = new FormControl();
-        this.FormGroup.controls[this.FieldName + 'upload'] = this.uploadControl;
-        this.generateItems();
+        this._uploadControl = new FormControl();
+        this.inputFormGroup.controls[this.inputFieldName + 'upload'] = this._uploadControl;
+        this._generateItems();
     }
 
     delete(file: InputFile): void {
-        if (!this.Multiple) {
-            this.Control.patchValue(null);
+        if (!this.multiple) {
+            this.control.patchValue(null);
         } else {
-            let values = this.Control.value as StorageItem[];
+            let values = <Array<StorageItem>>this.control.value;
             values = values.filter(item => {
-                return item.PublicUri !== file.link;
+                return item.publicUri !== file.link;
             });
-            this.Control.patchValue(values);
+            this.control.patchValue(values);
         }
-        this.generateItems();
+        this._generateItems();
     }
 
     processFiles($event: InputFile): void {
-        const queue = [];
-        queue.push(this.Service.upload($event.file));
-        this.processUpload(queue);
+        if ($event.file) {
+            const queue: Observable<StorageItem>[] = [];
+            queue.push(this.service.upload($event.file));
+            this._processUpload(queue);
+        }
     }
 
-    private generateItems(): void {
-        const values = [];
-        this.items = [];
-        if (this.Control.value !== null) {
-            if (Array.isArray(this.Control.value)) {
-                if (this.Control.value.length > 0) {
-                    this.items = this.Control.value;
+    private _generateItems(): void {
+        const values: any[] = [];
+        this._items = [];
+        if (this.control.value !== null) {
+            if (Array.isArray(this.control.value)) {
+                if (this.control.value.length > 0) {
+                    this._items = this.control.value;
                 }
             } else {
-                this.items = [this.Control.value];
+                this._items = [this.control.value];
             }
         }
-        this.items.forEach(item => {
+        this._items.forEach(item => {
             values.push({
-                link: item.PublicUri,
-                preview: this.DisplayMode === 'images' ? item.PublicUri : null,
-                file: this.DisplayMode !== 'images' ? { name: item.FileName } : null
+                link: item.publicUri,
+                preview: this.displayMode === 'images' ? item.publicUri : null,
+                file: this.displayMode !== 'images' ? {name: item.fileName} : null
             });
         });
-        this.uploadControl.setValue(values);
+        this._uploadControl.setValue(values);
     }
 
-    private processUpload(queue: Observable<StorageItem>[]): void {
-        this.snackBarService.info(
+    private _processUpload(queue: Array<Observable<StorageItem>>): void {
+        this._snackBarService.info(
             new SnackBarMessage('Загрузка файлов', 'Загрузка файлов в процессе')
         );
         forkJoin(queue).subscribe(results => {
-            if (this.Multiple) {
-                this.items = this.items.concat(results);
-                this.Control.patchValue(this.items);
+            if (this.multiple) {
+                this._items = this._items.concat(results);
+                this.control.patchValue(this._items);
             } else {
                 const item = results[0];
-                this.items = [item];
-                this.Control.patchValue(item);
+                this._items = [item];
+                this.control.patchValue(item);
             }
-            this.snackBarService.success(
+            this._snackBarService.success(
                 new SnackBarMessage('Загрузка файлов', 'Загрузка файлов успешно завершена')
             );
         });

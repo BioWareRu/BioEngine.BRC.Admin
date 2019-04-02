@@ -1,8 +1,8 @@
-import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { SectionsListComponent } from './list/list.component';
+import { RouterModule, Routes } from '@angular/router';
 import { DeveloperFormPageComponent } from './developers/form/form-page.component';
 import { GameFormPageComponent } from './games/form/form-page.component';
+import { SectionsListComponent } from './list/list.component';
 import { TopicFormPageComponent } from './topics/form/form-page.component';
 
 const routes: Routes = [

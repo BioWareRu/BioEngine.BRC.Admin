@@ -1,21 +1,20 @@
-import {Observable} from 'rxjs';
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {map} from 'rxjs/operators';
-import {plainToClass} from 'class-transformer';
-import {environment} from '../../environments/environment';
-import {User} from '../@models/User';
-
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { plainToClass } from 'class-transformer';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { ENV } from '../../environments/environment';
+import { User } from '@models/User';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UsersService {
 
-    constructor(private httpClient: HttpClient) {
+    constructor(private readonly _httpClient: HttpClient) {
     }
 
     getUser(): Observable<User> {
-        return this.httpClient.get(environment.apiUrl + 'me').pipe(map(data => plainToClass(User, data as User)));
+        return this._httpClient.get(ENV.apiUrl + 'me').pipe(map(data => plainToClass(User, <User>data)));
     }
 }

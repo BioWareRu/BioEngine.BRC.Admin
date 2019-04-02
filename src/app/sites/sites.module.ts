@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 
+import { BioCommonModule } from '@common/BioCommonModule';
+import { BioFormsModule } from '@common/forms/FormsModule';
+import { SiteFormPageComponent } from './form/form-page.component';
+import { SitesFormComponent } from './form/sites-form.component';
 import { SitesListComponent } from './list/list.component';
 import { SitesRoutingModule } from './sites-routing.module';
-import { BioCommonModule } from '../@common/BioCommonModule';
-import { SitesFormComponent } from './form/sites-form.component';
-import { BioFormsModule } from '../@common/forms/FormsModule';
-import { SiteFormPageComponent } from './form/form-page.component';
 
 const SITES_COMPONENTS = [
     SitesListComponent,

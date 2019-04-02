@@ -1,22 +1,21 @@
+import { EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { AsyncValidatorFn, ValidatorFn } from '@angular/forms/src/directives/validators';
 import { AbstractControlOptions } from '@angular/forms/src/model';
-import { BaseFormComponent } from './FormComponent';
 import * as objectPath from 'object-path';
-import { EventEmitter } from '@angular/core';
-import { Form, FieldInputChange } from './Form';
+import { FieldInputChange, Form } from './Form';
 
 export class BioFormControl extends FormControl {
-    public ServerErrors: string[] = [];
-    public OnErrorsChanged: EventEmitter<void> = new EventEmitter<void>();
+    public serverErrors: Array<string> = [];
+    public onErrorsChanged: EventEmitter<void> = new EventEmitter<void>();
 
     constructor(
-        private _form: Form,
-        private _name: string,
-        private _model: any,
-        private _property: string,
-        validatorOrOpts?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null,
-        asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null
+        private readonly _form: Form,
+        private readonly _name: string,
+        private readonly _model: any,
+        private readonly _property: string,
+        validatorOrOpts?: ValidatorFn | Array<ValidatorFn> | AbstractControlOptions | null,
+        asyncValidator?: AsyncValidatorFn | Array<AsyncValidatorFn> | null
     ) {
         super('', validatorOrOpts, asyncValidator);
         this.setValue(objectPath.get(this._model, this._property));
@@ -27,8 +26,8 @@ export class BioFormControl extends FormControl {
         const oldValue = objectPath.get(this._model, this._property);
         if (value !== oldValue) {
             objectPath.set(this._model, this._property, value);
-            this.ServerErrors = [];
-            this.OnErrorsChanged.emit();
+            this.serverErrors = [];
+            this.onErrorsChanged.emit();
             this._form.registerChange(new FieldInputChange(this._name, oldValue, value));
         }
     }
@@ -42,8 +41,8 @@ export class BioFormControl extends FormControl {
     }
 
     public setServerError(error: string): void {
-        this.ServerErrors.push(error);
+        this.serverErrors.push(error);
         this.setErrors({ server: true });
-        this.OnErrorsChanged.emit();
+        this.onErrorsChanged.emit();
     }
 }

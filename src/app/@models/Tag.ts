@@ -1,9 +1,9 @@
-import {Model} from './base/Model';
+import { AbstractModel } from './base/abstract-model';
 
-export class Tag extends Model {
-    public Name: string;
+export class Tag extends AbstractModel {
+    public name: string;
 
-    public get Title(): string {
-        return this.Name;
+    public get title(): string {
+        return this.name;
     }
 }

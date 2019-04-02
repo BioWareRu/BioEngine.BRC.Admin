@@ -1,19 +1,19 @@
-<mat-form-field [formGroup]="FormGroup" [fxFlex]="FxFlex" [appearance]="Appearance">
-    <mat-label>{{ Label }}</mat-label>
-    <mat-chip-list #chipList [formControlName]="FieldName" [errorStateMatcher]="matcher">
+<mat-form-field [formGroup]="inputFormGroup" [fxFlex]="inputFxFlex" [appearance]="inputAppearance">
+    <mat-label>{{ inputLabel }}</mat-label>
+    <mat-chip-list #chipList [formControlName]="inputFieldName" [errorStateMatcher]="matcher">
         <mat-chip
-            *ngFor="let value of this.Control.value"
-            [selectable]="Selectable"
-            [removable]="Removable"
-            (removed)="remove(value)"
+                *ngFor="let value of control.value"
+                [selectable]="selectable"
+                [removable]="removable"
+                (removed)="remove(value)"
         >
             {{ displayFn(value) }}
-            <icon matChipRemove *ngIf="Removable" iconName="fa-times"></icon>
+            <icon matChipRemove *ngIf="removable" iconName="fa-times"></icon>
         </mat-chip>
         <input
             #newInput
-            [placeholder]="Creatable ? 'Создать...' : ''"
-            (input)="onSearchChange($event.target.value)"
+            [placeholder]="creatable ? 'Создать...' : ''"
+            (input)="onSearchChange($event.target)"
             [matAutocomplete]="autoGroup"
             [matChipInputFor]="chipList"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
@@ -29,7 +29,7 @@
         (closed)="inputClosed()"
     >
         <ng-container *ngIf="groups && groups.length > 1">
-            <mat-optgroup *ngFor="let group of (groups | async)" [label]="group.title">
+            <mat-optgroup *ngFor="let group of groups " [label]="group.title">
                 <mat-option *ngFor="let option of group.options" [value]="option.value">
                     {{ option.title }}
                 </mat-option>
@@ -41,8 +41,8 @@
             </mat-option>
         </ng-container>
     </mat-autocomplete>
-    <icon matSuffix *ngIf="Icon" [icon]="Icon"></icon>
+    <icon matSuffix *ngIf="inputIcon" [icon]="inputIcon"></icon>
     <mat-error
-        ><span *ngFor="let error of Errors">{{ error }}</span></mat-error
+    ><span *ngFor="let error of errors">{{ error }}</span></mat-error
     >
 </mat-form-field>

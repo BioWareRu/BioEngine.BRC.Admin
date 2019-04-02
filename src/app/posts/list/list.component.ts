@@ -1,59 +1,53 @@
 import { Component, OnInit } from '@angular/core';
-import { ListComponent } from '../../@common/list/ListComponent';
-import { ServicesProvider } from '../../@services/ServicesProvider';
-import {
-    AuthorTableColumn,
-    ListTableColumn,
-    SectionsTableColumn,
-    SitesTableColumn,
-    TagsTableColumn
-} from '../../@common/list/ListTableColumn';
-import { ListTableColumnType } from '../../@common/list/ListEnums';
-import { ListTableColumnAction } from '../../@common/list/ListTableColumnAction';
-import { Post } from '../../@models/posts/Post';
-import { PageContext } from '../../@common/PageComponent';
-import { Icon } from 'app/@common/shared/icon/Icon';
+import { Icon } from '@common/shared/icon/Icon';
+import { AbstractListComponent } from '@common/list/abstract-list-component';
+import { ListTableColumnType } from '@common/list/ListEnums';
+import { AuthorTableColumn, ListTableColumn, SectionsTableColumn, SitesTableColumn, TagsTableColumn } from '@common/list/ListTableColumn';
+import { ListTableColumnAction } from '@common/list/ListTableColumnAction';
+import { PageContext } from '@common/abstract-page-component';
+import { Post } from '@models/posts/Post';
+import { ServicesProvider } from '@services/ServicesProvider';
 
 @Component({
     selector: 'posts-list',
     templateUrl: './list.component.html',
     providers: [PageContext]
 })
-export class ContentListComponent extends ListComponent<Post> implements OnInit {
-    constructor(context: PageContext, private servicesProvider: ServicesProvider) {
-        super(context, servicesProvider.PostsService);
+export class ContentListComponent extends AbstractListComponent<Post> implements OnInit {
+    constructor(private readonly _servicesProvider: ServicesProvider, context: PageContext) {
+        super(_servicesProvider.postsService, context);
 
-        context.StateService.setTitle('Список постов');
+        context.stateService.setTitle('Список постов');
         this.provider.itemsPerPage = 20;
     }
 
     ngOnInit(): void {
-        this.Init();
+        this._init();
     }
 
-    protected GetColumns(): ListTableColumn<Post>[] {
+    protected _getColumns(): Array<ListTableColumn<Post>> {
         return [
-            // new ListTableColumn<Post>('Id', '#').setSortable(),
-            new ListTableColumn<Post>('Title', 'Заголовок').setSortable().setLinkGetter(content => {
-                return ['/posts/', content.Id, 'edit'];
+            // new ListTableColumn<Post>('id', '#').setSortable(),
+            new ListTableColumn<Post>('title', 'Заголовок').setSortable().setLinkGetter(content => {
+                return ['/posts/', content.id, 'edit'];
             }),
             new ListTableColumn<Post>(
-                'DateAdded',
+                'dateAdded',
                 'Дата',
                 ListTableColumnType.TimeAgo
             ).setSortable(),
-            new SitesTableColumn<Post>('SiteIds', 'Сайты'),
-            new SectionsTableColumn<Post>('SectionIds', 'Разделы'),
-            new TagsTableColumn<Post>('TagIds', 'Тэги'),
-            new AuthorTableColumn<Post>('Author', 'Автор'),
-            new ListTableColumn<Post>('Actions', '')
-                .AddAction(
+            new SitesTableColumn<Post>('siteIds', 'Сайты'),
+            new SectionsTableColumn<Post>('sectionIds', 'Разделы'),
+            new TagsTableColumn<Post>('tagIds', 'Тэги'),
+            new AuthorTableColumn<Post>('author', 'Автор'),
+            new ListTableColumn<Post>('actions', '')
+                .addAction(
                     new ListTableColumnAction<Post>(
                         'Просмотреть на сайте',
                         new Icon('fa-globe')
-                    ).setExternal(content => content.Url)
+                    ).setExternal(content => content.url)
                 )
-                .AddAction(
+                .addAction(
                     new ListTableColumnAction<Post>('Удалить', new Icon('fa-trash')).setClick(
                         content => this.deleteItem(content)
                     )

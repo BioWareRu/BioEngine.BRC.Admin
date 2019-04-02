@@ -1,13 +1,13 @@
-import {AuthConfig} from 'angular-oauth2-oidc';
-import {environment} from '../environments/environment';
+import { AuthConfig } from 'angular-oauth2-oidc';
+import { ENV } from '../environments/environment';
 
-export const authConfig: AuthConfig = {
+export const AUTH_CONFIG: AuthConfig = {
     oidc: false,
-    loginUrl: environment.oauth.loginUrl,
-    tokenEndpoint: environment.oauth.tokenEndpoint,
-    userinfoEndpoint: environment.oauth.userinfoEndpoint,
-    redirectUri: environment.oauth.redirectUri,
-    clientId: environment.oauth.clientId,
+    loginUrl: ENV.oauth.loginUrl,
+    tokenEndpoint: ENV.oauth.tokenEndpoint,
+    userinfoEndpoint: ENV.oauth.userinfoEndpoint,
+    redirectUri: ENV.oauth.redirectUri,
+    clientId: ENV.oauth.clientId,
     silentRefreshRedirectUri: window.location.origin + '/silent-refresh.html',
-    scope: environment.oauth.scope,
+    scope: ENV.oauth.scope
 };

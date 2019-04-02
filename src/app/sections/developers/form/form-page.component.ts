@@ -1,41 +1,41 @@
-import { FormPageComponent } from 'app/@common/forms/FormComponent';
-import { BaseService } from 'app/@common/BaseService';
-import { PageContext } from 'app/@common/PageComponent';
 import { Component } from '@angular/core';
-import { Developer } from 'app/@models/Developer';
-import { SaveDeveloperResponse } from 'app/@models/results/Developer';
-import { DevelopersService } from 'app/@services/DevelopersService';
+import { AbstractBaseService } from '@common/abstract-base-service';
+import { AbstractFormPageComponent } from '@common/forms/abstract-form-component';
+import { PageContext } from '@common/abstract-page-component';
+import { Developer } from '@models/Developer';
+import { SaveDeveloperResponse } from '@models/results/Developer';
+import { DevelopersService } from '@services/DevelopersService';
 
 @Component({
     selector: 'developer-form-page',
     template: `
         <developer-form
-            class="model-form"
-            #modelForm
-            [model]="Model"
+                class="model-form"
+                #modelForm
+                [model]="model"
         ></developer-form>
     `,
     providers: [PageContext]
 })
-export class DeveloperFormPageComponent extends FormPageComponent<
+export class DeveloperFormPageComponent extends AbstractFormPageComponent<
     Developer,
     SaveDeveloperResponse
 > {
     constructor(
-        context: PageContext,
-        protected developerService: DevelopersService
+        protected _developerService: DevelopersService,
+        context: PageContext
     ) {
         super(context);
     }
 
-    protected getNewModelTitle(): string {
+    protected _getNewModelTitle(): string {
         return 'Создание разработчика';
     }
-    protected getService(): BaseService<Developer> {
-        return this.developerService;
+    protected _getService(): AbstractBaseService<Developer> {
+        return this._developerService;
     }
 
-    protected getRoute(): string {
+    protected _getRoute(): string {
         return '/sections/developers';
     }
 }

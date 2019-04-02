@@ -1,96 +1,96 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FormInput } from './FormInput';
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material';
 import { Observable } from 'rxjs';
+import Dictionary from '../../Dictionary';
+import { AbstractFormInput } from './abstract-form-input';
 
 @Component({
     selector: 'autocomplete-input',
     templateUrl: './AutocompleteInputComponent.html'
 })
-export class AutocompleteInputComponent extends FormInput implements OnInit {
-    public groups: SelectGroup[] = [];
-    @Input() public Options: any[] | Observable<any>;
-    @Input() public GroupField: string = null;
-    @Input() public TitleField = 'title';
-    @Input() public ValueField = 'value';
-    @Input() public Type = 'text';
+export class AutocompleteInputComponent extends AbstractFormInput implements OnInit {
+    public groups: Array<SelectGroup> = [];
+    @Input() public options: Array<any> | Observable<any>;
+    @Input() public groupField: string | null = '';
+    @Input() public titleField = 'title';
+    @Input() public valueField = 'value';
+    @Input() public type = 'text';
     @ViewChild(MatAutocompleteTrigger)
-    AutoCompleteTrigger: MatAutocompleteTrigger;
-    @ViewChild(MatAutocomplete) MatAutocomplete: MatAutocomplete;
-    protected RemoveSelectedValues = false;
-    protected Labels: { [key: number]: string } = null;
-    protected Values: any[] = [];
-    private filter: string;
+    autoCompleteTrigger: MatAutocompleteTrigger;
+    @ViewChild(MatAutocomplete) matAutocomplete: MatAutocomplete;
+    protected _removeSelectedValues = false;
+    protected _labels = new Dictionary<number, string>();
+    protected _values: Array<any> = [];
+    private _filter: string;
     public isInitialized = false;
 
     public ngOnInit(): void {
         super.ngOnInit();
-        if (!this.Options) {
-            throw new Error('Empty options for field ' + this.FieldName);
+        if (!this.options) {
+            throw new Error('Empty options for field ' + this.inputFieldName);
         }
-        if (Array.isArray(this.Options)) {
-            this.Values = this.Options;
-            this.buildGroups();
-            this.buildLabels();
+        if (Array.isArray(this.options)) {
+            this._values = this.options;
+            this._buildGroups();
+            this._buildLabels();
             this.isInitialized = true;
         } else {
-            this.Options.subscribe(data => {
-                this.Values = data;
-                this.buildGroups();
-                this.buildLabels();
+            this.options.subscribe(data => {
+                this._values = data;
+                this._buildGroups();
+                this._buildLabels();
                 this.isInitialized = true;
             });
         }
     }
 
     // noinspection JSMethodCanBeStatic
-    public displayFn(item: any): string {
-        return item !== null && this.Labels && this.Labels.hasOwnProperty(item)
-            ? this.Labels[item]
-            : undefined;
+    public displayFn(item: any): string | null {
+        return item !== null && this._labels && this._labels.hasKey(item)
+            ? this._labels.get(item)
+            : null;
     }
 
-    public onSearchChange(input: string): void {
-        this.filter = input.toLowerCase();
-        this.buildGroups();
+    public onSearchChange(input: EventTarget): void {
+        this._filter = (<HTMLInputElement>input).value.toLowerCase();
+        this._buildGroups();
     }
 
-    protected buildLabels(): void {
-        const labels: { [key: number]: string } = {};
-        this.Values.forEach(option => {
-            labels[option[this.ValueField]] = option[this.TitleField];
+    protected _buildLabels(): void {
+        this._labels.clear();
+        this._values.forEach(option => {
+            this._labels.set(option[this.valueField], option[this.titleField]);
         });
-        this.Labels = labels;
     }
 
-    protected buildGroups(): void {
-        const groups: SelectGroup[] = [];
+    protected _buildGroups(): void {
+        const groups: Array<SelectGroup> = [];
 
-        if (this.GroupField === null) {
+        if (this.groupField === null) {
             groups.push(new SelectGroup());
         }
-        this.Values.forEach(option => {
+        this._values.forEach(option => {
             const selectOption = new SelectOption();
-            selectOption.title = option[this.TitleField];
-            selectOption.value = option[this.ValueField];
+            selectOption.title = option[this.titleField];
+            selectOption.value = option[this.valueField];
 
             if (
-                this.RemoveSelectedValues &&
-                this.isValueSelected(selectOption.value)
+                this._removeSelectedValues &&
+                this._isValueSelected(selectOption.value)
             ) {
                 return;
             }
             if (
-                this.filter &&
-                selectOption.title.toLowerCase().indexOf(this.filter) === -1
+                this._filter &&
+                selectOption.title.toLowerCase().indexOf(this._filter) === -1
             ) {
                 return;
             }
-            if (this.GroupField === null) {
+            if (this.groupField === null) {
                 groups[0].options.push(selectOption);
             } else {
-                let group: SelectGroup = null;
-                const groupTitle = option[this.GroupField];
+                let group: SelectGroup | null = null;
+                const groupTitle = option[this.groupField];
                 groups.forEach(selectGroup => {
                     if (selectGroup.title === groupTitle) {
                         group = selectGroup;
@@ -107,15 +107,15 @@ export class AutocompleteInputComponent extends FormInput implements OnInit {
         this.groups = groups;
     }
 
-    protected isValueSelected(value: any): boolean {
+    protected _isValueSelected(value: any): boolean {
         // noinspection TsLint
-        return this.Control.value === value;
+        return this.control.value === value;
     }
 }
 
 export class SelectGroup {
-    public options: SelectOption[] = [];
-    public title: string = null;
+    public options: Array<SelectOption> = [];
+    public title: string | null = '';
 }
 
 export class SelectOption {

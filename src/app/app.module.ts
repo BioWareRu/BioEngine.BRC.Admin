@@ -1,40 +1,33 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import {
-    MatButtonModule,
-    MatCardModule,
-    MatGridListModule,
-    MatIconModule,
-    MatMenuModule
-} from '@angular/material';
-import 'hammerjs';
-
-import { OAuthModule, OAuthStorage, OAuthModuleConfig } from 'angular-oauth2-oidc';
-
 import { APP_BASE_HREF } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
-import { BioCommonModule } from './@common/BioCommonModule';
-import { ServicesProvider } from './@services/ServicesProvider';
-import { RestClient } from './@common/HttpClient';
-import { SitesService } from './@services/SitesService';
 import { FormsModule } from '@angular/forms';
+import { MatButtonModule, MatCardModule, MatGridListModule, MatIconModule, MatMenuModule } from '@angular/material';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { OAuthModule, OAuthModuleConfig, OAuthStorage } from 'angular-oauth2-oidc';
+import 'hammerjs';
 import { CustomFormsModule } from 'ngx-custom-validators';
-import { DevelopersService } from './@services/DevelopersService';
-import { GamesService } from './@services/GamesService';
-import { TopicsService } from './@services/TopicsService';
-import { SectionsService } from './@services/SectionsService';
-import { PostsService } from './@services/ContentService';
-import { TagsService } from './@services/TagsService';
-import { PagesService } from './@services/PagesService';
-import { ForumsService } from './@services/ForumsService';
-import { PropertiesService } from './@services/properties.service';
-import { MenuService } from './@services/MenuService';
-import { environment } from '../environments/environment';
+import { ENV } from '../environments/environment';
+import { BioCommonModule } from '@common/BioCommonModule';
+import { RestClient } from '@common/HttpClient';
+import { PostsService } from '@services/ContentService';
+import { DevelopersService } from '@services/DevelopersService';
+import { ForumsService } from '@services/ForumsService';
+import { GamesService } from '@services/GamesService';
+import { MenuService } from '@services/MenuService';
+import { PagesService } from '@services/PagesService';
+import { PropertiesService } from '@services/properties.service';
+import { SectionsService } from '@services/SectionsService';
+import { ServicesProvider } from '@services/ServicesProvider';
+import { SitesService } from '@services/SitesService';
+import { TagsService } from '@services/TagsService';
+import { TopicsService } from '@services/TopicsService';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 import { LayoutModule } from './layout/layout.module';
 
 @NgModule({
@@ -54,7 +47,7 @@ import { LayoutModule } from './layout/layout.module';
         // OAuth
         OAuthModule.forRoot({
             resourceServer: {
-                allowedUrls: [environment.apiUrl],
+                allowedUrls: [ENV.apiUrl],
                 sendAccessToken: true
             }
         }),
@@ -77,7 +70,7 @@ import { LayoutModule } from './layout/layout.module';
     ],
     bootstrap: [AppComponent],
     providers: [
-        { provide: APP_BASE_HREF, useValue: '/' },
+        {provide: APP_BASE_HREF, useValue: '/'},
         {
             provide: OAuthModuleConfig,
             useFactory: authConfigFactory
@@ -101,12 +94,13 @@ import { LayoutModule } from './layout/layout.module';
         ServicesProvider
     ]
 })
-export class AppModule { }
+export class AppModule {
+}
 
 export function authConfigFactory(): OAuthModuleConfig {
     return {
         resourceServer: {
-            allowedUrls: [environment.apiUrl],
+            allowedUrls: [ENV.apiUrl],
             sendAccessToken: true
         }
     };

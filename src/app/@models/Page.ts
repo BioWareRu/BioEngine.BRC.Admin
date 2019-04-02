@@ -1,14 +1,11 @@
-import { ISiteEntity } from './interfaces/ISiteEntity';
-import { Model } from './base/Model';
+import { AbstractModel } from './base/abstract-model';
+import { AbstractBaseContentBlock } from './blocks/abstract-content-block';
 import { IContentEntity } from './interfaces/IContentEntity';
-import { BaseContentBlock } from './blocks/ContentBlock';
+import { ISiteEntity } from './interfaces/ISiteEntity';
 
-export class Page extends Model implements ISiteEntity, IContentEntity {
-    public Id: string;
-    public Title: string;
-    public Url: string;
-    public SiteIds: string[];
-    public Sites: any[];
+export class Page extends AbstractModel implements ISiteEntity, IContentEntity {
+    public siteIds: Array<string>;
+    public sites: Array<any>;
 
-    Blocks: BaseContentBlock[] = [];
+    blocks: Array<AbstractBaseContentBlock> = [];
 }

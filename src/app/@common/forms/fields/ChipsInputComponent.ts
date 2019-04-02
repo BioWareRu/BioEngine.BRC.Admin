@@ -1,87 +1,90 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import {AutocompleteInputComponent} from './AutocompleteInputComponent';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import {ErrorStateMatcher, MatAutocompleteSelectedEvent} from '@angular/material';
-import {FormControl, FormGroupDirective, NgForm} from '@angular/forms';
-import {FormInput} from './FormInput';
-import {IBaseServiceCreatable} from '../../BaseService';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroupDirective, NgForm } from '@angular/forms';
+import { ErrorStateMatcher, MatAutocompleteSelectedEvent } from '@angular/material';
+import { IBaseServiceCreatable } from '../../abstract-base-service';
+import { AutocompleteInputComponent } from './AutocompleteInputComponent';
+import { AbstractFormInput } from './abstract-form-input';
 
 @Component({
     selector: 'chips-input',
-    templateUrl: './ChipsInputComponent.html',
+    templateUrl: './ChipsInputComponent.html'
 })
 export class ChipsInputComponent extends AutocompleteInputComponent implements OnInit {
-    @Input() public Creatable = false;
-    @Input() public Removable = true;
-    @Input() public Selectable = true;
-    @Input() public Visible = true;
-    @Input() public EntitiesService: IBaseServiceCreatable<any> = null;
+    @Input() public creatable = false;
+    @Input() public removable = true;
+    @Input() public selectable = true;
+    @Input() public visible = true;
+    @Input() public entitiesService: IBaseServiceCreatable<any> | null = null;
     @ViewChild('newInput') newInput: ElementRef<HTMLInputElement>;
-    separatorKeysCodes: number[] = [ENTER, COMMA];
+    separatorKeysCodes: Array<number> = [ENTER, COMMA];
     matcher: ChipsErrorStateMatcher;
     public addInProgress = false;
 
     selected(event: MatAutocompleteSelectedEvent): void {
-        const values = this.Control.value || [];
+        const values = this.control.value || [];
         values.push(event.option.value);
-        this.Control.setValue(values);
-        this.buildGroups();
+        this.control.setValue(values);
+        this._buildGroups();
 
     }
 
     ngOnInit(): void {
-        this.RemoveSelectedValues = true;
+        this._removeSelectedValues = true;
         super.ngOnInit();
         this.matcher = new ChipsErrorStateMatcher(this);
     }
 
     remove(value): void {
-        const index = this.Control.value.indexOf(value);
+        const index = this.control.value.indexOf(value);
 
         if (index >= 0) {
-            this.Control.value.splice(index, 1);
-            if (this.Control.value.length === 0) {
-                this.Control.setValue(null);
+            this.control.value.splice(index, 1);
+            if (this.control.value.length === 0) {
+                this.control.setValue(null);
             }
-            this.buildGroups();
+            this._buildGroups();
         }
     }
 
     add(value): void {
-        if (!this.Creatable || !value || !value.value) {
+        if (!this.creatable || !value || !value.value) {
             return;
         }
         this.addInProgress = true;
-        this.EntitiesService.create(value.value).subscribe(result => {
-            let values = this.Control.value;
-            if (!values) {
-                values = [];
-            }
-            values.push(result.Model[this.ValueField]);
-            this.Control.setValue(values);
-            this.Values.push(result.Model);
-            this.buildGroups();
-            this.buildLabels();
-            this.newInput.nativeElement.value = null;
-            this.addInProgress = false;
-        });
+        if (this.entitiesService) {
+            this.entitiesService.create(value.value).subscribe(result => {
+                let values = this.control.value;
+                if (!values) {
+                    values = [];
+                }
+                values.push(result.model[this.valueField]);
+                this.control.setValue(values);
+                this._values.push(result.model);
+                this._buildGroups();
+                this._buildLabels();
+                this.newInput.nativeElement.value = '';
+                this.addInProgress = false;
+
+            });
+        }
     }
 
     inputClosed(): void {
-        this.Control.setValue(this.Control.value);
+        this.control.setValue(this.control.value);
     }
 
-    protected isValueSelected(value: any): boolean {
-        return value && this.Control.value && this.Control.value.indexOf(value) > -1;
+    protected _isValueSelected(value: any): boolean {
+        return value && this.control.value && Array.isArray(this.control.value) && this.control.value.indexOf(value) > -1;
     }
 }
 
 class ChipsErrorStateMatcher extends ErrorStateMatcher {
-    constructor(private _input: FormInput) {
+    constructor(private readonly _input: AbstractFormInput) {
         super();
     }
 
-    public isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-        return this._input.Errors.length > 0;
+    public isErrorState(_control: FormControl | null, _form: FormGroupDirective | NgForm | null): boolean {
+        return this._input.errors.length > 0;
     }
 }

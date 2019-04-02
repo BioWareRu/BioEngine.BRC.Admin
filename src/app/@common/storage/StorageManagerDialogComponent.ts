@@ -1,7 +1,7 @@
-import { Component, ViewChild, Inject, OnInit } from '@angular/core';
-import { DialogComponent } from '../modals/DialogComponent';
-import { StorageManagerComponent } from './StorageManagerComponent';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
+import { AbstractDialogComponent } from '../modals/abstract-dialog-component';
+import { StorageManagerComponent } from './StorageManagerComponent';
 
 @Component({
     selector: 'storageManageDialog',
@@ -15,7 +15,7 @@ import { MAT_DIALOG_DATA } from '@angular/material';
         </div>
     `
 })
-export class StorageManagerDialogComponent extends DialogComponent<any> implements OnInit {
+export class StorageManagerDialogComponent extends AbstractDialogComponent<any> implements OnInit {
     public constructor(@Inject(MAT_DIALOG_DATA) data: string) {
         super(data);
     }

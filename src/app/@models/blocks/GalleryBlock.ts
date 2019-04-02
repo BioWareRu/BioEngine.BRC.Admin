@@ -1,20 +1,20 @@
+import { Icon } from '@common/shared/icon/Icon';
 import { Type } from 'class-transformer';
 import { StorageItem } from '../results/StorageItem';
-import { Icon } from 'app/@common/shared/icon/Icon';
-import { ContentBlockData, ContentBlock, ContentBlockItemType } from './ContentBlock';
+import { AbstractContentBlock, AbstractContentBlockData, ContentBlockItemType } from './abstract-content-block';
 
-export class GalleryBlock extends ContentBlock<GalleryBlockData> {
-    public Title = 'Галерея';
-    public Icon = new Icon('fa-images');
-    public Type: ContentBlockItemType = ContentBlockItemType.Gallery;
+export class GalleryBlock extends AbstractContentBlock<GalleryBlockData> {
+    public title = 'Галерея';
+    public icon = new Icon('fa-images');
+    public type: ContentBlockItemType = ContentBlockItemType.Gallery;
     @Type(() => GalleryBlockData)
-    Data: GalleryBlockData = new GalleryBlockData();
+    data: GalleryBlockData = new GalleryBlockData();
 
-    static IsEmpty(block: GalleryBlock): boolean {
-        return !block.Data.Pictures || block.Data.Pictures.length === 0;
+    static isEmpty(block: GalleryBlock): boolean {
+        return !block.data.pictures || block.data.pictures.length === 0;
     }
 }
 
-export class GalleryBlockData extends ContentBlockData {
-    public Pictures: StorageItem[] = [];
+export class GalleryBlockData extends AbstractContentBlockData {
+    public pictures: Array<StorageItem> = [];
 }

@@ -5,27 +5,27 @@ import { BehaviorSubject, Observable } from 'rxjs';
     providedIn: 'root'
 })
 export class StateService {
-    protected titleState$ = new BehaviorSubject<string>('BRC Games');
-    protected sidebarState$ = new BehaviorSubject<boolean>(true);
+    protected _titleState$ = new BehaviorSubject<string>('BRC Games');
+    protected _sidebarState$ = new BehaviorSubject<boolean>(true);
 
     onTitleChange(): Observable<string> {
-        return this.titleState$.asObservable();
+        return this._titleState$.asObservable();
     }
 
     onSidebarStateChange(): Observable<boolean> {
-        return this.sidebarState$.asObservable();
+        return this._sidebarState$.asObservable();
     }
 
     public setTitle(title: string): void {
-        this.titleState$.next(title);
+        this._titleState$.next(title);
         document.title = title + ' - BRC Games';
     }
 
     public hideToolbar(): void {
-        this.sidebarState$.next(false);
+        this._sidebarState$.next(false);
     }
 
     public showToolbar(): void {
-        this.sidebarState$.next(true);
+        this._sidebarState$.next(true);
     }
 }

@@ -1,30 +1,30 @@
 import { Injectable } from '@angular/core';
-import { BaseService, BaseServiceWithUpload } from '../@common/BaseService';
-import { RestClient } from '../@common/HttpClient';
-import { Post } from '../@models/posts/Post';
-import { PostListResult, SavePostResponse } from '../@models/results/Post';
 import { ClassType } from 'class-transformer/ClassTransformer';
-import { SaveModelResponse } from '../@common/SaveModelResponse';
+import { AbstractServiceWithUpload } from '@common/abstract-base-service';
+import { RestClient } from '@common/HttpClient';
+import { SaveModelResponse } from '@common/SaveModelResponse';
+import { Post } from '@models/posts/Post';
+import { PostListResult, SavePostResponse } from '@models/results/Post';
 
 @Injectable()
-export class PostsService extends BaseServiceWithUpload<Post> {
+export class PostsService extends AbstractServiceWithUpload<Post> {
     constructor(httpClient: RestClient) {
         super(httpClient);
     }
 
-    protected getResource(): string {
+    protected _getResource(): string {
         return 'posts';
     }
 
-    protected getListType(): ClassType<PostListResult> {
+    protected _getListType(): ClassType<PostListResult> {
         return PostListResult;
     }
 
-    protected getSaveType(): ClassType<SaveModelResponse<Post>> {
+    protected _getSaveType(): ClassType<SaveModelResponse<Post>> {
         return SavePostResponse;
     }
 
-    protected getType(): ClassType<Post> {
+    protected _getType(): ClassType<Post> {
         return Post;
     }
 }

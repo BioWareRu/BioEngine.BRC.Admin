@@ -1,15 +1,15 @@
-import {Component, HostBinding, Input, OnDestroy, OnInit} from '@angular/core';
-import {NavigationItem} from './NavigationItem';
-import {Subject} from 'rxjs';
-import {NavigationEnd, Router} from '@angular/router';
-import {filter, takeUntil} from 'rxjs/operators';
-import {brcAnimations} from '../animations';
+import { Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
+import { BRC_ANIMATIONS } from '../animations';
+import { NavigationItem } from './NavigationItem';
 
 @Component({
     selector: 'nav-collapsable',
     templateUrl: './collapsable.component.html',
     styleUrls: ['./collapsable.component.scss'],
-    animations: brcAnimations
+    animations: BRC_ANIMATIONS
 })
 export class NavigationCollapsableComponent implements OnInit, OnDestroy {
     @Input()
@@ -22,7 +22,7 @@ export class NavigationCollapsableComponent implements OnInit, OnDestroy {
     public isOpen = false;
 
     // Private
-    private _unsubscribeAll: Subject<any>;
+    private readonly _unsubscribeAll: Subject<any>;
 
     /**
      * Constructor
@@ -30,7 +30,7 @@ export class NavigationCollapsableComponent implements OnInit, OnDestroy {
      * @param {Router} _router
      */
     constructor(
-        private _router: Router
+        private readonly _router: Router
     ) {
         // Set the private defaults
         this._unsubscribeAll = new Subject();
@@ -46,16 +46,14 @@ export class NavigationCollapsableComponent implements OnInit, OnDestroy {
 
                 if (this.isUrlInChildren(this.item, event.urlAfterRedirects)) {
                     this.expand();
-                }
-                else {
+                } else {
                     this.collapse();
                 }
             });
 
         if (this.isUrlInChildren(this.item, this._router.url)) {
             this.expand();
-        }
-        else {
+        } else {
             this.collapse();
         }
     }
@@ -99,6 +97,8 @@ export class NavigationCollapsableComponent implements OnInit, OnDestroy {
                 return this.isChildrenOf(children, item);
             }
         }
+
+        return false;
     }
 
     isUrlInChildren(parent, url): boolean {
@@ -107,10 +107,8 @@ export class NavigationCollapsableComponent implements OnInit, OnDestroy {
         }
 
         for (let i = 0; i < parent.children.length; i++) {
-            if (parent.children[i].children) {
-                if (this.isUrlInChildren(parent.children[i], url)) {
-                    return true;
-                }
+            if (parent.children[i].children && this.isUrlInChildren(parent.children[i], url)) {
+                return true;
             }
 
             if (parent.children[i].url === url || url.includes(parent.children[i].url)) {

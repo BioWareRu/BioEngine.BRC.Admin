@@ -1,27 +1,27 @@
-import { Validators } from '@angular/forms';
 import { Component } from '@angular/core';
-import { SnackBarService } from 'app/@common/snacks/SnackBarService';
-import { CutBlock } from 'app/@models/blocks/CutBlock';
-import { ContentBlockFormComponent, BlockFieldDescriptor } from './ContentBlockFormComponent';
+import { Validators } from '@angular/forms';
+import { SnackBarService } from '@common/snacks/SnackBarService';
+import { CutBlock } from '@models/blocks/CutBlock';
+import { BlockFieldDescriptor, AbstractContentBlockFormComponent } from './abstract-content-block-form-component';
 
 @Component({
     selector: 'cut-block-form',
     template: `
         <text-input
-            [FormGroup]="Form.FormGroup"
-            [FieldName]="getFieldName('ButtonText')"
-            Label="Текст кнопки"
+                [inputFormGroup]="form.formGroup"
+                [inputFieldName]="getFieldName('buttonText')"
+                inputLabel="Текст кнопки"
         ></text-input>
     `,
     styles: [``]
 })
-export class CutBlockFormComponent extends ContentBlockFormComponent<CutBlock> {
+export class CutBlockFormComponent extends AbstractContentBlockFormComponent<CutBlock> {
     constructor(snackBarService: SnackBarService) {
         super(snackBarService);
     }
 
-    protected getFields(): BlockFieldDescriptor[] {
-        return [new BlockFieldDescriptor('ButtonText', [Validators.required], 'Data.ButtonText')];
+    protected _getFields(): Array<BlockFieldDescriptor> {
+        return [new BlockFieldDescriptor('buttonText', [Validators.required], 'data.buttonText')];
     }
 
     public isEmpty(): boolean {

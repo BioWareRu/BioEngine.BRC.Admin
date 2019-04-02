@@ -1,31 +1,26 @@
-import { Model } from '../base/Model';
-import { ISiteEntity } from '../interfaces/ISiteEntity';
-import { ISectionEntity } from '../interfaces/ISectionEntity';
-import { User } from '../User';
-import { BaseContentBlock } from '../blocks/ContentBlock';
-import { IContentEntity } from '../interfaces/IContentEntity';
 import { Type } from 'class-transformer';
+import { AbstractModel } from '../base/abstract-model';
+import { AbstractBaseContentBlock } from '../blocks/abstract-content-block';
+import { IContentEntity } from '../interfaces/IContentEntity';
+import { ISectionEntity } from '../interfaces/ISectionEntity';
+import { ISiteEntity } from '../interfaces/ISiteEntity';
+import { User } from '../User';
 
-export class Post extends Model implements ISiteEntity, ISectionEntity, IContentEntity {
-    public Id = '';
-    public AuthorId: number;
-    public Author: User;
-    public Url: string;
-    public DateAdded: string;
-    public DateUpdated: string;
-    public DatePublished: string;
-    public IsPinned: boolean;
-    public ForumTopicId: number;
-    public ForumPostId: number;
-    public CommentsCount: number;
-    public SectionIds: string[];
-    public SiteIds: string[];
-    TagIds: string[];
+export class Post extends AbstractModel implements ISiteEntity, ISectionEntity, IContentEntity {
+    public authorId: number;
+    public author: User;
+    public isPinned: boolean;
+    public forumTopicId: number;
+    public forumPostId: number;
+    public commentsCount: number;
+    public sectionIds: Array<string>;
+    public siteIds: Array<string>;
+    tagIds: Array<string>;
 
-    @Type(() => BaseContentBlock)
-    public Blocks: BaseContentBlock[];
+    @Type(() => AbstractBaseContentBlock)
+    public blocks: Array<AbstractBaseContentBlock>;
 
-    public Sections: any[];
-    public Sites: any[];
-    Tags: any[];
+    public sections: Array<any>;
+    public sites: Array<any>;
+    tags: Array<any>;
 }

@@ -1,73 +1,77 @@
-import { TextBlock } from 'app/@models/blocks/TextBlock';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { Component, ViewChild, ElementRef } from '@angular/core';
-import { SnackBarService } from 'app/@common/snacks/SnackBarService';
 import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
-import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
-import { ContentBlockItemType } from 'app/@models/blocks/ContentBlock';
-import { ContentBlockFormComponent, BlockFieldDescriptor } from './ContentBlockFormComponent';
+import { SnackBarService } from '@common/snacks/SnackBarService';
+import { ContentBlockItemType } from '@models/blocks/abstract-content-block';
+import { TextBlock } from '@models/blocks/TextBlock';
+import { BlockFieldDescriptor, AbstractContentBlockFormComponent } from './abstract-content-block-form-component';
 
 @Component({
     selector: 'text-block-form',
     template: `
-        <div [formGroup]="Form.FormGroup">
+        <div [formGroup]="form.formGroup">
             <ckeditor
-                #editor
-                [editor]="Editor"
-                [formControlName]="getFieldName('Text')"
-                (change)="onChange($event)"
-                (ready)="ready($event)"
+                    #editor
+                    [editor]="editorInstance"
+                    [formControlName]="getFieldName('text')"
+                    (ready)="ready($event)"
             ></ckeditor>
         </div>
     `,
     styles: [
-        `
+            `
             .ck.ck-editor__editable_inline > :last-child {
                 margin-bottom: 5px;
             }
+
             .ck.ck-editor__editable_inline > :first-child {
                 margin-top: 5px;
             }
         `
     ]
 })
-export class TextBlockFormComponent extends ContentBlockFormComponent<TextBlock> {
+export class TextBlockFormComponent extends AbstractContentBlockFormComponent<TextBlock> {
     constructor(snackBarService: SnackBarService) {
         super(snackBarService);
     }
-    public Editor = BalloonEditor;
+
+    public editorInstance = BalloonEditor;
     view: any;
     focusOnReady: boolean;
 
     splitSymbol = '‌‌\u200C';
 
-    @ViewChild('editor') editor: ElementRef<HTMLElement>;
+    @ViewChild('editor') editorElement: ElementRef<HTMLElement>;
 
-    protected getFields(): BlockFieldDescriptor[] {
-        return [new BlockFieldDescriptor('Text', [Validators.required], 'Data.Text')];
+    protected _getFields(): Array<BlockFieldDescriptor> {
+        return [new BlockFieldDescriptor('text', [Validators.required], 'data.text')];
     }
 
-    private onDelete(): void {
-        this.blocksManager.RemoveBlock(this.Model);
-        this.blocksManager.Update();
+    private _onDelete(): void {
+        this.blocksManager.removeBlock(this.model);
+        this.blocksManager.update();
     }
 
-    private onSplit(): void {
-        const parts = this.Model.Data.Text.split(this.splitSymbol);
-        const id = this.getFieldName('Text');
-        this.Form.FormGroup.get(id).setValue(parts[0]);
-        const nextBlock = this.blocksManager.CreateBlock<TextBlock>(ContentBlockItemType.Text);
-        nextBlock.Data.Text = parts[1];
-        nextBlock.InFocus = true;
-        this.blocksManager.AddBlock(nextBlock, this.Model);
-        this.blocksManager.Update();
+    private _onSplit(): void {
+        const parts = this.model.data.text.split(this.splitSymbol);
+        const id = this.getFieldName('text');
+        const control = this.form.formGroup.get(id);
+        if (!control) {
+            throw new Error('No control for id ' + id);
+        }
+        control.setValue(parts[0]);
+        const nextBlock = this.blocksManager.createBlock<TextBlock>(ContentBlockItemType.Text);
+        nextBlock.data.text = parts[1];
+        nextBlock.inFocus = true;
+        this.blocksManager.addBlock(nextBlock, this.model);
+        this.blocksManager.update();
     }
 
     public isEmpty(): boolean {
-        return this.Model.Data.Text === '' || this.Model.Data.Text === '<p>&nbsp;</p>';
+        return this.model.data.text === '' || this.model.data.text === '<p>&nbsp;</p>';
     }
 
-    protected setFocus(): void {
+    protected _setFocus(): void {
         this.focus();
     }
 
@@ -92,18 +96,14 @@ export class TextBlockFormComponent extends ContentBlockFormComponent<TextBlock>
                     );
                 });
                 eventInfo.stop();
-                this.onSplit();
+                this._onSplit();
             }
         });
-        editor.keystrokes.set('backspace', (keyEvtData, cancel) => {
+        editor.keystrokes.set('backspace', () => {
             if (this.isEmpty()) {
-                this.onDelete();
+                this._onDelete();
             }
         });
-    }
-
-    public onChange({ editor }: ChangeEvent): void {
-        const data = editor.getData();
     }
 
     focus(): void {

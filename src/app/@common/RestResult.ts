@@ -1,14 +1,14 @@
-import {Type} from 'class-transformer';
+import { Type } from 'class-transformer';
 
 export class RestError {
-  public Message: string;
-  public Field: string;
+  public message: string;
+  public field: string;
 }
 
 export class RestResult {
-  public Code: number;
+  public code: number;
   @Type(() => RestError)
-  public Errors: RestError[] = [];
-  public Message: string;
-  public IsSuccess: boolean;
+  public errors: Array<RestError> = [];
+  public message: string;
+  public isSuccess: boolean;
 }

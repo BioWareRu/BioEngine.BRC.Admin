@@ -1,6 +1,6 @@
-<mat-form-field [formGroup]="FormGroup" [fxFlex]="FxFlex" [appearance]="Appearance">
-    <mat-label>{{ Label }}</mat-label>
-    <mat-select [formControlName]="FieldName" [placeholder]="Placeholder" [multiple]="IsMultiple">
+<mat-form-field [formGroup]="inputFormGroup" [fxFlex]="inputFxFlex" [appearance]="inputAppearance">
+    <mat-label>{{ inputLabel }}</mat-label>
+    <mat-select [formControlName]="inputFieldName" [placeholder]="inputPlaceholder" [multiple]="isMultiple">
         <ng-container *ngIf="groups && groups.length > 1">
             <mat-optgroup *ngFor="let group of groups" [label]="group.title">
                 <mat-option *ngFor="let option of group.options" [value]="option.value">
@@ -14,6 +14,6 @@
             </mat-option>
         </ng-container>
     </mat-select>
-    <icon matSuffix *ngIf="Icon" [icon]="Icon"></icon>
-    <mat-error *ngFor="let error of Errors">{{ error }}</mat-error>
+    <icon matSuffix *ngIf="inputIcon" [icon]="inputIcon"></icon>
+    <mat-error *ngFor="let error of errors">{{ error }}</mat-error>
 </mat-form-field>

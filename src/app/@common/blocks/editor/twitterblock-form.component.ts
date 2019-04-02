@@ -1,30 +1,30 @@
-import { Validators } from '@angular/forms';
 import { Component } from '@angular/core';
-import { SnackBarService } from 'app/@common/snacks/SnackBarService';
-import { TwitterBlock } from 'app/@models/blocks/TwitterBlock';
-import { ContentBlockFormComponent, BlockFieldDescriptor } from './ContentBlockFormComponent';
+import { Validators } from '@angular/forms';
+import { SnackBarService } from '@common/snacks/SnackBarService';
+import { TwitterBlock } from '@models/blocks/TwitterBlock';
+import { BlockFieldDescriptor, AbstractContentBlockFormComponent } from './abstract-content-block-form-component';
 
 @Component({
     selector: 'twitter-block-form',
     template: `
         <text-input
-            [FormGroup]="Form.FormGroup"
-            [FieldName]="getFieldName('TwitID')"
-            Label="Номер твита"
+                [inputFormGroup]="form.formGroup"
+                [inputFieldName]="getFieldName('TwitID')"
+                inputLabel="Номер твита"
         ></text-input>
     `,
     styles: [``]
 })
-export class TwitterBlockFormComponent extends ContentBlockFormComponent<TwitterBlock> {
+export class TwitterBlockFormComponent extends AbstractContentBlockFormComponent<TwitterBlock> {
     constructor(snackBarService: SnackBarService) {
         super(snackBarService);
     }
 
-    protected getFields(): BlockFieldDescriptor[] {
-        return [new BlockFieldDescriptor('TwitID', [Validators.required], 'Data.TwitId')];
+    protected _getFields(): Array<BlockFieldDescriptor> {
+        return [new BlockFieldDescriptor('TwitID', [Validators.required], 'data.twitId')];
     }
 
     public isEmpty(): boolean {
-        return this.Model.Data.TwitId > 0;
+        return !this.model.data.twitId || this.model.data.twitId > 0;
     }
 }

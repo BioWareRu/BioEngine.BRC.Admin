@@ -1,12 +1,12 @@
-import {Component, Input} from '@angular/core';
-import {User} from '../../@models/User';
+import { Component, Input } from '@angular/core';
+import { User } from '@models/User';
 
 @Component({
     template: `
         <ng-container *ngIf="user">
-            <div class="avatar" [ngStyle]="{'background-image': 'url(' + user.PhotoUrl + ')'}"></div>
+            <div class="avatar" [ngStyle]="{'background-image': 'url(' + user.photoUrl + ')'}"></div>
             <div class="name"><a [ngStyle]="{'color':'#'+color}" target="_blank"
-                                 [href]="user.ProfileUrl">{{user.Name}}</a></div>
+                                 [href]="user.profileUrl">{{ user.name }}</a></div>
         </ng-container>
     `,
     styles: [`

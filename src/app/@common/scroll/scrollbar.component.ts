@@ -1,10 +1,10 @@
-import {AfterViewInit, Directive, ElementRef, HostListener, Input, OnDestroy} from '@angular/core';
-import {NavigationEnd, Router} from '@angular/router';
-import {Platform} from '@angular/cdk/platform';
-import {Subject} from 'rxjs';
-import {filter, takeUntil} from 'rxjs/operators';
-import PerfectScrollbar from 'perfect-scrollbar';
+import { Platform } from '@angular/cdk/platform';
+import { AfterViewInit, Directive, ElementRef, HostListener, Input, OnDestroy } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import * as _ from 'lodash';
+import PerfectScrollbar from 'perfect-scrollbar';
+import { Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
 
 @Directive({
     selector: '[brcPerfectScrollbar]'
@@ -12,10 +12,10 @@ import * as _ from 'lodash';
 export class BrcPerfectScrollbarDirective implements AfterViewInit, OnDestroy {
     isInitialized: boolean;
     isMobile: boolean;
-    ps: PerfectScrollbar;
-    private _debouncedUpdate: any;
+    ps: PerfectScrollbar | null;
+    private readonly _debouncedUpdate: any;
     private _options: any;
-    private _unsubscribeAll: Subject<any>;
+    private readonly _unsubscribeAll: Subject<any>;
 
     /**
      * Constructor
@@ -26,8 +26,8 @@ export class BrcPerfectScrollbarDirective implements AfterViewInit, OnDestroy {
      */
     constructor(
         public elementRef: ElementRef,
-        private _platform: Platform,
-        private _router: Router
+        private readonly _platform: Platform,
+        private readonly _router: Router
     ) {
         // Set the defaults
         this.isInitialized = false;
@@ -68,7 +68,7 @@ export class BrcPerfectScrollbarDirective implements AfterViewInit, OnDestroy {
         }
 
         // Return, if both values are the same
-        if (this.enabled === value) {
+        if (this._enabled === value) {
             return;
         }
 
@@ -76,11 +76,10 @@ export class BrcPerfectScrollbarDirective implements AfterViewInit, OnDestroy {
         this._enabled = value;
 
         // If enabled...
-        if (this.enabled) {
+        if (this._enabled) {
             // Init the directive
             this._init();
-        }
-        else {
+        } else {
             // Otherwise destroy it
             this._destroy();
         }
@@ -147,7 +146,7 @@ export class BrcPerfectScrollbarDirective implements AfterViewInit, OnDestroy {
      *
      * @private
      */
-    _init(): void {
+    protected _init(): void {
         // Return, if already initialized
         if (this.isInitialized) {
             return;
@@ -178,7 +177,7 @@ export class BrcPerfectScrollbarDirective implements AfterViewInit, OnDestroy {
      *
      * @private
      */
-    _destroy(): void {
+    protected _destroy(): void {
         if (!this.isInitialized || !this.ps) {
             return;
         }
@@ -192,12 +191,12 @@ export class BrcPerfectScrollbarDirective implements AfterViewInit, OnDestroy {
     }
 
     /**
-     * Update scrollbars on window resize
+     * update scrollbars on window resize
      *
      * @private
      */
     @HostListener('window:resize')
-    _updateOnResize(): void {
+    protected _updateOnResize(): void {
         this._debouncedUpdate();
     }
 
@@ -208,15 +207,15 @@ export class BrcPerfectScrollbarDirective implements AfterViewInit, OnDestroy {
     /**
      * Document click
      *
-     * @param {Event} event
+     * @param {Event} _event
      */
     @HostListener('document:click', ['$event'])
-    documentClick(event: Event): void {
+    documentClick(_event: Event): void {
         if (!this.isInitialized || !this.ps) {
             return;
         }
 
-        // Update the scrollbar on document click..
+        // update the scrollbar on document click..
         // This isn't the most elegant solution but there is no other way
         // of knowing when the contents of the scrollable container changes.
         // Therefore, we update scrollbars on every document click.
@@ -224,15 +223,17 @@ export class BrcPerfectScrollbarDirective implements AfterViewInit, OnDestroy {
     }
 
     /**
-     * Update the scrollbar
+     * update the scrollbar
      */
     update(): void {
         if (!this.isInitialized) {
             return;
         }
 
-        // Update the perfect-scrollbar
-        this.ps.update();
+        // update the perfect-scrollbar
+        if (this.ps) {
+            this.ps.update();
+        }
     }
 
     /**
@@ -320,8 +321,7 @@ export class BrcPerfectScrollbarDirective implements AfterViewInit, OnDestroy {
             // PS has weird event sending order, this is a workaround for that
             this.update();
             this.update();
-        }
-        else if (value !== this.elementRef.nativeElement[target]) {
+        } else if (value !== this.elementRef.nativeElement[target]) {
             let newValue = 0;
             let scrollCount = 0;
 
@@ -330,7 +330,7 @@ export class BrcPerfectScrollbarDirective implements AfterViewInit, OnDestroy {
 
             const cosParameter = (oldValue - value) / 2;
 
-            const step = (newTimestamp) => {
+            const step = newTimestamp => {
                 scrollCount += Math.PI / (speed / (newTimestamp - oldTimestamp));
 
                 newValue = Math.round(value + cosParameter + cosParameter * Math.cos(scrollCount));
@@ -344,8 +344,7 @@ export class BrcPerfectScrollbarDirective implements AfterViewInit, OnDestroy {
                         this.update();
 
                         this.update();
-                    }
-                    else {
+                    } else {
                         this.elementRef.nativeElement[target] = oldValue = newValue;
 
                         oldTimestamp = newTimestamp;

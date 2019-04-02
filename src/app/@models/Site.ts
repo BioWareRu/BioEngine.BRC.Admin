@@ -1,11 +1,4 @@
-﻿import { Model } from './base/Model';
+﻿import { AbstractModel } from './base/abstract-model';
 
-export class Site extends Model {
-    public Id: string;
-    public Title: string;
-    public Url: string;
-    public IsPublished: boolean;
-    public DateAdded: string;
-    public DateUpdated: string;
-    public DatePublished: string;
+export class Site extends AbstractModel {
 }

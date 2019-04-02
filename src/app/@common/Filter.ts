@@ -12,7 +12,7 @@ export enum FilterOperator {
 }
 
 export class Filter {
-    constructor(public groups: FilterConditionsGroup[] = []) {}
+    constructor(public groups: Array<FilterConditionsGroup> = []) {}
 
     public static simple(propertyName: string, operator: FilterOperator, value: any): Filter {
         return new Filter([
@@ -30,7 +30,7 @@ export class Filter {
 }
 
 export class FilterConditionsGroup {
-    constructor(public conditions: FilterCondition[] = []) {}
+    constructor(public conditions: Array<FilterCondition> = []) {}
 }
 
 export class FilterCondition {

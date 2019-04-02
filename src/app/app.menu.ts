@@ -1,3 +1,3 @@
-export const MENU_ITEMS: any[] = [
+export const MENU_ITEMS: Array<any> = [
 
 ];

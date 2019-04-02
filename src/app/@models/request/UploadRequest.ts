@@ -1,5 +1,5 @@
 export class UploadRequest {
-  public Data: Blob;
-  public FileName: string;
-  public Params: { [id: string]: string };
+  public data: Blob;
+  public fileName: string;
+  public params: { [id: string]: string };
 }

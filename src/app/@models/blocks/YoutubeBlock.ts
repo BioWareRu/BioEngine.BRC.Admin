@@ -1,20 +1,20 @@
+import { Icon } from '@common/shared/icon/Icon';
 import { Type } from 'class-transformer';
-import { Icon } from 'app/@common/shared/icon/Icon';
-import { ContentBlock, ContentBlockItemType, ContentBlockData } from './ContentBlock';
+import { AbstractContentBlock, AbstractContentBlockData, ContentBlockItemType } from './abstract-content-block';
 
-export class YoutubeBlock extends ContentBlock<YoutubeBlockData> {
-    public Title = 'Youtube';
-    public Icon = new Icon('fa-youtube', 'fab');
-    public Type: ContentBlockItemType = ContentBlockItemType.Youtube;
+export class YoutubeBlock extends AbstractContentBlock<YoutubeBlockData> {
+    public title = 'Youtube';
+    public icon = new Icon('fa-youtube', 'fab');
+    public type: ContentBlockItemType = ContentBlockItemType.Youtube;
     @Type(() => YoutubeBlockData)
-    Data: YoutubeBlockData = new YoutubeBlockData();
+    data: YoutubeBlockData = new YoutubeBlockData();
 
-    static IsEmpty(block: YoutubeBlock): boolean {
-        return !block.Data.YoutubeId;
+    static isEmpty(block: YoutubeBlock): boolean {
+        return !block.data.youtubeId;
     }
 }
 
-export class YoutubeBlockData extends ContentBlockData {
-    public YoutubeId = '';
-    public YoutubeUrl = '';
+export class YoutubeBlockData extends AbstractContentBlockData {
+    public youtubeId = '';
+    public youtubeUrl = '';
 }

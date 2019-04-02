@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Inject, Injectable } from '@angular/core';
-import { DialogComponent } from './DialogComponent';
+import { Component, EventEmitter, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
+import { AbstractDialogComponent } from './abstract-dialog-component';
 
 @Component({
     selector: 'confirmation-dialog-component',
@@ -23,7 +23,7 @@ import { MAT_DIALOG_DATA } from '@angular/material';
         </div>
     `
 })
-export class ConfirmationDialogComponent extends DialogComponent<
+export class ConfirmationDialogComponent extends AbstractDialogComponent<
     ConfirmationDialogComponentData
 > {
     public onConfirm = new EventEmitter();

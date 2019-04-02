@@ -1,35 +1,35 @@
-import { RestClient } from 'app/@common/HttpClient';
 import { Injectable } from '@angular/core';
-import { StorageItem } from 'app/@models/results/StorageItem';
+import { RestClient } from '@common/HttpClient';
+import { StorageItem } from '@models/results/StorageItem';
+import { plainToClass } from 'class-transformer';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { plainToClass } from 'class-transformer';
 
 @Injectable({
     providedIn: 'root'
 })
 export class StorageService {
-    public constructor(protected httpClient: RestClient) {}
+    public constructor(protected _httpClient: RestClient) {}
 
-    public get(path: string): Observable<StorageNode[]> {
-        return this.httpClient
+    public get(path: string): Observable<Array<StorageNode>> {
+        return this._httpClient
             .get('Storage', {
-                path: path
+                path
             })
-            .pipe(map(res => res as StorageNode[]));
+            .pipe(map(res => <Array<StorageNode>>res));
     }
 
     public upload(file: File, prefix: string): Observable<StorageNode> {
-        return this.httpClient
+        return this._httpClient
             .post('Storage/upload/', file, { name: file.name, path: prefix })
-            .pipe(map(data => plainToClass(StorageNode, data as StorageNode)));
+            .pipe(map(data => plainToClass(StorageNode, <StorageNode>data)));
     }
 }
 
 export class StorageNode {
-    public Name: string;
-    public Path: string;
-    public IsDirectory: boolean;
-    public Item: StorageItem;
-    public Items: StorageNode[];
+    public name: string;
+    public path: string;
+    public isDirectory: boolean;
+    public item: StorageItem;
+    public items: Array<StorageNode>;
 }

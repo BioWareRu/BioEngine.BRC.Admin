@@ -1,37 +1,39 @@
-import { ListTableColumnActionType } from './ListEnums';
 import { Icon } from '../shared/icon/Icon';
+import { ListTableColumnActionType } from './ListEnums';
 
 export class ListTableColumnAction<T> {
-    public Icon: Icon;
-    public Title: string;
-    public Type: ListTableColumnActionType;
-    public Types = ListTableColumnActionType;
-    public GenerateUrl: (model: T) => string;
-    public DoClick: (model: T) => any;
+    public icon: Icon;
+    public title: string;
+    public type: ListTableColumnActionType;
+    public types = ListTableColumnActionType;
+    public generateUrl: (model: T) => string;
+    public doClick: (model: T) => any;
 
     constructor(
         title: string,
         icon: Icon,
         type: ListTableColumnActionType = ListTableColumnActionType.Click
     ) {
-        this.Title = title;
-        this.Icon = icon;
-        this.Type = type;
+        this.title = title;
+        this.icon = icon;
+        this.type = type;
     }
 
     public setClick(click: (model: T) => any): ListTableColumnAction<T> {
-        this.Type = ListTableColumnActionType.Click;
-        this.DoClick = click;
+        this.type = ListTableColumnActionType.Click;
+        this.doClick = click;
+
         return this;
     }
 
     public setExternal(externalLinkGenerator: (model: T) => string): ListTableColumnAction<T> {
-        this.Type = ListTableColumnActionType.ExternalLink;
-        this.GenerateUrl = externalLinkGenerator;
+        this.type = ListTableColumnActionType.ExternalLink;
+        this.generateUrl = externalLinkGenerator;
+
         return this;
     }
 
-    public Click(model: T): void {
-        this.DoClick(model);
+    public click(model: T): void {
+        this.doClick(model);
     }
 }

@@ -1,11 +1,11 @@
-import {Section, TypedData} from "./Section";
+import { AbstractSection, AbstractTypedData } from './abstract-section';
 
-export class GameData extends TypedData {
-  public Platforms: Platform[];
+export class GameData extends AbstractTypedData {
+  public platforms: Array<Platform>;
 }
 
-export class Game extends Section<GameData> {
-  Data: GameData;
+export class Game extends AbstractSection<GameData> {
+  data: GameData;
 }
 
 export enum Platform {
@@ -18,8 +18,7 @@ export enum Platform {
   PSThree,
   PSFour,
   Android,
-  iOS,
+  IOs,
   MacOS,
   Linux
 }
-

@@ -9,8 +9,14 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "paths": {
-            "@common": [
-                "@common/"
+            "@common/*": [
+                "app/@common/*"
+            ],
+            "@models/*": [
+                "app/@models/*"
+            ],
+            "@services/*": [
+                "app/@services/*"
             ]
         },
         "target": "es5",
@@ -20,6 +26,7 @@
         "lib": [
             "es2017",
             "dom"
-        ]
+        ],
+        "strictNullChecks": true
     }
 }

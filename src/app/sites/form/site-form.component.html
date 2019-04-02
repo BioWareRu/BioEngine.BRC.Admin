@@ -1,10 +1,10 @@
 <div class="page-layout blank p-24">
-    <form-layout *ngIf="formLoaded" [FormComponent]="this">
+    <form-layout *ngIf="formLoaded" [formComponent]="this">
         <text-input
-            [FormGroup]="Form.FormGroup"
-            FieldName="Title"
-            Label="Название сайта"
+                [inputFormGroup]="form.formGroup"
+            inputFieldName="title"
+            inputLabel="Название сайта"
         ></text-input>
-        <text-input [FormGroup]="Form.FormGroup" FieldName="Url" Label="Адрес сайта"></text-input>
+        <text-input [inputFormGroup]="form.formGroup" inputFieldName="url" inputLabel="Адрес сайта"></text-input>
     </form-layout>
 </div>

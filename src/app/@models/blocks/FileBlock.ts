@@ -1,19 +1,21 @@
+import { Icon } from '@common/shared/icon/Icon';
 import { Type } from 'class-transformer';
 import { StorageItem } from '../results/StorageItem';
-import { Icon } from 'app/@common/shared/icon/Icon';
-import { ContentBlockData, ContentBlock, ContentBlockItemType } from './ContentBlock';
+import { AbstractContentBlock, AbstractContentBlockData, ContentBlockItemType } from './abstract-content-block';
 
-export class FileBlockData extends ContentBlockData {
-    public File: StorageItem = new StorageItem();
+export class FileBlockData extends AbstractContentBlockData {
+    public file: StorageItem | null = new StorageItem();
 }
 
-export class FileBlock extends ContentBlock<FileBlockData> {
-    public Title = 'Файл';
-    public Icon = new Icon('fa-file-alt');
-    public Type: ContentBlockItemType = ContentBlockItemType.File;
+export class FileBlock extends AbstractContentBlock<FileBlockData> {
+    public title = 'Файл';
+    public icon = new Icon('fa-file-alt');
+    public type: ContentBlockItemType = ContentBlockItemType.File;
     @Type(() => FileBlockData)
-    Data: FileBlockData = new FileBlockData();
-    static IsEmpty(block: FileBlock): boolean {
-        return !block.Data.File || block.Data.File.FileSize < 1;
+    data: FileBlockData = new FileBlockData();
+
+
+    static isEmpty(block: FileBlock): boolean {
+        return !block.data.file || block.data.file.fileSize < 1;
     }
 }

@@ -1,52 +1,52 @@
 import { Component, OnInit } from '@angular/core';
-import { ListComponent } from '../../@common/list/ListComponent';
-import { ListTableColumn, SitesTableColumn } from '../../@common/list/ListTableColumn';
-import { ListTableColumnType } from '../../@common/list/ListEnums';
-import { ListTableColumnAction } from '../../@common/list/ListTableColumnAction';
-import { PageContext } from '../../@common/PageComponent';
-import { ServicesProvider } from '../../@services/ServicesProvider';
-import { Page } from '../../@models/Page';
-import { Icon } from 'app/@common/shared/icon/Icon';
+import { Icon } from '@common/shared/icon/Icon';
+import { AbstractListComponent } from '@common/list/abstract-list-component';
+import { ListTableColumnType } from '@common/list/ListEnums';
+import { ListTableColumn, SitesTableColumn } from '@common/list/ListTableColumn';
+import { ListTableColumnAction } from '@common/list/ListTableColumnAction';
+import { PageContext } from '@common/abstract-page-component';
+import { Page } from '@models/Page';
+import { ServicesProvider } from '@services/ServicesProvider';
 
 @Component({
     selector: 'ngx-dashboard',
     templateUrl: './list.component.html',
     providers: [PageContext]
 })
-export class PagesListComponent extends ListComponent<Page> implements OnInit {
-    constructor(context: PageContext, private servicesProvider: ServicesProvider) {
-        super(context, servicesProvider.PagesService);
+export class PagesListComponent extends AbstractListComponent<Page> implements OnInit {
+    constructor(private readonly _servicesProvider: ServicesProvider, context: PageContext) {
+        super(_servicesProvider.pagesService, context);
 
-        this.setTitle('Список страниц');
+        this._setTitle('Список страниц');
         this.provider.itemsPerPage = 20;
         this.addUrl = '/pages/add';
     }
 
     ngOnInit(): void {
-        this.Init();
+        this._init();
     }
 
-    protected GetColumns(): ListTableColumn<Page>[] {
+    protected _getColumns(): Array<ListTableColumn<Page>> {
         return [
-            new ListTableColumn<Page>('Title', 'Заголовок').setSortable().setLinkGetter(page => {
-                return ['/pages', page.Id, 'edit'];
+            new ListTableColumn<Page>('title', 'Заголовок').setSortable().setLinkGetter(page => {
+                return ['/pages', page.id, 'edit'];
             }),
             /*.setDisabled(!this.can(UserRights.AddNews))*/ new ListTableColumn<Page>(
-                'DateAdded',
+                'dateAdded',
                 'Дата',
                 ListTableColumnType.TimeAgo
             ).setSortable(),
-            new SitesTableColumn<Page>('SiteIds', 'Сайты'),
-            new ListTableColumn<Page>('Actions', '')
-                .AddAction(
+            new SitesTableColumn<Page>('siteIds', 'Сайты'),
+            new ListTableColumn<Page>('actions', '')
+                .addAction(
                     new ListTableColumnAction<Page>(
                         'Просмотреть на сайте',
                         new Icon('fa-globe')
-                    ).setExternal(page => page.Url)
+                    ).setExternal(page => page.url)
                 )
-                .AddAction(
+                .addAction(
                     new ListTableColumnAction<Page>('Удалить', new Icon('fa-trash')).setClick(
-                        Developer => this.deleteItem(Developer)
+                        page => this.deleteItem(page)
                     )
                 )
         ];

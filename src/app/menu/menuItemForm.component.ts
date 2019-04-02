@@ -1,26 +1,26 @@
 import { Component, Inject } from '@angular/core';
-import { PageContext } from '../@common/PageComponent';
-import { TreeNode } from 'angular-tree-component';
-import { SimpleFormComponent } from '../@common/forms/FormComponent';
 import { Validators } from '@angular/forms';
-import { DialogComponent } from '../@common/modals/DialogComponent';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { MenuItem } from '../@models/Menu';
-import { SnackBarService } from 'app/@common/snacks/SnackBarService';
+import { SnackBarService } from '@common/snacks/SnackBarService';
+import { TreeNode } from 'angular-tree-component';
+import { AbstractSimpleFormComponent } from '@common/forms/abstract-form-component';
+import { AbstractDialogComponent } from '@common/modals/abstract-dialog-component';
+import { PageContext } from '@common/abstract-page-component';
+import { MenuItem } from '@models/Menu';
 
 @Component({
     moduleId: module.id,
     selector: 'menuItemForm',
     templateUrl: './menuItemForm.component.html'
 })
-export class MenuItemFormComponent extends SimpleFormComponent<MenuItem> {
+export class MenuItemFormComponent extends AbstractSimpleFormComponent<MenuItem> {
     public constructor(snackBarService: SnackBarService) {
         super(snackBarService);
     }
 
-    protected constructForm(): void {
-        this.registerFormControl('Label', [<any>Validators.required]);
-        this.registerFormControl('Url', [<any>Validators.required]);
+    protected _constructForm(): void {
+        this.registerFormControl('inputLabel', [Validators.required]);
+        this.registerFormControl('url', [Validators.required]);
     }
 }
 
@@ -28,9 +28,9 @@ export class MenuItemFormComponent extends SimpleFormComponent<MenuItem> {
     moduleId: module.id,
     selector: 'menuItemFormDialog',
     template: `
-        <h1 mat-dialog-title>Пункт меню {{ item.Label }}</h1>
+        <h1 mat-dialog-title>Пункт меню {{ item.label }}</h1>
         <div mat-dialog-content>
-            <menuItemForm [Model]="item"> </menuItemForm>
+            <menuItemForm [model]="item"></menuItemForm>
         </div>
         <div mat-dialog-actions>
             <button mat-raised-button color="accent" (click)="hideDialog()">
@@ -40,7 +40,7 @@ export class MenuItemFormComponent extends SimpleFormComponent<MenuItem> {
     `,
     providers: [PageContext]
 })
-export class MenuItemFormDialogComponent extends DialogComponent<TreeNode> {
+export class MenuItemFormDialogComponent extends AbstractDialogComponent<TreeNode> {
     public item: MenuItem;
 
     public constructor(@Inject(MAT_DIALOG_DATA) data: TreeNode) {

@@ -1,32 +1,32 @@
-import {Injectable} from '@angular/core';
-import {BaseService} from '../@common/BaseService';
-import {RestClient} from '../@common/HttpClient';
-import {ClassType} from 'class-transformer/ClassTransformer';
-import {SaveModelResponse} from '../@common/SaveModelResponse';
-import {Forum} from '../@models/Forum';
-import {ListResult} from '../@common/list/ListResult';
-import {ForumListResult, SaveForumResponse} from '../@models/results/Forum';
+import { Injectable } from '@angular/core';
+import { ClassType } from 'class-transformer/ClassTransformer';
+import { AbstractBaseService } from '@common/abstract-base-service';
+import { RestClient } from '@common/HttpClient';
+import { AbstractListResult } from '@common/list/abstract-list-result';
+import { SaveModelResponse } from '@common/SaveModelResponse';
+import { Forum } from '@models/Forum';
+import { ForumListResult, SaveForumResponse } from '@models/results/Forum';
 
 @Injectable()
-export class ForumsService extends BaseService<Forum> {
+export class ForumsService extends AbstractBaseService<Forum> {
 
   constructor(httpClient: RestClient) {
     super(httpClient);
   }
 
-  protected getListType(): ClassType<ListResult<Forum>> {
+  protected _getListType(): ClassType<AbstractListResult<Forum>> {
     return ForumListResult;
   }
 
-  protected getResource(): string {
+  protected _getResource(): string {
     return 'ipb/forums';
   }
 
-  protected getType(): ClassType<Forum> {
+  protected _getType(): ClassType<Forum> {
     return Forum;
   }
 
-  protected getSaveType(): ClassType<SaveModelResponse<Forum>> {
+  protected _getSaveType(): ClassType<SaveModelResponse<Forum>> {
     return SaveForumResponse;
   }
 }

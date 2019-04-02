@@ -1,8 +1,8 @@
-import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
-import { ContentListComponent } from './list/list.component';
 import { PostFormPageComponent } from './form/form-page.component';
+import { ContentListComponent } from './list/list.component';
 
 const routes: Routes = [
     {

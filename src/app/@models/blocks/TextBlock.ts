@@ -1,19 +1,19 @@
+import { Icon } from '@common/shared/icon/Icon';
 import { Type } from 'class-transformer';
-import { Icon } from 'app/@common/shared/icon/Icon';
-import { ContentBlock, ContentBlockItemType, ContentBlockData } from './ContentBlock';
+import { AbstractContentBlock, AbstractContentBlockData, ContentBlockItemType } from './abstract-content-block';
 
-export class TextBlock extends ContentBlock<TextBlockData> {
-    public Title = 'Текст';
-    public Icon = new Icon('fa-pen');
-    public Type: ContentBlockItemType = ContentBlockItemType.Text;
+export class TextBlock extends AbstractContentBlock<TextBlockData> {
+    public title = 'Текст';
+    public icon = new Icon('fa-pen');
+    public type: ContentBlockItemType = ContentBlockItemType.Text;
     @Type(() => TextBlockData)
-    Data: TextBlockData = new TextBlockData();
+    data: TextBlockData = new TextBlockData();
 
-    static IsEmpty(block: TextBlock): boolean {
-        return !block.Data.Text || block.Data.Text === '' || block.Data.Text === '<p>&nbsp;</p>';
+    static isEmpty(block: TextBlock): boolean {
+        return !block.data.text || block.data.text === '' || block.data.text === '<p>&nbsp;</p>';
     }
 }
 
-export class TextBlockData extends ContentBlockData {
-    public Text = '';
+export class TextBlockData extends AbstractContentBlockData {
+    public text = '';
 }

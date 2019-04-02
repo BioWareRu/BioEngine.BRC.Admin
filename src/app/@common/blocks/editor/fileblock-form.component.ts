@@ -1,32 +1,30 @@
-import { Validators } from '@angular/forms';
 import { Component } from '@angular/core';
-import { FileBlock } from 'app/@models/blocks/FileBlock';
-import { ServicesProvider } from 'app/@services/ServicesProvider';
-import { PostsService } from 'app/@services/ContentService';
-import { SnackBarService } from 'app/@common/snacks/SnackBarService';
-import { ContentBlockFormComponent, BlockFieldDescriptor } from './ContentBlockFormComponent';
-import { IKeyedCollection, NumberKeyedCollection } from 'app/@common/KeyedCollection';
-import { StorageItem } from 'app/@models/results/StorageItem';
-import { DialogService } from 'app/@common/modals/DialogService';
-import { StorageManagerDialogComponent } from 'app/@common/storage/StorageManagerDialogComponent';
-import { DialogConfig } from 'app/@common/modals/DialogConfig';
-import { StorageNode } from 'app/@services/StorageService';
+import { Validators } from '@angular/forms';
+import { DialogService } from '@common/modals/DialogService';
+import { SnackBarService } from '@common/snacks/SnackBarService';
+import { StorageManagerDialogComponent } from '@common/storage/StorageManagerDialogComponent';
+import { FileBlock } from '@models/blocks/FileBlock';
+import { StorageItem } from '@models/results/StorageItem';
+import { PostsService } from '@services/ContentService';
+import { ServicesProvider } from '@services/ServicesProvider';
+import { StorageNode } from '@services/StorageService';
+import { BlockFieldDescriptor, AbstractContentBlockFormComponent } from './abstract-content-block-form-component';
 
 @Component({
     selector: 'file-block-form',
     template: `
-        <div [formGroup]="Form.FormGroup">
-            <div class="file" *ngIf="File">
+        <div [formGroup]="form.formGroup">
+            <div class="file" *ngIf="file">
                 <div class="icon">
                     <icon iconName="fa-file"></icon>
                 </div>
-                <p>{{ File.FileName }}</p>
-                <p>{{ File.FileSize | fileSize }}</p>
-                <div (click)="deletePicture(picture)" class="deleteOverlay">
+                <p>{{ file.fileName }}</p>
+                <p>{{ file.fileSize | fileSize }}</p>
+                <div (click)="delete()" class="deleteOverlay">
                     <icon iconName="fa-trash"></icon>
                 </div>
             </div>
-            <div *ngIf="!File">
+            <div *ngIf="!file">
                 <p style="text-align:center">Выберите файл</p>
                 <p style="text-align:center">
                     <button mat-raised-button color="accent" (click)="showStorageDialog()">
@@ -38,56 +36,58 @@ import { StorageNode } from 'app/@services/StorageService';
     `,
     styleUrls: [`./fileblock-form.component.scss`]
 })
-export class FileBlockFormComponent extends ContentBlockFormComponent<FileBlock> {
-    public File: StorageItem;
+export class FileBlockFormComponent extends AbstractContentBlockFormComponent<FileBlock> {
+    public file: StorageItem | null;
 
     constructor(
-        private servicesProvider: ServicesProvider,
-        snackBarService: SnackBarService,
-        protected dialogService: DialogService
+        private readonly _servicesProvider: ServicesProvider,
+        protected _dialogService: DialogService,
+        snackBarService: SnackBarService
     ) {
         super(snackBarService);
     }
 
     public getService(): PostsService {
-        return this.servicesProvider.PostsService;
+        return this._servicesProvider.postsService;
     }
 
-    protected getFields(): BlockFieldDescriptor[] {
-        return [new BlockFieldDescriptor('File', [Validators.required], 'Data.File')];
+    protected _getFields(): Array<BlockFieldDescriptor> {
+        return [new BlockFieldDescriptor('file', [Validators.required], 'data.file')];
     }
 
     public isEmpty(): boolean {
-        return this.Model.Data.File.FileSize === 0;
+        return !this.model.data.file || this.model.data.file.fileSize === 0;
     }
 
-    protected afterInit(): void {
-        super.afterInit();
-        if (!FileBlock.IsEmpty(this.Model)) {
-            this.File = this.Model.Data.File;
+    protected _afterInit(): void {
+        super._afterInit();
+        if (!FileBlock.isEmpty(this.model)) {
+            this.file = this.model.data.file;
         }
     }
 
     public delete(): void {
-        this.File = null;
-        this.Model.Data.File = null;
+        this.file = null;
+        this.model.data.file = null;
     }
 
-    public showStorageDialog(replace = false): void {
-        this.dialogService
-            .show(StorageManagerDialogComponent, '', (config: DialogConfig) => {
+    public showStorageDialog(): void {
+        this._dialogService
+            .show(StorageManagerDialogComponent, '', (config) => {
                 config.maxWidth = '90vw';
                 config.width = '90vw';
             })
             .dialogRef.afterClosed()
-            .subscribe((nodes: StorageNode[]) => {
+            .subscribe((nodes: Array<StorageNode>) => {
                 nodes.forEach(node => {
-                    this.File = node.Item;
+                    this.file = node.item;
                 });
 
-                const control = this.Form.FormGroup.get(this.getFieldName('File'));
-                control.patchValue(this.File);
-                console.log(this.Form);
+                const control = this.form.formGroup.get(this.getFieldName('file'));
+                if (control) {
+                    control.patchValue(this.file);
+                    console.log(this.form);
+                }
             });
     }
 }

@@ -1,91 +1,92 @@
 import { Component, OnInit } from '@angular/core';
-import { ListComponent } from '../../@common/list/ListComponent';
-import { ServicesProvider } from '../../@services/ServicesProvider';
-import { ListTableColumn, SitesTableColumn } from '../../@common/list/ListTableColumn';
-import { ListTableColumnType } from '../../@common/list/ListEnums';
-import { ListTableColumnAction } from '../../@common/list/ListTableColumnAction';
-import { BaseSection, SectionType } from '../../@models/Section';
+import { Icon } from '@common/shared/icon/Icon';
 import { map } from 'rxjs/operators';
-import { PageContext } from '../../@common/PageComponent';
-import { Filter, FilterOperator } from '../../@common/Filter';
-import { Icon } from 'app/@common/shared/icon/Icon';
+import { Filter, FilterOperator } from '@common/Filter';
+import { AbstractListComponent } from '@common/list/abstract-list-component';
+import { ListTableColumnType } from '@common/list/ListEnums';
+import { ListTableColumn, SitesTableColumn } from '@common/list/ListTableColumn';
+import { ListTableColumnAction } from '@common/list/ListTableColumnAction';
+import { PageContext } from '@common/abstract-page-component';
+import { BaseSection, SectionType } from '@models/abstract-section';
+import { ServicesProvider } from '@services/ServicesProvider';
 
 @Component({
     selector: 'sections-list',
     templateUrl: './list.component.html',
     providers: [PageContext]
 })
-export class SectionsListComponent extends ListComponent<BaseSection> implements OnInit {
-    _showType = true;
-    constructor(context: PageContext, private servicesProvider: ServicesProvider) {
-        super(context, servicesProvider.SectionsService);
+export class SectionsListComponent extends AbstractListComponent<BaseSection> implements OnInit {
+    private _showType = true;
 
-        context.StateService.setTitle('Список разделов');
+    constructor(private readonly _servicesProvider: ServicesProvider, context: PageContext) {
+        super(_servicesProvider.sectionsService, context);
+
+        context.stateService.setTitle('Список разделов');
         this.provider.itemsPerPage = 20;
     }
 
     ngOnInit(): void {
-        this.Route.params.pipe(map(p => p.type)).subscribe(type => {
+        this._route.params.pipe(map(p => p.type)).subscribe(type => {
             this._showType = false;
             switch (type) {
                 case 'developers':
                     this.provider.applyFilter(
-                        Filter.simple('Type', FilterOperator.Equal, SectionType.Developer)
+                        Filter.simple('type', FilterOperator.Equal, SectionType.Developer)
                     );
-                    this.setTitle('Разработчики');
+                    this._setTitle('Разработчики');
                     this.addUrl = '/sections/developers/add';
                     break;
                 case 'games':
                     this.provider.applyFilter(
-                        Filter.simple('Type', FilterOperator.Equal, SectionType.Game)
+                        Filter.simple('type', FilterOperator.Equal, SectionType.Game)
                     );
-                    this.setTitle('Игры');
+                    this._setTitle('Игры');
                     this.addUrl = '/sections/games/add';
                     break;
                 case 'topics':
                     this.provider.applyFilter(
-                        Filter.simple('Type', FilterOperator.Equal, SectionType.Topic)
+                        Filter.simple('type', FilterOperator.Equal, SectionType.Topic)
                     );
-                    this.setTitle('Темы');
+                    this._setTitle('Темы');
                     this.addUrl = '/sections/topics/add';
                     break;
                 default:
                     this._showType = true;
                     break;
             }
-            this.Init();
+            this._init();
         });
     }
 
-    protected GetColumns(): ListTableColumn<BaseSection>[] {
+    protected _getColumns(): Array<ListTableColumn<BaseSection>> {
         return [
-            new ListTableColumn<BaseSection>('Title', 'Заголовок')
+            new ListTableColumn<BaseSection>('title', 'Заголовок')
                 .setSortable()
                 .setLinkGetter(section => {
-                    switch (section.Type) {
+                    switch (section.type) {
                         case SectionType.Developer:
-                            return ['/sections/developers', section.Id, 'edit'];
+                            return ['/sections/developers', section.id, 'edit'];
                         case SectionType.Game:
-                            return ['/sections/games', section.Id, 'edit'];
+                            return ['/sections/games', section.id, 'edit'];
                         case SectionType.Topic:
-                            return ['/sections/topics', section.Id, 'edit'];
+                            return ['/sections/topics', section.id, 'edit'];
                     }
                 }),
-            new ListTableColumn<BaseSection>('TypeTitle', 'Тип').setHidden(!this._showType),
+            new ListTableColumn<BaseSection>('typeTitle', 'Тип').setHidden(!this._showType),
             /*.setDisabled(!this.can(UserRights.AddNews))*/ new ListTableColumn<BaseSection>(
-                'DateAdded',
+                'dateAdded',
                 'Дата',
                 ListTableColumnType.TimeAgo
             ).setSortable(),
-            new SitesTableColumn<BaseSection>('SiteIds', 'Сайты'),
-            new ListTableColumn<BaseSection>('Actions', '')
-                .AddAction(
+            new SitesTableColumn<BaseSection>('siteIds', 'Сайты'),
+            new ListTableColumn<BaseSection>('actions', '')
+                .addAction(
                     new ListTableColumnAction<BaseSection>(
                         'Просмотреть на сайте',
                         new Icon('fa-globe')
-                    ).setExternal(secion => secion.Url)
+                    ).setExternal(secion => secion.url)
                 )
-                .AddAction(
+                .addAction(
                     new ListTableColumnAction<BaseSection>(
                         'Удалить',
                         new Icon('fa-trash')

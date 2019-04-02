@@ -1,17 +1,14 @@
 import { NgModule } from '@angular/core';
 
-import { BioCommonModule } from '../@common/BioCommonModule';
-import { BioFormsModule } from '../@common/forms/FormsModule';
-import { MenuListComponent } from './list.component';
-import { MenuFormComponent } from './form.component';
-import { TreeModule } from 'angular-tree-component';
-import {
-    MenuItemFormComponent,
-    MenuItemFormDialogComponent
-} from './menuItemForm.component';
 import { RouterModule, Routes } from '@angular/router';
-import { DialogService } from '../@common/modals/DialogService';
+import { TreeModule } from 'angular-tree-component';
+import { BioCommonModule } from '@common/BioCommonModule';
+import { BioFormsModule } from '@common/forms/FormsModule';
+import { DialogService } from '@common/modals/DialogService';
 import { MenuFormPageComponent } from './form-page.component';
+import { MenuFormComponent } from './form.component';
+import { MenuListComponent } from './list.component';
+import { MenuItemFormComponent, MenuItemFormDialogComponent } from './menuItemForm.component';
 
 const routes: Routes = [
     {

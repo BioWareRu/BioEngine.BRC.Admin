@@ -1,6 +1,6 @@
 export class User {
-    public Id: number;
-    public Name: string;
-    public PhotoUrl: string;
-    public ProfileUrl: string;
+    public id: number;
+    public name: string;
+    public photoUrl: string;
+    public profileUrl: string;
 }

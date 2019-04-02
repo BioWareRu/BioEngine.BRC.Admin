@@ -1,37 +1,34 @@
-import { FormPageComponent } from 'app/@common/forms/FormComponent';
-import { SaveSiteResponse } from 'app/@models/results/Site';
-import { Site } from 'app/@models/Site';
-import { BaseService } from 'app/@common/BaseService';
-import { PageContext } from 'app/@common/PageComponent';
-import { SitesService } from 'app/@services/SitesService';
 import { Component } from '@angular/core';
-import { Page } from 'app/@models/Page';
-import { SavePageResponse } from 'app/@models/results/Page';
-import { PagesService } from 'app/@services/PagesService';
+import { AbstractBaseService } from '@common/abstract-base-service';
+import { AbstractFormPageComponent } from '@common/forms/abstract-form-component';
+import { PageContext } from '@common/abstract-page-component';
+import { Page } from '@models/Page';
+import { SavePageResponse } from '@models/results/Page';
+import { PagesService } from '@services/PagesService';
 
 @Component({
     selector: 'page-form-page',
     template: `
-        <page-form class="model-form" #modelForm [model]="Model"></page-form>
+        <page-form class="model-form" #modelForm [model]="model"></page-form>
     `,
     providers: [PageContext]
 })
-export class PageFormPageComponent extends FormPageComponent<
+export class PageFormPageComponent extends AbstractFormPageComponent<
     Page,
     SavePageResponse
 > {
-    constructor(context: PageContext, protected pagesService: PagesService) {
+    constructor(protected _pagesService: PagesService, context: PageContext) {
         super(context);
     }
 
-    protected getNewModelTitle(): string {
+    protected _getNewModelTitle(): string {
         return 'Создание страницы';
     }
-    protected getService(): BaseService<Page> {
-        return this.pagesService;
+    protected _getService(): AbstractBaseService<Page> {
+        return this._pagesService;
     }
 
-    protected getRoute(): string {
+    protected _getRoute(): string {
         return '/pages';
     }
 }

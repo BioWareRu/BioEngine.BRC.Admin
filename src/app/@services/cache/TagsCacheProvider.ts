@@ -1,7 +1,8 @@
-import { TagsService } from './../TagsService';
 import { Injectable } from '@angular/core';
-import { CacheProvider } from 'app/@common/CacheProvider';
-import { Tag } from 'app/@models/Tag';
+import { CacheProvider } from '@common/CacheProvider';
+import { Tag } from '@models/Tag';
+import { TagsService } from './../TagsService';
+
 @Injectable({
     providedIn: 'root'
 })

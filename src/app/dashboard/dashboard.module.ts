@@ -1,8 +1,8 @@
-import {NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 
-import {DashboardComponent} from './dashboard.component';
-import {BioCommonModule} from '../@common/BioCommonModule';
-import {RouterModule, Routes} from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+import { BioCommonModule } from '@common/BioCommonModule';
+import { DashboardComponent } from './dashboard.component';
 
 const routes: Routes = [{
     path: '',
@@ -10,26 +10,26 @@ const routes: Routes = [{
     children: [
         {
             path: 'dashboard',
-            component: DashboardComponent,
+            component: DashboardComponent
         },
         {
             path: '',
             redirectTo: 'dashboard',
-            pathMatch: 'full',
-        },
-    ],
+            pathMatch: 'full'
+        }
+    ]
 }];
 
 @NgModule({
     imports: [
         BioCommonModule,
-        RouterModule.forChild(routes),
+        RouterModule.forChild(routes)
     ],
     exports: [
         RouterModule
     ],
     declarations: [
-        DashboardComponent,
+        DashboardComponent
     ]
 })
 export class DashboardModule {

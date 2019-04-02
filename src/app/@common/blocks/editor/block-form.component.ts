@@ -1,22 +1,22 @@
-import { YoutubeBlock } from './../../../@models/blocks/YoutubeBlock';
-import { GalleryBlock } from 'app/@models/blocks/GalleryBlock';
-import { FileBlock } from 'app/@models/blocks/FileBlock';
-import { TextBlock } from 'app/@models/blocks/TextBlock';
+import { Component, ComponentFactoryResolver, Input, OnInit, Type, ViewChild } from '@angular/core';
+import { DynamicHostDirective } from '@common/directives/DynamicHostDirective';
+import { Form } from '@common/forms/Form';
+import { AbstractBaseContentBlock, ContentBlockItemType } from '@models/blocks/abstract-content-block';
+import { CutBlock } from '@models/blocks/CutBlock';
+import { FileBlock } from '@models/blocks/FileBlock';
+import { GalleryBlock } from '@models/blocks/GalleryBlock';
+import { TextBlock } from '@models/blocks/TextBlock';
+import { TwitterBlock } from '@models/blocks/TwitterBlock';
+import { YoutubeBlock } from '@models/blocks/YoutubeBlock';
+import Dictionary from '../../Dictionary';
 import { BlocksManager } from '../BlocksManager';
-import { DynamicHostDirective } from 'app/@common/directives/DynamicHostDirective';
-import { ViewChild, Component, Input, OnInit, ComponentFactoryResolver, Type } from '@angular/core';
-import { IKeyedCollection, KeyedCollection } from 'app/@common/KeyedCollection';
-import { Form } from 'app/@common/forms/Form';
-import { BaseContentBlock, ContentBlockItemType } from 'app/@models/blocks/ContentBlock';
-import { TextBlockFormComponent } from './textblock-form.component';
+import { AbstractContentBlockFormComponent } from './abstract-content-block-form-component';
+import { CutBlockFormComponent } from './cutblock-form.component';
+import { FileBlockFormComponent } from './fileblock-form.component';
 import { GalleryBlockFormComponent } from './galleryblock-form.component';
+import { TextBlockFormComponent } from './textblock-form.component';
 import { TwitterBlockFormComponent } from './twitterblock-form.component';
 import { YoutubeBlockFormComponent } from './youtubeblock-form.component';
-import { ContentBlockFormComponent } from './ContentBlockFormComponent';
-import { FileBlockFormComponent } from './fileblock-form.component';
-import { CutBlockFormComponent } from './cutblock-form.component';
-import { CutBlock } from 'app/@models/blocks/CutBlock';
-import { TwitterBlock } from 'app/@models/blocks/TwitterBlock';
 
 @Component({
     selector: 'blockForm',
@@ -26,11 +26,12 @@ import { TwitterBlock } from 'app/@models/blocks/TwitterBlock';
                 <icon iconName="fa-plus"></icon>
             </button>
             <mat-menu #menuTop="matMenu">
-                <ng-container *ngFor="let config of blocksManager.Types.Values()">
+                <ng-container *ngFor="let config of blocksManager.types.values()">
                     <button mat-menu-item (click)="addBlock(config.type, 'before')">
                         <icon [icon]="config.icon"></icon>
                         <span>{{ config.title }}</span>
-                    </button></ng-container
+                    </button>
+                </ng-container
                 >
             </mat-menu>
         </ng-container>
@@ -40,85 +41,94 @@ import { TwitterBlock } from 'app/@models/blocks/TwitterBlock';
                 <icon iconName="fa-plus"></icon>
             </button>
             <mat-menu #menu="matMenu">
-                <ng-container *ngFor="let config of blocksManager.Types.Values()">
+                <ng-container *ngFor="let config of blocksManager.types.values()">
                     <button mat-menu-item (click)="addBlock(config.type)">
                         <icon [icon]="config.icon"></icon>
                         <span>{{ config.title }}</span>
-                    </button></ng-container
+                    </button>
+                </ng-container
                 >
             </mat-menu>
         </ng-container>
     `
 })
-export class BlockFormComponent<TModel extends BaseContentBlock> implements OnInit {
-    constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
-    static forms: IKeyedCollection<Type<any>, string> = new KeyedCollection<Type<any>>();
+export class BlockFormComponent<TModel extends AbstractBaseContentBlock> implements OnInit {
+    constructor(private readonly _componentFactoryResolver: ComponentFactoryResolver) {
+    }
+
+    static forms = new Dictionary<ContentBlockItemType, Type<any>>();
 
     @ViewChild(DynamicHostDirective) adHost: DynamicHostDirective;
 
     @Input()
     public blocksManager: BlocksManager;
 
-    @Input() public Model: TModel;
+    @Input() public model: TModel;
 
     @Input()
-    public Form: Form;
+    public form: Form;
+
     ngOnInit(): void {
-        if (BlockFormComponent.forms.Count() === 0) {
-            BlockFormComponent.forms.Add(ContentBlockItemType.Text, TextBlockFormComponent);
-            BlockFormComponent.forms.Add(ContentBlockItemType.Gallery, GalleryBlockFormComponent);
-            BlockFormComponent.forms.Add(ContentBlockItemType.File, FileBlockFormComponent);
-            BlockFormComponent.forms.Add(ContentBlockItemType.Cut, CutBlockFormComponent);
-            BlockFormComponent.forms.Add(ContentBlockItemType.Twitter, TwitterBlockFormComponent);
-            BlockFormComponent.forms.Add(ContentBlockItemType.Youtube, YoutubeBlockFormComponent);
+        if (BlockFormComponent.forms.size() === 0) {
+            BlockFormComponent.forms.set(ContentBlockItemType.Text, TextBlockFormComponent);
+            BlockFormComponent.forms.set(ContentBlockItemType.Gallery, GalleryBlockFormComponent);
+            BlockFormComponent.forms.set(ContentBlockItemType.File, FileBlockFormComponent);
+            BlockFormComponent.forms.set(ContentBlockItemType.Cut, CutBlockFormComponent);
+            BlockFormComponent.forms.set(ContentBlockItemType.Twitter, TwitterBlockFormComponent);
+            BlockFormComponent.forms.set(ContentBlockItemType.Youtube, YoutubeBlockFormComponent);
         }
 
-        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
-            BlockFormComponent.forms.Item(this.Model.Type)
+        const formComponent = BlockFormComponent.forms.get(this.model.type);
+        if (!formComponent) {
+            throw new Error('Can\'t find form component for ' + this.model.type);
+        }
+        const componentFactory = this._componentFactoryResolver.resolveComponentFactory(
+            formComponent
         );
 
         const viewContainerRef = this.adHost.viewContainerRef;
         viewContainerRef.clear();
 
         const componentRef = viewContainerRef.createComponent(componentFactory);
-        const instance = <ContentBlockFormComponent<TModel>>componentRef.instance;
-        instance.Model = this.Model;
-        instance.Form = this.Form;
+        const instance = <AbstractContentBlockFormComponent<TModel>>componentRef.instance;
+        instance.model = this.model;
+        instance.form = this.form;
         instance.blocksManager = this.blocksManager;
     }
 
     public addBlock(type: ContentBlockItemType, direction = 'after'): void {
-        const newBlock = this.blocksManager.CreateBlock(type);
-        if (this.isEmpty()) {
-            this.blocksManager.ReplaceBlock(this.Model, newBlock);
+        const newBlock = this.blocksManager.createBlock(type);
+        if (this._isEmpty()) {
+            this.blocksManager.replaceBlock(this.model, newBlock);
         } else {
-            this.blocksManager.AddBlock(newBlock, this.Model, direction);
+            this.blocksManager.addBlock(newBlock, this.model, direction);
         }
-        this.blocksManager.Update();
+        this.blocksManager.update();
     }
 
-    private isEmpty(): boolean {
+    private _isEmpty(): boolean {
         let isEmpty = false;
-        switch (this.Model.Type) {
+        switch (this.model.type) {
             case ContentBlockItemType.Text:
-                isEmpty = TextBlock.IsEmpty((<unknown>this.Model) as TextBlock);
+                isEmpty = TextBlock.isEmpty(<TextBlock>(<unknown>this.model));
                 break;
             case ContentBlockItemType.Cut:
-                isEmpty = CutBlock.IsEmpty((<unknown>this.Model) as CutBlock);
+                isEmpty = CutBlock.isEmpty(<CutBlock>(<unknown>this.model));
                 break;
             case ContentBlockItemType.File:
-                isEmpty = FileBlock.IsEmpty((<unknown>this.Model) as FileBlock);
+                isEmpty = FileBlock.isEmpty(<FileBlock>(<unknown>this.model));
                 break;
             case ContentBlockItemType.Gallery:
-                isEmpty = GalleryBlock.IsEmpty((<unknown>this.Model) as GalleryBlock);
+                isEmpty = GalleryBlock.isEmpty(<GalleryBlock>(<unknown>this.model));
                 break;
             case ContentBlockItemType.Twitter:
-                isEmpty = TwitterBlock.IsEmpty((<unknown>this.Model) as TwitterBlock);
+                isEmpty = TwitterBlock.isEmpty(<TwitterBlock>(<unknown>this.model));
                 break;
             case ContentBlockItemType.Youtube:
-                isEmpty = YoutubeBlock.IsEmpty((<unknown>this.Model) as YoutubeBlock);
+                isEmpty = YoutubeBlock.isEmpty(<YoutubeBlock>(<unknown>this.model));
                 break;
         }
+
         return isEmpty;
     }
 }

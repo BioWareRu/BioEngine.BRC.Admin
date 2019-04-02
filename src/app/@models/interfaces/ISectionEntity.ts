@@ -1,10 +1,10 @@
 import { ISiteEntity } from './ISiteEntity';
 
 export interface ISectionEntity extends ISiteEntity {
-    SectionIds: string[];
-    TagIds: string[];
-    Sections: any[];
-    Tags: any[];
-    Url: string;
-    Title: string;
+    sectionIds: Array<string>;
+    tagIds: Array<string>;
+    sections: Array<any>;
+    tags: Array<any>;
+    url: string;
+    title: string;
 }

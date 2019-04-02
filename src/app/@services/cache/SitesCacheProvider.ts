@@ -1,7 +1,8 @@
-import { Site } from '../../@models/Site';
 import { Injectable } from '@angular/core';
-import { CacheProvider } from 'app/@common/CacheProvider';
+import { CacheProvider } from '@common/CacheProvider';
+import { Site } from '@models/Site';
 import { SitesService } from '../SitesService';
+
 @Injectable({
     providedIn: 'root'
 })

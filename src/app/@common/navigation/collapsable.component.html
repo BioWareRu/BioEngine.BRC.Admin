@@ -1,6 +1,5 @@
 <a
     class="nav-link"
-    [ngClass]="item.classes"
     *ngIf="!item.url"
     (click)="toggleOpen($event)"
     matRipple
@@ -9,7 +8,6 @@
 </a>
 <a
     class="nav-link"
-    [ngClass]="item.classes"
     *ngIf="item.url"
     (click)="toggleOpen($event)"
     [routerLink]="[item.url]"

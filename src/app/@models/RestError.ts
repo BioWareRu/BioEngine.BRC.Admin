@@ -1,4 +1,4 @@
 export class RestError {
-  constructor(public Code: number, public Error: string) {
+  constructor(public code: number, public error: string) {
   }
 }

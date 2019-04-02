@@ -1,4 +1,4 @@
-<form [formGroup]="Form.FormGroup" *ngIf="formLoaded">
-    <text-input [FormGroup]="Form.FormGroup" FieldName="Label" Label="Название"></text-input>
-    <text-input [FormGroup]="Form.FormGroup" FieldName="Url" Label="Адрес"></text-input>
+<form [formGroup]="form.formGroup" *ngIf="formLoaded">
+    <text-input [inputFormGroup]="form.formGroup" inputFieldName="Label" inputLabel="Название"></text-input>
+    <text-input [inputFormGroup]="form.formGroup" inputFieldName="Url" inputLabel="Адрес"></text-input>
 </form>

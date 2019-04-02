@@ -1,7 +1,7 @@
-import { NavigationItem } from './@common/navigation/NavigationItem';
-import { Icon } from './@common/shared/icon/Icon';
+import { NavigationItem } from '@common/navigation/NavigationItem';
+import { Icon } from '@common/shared/icon/Icon';
 
-export const navigation: NavigationItem[] = [
+export const NAVIGATION: Array<NavigationItem> = [
     {
         id: 'dash',
         type: 'item',

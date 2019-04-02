@@ -1,32 +1,32 @@
-import {Injectable} from '@angular/core';
-import {BaseServiceWithUpload} from '../@common/BaseService';
-import {Developer} from '../@models/Developer';
-import {RestClient} from '../@common/HttpClient';
-import {ListResult} from '../@common/list/ListResult';
-import {DeveloperListResult, SaveDeveloperResponse} from '../@models/results/Developer';
-import {ClassType} from 'class-transformer/ClassTransformer';
-import {SaveModelResponse} from '../@common/SaveModelResponse';
+import { Injectable } from '@angular/core';
+import { ClassType } from 'class-transformer/ClassTransformer';
+import { AbstractServiceWithUpload } from '@common/abstract-base-service';
+import { RestClient } from '@common/HttpClient';
+import { AbstractListResult } from '@common/list/abstract-list-result';
+import { SaveModelResponse } from '@common/SaveModelResponse';
+import { Developer } from '@models/Developer';
+import { DeveloperListResult, SaveDeveloperResponse } from '@models/results/Developer';
 
 @Injectable()
-export class DevelopersService extends BaseServiceWithUpload<Developer> {
+export class DevelopersService extends AbstractServiceWithUpload<Developer> {
 
   constructor(httpClient: RestClient) {
     super(httpClient);
   }
 
-  protected getListType(): ClassType<ListResult<Developer>> {
+  protected _getListType(): ClassType<AbstractListResult<Developer>> {
     return DeveloperListResult;
   }
 
-  protected getResource(): string {
+  protected _getResource(): string {
     return 'developers';
   }
 
-  protected getSaveType(): ClassType<SaveModelResponse<Developer>> {
+  protected _getSaveType(): ClassType<SaveModelResponse<Developer>> {
     return SaveDeveloperResponse;
   }
 
-  protected getType(): ClassType<Developer> {
+  protected _getType(): ClassType<Developer> {
     return Developer;
   }
 }

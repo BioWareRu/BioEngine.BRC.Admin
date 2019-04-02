@@ -1,10 +1,7 @@
-import { NgModule } from '@angular/core';
-import { ListTableComponent } from './list/component/list.component';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { MomentModule } from 'ngx-moment';
-import 'moment/locale/ru';
-import { BioFormsModule } from './forms/FormsModule';
+import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule } from '@angular/forms';
 import {
     MatButtonModule,
     MatCardModule,
@@ -19,25 +16,25 @@ import {
     MatSortModule,
     MatTableModule
 } from '@angular/material';
-import { BrcPerfectScrollbarDirective } from './scroll/scrollbar.component';
-import { UserComponent } from './user/user.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { NotificationComponent } from './snacks/NotificationComponent';
-import { ConfirmationDialogComponent } from './modals/ConfirmationDialogService';
-import {
-    StorageManagerComponent,
-    CreateFolderDialogComponent,
-    FileSizePipe
-} from './storage/StorageManagerComponent';
-import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import 'moment/locale/ru';
+import { TrackByPropertyPipe } from '@common/pipes/TrackByPropertyPipe';
+import { MomentModule } from 'ngx-moment';
 import { DynamicHostDirective } from './directives/DynamicHostDirective';
-import { StorageManagerDialogComponent } from './storage/StorageManagerDialogComponent';
-import { BioSharedModule } from './shared/BioSharedModule';
+import { BioFormsModule } from './forms/FormsModule';
+import { ListTableComponent } from './list/component/list.component';
+import { SectionsLabelsListComponent } from './list/component/sections-list.component';
+import { SitesLabelsListComponent } from './list/component/sites-list.component';
+import { TagsLabelsListComponent } from './list/component/tags-list.component';
+import { ConfirmationDialogComponent } from './modals/ConfirmationDialogService';
 import { SafePipe } from './pipes/SafePipe';
 import { TruncatePipe } from './pipes/TruncatePipe';
-import { SitesLabelsListComponent } from './list/component/sites-list.component';
-import { SectionsLabelsListComponent } from './list/component/sections-list.component';
-import { TagsLabelsListComponent } from './list/component/tags-list.component';
+import { BrcPerfectScrollbarDirective } from './scroll/scrollbar.component';
+import { BioSharedModule } from './shared/BioSharedModule';
+import { NotificationComponent } from './snacks/NotificationComponent';
+import { CreateFolderDialogComponent, FileSizePipe, StorageManagerComponent } from './storage/StorageManagerComponent';
+import { StorageManagerDialogComponent } from './storage/StorageManagerDialogComponent';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
     declarations: [
@@ -54,6 +51,7 @@ import { TagsLabelsListComponent } from './list/component/tags-list.component';
         FileSizePipe,
         SafePipe,
         TruncatePipe,
+        TrackByPropertyPipe,
         DynamicHostDirective,
         StorageManagerDialogComponent
     ],
@@ -76,6 +74,7 @@ import { TagsLabelsListComponent } from './list/component/tags-list.component';
         FileSizePipe,
         SafePipe,
         TruncatePipe,
+        TrackByPropertyPipe,
         DynamicHostDirective,
         BioSharedModule
     ],

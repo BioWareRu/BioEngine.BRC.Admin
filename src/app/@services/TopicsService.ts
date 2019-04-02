@@ -1,32 +1,32 @@
-import {Injectable} from '@angular/core';
-import {BaseServiceWithUpload} from '../@common/BaseService';
-import {Topic} from '../@models/Topic';
-import {RestClient} from '../@common/HttpClient';
-import {ListResult} from '../@common/list/ListResult';
-import {SaveTopicResponse, TopicListResult} from '../@models/results/Topic';
-import {ClassType} from 'class-transformer/ClassTransformer';
-import {SaveModelResponse} from '../@common/SaveModelResponse';
+import { Injectable } from '@angular/core';
+import { ClassType } from 'class-transformer/ClassTransformer';
+import { AbstractServiceWithUpload } from '@common/abstract-base-service';
+import { RestClient } from '@common/HttpClient';
+import { AbstractListResult } from '@common/list/abstract-list-result';
+import { SaveModelResponse } from '@common/SaveModelResponse';
+import { SaveTopicResponse, TopicListResult } from '@models/results/Topic';
+import { Topic } from '@models/Topic';
 
 @Injectable()
-export class TopicsService extends BaseServiceWithUpload<Topic> {
+export class TopicsService extends AbstractServiceWithUpload<Topic> {
 
   constructor(httpClient: RestClient) {
     super(httpClient);
   }
 
-  protected getListType(): ClassType<ListResult<Topic>> {
+  protected _getListType(): ClassType<AbstractListResult<Topic>> {
     return TopicListResult;
   }
 
-  protected getResource(): string {
-    return "topics";
+  protected _getResource(): string {
+    return 'topics';
   }
 
-  protected getSaveType(): ClassType<SaveModelResponse<Topic>> {
+  protected _getSaveType(): ClassType<SaveModelResponse<Topic>> {
     return SaveTopicResponse;
   }
 
-  protected getType(): ClassType<Topic> {
+  protected _getType(): ClassType<Topic> {
     return Topic;
   }
 }
