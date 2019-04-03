@@ -12,14 +12,14 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    npm install
+      npm ci
       npm run build-prod
   displayName: 'npm install and build'
 
 - script: |
     docker build . -t $(ImageName)
   displayName: 'build docker image'
-  
+
 - script: |
     docker login -u $(dockerId) -p $(dockerPswd)
   displayName: 'login to docker hub'
