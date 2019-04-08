@@ -8,7 +8,6 @@ import { GalleryBlock } from '@models/blocks/GalleryBlock';
 import { TextBlock } from '@models/blocks/TextBlock';
 import { TwitterBlock } from '@models/blocks/TwitterBlock';
 import { YoutubeBlock } from '@models/blocks/YoutubeBlock';
-import Dictionary from '../../Dictionary';
 import { BlocksManager } from '../BlocksManager';
 import { AbstractContentBlockFormComponent } from './abstract-content-block-form-component';
 import { CutBlockFormComponent } from './cutblock-form.component';
@@ -56,8 +55,6 @@ export class BlockFormComponent<TModel extends AbstractBaseContentBlock> impleme
     constructor(private readonly _componentFactoryResolver: ComponentFactoryResolver) {
     }
 
-    static forms = new Dictionary<ContentBlockItemType, Type<any>>();
-
     @ViewChild(DynamicHostDirective) adHost: DynamicHostDirective;
 
     @Input()
@@ -69,16 +66,12 @@ export class BlockFormComponent<TModel extends AbstractBaseContentBlock> impleme
     public form: Form;
 
     ngOnInit(): void {
-        if (BlockFormComponent.forms.size() === 0) {
-            BlockFormComponent.forms.set(ContentBlockItemType.Text, TextBlockFormComponent);
-            BlockFormComponent.forms.set(ContentBlockItemType.Gallery, GalleryBlockFormComponent);
-            BlockFormComponent.forms.set(ContentBlockItemType.File, FileBlockFormComponent);
-            BlockFormComponent.forms.set(ContentBlockItemType.Cut, CutBlockFormComponent);
-            BlockFormComponent.forms.set(ContentBlockItemType.Twitter, TwitterBlockFormComponent);
-            BlockFormComponent.forms.set(ContentBlockItemType.Youtube, YoutubeBlockFormComponent);
+        const blockConfig = this.blocksManager.getBlockConfig(this.model.type);
+        if (blockConfig === null) {
+            throw new Error('Can\'t find block with type ' + this.model.type);
         }
 
-        const formComponent = BlockFormComponent.forms.get(this.model.type);
+        const formComponent = blockConfig.formComponent;
         if (!formComponent) {
             throw new Error('Can\'t find form component for ' + this.model.type);
         }

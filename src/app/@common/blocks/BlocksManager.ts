@@ -81,14 +81,18 @@ export class BlocksManager {
         this.update();
     }
 
-    public registerBlockType(type: ContentBlockItemType, typeClass: Type<any>): void {
+    public registerBlockType(type: ContentBlockItemType, typeClass: Type<any>, formComponent: Type<any>): void {
         if (this.types.hasKey(type)) {
             throw new Error(`type ${type} already registered!`);
         }
 
         const block = <AbstractBaseContentBlock>new typeClass();
 
-        this.types.set(type, new BlockConfig(type, typeClass, block.title, block.icon));
+        this.types.set(type, new BlockConfig(type, typeClass, block.title, block.icon, formComponent));
+    }
+
+    public getBlockConfig(type: ContentBlockItemType): BlockConfig | null {
+        return this.types.get(type);
     }
 }
 
@@ -97,7 +101,8 @@ export class BlockConfig {
         public type: ContentBlockItemType,
         public typeClass: Type<any>,
         public title: string,
-        public icon: Icon
+        public icon: Icon,
+        public formComponent: Type<any>
     ) {
     }
 }

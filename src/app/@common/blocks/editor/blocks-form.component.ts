@@ -11,6 +11,13 @@ import { YoutubeBlock } from '@models/blocks/YoutubeBlock';
 import { BlocksManager } from '../BlocksManager';
 import { IContentEntity } from '@models/interfaces/IContentEntity';
 import { Form } from './../../forms/Form';
+import { TextBlockFormComponent } from './textblock-form.component';
+import { QuoteBlockFormComponent } from './quoteblock-form.component';
+import { FileBlockFormComponent } from './fileblock-form.component';
+import { GalleryBlockFormComponent } from './galleryblock-form.component';
+import { CutBlockFormComponent } from './cutblock-form.component';
+import { TwitterBlockFormComponent } from './twitterblock-form.component';
+import { YoutubeBlockFormComponent } from './youtubeblock-form.component';
 
 @Component({
     selector: 'blocksForm',
@@ -32,12 +39,12 @@ export class BlocksFormComponent implements OnInit {
     ngOnInit(): void {
         this.blocksManager = new BlocksManager(this.model);
 
-        this.blocksManager.registerBlockType(ContentBlockItemType.Text, TextBlock);
-        this.blocksManager.registerBlockType(ContentBlockItemType.File, FileBlock);
-        this.blocksManager.registerBlockType(ContentBlockItemType.Gallery, GalleryBlock);
-        this.blocksManager.registerBlockType(ContentBlockItemType.Cut, CutBlock);
-        this.blocksManager.registerBlockType(ContentBlockItemType.Twitter, TwitterBlock);
-        this.blocksManager.registerBlockType(ContentBlockItemType.Youtube, YoutubeBlock);
+        this.blocksManager.registerBlockType(ContentBlockItemType.Text, TextBlock, TextBlockFormComponent);
+        this.blocksManager.registerBlockType(ContentBlockItemType.File, FileBlock, FileBlockFormComponent);
+        this.blocksManager.registerBlockType(ContentBlockItemType.Gallery, GalleryBlock, GalleryBlockFormComponent);
+        this.blocksManager.registerBlockType(ContentBlockItemType.Cut, CutBlock, CutBlockFormComponent);
+        this.blocksManager.registerBlockType(ContentBlockItemType.Twitter, TwitterBlock, TwitterBlockFormComponent);
+        this.blocksManager.registerBlockType(ContentBlockItemType.Youtube, YoutubeBlock, YoutubeBlockFormComponent);
 
         this.blocksManager.blocks.subscribe(blocks => {
             this.form.getControlByProperty('blocks').patchValue(blocks);
