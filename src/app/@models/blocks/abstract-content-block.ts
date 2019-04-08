@@ -21,6 +21,7 @@ export enum ContentBlockItemType {
     Cut = 'cut',
     Twitter = 'twitter',
     Youtube = 'youtube',
+    Twitch = 'twitch'
 }
 
-export abstract class AbstractContentBlockData {}
+export abstract class AbstractContentBlockData { }

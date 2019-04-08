@@ -11,6 +11,7 @@ import { TextBlockFormComponent } from './editor/textblock-form.component';
 import { TwitterBlockFormComponent } from './editor/twitterblock-form.component';
 import { YoutubeBlockFormComponent } from './editor/youtubeblock-form.component';
 import { QuoteBlockFormComponent } from './editor/quoteblock-form.component';
+import { TwitchBlockFormComponent } from './editor/twitchblock-form.component';
 
 @NgModule({
     imports: [BioCommonModule, BioFormsModule, DragDropModule],
@@ -25,6 +26,7 @@ import { QuoteBlockFormComponent } from './editor/quoteblock-form.component';
         CutBlockFormComponent,
         FileBlockFormComponent,
         QuoteBlockFormComponent,
+        TwitchBlockFormComponent
     ],
     entryComponents: [
         TextBlockFormComponent,
@@ -34,6 +36,7 @@ import { QuoteBlockFormComponent } from './editor/quoteblock-form.component';
         TwitterBlockFormComponent,
         YoutubeBlockFormComponent,
         QuoteBlockFormComponent,
+        TwitchBlockFormComponent
     ]
 })
-export class BlocksModule {}
+export class BlocksModule { }

@@ -11,6 +11,7 @@ import { YoutubeBlock } from '@models/blocks/YoutubeBlock';
 import { BlocksManager } from '../BlocksManager';
 import { IContentEntity } from '@models/interfaces/IContentEntity';
 import { Form } from './../../forms/Form';
+import { TwitchBlock } from '@models/blocks/TwitchBlock';
 import { QuoteBlock } from '@models/blocks/QuoteBlock';
 import { TextBlockFormComponent } from './textblock-form.component';
 import { QuoteBlockFormComponent } from './quoteblock-form.component';
@@ -19,6 +20,7 @@ import { GalleryBlockFormComponent } from './galleryblock-form.component';
 import { CutBlockFormComponent } from './cutblock-form.component';
 import { TwitterBlockFormComponent } from './twitterblock-form.component';
 import { YoutubeBlockFormComponent } from './youtubeblock-form.component';
+import { TwitchBlockFormComponent } from './twitchblock-form.component';
 
 @Component({
     selector: 'blocksForm',
@@ -47,6 +49,7 @@ export class BlocksFormComponent implements OnInit {
         this.blocksManager.registerBlockType(ContentBlockItemType.Cut, CutBlock, CutBlockFormComponent);
         this.blocksManager.registerBlockType(ContentBlockItemType.Twitter, TwitterBlock, TwitterBlockFormComponent);
         this.blocksManager.registerBlockType(ContentBlockItemType.Youtube, YoutubeBlock, YoutubeBlockFormComponent);
+        this.blocksManager.registerBlockType(ContentBlockItemType.Twitch, TwitchBlock, TwitchBlockFormComponent);
 
         this.blocksManager.blocks.subscribe(blocks => {
             this.form.getControlByProperty('blocks').patchValue(blocks);
@@ -69,9 +72,9 @@ export class BlocksFormComponent implements OnInit {
         this._dialogsService
             .confirm('Удаление блока', 'Вы точно хотите удалить это блок?')
             .onConfirm.subscribe(() => {
-            this.blocksManager.removeBlock(block);
-            this.blocksManager.update();
-        });
+                this.blocksManager.removeBlock(block);
+                this.blocksManager.update();
+            });
     }
 
     public drop(event: CdkDragDrop<Array<string>>): void {

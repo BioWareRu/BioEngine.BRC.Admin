@@ -10,6 +10,7 @@ import { TwitterBlock } from '@models/blocks/TwitterBlock';
 import { YoutubeBlock } from '@models/blocks/YoutubeBlock';
 import { BlocksManager } from '../BlocksManager';
 import { AbstractContentBlockFormComponent } from './abstract-content-block-form-component';
+import { TwitchBlock } from '@models/blocks/TwitchBlock';
 import { QuoteBlock } from '@models/blocks/QuoteBlock';
 
 @Component({
@@ -61,6 +62,7 @@ export class BlockFormComponent<TModel extends AbstractBaseContentBlock> impleme
     public form: Form;
 
     ngOnInit(): void {
+
         const blockConfig = this.blocksManager.getBlockConfig(this.model.type);
         if (blockConfig === null) {
             throw new Error('Can\'t find block with type ' + this.model.type);
@@ -117,6 +119,9 @@ export class BlockFormComponent<TModel extends AbstractBaseContentBlock> impleme
                 break;
             case ContentBlockItemType.Youtube:
                 isEmpty = YoutubeBlock.isEmpty(<YoutubeBlock>(<unknown>this.model));
+                break;
+            case ContentBlockItemType.Twitch:
+                isEmpty = TwitchBlock.isEmpty(<TwitchBlock>(<unknown>this.model));
                 break;
         }
 
