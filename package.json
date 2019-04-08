@@ -23,15 +23,15 @@
     },
     "dependencies": {
         "@angular/animations": "^7.2.12",
-        "@angular/cdk": "^7.3.6",
+        "@angular/cdk": "^7.3.7",
         "@angular/common": "^7.2.12",
         "@angular/compiler": "^7.2.12",
         "@angular/core": "^7.2.12",
         "@angular/flex-layout": "^7.0.0-beta.23",
         "@angular/forms": "^7.2.12",
         "@angular/http": "^7.2.12",
-        "@angular/material": "^7.3.6",
-        "@angular/material-moment-adapter": "^7.3.6",
+        "@angular/material": "^7.3.7",
+        "@angular/material-moment-adapter": "^7.3.7",
         "@angular/platform-browser": "^7.2.12",
         "@angular/platform-browser-dynamic": "^7.2.12",
         "@angular/router": "^7.2.12",
@@ -71,6 +71,6 @@
         "tslint": "^5.15.0",
         "tslint-consistent-codestyle": "1.15.1",
         "typescript": "^3.2.4",
-        "webpack-bundle-analyzer": "^3.1.0"
+        "webpack-bundle-analyzer": "^3.2.0"
     }
 }
