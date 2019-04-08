@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, Input, OnInit, Type, ViewChild } from '@angular/core';
+import { Component, ComponentFactoryResolver, Input, OnInit, ViewChild } from '@angular/core';
 import { DynamicHostDirective } from '@common/directives/DynamicHostDirective';
 import { Form } from '@common/forms/Form';
 import { AbstractBaseContentBlock, ContentBlockItemType } from '@models/blocks/abstract-content-block';

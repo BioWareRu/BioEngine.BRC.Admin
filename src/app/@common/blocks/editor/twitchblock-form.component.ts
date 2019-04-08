@@ -92,7 +92,7 @@ export class TwitchBlockFormComponent extends AbstractContentBlockFormComponent<
         else if (this.model.data.collectionId) {
             params.collection = this.model.data.collectionId;
         }
-        new Twitch.Embed("twitch-" + this.model.id, params);
+        return new Twitch.Embed('twitch-' + this.model.id, params);
     }
 
     public isEmpty(): boolean {
