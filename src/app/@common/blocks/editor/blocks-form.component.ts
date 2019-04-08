@@ -11,6 +11,7 @@ import { YoutubeBlock } from '@models/blocks/YoutubeBlock';
 import { BlocksManager } from '../BlocksManager';
 import { IContentEntity } from '@models/interfaces/IContentEntity';
 import { Form } from './../../forms/Form';
+import { QuoteBlock } from '@models/blocks/QuoteBlock';
 import { TextBlockFormComponent } from './textblock-form.component';
 import { QuoteBlockFormComponent } from './quoteblock-form.component';
 import { FileBlockFormComponent } from './fileblock-form.component';
@@ -40,6 +41,7 @@ export class BlocksFormComponent implements OnInit {
         this.blocksManager = new BlocksManager(this.model);
 
         this.blocksManager.registerBlockType(ContentBlockItemType.Text, TextBlock, TextBlockFormComponent);
+        this.blocksManager.registerBlockType(ContentBlockItemType.Quote, QuoteBlock, QuoteBlockFormComponent);
         this.blocksManager.registerBlockType(ContentBlockItemType.File, FileBlock, FileBlockFormComponent);
         this.blocksManager.registerBlockType(ContentBlockItemType.Gallery, GalleryBlock, GalleryBlockFormComponent);
         this.blocksManager.registerBlockType(ContentBlockItemType.Cut, CutBlock, CutBlockFormComponent);

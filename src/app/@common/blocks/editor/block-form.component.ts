@@ -10,12 +10,7 @@ import { TwitterBlock } from '@models/blocks/TwitterBlock';
 import { YoutubeBlock } from '@models/blocks/YoutubeBlock';
 import { BlocksManager } from '../BlocksManager';
 import { AbstractContentBlockFormComponent } from './abstract-content-block-form-component';
-import { CutBlockFormComponent } from './cutblock-form.component';
-import { FileBlockFormComponent } from './fileblock-form.component';
-import { GalleryBlockFormComponent } from './galleryblock-form.component';
-import { TextBlockFormComponent } from './textblock-form.component';
-import { TwitterBlockFormComponent } from './twitterblock-form.component';
-import { YoutubeBlockFormComponent } from './youtubeblock-form.component';
+import { QuoteBlock } from '@models/blocks/QuoteBlock';
 
 @Component({
     selector: 'blockForm',
@@ -104,6 +99,9 @@ export class BlockFormComponent<TModel extends AbstractBaseContentBlock> impleme
         switch (this.model.type) {
             case ContentBlockItemType.Text:
                 isEmpty = TextBlock.isEmpty(<TextBlock>(<unknown>this.model));
+                break;
+            case ContentBlockItemType.Quote:
+                isEmpty = QuoteBlock.isEmpty(<QuoteBlock>(<unknown>this.model));
                 break;
             case ContentBlockItemType.Cut:
                 isEmpty = CutBlock.isEmpty(<CutBlock>(<unknown>this.model));

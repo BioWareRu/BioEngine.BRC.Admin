@@ -10,6 +10,7 @@ import { GalleryBlockFormComponent } from './editor/galleryblock-form.component'
 import { TextBlockFormComponent } from './editor/textblock-form.component';
 import { TwitterBlockFormComponent } from './editor/twitterblock-form.component';
 import { YoutubeBlockFormComponent } from './editor/youtubeblock-form.component';
+import { QuoteBlockFormComponent } from './editor/quoteblock-form.component';
 
 @NgModule({
     imports: [BioCommonModule, BioFormsModule, DragDropModule],
@@ -22,7 +23,8 @@ import { YoutubeBlockFormComponent } from './editor/youtubeblock-form.component'
         TwitterBlockFormComponent,
         YoutubeBlockFormComponent,
         CutBlockFormComponent,
-        FileBlockFormComponent
+        FileBlockFormComponent,
+        QuoteBlockFormComponent,
     ],
     entryComponents: [
         TextBlockFormComponent,
@@ -30,7 +32,8 @@ import { YoutubeBlockFormComponent } from './editor/youtubeblock-form.component'
         FileBlockFormComponent,
         CutBlockFormComponent,
         TwitterBlockFormComponent,
-        YoutubeBlockFormComponent
+        YoutubeBlockFormComponent,
+        QuoteBlockFormComponent,
     ]
 })
 export class BlocksModule {}

@@ -15,6 +15,7 @@ export abstract class AbstractContentBlock<T extends AbstractContentBlockData> e
 
 export enum ContentBlockItemType {
     Text = 'text',
+    Quote = 'quote',
     File = 'file',
     Gallery = 'gallery',
     Cut = 'cut',
