@@ -14,12 +14,12 @@ export abstract class AbstractContentBlock<T extends AbstractContentBlockData> e
 }
 
 export enum ContentBlockItemType {
-    Text = 'BioEngine.Core.Entities.Blocks.TextBlock',
-    File = 'BioEngine.Core.Entities.Blocks.FileBlock',
-    Gallery = 'BioEngine.Core.Entities.Blocks.GalleryBlock',
-    Cut = 'BioEngine.Core.Entities.Blocks.CutBlock',
-    Twitter = 'BioEngine.Core.Entities.Blocks.TwitterBlock',
-    Youtube = 'BioEngine.Core.Entities.Blocks.YoutubeBlock'
+    Text = 'text',
+    File = 'file',
+    Gallery = 'gallery',
+    Cut = 'cut',
+    Twitter = 'twitter',
+    Youtube = 'youtube',
 }
 
 export abstract class AbstractContentBlockData {}

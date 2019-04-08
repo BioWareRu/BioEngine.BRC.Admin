@@ -29,7 +29,7 @@ export abstract class AbstractTypedData {
 }
 
 export enum SectionType {
-    Developer = 'BioEngine.BRC.Domain.Entities.Developer',
-    Game = 'BioEngine.BRC.Domain.Entities.Game',
-    Topic = 'BioEngine.BRC.Domain.Entities.Topic'
+    Developer = 'developer',
+    Game = 'game',
+    Topic = 'topic'
 }
