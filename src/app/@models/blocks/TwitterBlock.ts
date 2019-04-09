@@ -10,10 +10,12 @@ export class TwitterBlock extends AbstractContentBlock<TwitterBlockData> {
     data: TwitterBlockData = new TwitterBlockData();
 
     static isEmpty(block: TwitterBlock): boolean {
-        return !block.data.twitId || block.data.twitId < 1;
+        return !block.data.tweetId;
     }
 }
 
 export class TwitterBlockData extends AbstractContentBlockData {
-    public twitId: number | null = null;
+    public tweetId: string | null = null;
+    public tweetAuthor: string | null = null;
+    public tweetUrl = '';
 }
