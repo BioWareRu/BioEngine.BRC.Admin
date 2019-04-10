@@ -11,7 +11,6 @@ import { map } from 'rxjs/operators';
 import { AbstractModel } from '@models/base/abstract-model';
 import { Properties, PropertiesElementType } from '@models/base/Properties';
 import { ISingleSiteEntity, ISiteEntity } from '@models/interfaces/ISiteEntity';
-import { Site } from '@models/Site';
 import { ServicesProvider } from '@services/ServicesProvider';
 import { AbstractBaseService } from '../abstract-base-service';
 import { DialogService } from '../modals/DialogService';
