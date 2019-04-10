@@ -2,29 +2,16 @@
     <form-layout *ngIf="formLoaded" [formComponent]="this">
         <div fxLayout="row">
             <div fxFlex="45">
-                <text-input
-                        [inputFormGroup]="form.formGroup"
-                    inputFieldName="title"
-                    inputLabel="Название"
-                ></text-input>
+                <text-input [inputFormGroup]="form.formGroup" inputFieldName="title" inputLabel="Название"></text-input>
             </div>
             <div fxFlex="10"></div>
             <div fxFlex="45">
-                <text-input
-                        [inputFormGroup]="form.formGroup"
-                    inputFieldName="url"
-                    inputLabel="Адрес на сайте"
-                ></text-input>
+                <text-input [inputFormGroup]="form.formGroup" inputFieldName="url" inputLabel="Адрес на сайте">
+                </text-input>
             </div>
         </div>
-        <chips-input
-                [inputFormGroup]="form.formGroup"
-            inputFieldName="siteIds"
-            inputLabel="Сайты"
-            titleField="title"
-            valueField="id"
-            [options]="sites"
-        ></chips-input>
+        <chips-input [inputFormGroup]="form.formGroup" inputFieldName="siteIds" inputLabel="Сайты" titleField="title"
+            valueField="id" [entitiesService]="servicesProvider.sitesService"></chips-input>
         <blocksForm [model]="model" [form]="form"></blocksForm>
     </form-layout>
 </div>

@@ -1,5 +1,5 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { ErrorStateMatcher, MatAutocompleteSelectedEvent } from '@angular/material';
 import { IBaseServiceCreatable } from '../../abstract-base-service';
@@ -15,24 +15,31 @@ export class ChipsInputComponent extends AutocompleteInputComponent implements O
     @Input() public removable = true;
     @Input() public selectable = true;
     @Input() public visible = true;
+    public inputCtrl = new FormControl();
     @Input() public entitiesService: IBaseServiceCreatable<any> | null = null;
-    @ViewChild('newInput') newInput: ElementRef<HTMLInputElement>;
     separatorKeysCodes: Array<number> = [ENTER, COMMA];
     matcher: ChipsErrorStateMatcher;
     public addInProgress = false;
 
+    ngOnInit(): void {
+        this._removeSelectedValues = true;
+        this.inputFormGroup.controls[this.inputFieldName + 'input'] = this.inputCtrl;
+        super.ngOnInit();
+        this.matcher = new ChipsErrorStateMatcher(this);
+    }
+
+    protected _getInput(): FormControl {
+        return this.inputCtrl;
+    }
+
     selected(event: MatAutocompleteSelectedEvent): void {
+        this.input.nativeElement.value = '';
+        this.inputCtrl.setValue(null);
         const values = this.control.value || [];
         values.push(event.option.value);
         this.control.setValue(values);
         this._buildGroups();
 
-    }
-
-    ngOnInit(): void {
-        this._removeSelectedValues = true;
-        super.ngOnInit();
-        this.matcher = new ChipsErrorStateMatcher(this);
     }
 
     remove(value): void {
@@ -63,7 +70,7 @@ export class ChipsInputComponent extends AutocompleteInputComponent implements O
                 this._values.push(result.model);
                 this._buildGroups();
                 this._buildLabels();
-                this.newInput.nativeElement.value = '';
+                this.input.nativeElement.value = '';
                 this.addInProgress = false;
 
             });

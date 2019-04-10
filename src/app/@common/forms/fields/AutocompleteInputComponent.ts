@@ -1,8 +1,11 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material';
-import { Observable } from 'rxjs';
 import Dictionary from '../../Dictionary';
 import { AbstractFormInput } from './abstract-form-input';
+import { IBaseService } from '@common/abstract-base-service';
+import { Filter, FilterOperator } from '@common/Filter';
+import { FormControl } from '@angular/forms';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
     selector: 'autocomplete-input',
@@ -11,6 +14,7 @@ import { AbstractFormInput } from './abstract-form-input';
 export class AutocompleteInputComponent extends AbstractFormInput implements OnInit {
     public groups: Array<SelectGroup> = [];
     @Input() public options: Array<any> | Observable<any>;
+    @Input() public entitiesService: IBaseService<any> | null = null;
     @Input() public groupField: string | null = '';
     @Input() public titleField = 'title';
     @Input() public valueField = 'value';
@@ -18,6 +22,7 @@ export class AutocompleteInputComponent extends AbstractFormInput implements OnI
     @ViewChild(MatAutocompleteTrigger)
     autoCompleteTrigger: MatAutocompleteTrigger;
     @ViewChild(MatAutocomplete) matAutocomplete: MatAutocomplete;
+    @ViewChild('input') input: ElementRef<HTMLInputElement>;
     protected _removeSelectedValues = false;
     protected _labels = new Dictionary<number, string>();
     protected _values: Array<any> = [];
@@ -26,20 +31,51 @@ export class AutocompleteInputComponent extends AbstractFormInput implements OnI
 
     public ngOnInit(): void {
         super.ngOnInit();
-        if (!this.options) {
+        if (!this.options && !this.entitiesService) {
             throw new Error('Empty options for field ' + this.inputFieldName);
         }
+        this._getInput().valueChanges.pipe(
+            startWith(null),
+            map((input: string | null) => {
+                this._filter = input ? input.toLowerCase() : '';
+                this._prepareData(this._filter);
+            })).subscribe();
+    }
+
+    protected _getInput(): FormControl {
+        return this.control;
+    }
+
+    private _prepareData(filterValue: string | null): void {
         if (Array.isArray(this.options)) {
             this._values = this.options;
             this._buildGroups();
             this._buildLabels();
             this.isInitialized = true;
-        } else {
+        } else if (this.entitiesService !== null) {
+            this._loadEntitesData(filterValue);
+            this.isInitialized = true;
+        }
+        else {
             this.options.subscribe(data => {
                 this._values = data;
                 this._buildGroups();
                 this._buildLabels();
                 this.isInitialized = true;
+            });
+        }
+    }
+
+    private _loadEntitesData(filterValue: string | null): void {
+        if (this.entitiesService !== null) {
+            let filter: Filter | null = null;
+            if (filterValue) {
+                filter = Filter.simple(this.titleField, FilterOperator.Contains, filterValue);
+            }
+            this.entitiesService.getAll(1, 10, this.titleField, filter).subscribe(res => {
+                this._values = res.data;
+                this._buildGroups();
+                this._buildLabels();
             });
         }
     }
@@ -51,13 +87,7 @@ export class AutocompleteInputComponent extends AbstractFormInput implements OnI
             : null;
     }
 
-    public onSearchChange(input: EventTarget): void {
-        this._filter = (<HTMLInputElement>input).value.toLowerCase();
-        this._buildGroups();
-    }
-
     protected _buildLabels(): void {
-        this._labels.clear();
         this._values.forEach(option => {
             this._labels.set(option[this.valueField], option[this.titleField]);
         });

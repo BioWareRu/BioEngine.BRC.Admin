@@ -46,7 +46,7 @@ export abstract class AbstractFormPageComponent<TModel extends AbstractModel,
                     });
             } else {
                 this._getService()
-                    .new()
+                    .getNew()
                     .subscribe(model => {
                         this.model = model;
                         this._setTitle(this._getNewModelTitle());
@@ -303,20 +303,10 @@ export abstract class AbstractFormComponent<TModel extends AbstractModel,
 
 export abstract class AbstractSiteEntityFormComponent<TModel extends ISiteEntity,
     TSaveModel extends SaveModelResponse<TModel>> extends AbstractFormComponent<TModel, TSaveModel> {
-    public get sites(): Observable<Array<Site>> {
-        return this.servicesProvider.sitesService.getAll(1, 1000, 'id').pipe(
-            map(list => list.data)
-        );
-    }
 }
 
 export abstract class AbstractSingleSiteEntityFormComponent<TModel extends ISingleSiteEntity,
     TSaveModel extends SaveModelResponse<TModel>> extends AbstractFormComponent<TModel, TSaveModel> {
-    public get sites(): Observable<Array<Site>> {
-        return this.servicesProvider.sitesService.getAll(1, 1000, 'id').pipe(
-            map(list => list.data)
-        );
-    }
 }
 
 export abstract class AbstractSectionFormComponent<TModel extends ISiteEntity,
@@ -363,7 +353,7 @@ export abstract class AbstractContentFormComponent<TModel extends IContentEntity
     }
 }
 
-@Pipe({name: 'keys'})
+@Pipe({ name: 'keys' })
 export class KeysPipe implements PipeTransform {
     transform(value, _args: Array<string>): any {
         const keys: any[] = [];
@@ -372,7 +362,7 @@ export class KeysPipe implements PipeTransform {
             if (!value.hasOwnProperty(key)) {
                 continue;
             }
-            keys.push({key, value: value[key]});
+            keys.push({ key, value: value[key] });
         }
 
         return keys;

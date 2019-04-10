@@ -1,33 +1,18 @@
 <mat-form-field [formGroup]="inputFormGroup" [fxFlex]="inputFxFlex" [appearance]="inputAppearance">
     <mat-label>{{ inputLabel }}</mat-label>
     <mat-chip-list #chipList [formControlName]="inputFieldName" [errorStateMatcher]="matcher">
-        <mat-chip
-                *ngFor="let value of control.value"
-                [selectable]="selectable"
-                [removable]="removable"
-                (removed)="remove(value)"
-        >
+        <mat-chip *ngFor="let value of control.value" [selectable]="selectable" [removable]="removable"
+            (removed)="remove(value)">
             {{ displayFn(value) }}
             <icon matChipRemove *ngIf="removable" iconName="fa-times"></icon>
         </mat-chip>
-        <input
-            #newInput
-            [placeholder]="creatable ? 'Создать...' : ''"
-            (input)="onSearchChange($event.target)"
-            [matAutocomplete]="autoGroup"
-            [matChipInputFor]="chipList"
-            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-            [matChipInputAddOnBlur]="false"
-            (matChipInputTokenEnd)="add($event)"
-            [disabled]="addInProgress"
-        />
+        <input #input [formControlName]="inputFieldName + 'input'" [placeholder]="creatable ? 'Создать...' : ''"
+            [matAutocomplete]="autoGroup" [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="false"
+            (matChipInputTokenEnd)="add($event)" [disabled]="addInProgress" />
     </mat-chip-list>
-    <mat-autocomplete
-        #autoGroup="matAutocomplete"
-        [displayWith]="displayFn.bind(this)"
-        (optionSelected)="selected($event)"
-        (closed)="inputClosed()"
-    >
+    <mat-autocomplete #autoGroup="matAutocomplete" [displayWith]="displayFn.bind(this)"
+        (optionSelected)="selected($event)" (closed)="inputClosed()">
         <ng-container *ngIf="groups && groups.length > 1">
             <mat-optgroup *ngFor="let group of groups " [label]="group.title">
                 <mat-option *ngFor="let option of group.options" [value]="option.value">
@@ -42,7 +27,5 @@
         </ng-container>
     </mat-autocomplete>
     <icon matSuffix *ngIf="inputIcon" [icon]="inputIcon"></icon>
-    <mat-error
-    ><span *ngFor="let error of errors">{{ error }}</span></mat-error
-    >
+    <mat-error><span *ngFor="let error of errors">{{ error }}</span></mat-error>
 </mat-form-field>

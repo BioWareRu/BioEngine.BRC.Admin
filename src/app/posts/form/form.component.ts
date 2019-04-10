@@ -7,11 +7,10 @@ import { SnackBarService } from '@common/snacks/SnackBarService';
 import { StateService } from '@common/StateService';
 import { Post } from '@models/posts/Post';
 import { SavePostResponse } from '@models/results/Post';
-import { BaseSection } from '@models/abstract-section';
+import { BaseSection, } from '@models/abstract-section';
 import { Tag } from '@models/Tag';
 import { ServicesProvider } from '@services/ServicesProvider';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { AbstractBaseService } from '@common/abstract-base-service';
 
 @Component({
     selector: 'post-form',
@@ -44,13 +43,11 @@ export class PostFormComponent extends AbstractContentFormComponent<Post, SavePo
         this.registerFormControl('tagIds', [Validators.required]);
     }
 
-    public get sections(): Observable<Array<BaseSection>> {
-        return this.servicesProvider.sectionsService.getAll(1, 1000, 'id').pipe(
-            map(list => list.data)
-        );
+    public get sectionsService(): AbstractBaseService<BaseSection> {
+        return this.servicesProvider.sectionsService;
     }
 
-    public get tags(): Observable<Array<Tag>> {
-        return this.servicesProvider.tagsService.getAll(1, 1000, 'id').pipe(map(list => list.data));
+    public get tagsService(): AbstractBaseService<Tag> {
+        return this.servicesProvider.tagsService;
     }
 }

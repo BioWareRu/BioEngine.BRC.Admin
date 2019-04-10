@@ -1,18 +1,8 @@
-<mat-form-field
-    *ngIf="isInitialized"
-    [formGroup]="inputFormGroup"
-    [fxFlex]="inputFxFlex"
-    [appearance]="inputAppearance"
->
+<mat-form-field *ngIf="isInitialized" [formGroup]="inputFormGroup" [fxFlex]="inputFxFlex"
+    [appearance]="inputAppearance">
     <mat-label>{{ inputLabel }}</mat-label>
-    <input
-        type="text"
-        matInput
-        [formControlName]="inputFieldName"
-        [matAutocomplete]="autoGroup"
-        [placeholder]="inputPlaceholder"
-        (input)="onSearchChange($event.target)"
-    />
+    <input type="text" matInput #input [formControlName]="inputFieldName" [matAutocomplete]="autoGroup"
+        [placeholder]="inputPlaceholder" (input)="onSearchChange($event.target)" />
     <mat-autocomplete #autoGroup="matAutocomplete" [displayWith]="displayFn.bind(this)">
         <ng-container *ngIf="groups && groups.length > 1">
             <mat-optgroup *ngFor="let group of groups" [label]="group.title">
