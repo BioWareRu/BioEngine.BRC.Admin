@@ -6,6 +6,7 @@ import { IBaseService } from '@common/abstract-base-service';
 import { Filter, FilterOperator } from '@common/Filter';
 import { FormControl } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'autocomplete-input',
