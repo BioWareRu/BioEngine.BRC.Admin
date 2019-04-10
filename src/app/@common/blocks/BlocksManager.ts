@@ -10,7 +10,7 @@ import { Icon } from '../shared/icon/Icon';
 export class BlocksManager {
     constructor(private readonly _contentItem: IContentEntity) {
         this.blocks = this._blocksSubject.asObservable();
-        this._blocks = _contentItem.blocks;
+        this._blocks = _contentItem.blocks || [];
         this.update();
     }
 
