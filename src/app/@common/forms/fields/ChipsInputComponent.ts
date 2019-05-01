@@ -1,4 +1,4 @@
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { ENTER } from '@angular/cdk/keycodes';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { ErrorStateMatcher, MatAutocompleteSelectedEvent } from '@angular/material';
@@ -17,7 +17,7 @@ export class ChipsInputComponent extends AutocompleteInputComponent implements O
     @Input() public visible = true;
     public inputCtrl = new FormControl();
     @Input() public entitiesService: IBaseServiceCreatable<any> | null = null;
-    separatorKeysCodes: Array<number> = [ENTER, COMMA];
+    separatorKeysCodes: Array<number> = [ENTER];
     matcher: ChipsErrorStateMatcher;
     public addInProgress = false;
 

@@ -27,7 +27,8 @@ export class AutocompleteInputComponent extends AbstractFormInput implements OnI
     protected _removeSelectedValues = false;
     protected _labels = new Dictionary<number, string>();
     protected _values: Array<any> = [];
-    private _filter: string;
+    protected _filter: Filter | null;
+    protected _filterValue: string;
     public isInitialized = false;
 
     public ngOnInit(): void {
@@ -38,8 +39,22 @@ export class AutocompleteInputComponent extends AbstractFormInput implements OnI
         this._getInput().valueChanges.pipe(
             startWith(null),
             map((input: string | null) => {
-                this._filter = input ? input.toLowerCase() : '';
+                if (input && typeof input === 'string') {
+                    this._filterValue = input.toLowerCase();
+                    this._filter = Filter.simple(this.titleField, FilterOperator.Contains, this._filterValue);
+                } else if (this.entitiesService && this.control.value) {
+                    if (Array.isArray(this.control.value)) {
+                        this._filter = Filter.simple(this.valueField, FilterOperator.In, this.control.value);
+                    } else {
+                        this._filter = Filter.simple(this.valueField, FilterOperator.Equal, this.control.value);
+                    }
+                } else {
+                    this._filter = null;
+                    this._filterValue = '';
+                }
+
                 this._prepareData(this._filter);
+
             })).subscribe();
     }
 
@@ -47,14 +62,14 @@ export class AutocompleteInputComponent extends AbstractFormInput implements OnI
         return this.control;
     }
 
-    private _prepareData(filterValue: string | null): void {
+    private _prepareData(filter: Filter | null): void {
         if (Array.isArray(this.options)) {
             this._values = this.options;
             this._buildGroups();
             this._buildLabels();
             this.isInitialized = true;
         } else if (this.entitiesService !== null) {
-            this._loadEntitesData(filterValue);
+            this._loadEntitesData(filter);
             this.isInitialized = true;
         }
         else {
@@ -67,12 +82,8 @@ export class AutocompleteInputComponent extends AbstractFormInput implements OnI
         }
     }
 
-    private _loadEntitesData(filterValue: string | null): void {
+    private _loadEntitesData(filter: Filter | null): void {
         if (this.entitiesService !== null) {
-            let filter: Filter | null = null;
-            if (filterValue) {
-                filter = Filter.simple(this.titleField, FilterOperator.Contains, filterValue);
-            }
             this.entitiesService.getAll(1, 10, this.titleField, filter).subscribe(res => {
                 this._values = res.data;
                 this._buildGroups();
@@ -113,7 +124,7 @@ export class AutocompleteInputComponent extends AbstractFormInput implements OnI
             }
             if (
                 this._filter &&
-                selectOption.title.toLowerCase().indexOf(this._filter) === -1
+                selectOption.title.toLowerCase().indexOf(this._filterValue) === -1
             ) {
                 return;
             }
