@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { SnackBarService } from '@common/snacks/SnackBarService';
 import { TwitterBlock } from '@models/blocks/TwitterBlock';
@@ -17,21 +17,21 @@ import * as url from 'url';
                 inputLabel="Адрес твита"
         ></text-input>
         <div *ngIf="!editMode" fxLayout="row" fxLayoutAlign="center center">
-           <div id="twitter-{{this.model.id}}"></div>
+            <div id="twitter-{{this.model.id}}"></div>
             <icon classes="editUrl" iconName="fa-edit" (click)="edit()"></icon>
         </div>
     `,
     styles: [`
-    icon.editUrl {
-        position: absolute;
-        right: 5px;
-        top: 5px;
-        cursor: pointer;
-        opacity: 0.3;
-    }
+        icon.editUrl {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            cursor: pointer;
+            opacity: 0.3;
+        }
     `]
 })
-export class TwitterBlockFormComponent extends AbstractContentBlockFormComponent<TwitterBlock> {
+export class TwitterBlockFormComponent extends AbstractContentBlockFormComponent<TwitterBlock> implements OnInit {
     constructor(snackBarService: SnackBarService) {
         super(snackBarService);
     }
@@ -44,6 +44,11 @@ export class TwitterBlockFormComponent extends AbstractContentBlockFormComponent
         return [new BlockFieldDescriptor('tweetUrl', [Validators.required, CustomValidators.url], 'data.tweetUrl')];
     }
 
+    public ngOnInit(): void {
+        this.model.data.tweetUrl = 'https://twitter.com/status/' + this.model.data.tweetAuthor + '/' + this.model.data.tweetId;
+        super.ngOnInit();
+    }
+
     public isEmpty(): boolean {
         return TwitterBlock.isEmpty(this.model);
     }
@@ -52,7 +57,9 @@ export class TwitterBlockFormComponent extends AbstractContentBlockFormComponent
         super._afterInit();
         if (!this.isEmpty()) {
             this.editMode = false;
-            this._render();
+            setTimeout(() => {
+                this._render();
+            }, 10);
         }
         this.form.onChange.subscribe((change: FieldInputChange) => {
             if (change.key === this.getFieldName('tweetUrl')) {

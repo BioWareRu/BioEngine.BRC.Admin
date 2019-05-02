@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { FieldInputChange } from '@common/forms/Form';
 import { SnackBarService } from '@common/snacks/SnackBarService';
@@ -27,7 +27,7 @@ import { BlockFieldDescriptor, AbstractContentBlockFormComponent } from './abstr
     `,
     styleUrls: [`./youtubeblock-form.component.scss`]
 })
-export class YoutubeBlockFormComponent extends AbstractContentBlockFormComponent<YoutubeBlock> {
+export class YoutubeBlockFormComponent extends AbstractContentBlockFormComponent<YoutubeBlock> implements OnInit {
     constructor(snackBarService: SnackBarService) {
         super(snackBarService);
     }
@@ -51,10 +51,16 @@ export class YoutubeBlockFormComponent extends AbstractContentBlockFormComponent
         ];
     }
 
+    public ngOnInit(): void {
+        if (this.model.data.youtubeId) {
+            this.model.data.youtubeUrl = this._getUrl();
+        }
+        super.ngOnInit();
+    }
+
     protected _afterInit(): void {
         super._afterInit();
         if (this.model.data.youtubeId) {
-            this._updateUrl();
             this.editMode = false;
         }
         this.form.onChange.subscribe((change: FieldInputChange) => {
