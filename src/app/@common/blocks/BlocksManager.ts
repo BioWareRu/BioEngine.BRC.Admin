@@ -44,7 +44,7 @@ export class BlocksManager {
         this._blocks.push(block);
         this._setPositions();
         if (neighbor) {
-            const toIndex = direction === 'after' ? neighbor.position + 1 : neighbor.position - 1;
+            const toIndex = direction === 'after' ? neighbor.position + 1 : neighbor.position;
             moveItemInArray(this._blocks, block.position, toIndex);
             this._setPositions();
         }
