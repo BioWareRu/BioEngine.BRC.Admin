@@ -59,7 +59,8 @@ const config: InputFileConfig = {};
         ChipsInputComponent,
         AutocompleteInputComponent,
         DatePickerInputComponent,
-        CKEditorModule
+        CKEditorModule,
+        KeysPipe
     ],
     providers: [],
     imports: [
