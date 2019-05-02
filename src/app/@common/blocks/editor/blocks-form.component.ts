@@ -100,8 +100,6 @@ export class BlocksFormComponent implements OnInit {
         this.blocksManager.blocks.subscribe(blocks => {
             if (!BlocksFormComponent.equals(blocks, this.model.blocks)) {
                 this.form.getControlByProperty('blocks').patchValue(blocks);
-            } else {
-                console.log('equals');
             }
         });
 
