@@ -38,7 +38,7 @@ export class AutocompleteInputComponent extends AbstractFormInput implements OnI
         }
         this._getInput().valueChanges.pipe(
             startWith(null),
-            map((input: string | null) => {
+            map((input) => {
                 if (input && typeof input === 'string') {
                     this._filterValue = input.toLowerCase();
                     this._filter = Filter.simple(this.titleField, FilterOperator.Contains, this._filterValue);
@@ -71,8 +71,7 @@ export class AutocompleteInputComponent extends AbstractFormInput implements OnI
         } else if (this.entitiesService !== null) {
             this._loadEntitiesData(filter);
             this.isInitialized = true;
-        }
-        else {
+        } else {
             this.options.subscribe(data => {
                 this._values = data;
                 this._buildGroups();
