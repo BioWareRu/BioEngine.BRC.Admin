@@ -69,7 +69,7 @@ export class AutocompleteInputComponent extends AbstractFormInput implements OnI
             this._buildLabels();
             this.isInitialized = true;
         } else if (this.entitiesService !== null) {
-            this._loadEntitesData(filter);
+            this._loadEntitiesData(filter);
             this.isInitialized = true;
         }
         else {
@@ -82,9 +82,9 @@ export class AutocompleteInputComponent extends AbstractFormInput implements OnI
         }
     }
 
-    private _loadEntitesData(filter: Filter | null): void {
+    private _loadEntitiesData(filter: Filter | null): void {
         if (this.entitiesService !== null) {
-            this.entitiesService.getAll(1, 10, this.titleField, filter).subscribe(res => {
+            this.entitiesService.getAll(0, 10, this.titleField, filter).subscribe(res => {
                 this._values = res.data;
                 this._buildGroups();
                 this._buildLabels();
