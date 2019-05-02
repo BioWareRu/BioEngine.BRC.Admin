@@ -20,15 +20,27 @@
                     Опубликовать
                 </button>
                 <button mat-raised-button color="warn" (click)="changePublishState()" *ngIf="model.isPublished"
-                    [disabled]="form.formGroup.invalid || form.hasChanges || form.inProgress">
+                        [disabled]="form.formGroup.invalid || form.hasChanges || form.inProgress">
                     Спрятать
                 </button>
             </div>
             <text-input [inputFormGroup]="form.formGroup" inputFieldName="url" inputLabel="Адрес на сайте"></text-input>
             <chips-input [inputFormGroup]="form.formGroup" inputFieldName="sectionIds" inputLabel="Разделы"
-                titleField="title" valueField="id" [entitiesService]="servicesProvider.sectionsService"></chips-input>
+                         titleField="title" valueField="id"
+                         [entitiesService]="servicesProvider.sectionsService"></chips-input>
             <chips-input [inputFormGroup]="form.formGroup" inputFieldName="tagIds" inputLabel="Тэги" titleField="name"
-                valueField="id" [creatable]="true" [entitiesService]="servicesProvider.tagsService"></chips-input>
+                         valueField="id" [creatable]="true"
+                         [entitiesService]="servicesProvider.tagsService"></chips-input>
+<!--            <div>-->
+<!--                <div *ngIf="!form.formGroup.valid">-->
+<!--                    <div *ngFor="let control of form.formGroup.controls | keys">-->
+<!--                        <div *ngIf="control.value.invalid">-->
+<!--                            {{control.key}}-->
+<!--                            : {{control.value.status}} {{control.value.errors|json}} {{control.value.value|json}}-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
         </mat-sidenav>
     </mat-sidenav-container>
 </div>
