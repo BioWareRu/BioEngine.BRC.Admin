@@ -26,7 +26,7 @@ export abstract class AbstractBaseService<T> implements IBaseService<T> {
         return this._httpClient
             .get(this._getResource(), {
                 limit: perPage || 10,
-                offset: page !== null && perPage !== null && page > 0 ? perPage * (page - 1) : 0,
+                offset: page !== null && perPage !== null && page > 0 ? perPage * page : 0,
                 order: sort,
                 filter: filter === null ? null : filter.toString()
             })
