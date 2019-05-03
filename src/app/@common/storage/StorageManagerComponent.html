@@ -26,8 +26,8 @@
         <ng-container matColumnDef="select">
             <mat-header-cell *matHeaderCellDef></mat-header-cell>
             <mat-cell *matCellDef="let element">
-                <ng-container *ngIf="!element.isDirectory && selectMode">
-                    <input type="checkbox" (click)="select($event.target, element)"/>
+                <ng-container *ngIf="!element.isDirectory && selectMode==selectModes.Multiple">
+                    <input type="checkbox" [checked]="element.selected" (click)="select(element)"/>
                 </ng-container>
             </mat-cell>
         </ng-container>
@@ -79,6 +79,7 @@
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: columnsToDisplay"></mat-row>
+        <mat-row *matRowDef="let node; columns: columnsToDisplay"
+                 [ngClass]="{ selectable: selectMode!==selectModes.None, selected: node.selected}"  (click)="select(node)"></mat-row>
     </mat-table>
 </div>

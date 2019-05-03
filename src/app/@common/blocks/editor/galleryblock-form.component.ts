@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { DialogService } from '@common/modals/DialogService';
 import { SnackBarService } from '@common/snacks/SnackBarService';
+import { StorageManagerSelectMode } from '@common/storage/StorageManagerComponent';
 import { StorageManagerDialogComponent } from '@common/storage/StorageManagerDialogComponent';
 import { GalleryBlock } from '@models/blocks/GalleryBlock';
 import { StorageItem } from '@models/results/StorageItem';
-import { PostsService } from '@services/ContentService';
 import { ServicesProvider } from '@services/ServicesProvider';
 import { StorageNode } from '@services/StorageService';
 import Dictionary from '../../Dictionary';
@@ -16,33 +16,19 @@ import { BlockFieldDescriptor, AbstractContentBlockFormComponent } from './abstr
     template: `
         <div [formGroup]="form.formGroup">
             <div *ngIf="items.size() > 0">
-                <ng-container *ngIf="items.size() == 1">
-                    <div class="singlePicture">
-                        <img [src]="model.data.pictures[0].publicUri" alt="model.data.pictures[0].fileName"/>
-                        <div class="addOverlay">
-                            <icon (click)="showStorageDialog(true)" iconName="fa-plus"></icon>
-                            <icon
-                                    (click)="deletePicture(model.data.pictures[0])"
-                                    iconName="fa-trash"
-                            ></icon>
-                        </div>
-                    </div>
-                </ng-container>
-                <ng-container *ngIf="items.size() > 1">
-                    <div class="picturesList">
-                        <ng-container *ngFor="let picture of items.values()">
-                            <div class="pic">
-                                <img [src]="picture.publicUri" alt="{{ picture.fileName }}"/>
-                                <div (click)="deletePicture(picture)" class="deleteOverlay">
-                                    <icon iconName="fa-trash"></icon>
-                                </div>
+                <div class="picturesList">
+                    <ng-container *ngFor="let picture of items.values()">
+                        <div class="pic">
+                            <img [src]="picture.publicUri" alt="{{ picture.fileName }}"/>
+                            <div (click)="deletePicture(picture)" class="deleteOverlay">
+                                <icon iconName="fa-trash"></icon>
                             </div>
-                        </ng-container>
-                        <div class="addButton">
-                            <icon (click)="showStorageDialog(false)" iconName="fa-plus"></icon>
                         </div>
+                    </ng-container>
+                    <div class="addButton">
+                        <icon (click)="showStorageDialog(false)" iconName="fa-plus"></icon>
                     </div>
-                </ng-container>
+                </div>
             </div>
             <div *ngIf="items.size() == 0">
                 <p style="text-align:center">Выберите одно или несколько изображений</p>
@@ -82,10 +68,6 @@ export class GalleryBlockFormComponent extends AbstractContentBlockFormComponent
         });
     }
 
-    public getService(): PostsService {
-        return this._servicesProvider.postsService;
-    }
-
     public deletePicture(pic: StorageItem): void {
         this.items.remove(pic.id);
         this.model.data.pictures = this.items.values();
@@ -93,7 +75,7 @@ export class GalleryBlockFormComponent extends AbstractContentBlockFormComponent
 
     public showStorageDialog(replace = false): void {
         this._dialogService
-            .show(StorageManagerDialogComponent, '', (config) => {
+            .show(StorageManagerDialogComponent, StorageManagerSelectMode.Multiple, (config) => {
                 config.maxWidth = '90vw';
                 config.width = '90vw';
             })

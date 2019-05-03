@@ -53,3 +53,14 @@ mat-cell {
     }
   }
 }
+
+mat-row.selectable {
+  cursor: pointer;
+  &:hover {
+    background: mat-color($brc-accent);
+  }
+}
+
+mat-row.selected {
+  background: lighten(mat-color($brc-accent), 10);
+}

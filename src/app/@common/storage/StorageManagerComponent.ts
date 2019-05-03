@@ -21,7 +21,8 @@ export class StorageManagerComponent implements OnInit {
     public columnsToDisplay = ['select', 'icon', 'title', 'size', 'date'];
 
     @Input()
-    public selectMode = false;
+    public selectMode = StorageManagerSelectMode.None;
+    public selectModes = StorageManagerSelectMode;
 
     public currentPath = '/';
     public breadcrumbs = [
@@ -69,12 +70,23 @@ export class StorageManagerComponent implements OnInit {
         });
     }
 
-    public select(target: EventTarget, node: StorageNode): void {
-        if ((<HTMLInputElement>target).checked) {
+    public select(node: StorageNode): void {
+        if (this.selectMode === StorageManagerSelectMode.None) {
+            return;
+        }
+        if (!node.selected) {
+            if (this.selectMode === StorageManagerSelectMode.Single) {
+                this.selection.forEach((_, selectedNode) => {
+                    selectedNode.selected = false;
+                });
+                this.selection.clear();
+            }
             this.selection.set(node.item.filePath, node);
+            node.selected = true;
+
         } else if (this.selection.hasKey(node.item.filePath)) {
             this.selection.remove(node.item.filePath);
-
+            node.selected = false;
         }
     }
 
@@ -186,4 +198,10 @@ export class FileSizePipe implements PipeTransform {
 
         return bytes.toFixed(+precision) + ' ' + this._units[unit];
     }
+}
+
+export enum StorageManagerSelectMode {
+    None = 1,
+    Single = 2,
+    Multiple = 3
 }

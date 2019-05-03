@@ -1,10 +1,12 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { PictureBlockFormComponent } from '@common/blocks/editor/pictureblock-form.component';
 import { DialogService } from '@common/modals/DialogService';
 import { AbstractBaseContentBlock, ContentBlockItemType } from '@models/blocks/abstract-content-block';
 import { CutBlock } from '@models/blocks/CutBlock';
 import { FileBlock } from '@models/blocks/FileBlock';
 import { GalleryBlock } from '@models/blocks/GalleryBlock';
+import { PictureBlock } from '@models/blocks/PictureBlock';
 import { TextBlock } from '@models/blocks/TextBlock';
 import { TwitterBlock } from '@models/blocks/TwitterBlock';
 import { YoutubeBlock } from '@models/blocks/YoutubeBlock';
@@ -92,6 +94,7 @@ export class BlocksFormComponent implements OnInit {
         this.blocksManager.registerBlockType(ContentBlockItemType.Quote, QuoteBlock, QuoteBlockFormComponent);
         this.blocksManager.registerBlockType(ContentBlockItemType.File, FileBlock, FileBlockFormComponent);
         this.blocksManager.registerBlockType(ContentBlockItemType.Gallery, GalleryBlock, GalleryBlockFormComponent);
+        this.blocksManager.registerBlockType(ContentBlockItemType.Picture, PictureBlock, PictureBlockFormComponent);
         this.blocksManager.registerBlockType(ContentBlockItemType.Cut, CutBlock, CutBlockFormComponent);
         this.blocksManager.registerBlockType(ContentBlockItemType.Twitter, TwitterBlock, TwitterBlockFormComponent);
         this.blocksManager.registerBlockType(ContentBlockItemType.Youtube, YoutubeBlock, YoutubeBlockFormComponent);

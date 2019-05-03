@@ -5,6 +5,7 @@ import { AbstractBaseContentBlock, ContentBlockItemType } from '@models/blocks/a
 import { CutBlock } from '@models/blocks/CutBlock';
 import { FileBlock } from '@models/blocks/FileBlock';
 import { GalleryBlock } from '@models/blocks/GalleryBlock';
+import { PictureBlock } from '@models/blocks/PictureBlock';
 import { TextBlock } from '@models/blocks/TextBlock';
 import { TwitterBlock } from '@models/blocks/TwitterBlock';
 import { YoutubeBlock } from '@models/blocks/YoutubeBlock';
@@ -113,6 +114,9 @@ export class BlockFormComponent<TModel extends AbstractBaseContentBlock> impleme
                 break;
             case ContentBlockItemType.Gallery:
                 isEmpty = GalleryBlock.isEmpty(<GalleryBlock>(<unknown>this.model));
+                break;
+            case ContentBlockItemType.Picture:
+                isEmpty = PictureBlock.isEmpty(<PictureBlock>(<unknown>this.model));
                 break;
             case ContentBlockItemType.Twitter:
                 isEmpty = TwitterBlock.isEmpty(<TwitterBlock>(<unknown>this.model));
