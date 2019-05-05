@@ -15,9 +15,9 @@ export class TagsService extends AbstractBaseService<Tag> implements IBaseServic
         super(httpClient);
     }
 
-    public create(name: string): Observable<SaveModelResponse<Tag>> {
+    public create(title: string): Observable<SaveModelResponse<Tag>> {
         const tag = new Tag();
-        tag.name = name;
+        tag.title = title;
 
         return this.add(tag);
     }

@@ -8,9 +8,9 @@ import { TagsCacheProvider } from '@services/cache/TagsCacheProvider';
             <mat-chip
                     selected
                     *ngFor="let tag of (provider.get(ids) | async).values()"
-                    title="{{ tag.name }}"
+                    title="{{ tag.title }}"
             >
-                {{ tag.name | truncate: 30 }}
+                {{ tag.title | truncate: 30 }}
             </mat-chip>
         </mat-chip-list>
     `
