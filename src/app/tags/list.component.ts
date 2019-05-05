@@ -23,7 +23,7 @@ export class TagsListComponent extends AbstractListComponent<Tag> {
 
     protected _getColumns(): Array<ListTableColumn<Tag>> {
         return [
-            new ListTableColumn<Tag>('name', 'Заголовок').setSortable(),
+            new ListTableColumn<Tag>('title', 'Заголовок').setSortable(),
             new ListTableColumn<Tag>(
                 'dateAdded',
                 'Дата',
