@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { DialogService } from '@common/modals/DialogService';
 import { SnackBarService } from '@common/snacks/SnackBarService';
+import { StorageManagerSelectMode } from '@common/storage/StorageManagerComponent';
 import { StorageManagerDialogComponent } from '@common/storage/StorageManagerDialogComponent';
 import { FileBlock } from '@models/blocks/FileBlock';
 import { StorageItem } from '@models/results/StorageItem';
-import { PostsService } from '@services/ContentService';
 import { ServicesProvider } from '@services/ServicesProvider';
 import { StorageNode } from '@services/StorageService';
 import { BlockFieldDescriptor, AbstractContentBlockFormComponent } from './abstract-content-block-form-component';
@@ -47,10 +47,6 @@ export class FileBlockFormComponent extends AbstractContentBlockFormComponent<Fi
         super(snackBarService);
     }
 
-    public getService(): PostsService {
-        return this._servicesProvider.postsService;
-    }
-
     protected _getFields(): Array<BlockFieldDescriptor> {
         return [new BlockFieldDescriptor('file', [Validators.required], 'data.file')];
     }
@@ -73,7 +69,7 @@ export class FileBlockFormComponent extends AbstractContentBlockFormComponent<Fi
 
     public showStorageDialog(): void {
         this._dialogService
-            .show(StorageManagerDialogComponent, '', (config) => {
+            .show(StorageManagerDialogComponent, StorageManagerSelectMode.Single, (config) => {
                 config.maxWidth = '90vw';
                 config.width = '90vw';
             })
