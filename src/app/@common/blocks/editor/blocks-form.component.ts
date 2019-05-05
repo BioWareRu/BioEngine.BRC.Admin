@@ -41,6 +41,7 @@ export class BlocksFormComponent implements OnInit {
     @Input()
     public model: IContentEntity;
     blocksManager: BlocksManager;
+    private _blocks: AbstractBaseContentBlock[] = [];
 
     public static equals(x, y): boolean {
         if (x === y) {
@@ -100,9 +101,18 @@ export class BlocksFormComponent implements OnInit {
         this.blocksManager.registerBlockType(ContentBlockItemType.Youtube, YoutubeBlock, YoutubeBlockFormComponent);
         this.blocksManager.registerBlockType(ContentBlockItemType.Twitch, TwitchBlock, TwitchBlockFormComponent);
 
+        this._blocks = this.model.blocks.slice();
         this.blocksManager.blocks.subscribe(blocks => {
             if (!BlocksFormComponent.equals(blocks, this.model.blocks)) {
                 this.form.getControlByProperty('blocks').patchValue(blocks);
+                this._blocks = this.model.blocks.slice();
+            }
+        });
+
+        this.form.onChange.subscribe(_ => {
+            if (!BlocksFormComponent.equals(this._blocks, this.model.blocks)) {
+                this.form.getControlByProperty('blocks').patchValue(this.model.blocks);
+                this._blocks = this.model.blocks.slice();
             }
         });
 
