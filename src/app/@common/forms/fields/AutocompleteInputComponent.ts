@@ -16,7 +16,7 @@ export class AutocompleteInputComponent extends AbstractFormInput implements OnI
     public groups: Array<SelectGroup> = [];
     @Input() public options: Array<any> | Observable<any>;
     @Input() public entitiesService: IBaseService<any> | null = null;
-    @Input() public groupField: string | null = '';
+    @Input() public groupField = '';
     @Input() public titleField = 'title';
     @Input() public valueField = 'value';
     @Input() public type = 'text';
@@ -70,7 +70,6 @@ export class AutocompleteInputComponent extends AbstractFormInput implements OnI
             this.isInitialized = true;
         } else if (this.entitiesService !== null) {
             this._loadEntitiesData(filter);
-            this.isInitialized = true;
         } else {
             this.options.subscribe(data => {
                 this._values = data;
@@ -87,15 +86,17 @@ export class AutocompleteInputComponent extends AbstractFormInput implements OnI
                 this._values = res.data;
                 this._buildGroups();
                 this._buildLabels();
+                this.isInitialized = true;
             });
         }
     }
 
     // noinspection JSMethodCanBeStatic
     public displayFn(item: any): string | null {
-        return item !== null && this._labels && this._labels.hasKey(item)
+        const res = item !== null && this._labels && this._labels.hasKey(item)
             ? this._labels.get(item)
             : null;
+        return res;
     }
 
     protected _buildLabels(): void {
@@ -106,8 +107,7 @@ export class AutocompleteInputComponent extends AbstractFormInput implements OnI
 
     protected _buildGroups(): void {
         const groups: Array<SelectGroup> = [];
-
-        if (this.groupField === null) {
+        if (!this.groupField) {
             groups.push(new SelectGroup());
         }
         this._values.forEach(option => {
@@ -121,13 +121,13 @@ export class AutocompleteInputComponent extends AbstractFormInput implements OnI
             ) {
                 return;
             }
-            if (
+            /*if (
                 this._filter &&
                 selectOption.title.toLowerCase().indexOf(this._filterValue) === -1
             ) {
                 return;
-            }
-            if (this.groupField === null) {
+            }*/
+            if (!this.groupField) {
                 groups[0].options.push(selectOption);
             } else {
                 let group: SelectGroup | null = null;
