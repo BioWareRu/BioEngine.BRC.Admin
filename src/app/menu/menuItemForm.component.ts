@@ -19,7 +19,7 @@ export class MenuItemFormComponent extends AbstractSimpleFormComponent<MenuItem>
     }
 
     protected _constructForm(): void {
-        this.registerFormControl('inputLabel', [Validators.required]);
+        this.registerFormControl('label', [Validators.required]);
         this.registerFormControl('url', [Validators.required]);
     }
 }
