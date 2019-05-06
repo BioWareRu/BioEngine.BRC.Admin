@@ -1,12 +1,12 @@
-import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material';
-import Dictionary from '../../Dictionary';
-import { AbstractFormInput } from './abstract-form-input';
 import { IBaseService } from '@common/abstract-base-service';
 import { Filter, FilterOperator } from '@common/Filter';
-import { FormControl } from '@angular/forms';
-import { startWith, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import Dictionary from '../../Dictionary';
+import { AbstractFormInput } from './abstract-form-input';
 
 @Component({
     selector: 'autocomplete-input',
@@ -93,10 +93,9 @@ export class AutocompleteInputComponent extends AbstractFormInput implements OnI
 
     // noinspection JSMethodCanBeStatic
     public displayFn(item: any): string | null {
-        const res = item !== null && this._labels && this._labels.hasKey(item)
+        return item !== null && this._labels && this._labels.hasKey(item)
             ? this._labels.get(item)
             : null;
-        return res;
     }
 
     protected _buildLabels(): void {
