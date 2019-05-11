@@ -104,6 +104,13 @@ export const NAVIGATION: Array<NavigationItem> = [
         url: '/pages'
     },
     {
+        id: 'ads',
+        type: 'item',
+        title: 'Реклама',
+        icon: new Icon('fa-ad'),
+        url: '/ads'
+    },
+    {
         id: 'menu',
         type: 'item',
         title: 'Меню',

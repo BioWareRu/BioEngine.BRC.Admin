@@ -7,6 +7,7 @@ import { MatButtonModule, MatCardModule, MatGridListModule, MatIconModule, MatMe
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AdsService } from '@services/AdsService';
 
 import { OAuthModule, OAuthModuleConfig, OAuthStorage } from 'angular-oauth2-oidc';
 import 'hammerjs';
@@ -87,6 +88,7 @@ import { LayoutModule } from './layout/layout.module';
         SectionsService,
         PostsService,
         TagsService,
+        AdsService,
         PagesService,
         ForumsService,
         PropertiesService,

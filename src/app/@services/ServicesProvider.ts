@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AdsService } from '@services/AdsService';
 import { PostsService } from './ContentService';
 import { DevelopersService } from './DevelopersService';
 import { ForumsService } from './ForumsService';
@@ -24,8 +25,10 @@ export class ServicesProvider {
         private readonly _pagesService: PagesService,
         private readonly _forumsService: ForumsService,
         private readonly _propertiesService: PropertiesService,
-        private readonly _menuService: MenuService
-    ) {}
+        private readonly _menuService: MenuService,
+        private readonly _adsService: AdsService,
+    ) {
+    }
 
     get sitesService(): SitesService {
         return this._sitesService;
@@ -57,6 +60,10 @@ export class ServicesProvider {
 
     get pagesService(): PagesService {
         return this._pagesService;
+    }
+
+    get adsService(): AdsService {
+        return this._adsService;
     }
 
     get forumsService(): ForumsService {

@@ -8,6 +8,7 @@ const routes: Routes = [
     { path: 'sections', loadChildren: './sections/sections.module#SectionsModule' },
     { path: 'tags', loadChildren: './tags/tags.module#TagsModule' },
     { path: 'pages', loadChildren: './pages/pages.module#PagesModule' },
+    { path: 'ads', loadChildren: './ads/ads.module#AdsModule' },
     { path: 'menu', loadChildren: './menu/menu.module#MenuModule' },
     { path: 'storage', loadChildren: './storage/storage.module#StorageModule' },
     { path: '**', redirectTo: 'dashboard' }
