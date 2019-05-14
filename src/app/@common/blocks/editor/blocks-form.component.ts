@@ -40,7 +40,7 @@ export class BlocksFormComponent implements OnInit {
 
     @Input()
     public model: IContentEntity;
-    blocksManager: BlocksManager;
+    public blocksManager: BlocksManager;
     private _blocks: AbstractBaseContentBlock[] = [];
 
     public static equals(x, y): boolean {

@@ -31,11 +31,6 @@ import { CustomValidators } from 'ngx-custom-validators';
     `,
     styles: [
         `
-            :host {
-                background: #ececec;
-                display: block;
-                padding: 10px;
-            }
             .ck.ck-editor__editable_inline > :last-child {
                 margin-bottom: 5px;
             }
