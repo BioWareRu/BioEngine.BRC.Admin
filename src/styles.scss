@@ -104,19 +104,6 @@ $fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
     }
 }
 
-.input-file-container img.image-preview,
-.input-file-container .replace-button {
-    max-width: 10rem;
-    max-height: 10rem;
-    width: 100% !important;
-    height: 100% !important;
-}
-
-.input-file-container .replace-button {
-    background-color: #415f8c;
-    padding: 5px;
-}
-
 snack-bar-container {
     padding: 0 !important;
     background: transparent !important;
