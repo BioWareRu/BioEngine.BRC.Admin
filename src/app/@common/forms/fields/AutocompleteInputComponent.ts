@@ -47,7 +47,7 @@ export class AutocompleteInputComponent extends AbstractFormInput implements OnI
                 } else if (this.entitiesService && this.control.value) {
                     if (Array.isArray(this.control.value) && this.control.value.length > 0) {
                         this._filter = Filter.simple(this.valueField, FilterOperator.In, this.control.value);
-                    } else if (this.control.value !== '00000000-0000-0000-0000-000000000000') {
+                    } else if (!Array.isArray(this.control.value) && this.control.value !== '00000000-0000-0000-0000-000000000000') {
                         this._filter = Filter.simple(this.valueField, FilterOperator.Equal, this.control.value);
                     }
                 }
