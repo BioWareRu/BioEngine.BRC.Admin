@@ -45,7 +45,7 @@ export class TwitterBlockFormComponent extends AbstractContentBlockFormComponent
     }
 
     public ngOnInit(): void {
-        this.model.data.tweetUrl = 'https://twitter.com/status/' + this.model.data.tweetAuthor + '/' + this.model.data.tweetId;
+        this.model.data.tweetUrl = 'https://twitter.com/' + this.model.data.tweetAuthor + '/status/' + this.model.data.tweetId;
         super.ngOnInit();
     }
 
