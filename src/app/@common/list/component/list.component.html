@@ -40,7 +40,7 @@
                         <sitesList [ids]="column.getValue(row)"></sitesList>
                     </ng-container>
                     <ng-container *ngSwitchCase="columnTypes.Site">
-                        <sitesList [ids]="column.getValue(row)"></sitesList>
+                        <sitesList [ids]="[column.getValue(row)]"></sitesList>
                     </ng-container>
                     <ng-container *ngSwitchCase="columnTypes.SectionsList">
                         <sectionsList [ids]="column.getValue(row)"></sectionsList>
