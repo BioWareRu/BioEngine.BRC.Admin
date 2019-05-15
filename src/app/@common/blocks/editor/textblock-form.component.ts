@@ -1,10 +1,11 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
-import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
+import { AbstractEditorBlockFormComponent } from '@common/blocks/editor/abstract-editor-block-form-component';
+
 import { SnackBarService } from '@common/snacks/SnackBarService';
 import { ContentBlockItemType } from '@models/blocks/abstract-content-block';
 import { TextBlock } from '@models/blocks/TextBlock';
-import { BlockFieldDescriptor, AbstractContentBlockFormComponent } from './abstract-content-block-form-component';
+import { BlockFieldDescriptor } from './abstract-content-block-form-component';
 
 @Component({
     selector: 'text-block-form',
@@ -13,6 +14,7 @@ import { BlockFieldDescriptor, AbstractContentBlockFormComponent } from './abstr
             <ckeditor
                     #editor
                     [editor]="editorInstance"
+                    [config]="editorConfig"
                     [formControlName]="getFieldName('text')"
                     (ready)="ready($event)"
             ></ckeditor>
@@ -30,12 +32,11 @@ import { BlockFieldDescriptor, AbstractContentBlockFormComponent } from './abstr
         `
     ]
 })
-export class TextBlockFormComponent extends AbstractContentBlockFormComponent<TextBlock> {
+export class TextBlockFormComponent extends AbstractEditorBlockFormComponent<TextBlock> {
     constructor(snackBarService: SnackBarService) {
         super(snackBarService);
     }
 
-    public editorInstance = BalloonEditor;
     view: any;
     focusOnReady: boolean;
 
