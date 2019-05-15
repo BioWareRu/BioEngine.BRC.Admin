@@ -16,6 +16,7 @@ import {
     MatTabsModule
 } from '@angular/material';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { FormLayoutContentComponent } from '@common/forms/FormLayoutContentComponent';
 import { InputFileConfig, InputFileModule } from 'ngx-input-file';
 import { BioSharedModule } from './../shared/BioSharedModule';
 import { ErrorsListComponent } from './ErrorsListComponent';
@@ -41,6 +42,7 @@ const config: InputFileConfig = {};
         CheckboxInputComponent,
         SelectInputComponent,
         FormLayoutComponent,
+        FormLayoutContentComponent,
         ChipsInputComponent,
         AutocompleteInputComponent,
         DatePickerInputComponent,
@@ -56,6 +58,7 @@ const config: InputFileConfig = {};
         UploadInputComponent,
         CheckboxInputComponent,
         FormLayoutComponent,
+        FormLayoutContentComponent,
         ChipsInputComponent,
         AutocompleteInputComponent,
         DatePickerInputComponent,

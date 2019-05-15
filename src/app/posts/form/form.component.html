@@ -1,9 +1,14 @@
 <div class="page-layout blank bg-white inner-scroll" *ngIf="formLoaded">
     <mat-sidenav-container>
         <mat-sidenav-content fxFlex>
-            <div class="editor p-24" brcPerfectScrollbar>
-                <text-input [inputFormGroup]="form.formGroup" inputFieldName="title" inputLabel="Название"></text-input>
-                <blocksForm [model]="model" [form]="form"></blocksForm>
+            <div class="editor" brcPerfectScrollbar>
+                <form-layout-content [formComponent]="this">
+                    <div class="p-12">
+                        <text-input [inputFormGroup]="form.formGroup" inputFieldName="title"
+                                    inputLabel="Название"></text-input>
+                        <blocksForm [model]="model" [form]="form"></blocksForm>
+                    </div>
+                </form-layout-content>
             </div>
         </mat-sidenav-content>
         <mat-sidenav #sidenav mode="side" opened class="p-24" position="end">
@@ -16,7 +21,7 @@
                 </button>
                 &nbsp;
                 <button mat-raised-button color="accent" (click)="changePublishState()" *ngIf="!model.isPublished"
-                    [disabled]="form.formGroup.invalid || form.hasChanges || form.inProgress">
+                        [disabled]="form.formGroup.invalid || form.hasChanges || form.inProgress">
                     Опубликовать
                 </button>
                 <button mat-raised-button color="warn" (click)="changePublishState()" *ngIf="model.isPublished"
@@ -31,16 +36,16 @@
             <chips-input [inputFormGroup]="form.formGroup" inputFieldName="tagIds" inputLabel="Тэги" titleField="title"
                          valueField="id" [creatable]="true"
                          [entitiesService]="servicesProvider.tagsService"></chips-input>
-<!--            <div>-->
-<!--                <div *ngIf="!form.formGroup.valid">-->
-<!--                    <div *ngFor="let control of form.formGroup.controls | keys">-->
-<!--                        <div *ngIf="control.value.invalid">-->
-<!--                            {{control.key}}-->
-<!--                            : {{control.value.status}} {{control.value.errors|json}} {{control.value.value|json}}-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
+            <!--            <div>-->
+            <!--                <div *ngIf="!form.formGroup.valid">-->
+            <!--                    <div *ngFor="let control of form.formGroup.controls | keys">-->
+            <!--                        <div *ngIf="control.value.invalid">-->
+            <!--                            {{control.key}}-->
+            <!--                            : {{control.value.status}} {{control.value.errors|json}} {{control.value.value|json}}-->
+            <!--                        </div>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--            </div>-->
         </mat-sidenav>
     </mat-sidenav-container>
 </div>
