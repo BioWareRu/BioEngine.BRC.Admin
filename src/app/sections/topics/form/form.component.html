@@ -12,8 +12,10 @@
         </div>
         <div fxLayout="row">
             <div fxFlex="45">
-                <chips-input [inputFormGroup]="form.formGroup" inputFieldName="siteIds" inputLabel="Сайты"
-                    valueField="id" titleField="title" [entitiesService]="servicesProvider.sitesService"></chips-input>
+                <chips-input class="highlight-first" [inputFormGroup]="form.formGroup" inputFieldName="siteIds"
+                             inputLabel="Сайты"
+                             valueField="id" titleField="title"
+                             [entitiesService]="servicesProvider.sitesService"></chips-input>
             </div>
             <div fxFlex="10"></div>
             <div fxFlex="45">
@@ -25,14 +27,14 @@
         <div fxLayout="row">
             <div fxFlex="45">
                 <upload-input [inputFormGroup]="form.formGroup" inputFieldName="logo" inputLabel="Большой логотип"
-                    [multiple]="false" [service]="service"
-                    [types]="['image/png', 'image/jpeg', 'image/jpg', 'image/gif']"></upload-input>
+                              [multiple]="false" [service]="service"
+                              [types]="['image/png', 'image/jpeg', 'image/jpg', 'image/gif']"></upload-input>
             </div>
             <div fxFlex="10"></div>
             <div fxFlex="45">
                 <upload-input [inputFormGroup]="form.formGroup" inputFieldName="logoSmall"
-                    inputLabel="Маленький логотип" [multiple]="false" [service]="service"
-                    [types]="['image/png', 'image/jpeg', 'image/jpg', 'image/gif']"></upload-input>
+                              inputLabel="Маленький логотип" [multiple]="false" [service]="service"
+                              [types]="['image/png', 'image/jpeg', 'image/jpg', 'image/gif']"></upload-input>
             </div>
         </div>
     </form-layout>

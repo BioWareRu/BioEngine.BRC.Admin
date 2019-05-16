@@ -8,7 +8,8 @@ import { AbstractFormInput } from './abstract-form-input';
 
 @Component({
     selector: 'chips-input',
-    templateUrl: './ChipsInputComponent.html'
+    templateUrl: './ChipsInputComponent.html',
+    styleUrls: ['./ChipsInputComponent.scss'],
 })
 export class ChipsInputComponent extends AutocompleteInputComponent implements OnInit {
     @Input() public creatable = false;
