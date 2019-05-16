@@ -118,7 +118,9 @@ export abstract class AbstractBaseFormComponent {
             const data = plainToClass(RestResult, <RestResult>response.error);
             data.errors.forEach(error => {
                 const control = this.form.getControlByProperty(error.field);
-                control.setServerError(error.message);
+                if (control != null) {
+                    control.setServerError(error.message);
+                }
             });
             this._snackBarService.error(
                 new SnackBarMessage(
@@ -352,7 +354,7 @@ export abstract class AbstractContentFormComponent<TModel extends IContentEntity
     }
 }
 
-@Pipe({ name: 'keys' })
+@Pipe({name: 'keys'})
 export class KeysPipe implements PipeTransform {
     transform(value, _args: Array<string>): any {
         const keys: any[] = [];
@@ -361,7 +363,7 @@ export class KeysPipe implements PipeTransform {
             if (!value.hasOwnProperty(key)) {
                 continue;
             }
-            keys.push({ key, value: value[key] });
+            keys.push({key, value: value[key]});
         }
 
         return keys;
