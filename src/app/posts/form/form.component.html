@@ -30,7 +30,7 @@
                 </button>
             </div>
             <text-input [inputFormGroup]="form.formGroup" inputFieldName="url" inputLabel="Адрес на сайте"></text-input>
-            <chips-input class="highlight-first" [inputFormGroup]="form.formGroup" inputFieldName="sectionIds" inputLabel="Разделы"
+            <chips-input [inputFormGroup]="form.formGroup" inputFieldName="sectionIds" inputLabel="Разделы"
                          titleField="title" valueField="id"
                          [entitiesService]="servicesProvider.sectionsService"></chips-input>
             <chips-input [inputFormGroup]="form.formGroup" inputFieldName="tagIds" inputLabel="Тэги" titleField="title"
