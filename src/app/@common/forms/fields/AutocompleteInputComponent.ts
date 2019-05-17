@@ -119,12 +119,12 @@ export class AutocompleteInputComponent extends AbstractFormInput implements OnI
             ) {
                 return;
             }
-            /*if (
-                this._filter &&
+            if (
+                !this.entitiesService && this._filterValue &&
                 selectOption.title.toLowerCase().indexOf(this._filterValue) === -1
             ) {
                 return;
-            }*/
+            }
             if (!this.groupField) {
                 groups[0].options.push(selectOption);
             } else {
