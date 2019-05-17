@@ -182,7 +182,7 @@ export abstract class AbstractFormComponent<TModel extends AbstractModel,
                 }
                 propertiesSet.properties.forEach((prop, propIndex) => {
                     prop.values.forEach((val, valIndex) => {
-                        const fieldProperty = `PropertiesGroups.${groupIndex}.Properties.${propIndex}.Values.${valIndex}.Value`;
+                        const fieldProperty = `propertiesGroups.${groupIndex}.properties.${propIndex}.values.${valIndex}.value`;
                         let fieldName = propertiesSet.key + prop.key;
                         if (val.siteId) {
                             fieldName += val.siteId;
