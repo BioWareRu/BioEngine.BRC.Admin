@@ -9,7 +9,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdsService } from '@services/AdsService';
 
 import { OAuthModule, OAuthModuleConfig, OAuthStorage } from 'angular-oauth2-oidc';
-import 'hammerjs';
 import { CustomFormsModule } from 'ngx-custom-validators';
 import { ENV } from '../environments/environment';
 import { BioCommonModule } from '@common/BioCommonModule';
