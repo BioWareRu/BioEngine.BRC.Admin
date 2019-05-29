@@ -1,11 +1,11 @@
 import { Input, OnInit, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 import { AbstractModel } from '@models/base/abstract-model';
 import { AbstractBaseService } from '../abstract-base-service';
 import { AbstractPageComponent } from '../abstract-page-component';
 import { SaveModelResponse } from '../SaveModelResponse';
 import { AbstractFormComponent } from './abstract-form-component';
+import { Observable } from 'rxjs';
 export abstract class AbstractFormPageComponent<TModel extends AbstractModel, TResultModel extends SaveModelResponse<TModel>> extends AbstractPageComponent implements OnInit {
     @Input()
     public model: TModel | null;
