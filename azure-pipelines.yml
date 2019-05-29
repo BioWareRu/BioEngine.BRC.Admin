@@ -3,7 +3,7 @@ pool:
 
 variables:
   Version: '3.0.$(Build.BuildId)'
-  ImageName: biowareru/bioengine-brc-admin:$(Version)
+  ImageName: :$(Version)
 
 steps:
 - task: NodeTool@0
@@ -16,14 +16,12 @@ steps:
       npm run build-prod
   displayName: 'npm install and build'
 
-- script: |
-    docker build . -t $(ImageName)
-  displayName: 'build docker image'
-
-- script: |
-    docker login -u $(dockerId) -p $(dockerPswd)
-  displayName: 'login to docker hub'
-
-- script: |
-    docker push $(ImageName)
-  displayName: 'push image to docker hub'
+- task: Docker@2
+  displayName: 'build and push image'
+  inputs:
+      containerRegistry: 'BioWareRU DockerHub'
+      repository: 'biowareru/bioengine-brc-admin'
+      command: 'buildAndPush'
+      Dockerfile: 'Dockerfile'
+      buildContext: '.'
+      tags: '$(Version)'
