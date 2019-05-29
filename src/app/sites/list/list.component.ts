@@ -4,7 +4,7 @@ import { AbstractListComponent } from '@common/list/abstract-list-component';
 import { ListTableColumnType } from '@common/list/ListEnums';
 import { ListTableColumn } from '@common/list/ListTableColumn';
 import { ListTableColumnAction } from '@common/list/ListTableColumnAction';
-import { PageContext } from '@common/abstract-page-component';
+import { PageContext } from "@common/PageContext";
 import { Site } from '@models/Site';
 import { ServicesProvider } from '@services/ServicesProvider';
 

@@ -1,7 +1,8 @@
 import { EventEmitter } from '@angular/core';
 import { FormControl, AsyncValidatorFn, ValidatorFn, AbstractControlOptions } from '@angular/forms';
 import * as objectPath from 'object-path';
-import { FieldInputChange, Form } from './Form';
+import { Form } from './Form';
+import { FieldInputChange } from "./FieldInputChange";
 
 export class BioFormControl extends FormControl {
     public serverErrors: Array<string> = [];

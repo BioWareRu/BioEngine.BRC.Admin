@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 
-import { MatSidenavModule, MatTabsModule } from '@angular/material';
 import { BlocksModule } from '@common/blocks/blocks.module';
 import { PostFormPageComponent } from './form/form-page.component';
 import { PostFormComponent } from './form/form.component';
 import { ContentListComponent } from './list/list.component';
 import { PostsRoutingModule } from './posts-routing.module';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
     imports: [PostsRoutingModule, MatSidenavModule, BlocksModule, MatTabsModule],

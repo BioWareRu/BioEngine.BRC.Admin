@@ -1,6 +1,8 @@
 import { Icon } from '@common/shared/icon/Icon';
 import { Type } from 'class-transformer';
-import { AbstractContentBlock, AbstractContentBlockData, ContentBlockItemType } from './abstract-content-block';
+import { AbstractContentBlock } from './abstract-content-block';
+import { ContentBlockItemType } from "./ContentBlockItemType";
+import { TwitterBlockData } from './TwitterBlockData';
 
 export class TwitterBlock extends AbstractContentBlock<TwitterBlockData> {
     public title = 'Twitter';
@@ -14,8 +16,4 @@ export class TwitterBlock extends AbstractContentBlock<TwitterBlockData> {
     }
 }
 
-export class TwitterBlockData extends AbstractContentBlockData {
-    public tweetId: string | null = null;
-    public tweetAuthor: string | null = null;
-    public tweetUrl = '';
-}
+

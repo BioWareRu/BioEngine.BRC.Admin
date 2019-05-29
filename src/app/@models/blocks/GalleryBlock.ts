@@ -1,7 +1,8 @@
 import { Icon } from '@common/shared/icon/Icon';
 import { Type } from 'class-transformer';
-import { StorageItem } from '../results/StorageItem';
-import { AbstractContentBlock, AbstractContentBlockData, ContentBlockItemType } from './abstract-content-block';
+import { AbstractContentBlock } from './abstract-content-block';
+import { ContentBlockItemType } from "./ContentBlockItemType";
+import { GalleryBlockData } from './GalleryBlockData';
 
 export class GalleryBlock extends AbstractContentBlock<GalleryBlockData> {
     public title = 'Галерея';
@@ -15,6 +16,4 @@ export class GalleryBlock extends AbstractContentBlock<GalleryBlockData> {
     }
 }
 
-export class GalleryBlockData extends AbstractContentBlockData {
-    public pictures: Array<StorageItem> = [];
-}
+

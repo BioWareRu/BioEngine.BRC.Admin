@@ -1,7 +1,8 @@
 import { Icon } from '@common/shared/icon/Icon';
 import { Type } from 'class-transformer';
-import { StorageItem } from '../results/StorageItem';
-import { AbstractContentBlock, AbstractContentBlockData, ContentBlockItemType } from './abstract-content-block';
+import { AbstractContentBlock } from './abstract-content-block';
+import { ContentBlockItemType } from "./ContentBlockItemType";
+import { PictureBlockData } from './PictureBlockData';
 
 export class PictureBlock extends AbstractContentBlock<PictureBlockData> {
     public title = 'Картинка';
@@ -13,9 +14,4 @@ export class PictureBlock extends AbstractContentBlock<PictureBlockData> {
     static isEmpty(block: PictureBlock): boolean {
         return !block.data.picture;
     }
-}
-
-export class PictureBlockData extends AbstractContentBlockData {
-    public picture: StorageItem | null = null;
-    public url: string;
 }

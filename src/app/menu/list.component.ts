@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Icon } from '@common/shared/icon/Icon';
 import { AbstractListComponent } from '@common/list/abstract-list-component';
 import { ListTableColumnType } from '@common/list/ListEnums';
-import { ListTableColumn, SiteTableColumn } from '@common/list/ListTableColumn';
+import { ListTableColumn } from '@common/list/ListTableColumn';
+import { SiteTableColumn } from "@common/list/SiteTableColumn";
 import { ListTableColumnAction } from '@common/list/ListTableColumnAction';
-import { PageContext } from '@common/abstract-page-component';
+import { PageContext } from "@common/PageContext";
 import { Menu } from '@models/Menu';
 import { ServicesProvider } from '@services/ServicesProvider';
 

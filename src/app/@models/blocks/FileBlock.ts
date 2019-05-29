@@ -1,11 +1,8 @@
 import { Icon } from '@common/shared/icon/Icon';
 import { Type } from 'class-transformer';
-import { StorageItem } from '../results/StorageItem';
-import { AbstractContentBlock, AbstractContentBlockData, ContentBlockItemType } from './abstract-content-block';
-
-export class FileBlockData extends AbstractContentBlockData {
-    public file: StorageItem | null = new StorageItem();
-}
+import { AbstractContentBlock } from './abstract-content-block';
+import { ContentBlockItemType } from "./ContentBlockItemType";
+import { FileBlockData } from './FileBlockData';
 
 export class FileBlock extends AbstractContentBlock<FileBlockData> {
     public title = 'Файл';

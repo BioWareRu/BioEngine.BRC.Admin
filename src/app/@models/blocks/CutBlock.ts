@@ -1,6 +1,8 @@
 import { Icon } from '@common/shared/icon/Icon';
 import { Type } from 'class-transformer';
-import { AbstractContentBlock, AbstractContentBlockData, ContentBlockItemType } from './abstract-content-block';
+import { AbstractContentBlock } from './abstract-content-block';
+import { ContentBlockItemType } from "./ContentBlockItemType";
+import { CutBlockData } from './CutBlockData';
 
 export class CutBlock extends AbstractContentBlock<CutBlockData> {
     public title = 'Кат';
@@ -14,6 +16,4 @@ export class CutBlock extends AbstractContentBlock<CutBlockData> {
     }
 }
 
-export class CutBlockData extends AbstractContentBlockData {
-    public buttonText = 'Читать дальше';
-}
+

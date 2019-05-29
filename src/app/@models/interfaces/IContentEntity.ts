@@ -1,4 +1,4 @@
-import { AbstractBaseContentBlock } from '../blocks/abstract-content-block';
+import { AbstractBaseContentBlock } from "../blocks/AbstractBaseContentBlock";
 import { ISiteEntity } from './ISiteEntity';
 
 export interface IContentEntity extends ISiteEntity {

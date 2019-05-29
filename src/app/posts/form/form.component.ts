@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { AbstractContentFormComponent } from '@common/forms/abstract-form-component';
+import { AbstractContentFormComponent } from "@common/forms/AbstractContentFormComponent";
 import { DialogService } from '@common/modals/DialogService';
-import { PageContext } from '@common/abstract-page-component';
+import { PageContext } from "@common/PageContext";
 import { SnackBarService } from '@common/snacks/SnackBarService';
 import { StateService } from '@common/StateService';
 import { Post } from '@models/posts/Post';
-import { SavePostResponse } from '@models/results/Post';
-import { BaseSection, } from '@models/abstract-section';
+import { SavePostResponse } from "@models/results/SavePostResponse";
+import { BaseSection } from "@models/BaseSection";
 import { Tag } from '@models/Tag';
 import { ServicesProvider } from '@services/ServicesProvider';
 import { AbstractBaseService } from '@common/abstract-base-service';

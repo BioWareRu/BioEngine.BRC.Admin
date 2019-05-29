@@ -1,8 +1,8 @@
 import { Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { MatFormFieldAppearance } from '@angular/material';
 import { Icon } from '@common/shared/icon/Icon';
 import { BioFormControl } from '../BioFormControl';
+import { MatFormFieldAppearance } from '@angular/material/form-field';
 
 export abstract class AbstractFormInput implements OnInit {
     public control: BioFormControl;

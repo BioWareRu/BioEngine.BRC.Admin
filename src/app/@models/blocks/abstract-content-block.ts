@@ -1,28 +1,7 @@
-import { Icon } from '@common/shared/icon/Icon';
-
-export abstract class AbstractBaseContentBlock {
-    public id: string;
-    public abstract type: ContentBlockItemType;
-    public position: number;
-    public inFocus = false;
-    public abstract title: string;
-    public abstract icon: Icon;
-}
+import { AbstractContentBlockData } from './AbstractContentBlockData';
+import { AbstractBaseContentBlock } from './AbstractBaseContentBlock';
 
 export abstract class AbstractContentBlock<T extends AbstractContentBlockData> extends AbstractBaseContentBlock {
     public abstract data: T;
 }
 
-export enum ContentBlockItemType {
-    Text = 'text',
-    Quote = 'quote',
-    File = 'file',
-    Gallery = 'gallery',
-    Picture = 'picture',
-    Cut = 'cut',
-    Twitter = 'twitter',
-    Youtube = 'youtube',
-    Twitch = 'twitch'
-}
-
-export abstract class AbstractContentBlockData { }

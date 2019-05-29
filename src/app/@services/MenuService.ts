@@ -5,7 +5,8 @@ import { RestClient } from '@common/HttpClient';
 import { AbstractListResult } from '@common/list/abstract-list-result';
 import { SaveModelResponse } from '@common/SaveModelResponse';
 import { Menu } from '@models/Menu';
-import { MenuListResult, SaveMenuResponse } from '@models/results/Menu';
+import { MenuListResult } from '@models/results/Menu';
+import { SaveMenuResponse } from "@models/results/SaveMenuResponse";
 
 @Injectable()
 export class MenuService extends AbstractBaseService<Menu> {

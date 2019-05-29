@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { SnackBarService } from '@common/snacks/SnackBarService';
 import { CustomValidators } from 'ngx-custom-validators';
-import { BlockFieldDescriptor, AbstractContentBlockFormComponent } from './abstract-content-block-form-component';
+import { AbstractContentBlockFormComponent } from './abstract-content-block-form-component';
+import { BlockFieldDescriptor } from "./BlockFieldDescriptor";
 import { TwitchBlock } from '@models/blocks/TwitchBlock';
-import { FieldInputChange } from '@common/forms/Form';
+import { FieldInputChange } from "@common/forms/FieldInputChange";
 import * as URLParse from 'url-parse';
 
 declare var Twitch: any;

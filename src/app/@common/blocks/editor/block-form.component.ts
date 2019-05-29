@@ -1,7 +1,8 @@
 import { Component, ComponentFactoryResolver, Input, OnInit, ViewChild } from '@angular/core';
 import { DynamicHostDirective } from '@common/directives/DynamicHostDirective';
 import { Form } from '@common/forms/Form';
-import { AbstractBaseContentBlock, ContentBlockItemType } from '@models/blocks/abstract-content-block';
+import { AbstractBaseContentBlock } from "@models/blocks/AbstractBaseContentBlock";
+import { ContentBlockItemType } from "@models/blocks/ContentBlockItemType";
 import { CutBlock } from '@models/blocks/CutBlock';
 import { FileBlock } from '@models/blocks/FileBlock';
 import { GalleryBlock } from '@models/blocks/GalleryBlock';

@@ -1,12 +1,15 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material';
-import { IBaseService } from '@common/abstract-base-service';
-import { Filter, FilterOperator } from '@common/Filter';
+import { IBaseService } from "@common/IBaseService";
+import { Filter } from '@common/Filter';
+import { FilterOperator } from "@common/FilterOperator";
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import Dictionary from '../../Dictionary';
 import { AbstractFormInput } from './abstract-form-input';
+import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
+import { SelectGroup } from './SelectGroup';
+import { SelectOption } from './SelectOption';
 
 @Component({
     selector: 'autocomplete-input',
@@ -152,12 +155,4 @@ export class AutocompleteInputComponent extends AbstractFormInput implements OnI
     }
 }
 
-export class SelectGroup {
-    public options: Array<SelectOption> = [];
-    public title: string | null = '';
-}
 
-export class SelectOption {
-    public title: string;
-    public value: any;
-}

@@ -1,5 +1,4 @@
-import { MatSnackBarVerticalPosition } from '@angular/material';
-import { MatSnackBarHorizontalPosition } from '@angular/material/typings/esm5/snack-bar';
+import { MatSnackBarVerticalPosition, MatSnackBarHorizontalPosition } from '@angular/material/snack-bar';
 
 export class SnackBarMessage {
     constructor(

@@ -1,6 +1,6 @@
 import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
 import { AbstractContentBlockFormComponent } from '@common/blocks/editor/abstract-content-block-form-component';
-import { AbstractBaseContentBlock } from '@models/blocks/abstract-content-block';
+import { AbstractBaseContentBlock } from "@models/blocks/AbstractBaseContentBlock";
 import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 
 export abstract class AbstractEditorBlockFormComponent<TBlock extends AbstractBaseContentBlock> extends AbstractContentBlockFormComponent<TBlock> {

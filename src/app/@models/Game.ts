@@ -1,24 +1,8 @@
-import { AbstractSection, AbstractTypedData } from './abstract-section';
-
-export class GameData extends AbstractTypedData {
-  public platforms: Array<Platform>;
-}
+import { AbstractSection } from './abstract-section';
+import { GameData } from './GameData';
 
 export class Game extends AbstractSection<GameData> {
   data: GameData;
 }
 
-export enum Platform {
-  PC,
-  Xbox,
-  Xbox360,
-  XboxOne,
-  PSOne,
-  PSTwo,
-  PSThree,
-  PSFour,
-  Android,
-  IOs,
-  MacOS,
-  Linux
-}
+

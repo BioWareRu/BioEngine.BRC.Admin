@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { SnackBarService } from '@common/snacks/SnackBarService';
 import { TwitterBlock } from '@models/blocks/TwitterBlock';
-import { BlockFieldDescriptor, AbstractContentBlockFormComponent } from './abstract-content-block-form-component';
+import { AbstractContentBlockFormComponent } from './abstract-content-block-form-component';
+import { BlockFieldDescriptor } from "./BlockFieldDescriptor";
 import { CustomValidators } from 'ngx-custom-validators';
-import { FieldInputChange } from '@common/forms/Form';
+import { FieldInputChange } from "@common/forms/FieldInputChange";
 import * as url from 'url';
 
 @Component({

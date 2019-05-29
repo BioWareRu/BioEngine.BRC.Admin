@@ -1,6 +1,8 @@
 import { Icon } from '@common/shared/icon/Icon';
 import { Type } from 'class-transformer';
-import { AbstractContentBlock, AbstractContentBlockData, ContentBlockItemType } from './abstract-content-block';
+import { AbstractContentBlock } from './abstract-content-block';
+import { ContentBlockItemType } from "./ContentBlockItemType";
+import { QuoteBlockData } from './QuoteBlockData';
 
 export class QuoteBlock extends AbstractContentBlock<QuoteBlockData> {
     public title = 'Цитата';
@@ -14,8 +16,4 @@ export class QuoteBlock extends AbstractContentBlock<QuoteBlockData> {
     }
 }
 
-export class QuoteBlockData extends AbstractContentBlockData {
-    public text = '';
-    public author = '';
-    public link = '';
-}
+

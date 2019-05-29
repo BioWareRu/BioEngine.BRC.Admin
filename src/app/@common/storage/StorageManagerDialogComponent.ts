@@ -1,7 +1,8 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AbstractDialogComponent } from '../modals/abstract-dialog-component';
-import { StorageManagerComponent, StorageManagerSelectMode } from './StorageManagerComponent';
+import { StorageManagerComponent } from './StorageManagerComponent';
+import { StorageManagerSelectMode } from "./StorageManagerSelectMode";
 
 @Component({
     selector: 'storageManageDialog',

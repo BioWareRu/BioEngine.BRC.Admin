@@ -1,7 +1,8 @@
 import { OnInit } from '@angular/core';
 import { AbstractModel } from '@models/base/abstract-model';
 import { AbstractBaseService } from '../abstract-base-service';
-import { AbstractPageComponent, PageContext } from '../abstract-page-component';
+import { AbstractPageComponent } from '../abstract-page-component';
+import { PageContext } from "../PageContext";
 import { ListProvider } from './ListProvider';
 import { ListTableColumn } from './ListTableColumn';
 

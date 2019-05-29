@@ -1,10 +1,11 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatSort } from '@angular/material';
 import { AbstractModel } from '@models/base/abstract-model';
 import { StateService } from '../../StateService';
 import { ListTableColumnType } from '../ListEnums';
 import { ListProvider } from '../ListProvider';
 import { ListTableColumn } from '../ListTableColumn';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
     selector: 'ngx-list-table',

@@ -2,7 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { AbstractEditorBlockFormComponent } from '@common/blocks/editor/abstract-editor-block-form-component';
 import { SnackBarService } from '@common/snacks/SnackBarService';
-import { BlockFieldDescriptor } from './abstract-content-block-form-component';
+import { BlockFieldDescriptor } from "./BlockFieldDescriptor";
 import { QuoteBlock } from '@models/blocks/QuoteBlock';
 import { CustomValidators } from 'ngx-custom-validators';
 
@@ -32,7 +32,7 @@ import { CustomValidators } from 'ngx-custom-validators';
         </div>
     `,
     styles: [
-            `
+        `
             .ck.ck-editor__editable_inline > :last-child {
                 margin-bottom: 5px;
             }

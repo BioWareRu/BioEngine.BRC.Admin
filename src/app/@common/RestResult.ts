@@ -1,9 +1,5 @@
 import { Type } from 'class-transformer';
-
-export class RestError {
-  public message: string;
-  public field: string;
-}
+import { RestError } from './RestError';
 
 export class RestResult {
   public code: number;

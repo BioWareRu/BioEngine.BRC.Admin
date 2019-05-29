@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { AbstractSiteEntityFormComponent } from '@common/forms/abstract-form-component';
+import { AbstractSiteEntityFormComponent } from "@common/forms/AbstractSiteEntityFormComponent";
 import { SnackBarService } from '@common/snacks/SnackBarService';
 import { Ad } from '@models/Ad';
-import { SaveAdResponse } from '@models/results/Ad';
+import { SaveAdResponse } from "@models/results/SaveAdResponse";
 import { ServicesProvider } from '@services/ServicesProvider';
 import { CustomValidators } from 'ngx-custom-validators';
 

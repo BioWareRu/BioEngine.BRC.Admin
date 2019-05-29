@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DialogService } from './modals/DialogService';
 import { SnackBarService } from './snacks/SnackBarService';
 import { StateService } from './StateService';
+import { PageContext } from './PageContext';
 
 export abstract class AbstractPageComponent {
     public snackBarService: SnackBarService;
@@ -21,31 +21,5 @@ export abstract class AbstractPageComponent {
 
     protected _setTitle(title: string): void {
         this._stateService.setTitle(title);
-    }
-}
-
-@Injectable()
-export class PageContext {
-    public stateService: StateService;
-
-    public router: Router;
-
-    public snackBarService: SnackBarService;
-
-    public route: ActivatedRoute;
-    public dialogService: DialogService;
-
-    constructor(
-        stateService: StateService,
-        router: Router,
-        route: ActivatedRoute,
-        snackBarService: SnackBarService,
-        dialogService: DialogService
-    ) {
-        this.route = route;
-        this.snackBarService = snackBarService;
-        this.router = router;
-        this.stateService = stateService;
-        this.dialogService = dialogService;
     }
 }
