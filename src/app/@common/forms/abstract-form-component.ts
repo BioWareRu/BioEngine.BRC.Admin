@@ -1,8 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { EventEmitter, HostListener, Input, OnInit, Pipe, PipeTransform, ViewChild } from '@angular/core';
-import { Validators } from '@angular/forms';
-import { ValidatorFn } from '@angular/forms/src/directives/validators';
-import { AbstractControlOptions } from '@angular/forms/src/model';
+import { Validators, ValidatorFn, AbstractControlOptions } from '@angular/forms';
 import { IContentEntity } from '@models/interfaces/IContentEntity';
 import { plainToClass } from 'class-transformer';
 import { CustomValidators } from 'ngx-custom-validators';
@@ -354,7 +352,7 @@ export abstract class AbstractContentFormComponent<TModel extends IContentEntity
     }
 }
 
-@Pipe({name: 'keys'})
+@Pipe({ name: 'keys' })
 export class KeysPipe implements PipeTransform {
     transform(value, _args: Array<string>): any {
         const keys: any[] = [];
@@ -363,7 +361,7 @@ export class KeysPipe implements PipeTransform {
             if (!value.hasOwnProperty(key)) {
                 continue;
             }
-            keys.push({key, value: value[key]});
+            keys.push({ key, value: value[key] });
         }
 
         return keys;
