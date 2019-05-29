@@ -1,12 +1,11 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Subject } from 'rxjs/Subject';
 import { AbstractModel } from '@models/base/abstract-model';
 import { AbstractBaseService } from '../abstract-base-service';
 import { Filter } from '../Filter';
 import { ListTableColumn } from './ListTableColumn';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, SortDirection } from '@angular/material/sort';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 export class ListProvider<T extends AbstractModel> {
     public items: Subject<Array<T>>;

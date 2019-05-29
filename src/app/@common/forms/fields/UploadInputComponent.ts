@@ -1,8 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { InputFile } from 'ngx-input-file';
-import { forkJoin } from 'rxjs';
-import { Observable } from 'rxjs/Observable';
+import { forkJoin, Observable } from 'rxjs';
 import { StorageItem } from '@models/results/StorageItem';
 import { IBaseServiceWithUpload } from '../../IBaseServiceWithUpload';
 import { SnackBarMessage } from '../../snacks/SnackBarMessage';
@@ -70,7 +69,7 @@ export class UploadInputComponent extends AbstractFormInput implements OnInit {
             values.push({
                 link: item.publicUri,
                 preview: this.displayMode === 'images' ? item.publicUri : null,
-                file: this.displayMode !== 'images' ? {name: item.fileName} : null
+                file: this.displayMode !== 'images' ? { name: item.fileName } : null
             });
         });
         this._uploadControl.setValue(values);

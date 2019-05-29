@@ -1,7 +1,6 @@
 import { EventEmitter, Input } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { CustomValidators } from 'ngx-custom-validators';
-import { Observable } from 'rxjs/Observable';
 import { AbstractModel } from '@models/base/abstract-model';
 import { Properties } from '@models/base/Properties';
 import { PropertiesElementType } from '@models/base/PropertiesElementType';
@@ -11,6 +10,7 @@ import { SaveModelResponse } from '../SaveModelResponse';
 import { SnackBarMessage } from '../snacks/SnackBarMessage';
 import { SnackBarService } from '../snacks/SnackBarService';
 import { AbstractBaseFormComponent } from './AbstractBaseFormComponent';
+import { Observable } from 'rxjs';
 
 export abstract class AbstractFormComponent<TModel extends AbstractModel,
     TResultModel extends SaveModelResponse<TModel>> extends AbstractBaseFormComponent {
