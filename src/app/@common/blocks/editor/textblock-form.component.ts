@@ -42,7 +42,7 @@ export class TextBlockFormComponent extends AbstractEditorBlockFormComponent<Tex
 
     splitSymbol = '‌‌\u200C';
 
-    @ViewChild('editor') editorElement: ElementRef<HTMLElement>;
+    @ViewChild('editor', { static: true }) editorElement: ElementRef<HTMLElement>;
 
     protected _getFields(): Array<BlockFieldDescriptor> {
         return [new BlockFieldDescriptor('text', [Validators.required], 'data.text')];

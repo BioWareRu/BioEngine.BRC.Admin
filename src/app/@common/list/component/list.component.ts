@@ -45,8 +45,8 @@ export class ListTableComponent<T extends AbstractModel = AbstractModel> impleme
     @Input() public provider: ListProvider<T>;
     @Input() public columns: Array<ListTableColumn<T>>;
     @Input() public addUrl = '';
-    @ViewChild(MatPaginator) paginator: MatPaginator;
-    @ViewChild(MatSort) sorter: MatSort;
+    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+    @ViewChild(MatSort, { static: true }) sorter: MatSort;
     public title: string;
 
     public columnsToDisplay: Array<string> = [];

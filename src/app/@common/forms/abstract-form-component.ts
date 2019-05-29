@@ -28,7 +28,7 @@ export abstract class AbstractFormPageComponent<TModel extends AbstractModel,
     @Input() public model: TModel | null;
     protected _modelId: string;
     protected _isPublished: boolean;
-    @ViewChild('modelForm') protected _form: AbstractFormComponent<TModel, TResultModel>;
+    @ViewChild('modelForm', { static: true }) protected _form: AbstractFormComponent<TModel, TResultModel>;
 
     ngOnInit(): void {
         const id: Observable<string> = this._route.params.pipe(map(p => p.id));

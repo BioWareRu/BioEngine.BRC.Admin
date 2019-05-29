@@ -52,7 +52,7 @@ export class QuoteBlockFormComponent extends AbstractEditorBlockFormComponent<Qu
     view: any;
     focusOnReady: boolean;
 
-    @ViewChild('editor') editorElement: ElementRef<HTMLElement>;
+    @ViewChild('editor', { static: true }) editorElement: ElementRef<HTMLElement>;
 
     protected _getFields(): Array<BlockFieldDescriptor> {
         return [

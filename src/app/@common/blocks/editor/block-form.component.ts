@@ -52,7 +52,7 @@ export class BlockFormComponent<TModel extends AbstractBaseContentBlock> impleme
     constructor(private readonly _componentFactoryResolver: ComponentFactoryResolver) {
     }
 
-    @ViewChild(DynamicHostDirective) adHost: DynamicHostDirective;
+    @ViewChild(DynamicHostDirective, { static: true }) adHost: DynamicHostDirective;
 
     @Input()
     public blocksManager: BlocksManager;

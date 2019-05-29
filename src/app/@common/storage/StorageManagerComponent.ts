@@ -31,7 +31,7 @@ export class StorageManagerComponent implements OnInit {
             name: '/'
         }
     ];
-    @ViewChild('fileInput') fileInput: ElementRef;
+    @ViewChild('fileInput', { static: true }) fileInput: ElementRef;
 
     public selection = new Dictionary<string, StorageNode>();
 

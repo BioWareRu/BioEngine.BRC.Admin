@@ -2,15 +2,15 @@ import { NgModule } from '@angular/core';
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-    { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
-    { path: 'posts', loadChildren: './posts/posts.module#PostsModule' },
-    { path: 'sites', loadChildren: './sites/sites.module#SitesModule' },
-    { path: 'sections', loadChildren: './sections/sections.module#SectionsModule' },
-    { path: 'tags', loadChildren: './tags/tags.module#TagsModule' },
-    { path: 'pages', loadChildren: './pages/pages.module#PagesModule' },
-    { path: 'ads', loadChildren: './ads/ads.module#AdsModule' },
-    { path: 'menu', loadChildren: './menu/menu.module#MenuModule' },
-    { path: 'storage', loadChildren: './storage/storage.module#StorageModule' },
+    { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
+    { path: 'posts', loadChildren: () => import('./posts/posts.module').then(m => m.PostsModule) },
+    { path: 'sites', loadChildren: () => import('./sites/sites.module').then(m => m.SitesModule) },
+    { path: 'sections', loadChildren: () => import('./sections/sections.module').then(m => m.SectionsModule) },
+    { path: 'tags', loadChildren: () => import('./tags/tags.module').then(m => m.TagsModule) },
+    { path: 'pages', loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule) },
+    { path: 'ads', loadChildren: () => import('./ads/ads.module').then(m => m.AdsModule) },
+    { path: 'menu', loadChildren: () => import('./menu/menu.module').then(m => m.MenuModule) },
+    { path: 'storage', loadChildren: () => import('./storage/storage.module').then(m => m.StorageModule) },
     { path: '**', redirectTo: 'dashboard' }
 ];
 

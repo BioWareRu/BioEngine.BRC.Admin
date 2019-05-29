@@ -18,7 +18,7 @@ export class UploadInputComponent extends AbstractFormInput implements OnInit {
     @Input() public multiple: boolean;
     @Input() public displayMode = 'images';
     @Input() public service: IBaseServiceWithUpload;
-    @ViewChild('fileInput') fileInput;
+    @ViewChild('fileInput', { static: false }) fileInput;
     protected _items: Array<StorageItem> = [];
     private _uploadControl: FormControl;
 

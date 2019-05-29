@@ -20,10 +20,10 @@ export class AutocompleteInputComponent extends AbstractFormInput implements OnI
     @Input() public titleField = 'title';
     @Input() public valueField = 'value';
     @Input() public type = 'text';
-    @ViewChild(MatAutocompleteTrigger)
+    @ViewChild(MatAutocompleteTrigger, { static: false })
     autoCompleteTrigger: MatAutocompleteTrigger;
-    @ViewChild(MatAutocomplete) matAutocomplete: MatAutocomplete;
-    @ViewChild('input') input: ElementRef<HTMLInputElement>;
+    @ViewChild(MatAutocomplete, { static: false }) matAutocomplete: MatAutocomplete;
+    @ViewChild('input', { static: false }) input: ElementRef<HTMLInputElement>;
     protected _removeSelectedValues = false;
     protected _labels = new Dictionary<number, string>();
     protected _values: Array<any> = [];

@@ -22,7 +22,7 @@ export class StorageManagerDialogComponent extends AbstractDialogComponent<Stora
         super(data);
     }
 
-    @ViewChild(StorageManagerComponent) storageManager: StorageManagerComponent;
+    @ViewChild(StorageManagerComponent, { static: true }) storageManager: StorageManagerComponent;
 
     ngOnInit(): void {
     }
