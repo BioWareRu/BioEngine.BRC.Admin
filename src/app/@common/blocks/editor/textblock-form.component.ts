@@ -3,9 +3,9 @@ import { Validators } from '@angular/forms';
 import { AbstractEditorBlockFormComponent } from '@common/blocks/editor/abstract-editor-block-form-component';
 
 import { SnackBarService } from '@common/snacks/SnackBarService';
-import { ContentBlockItemType } from "@models/blocks/ContentBlockItemType";
+import { ContentBlockItemType } from '@models/blocks/ContentBlockItemType';
 import { TextBlock } from '@models/blocks/TextBlock';
-import { BlockFieldDescriptor } from "./BlockFieldDescriptor";
+import { BlockFieldDescriptor } from './BlockFieldDescriptor';
 
 @Component({
     selector: 'text-block-form',

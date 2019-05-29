@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { AbstractBaseService } from '@common/abstract-base-service';
-import { AbstractFormPageComponent } from "@common/forms/AbstractFormPageComponent";
-import { PageContext } from "@common/PageContext";
+import { AbstractFormPageComponent } from '@common/forms/AbstractFormPageComponent';
+import { PageContext } from '@common/PageContext';
 import { Post } from '@models/posts/Post';
-import { SavePostResponse } from "@models/results/SavePostResponse";
+import { SavePostResponse } from '@models/results/SavePostResponse';
 import { PostsService } from '@services/ContentService';
 
 @Component({

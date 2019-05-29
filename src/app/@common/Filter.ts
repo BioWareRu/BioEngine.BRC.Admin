@@ -1,6 +1,6 @@
-import { FilterConditionsGroup } from "./FilterConditionsGroup";
-import { FilterCondition } from "./FilterCondition";
-import { FilterOperator } from "./FilterOperator";
+import { FilterConditionsGroup } from './FilterConditionsGroup';
+import { FilterCondition } from './FilterCondition';
+import { FilterOperator } from './FilterOperator';
 
 export class Filter {
     constructor(public groups: Array<FilterConditionsGroup> = []) { }

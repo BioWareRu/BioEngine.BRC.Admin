@@ -1,5 +1,5 @@
-import { StorageItemPictureInfo } from "./StorageItemPictureInfo";
-import { StorageItemType } from "./StorageItemType";
+import { StorageItemPictureInfo } from './StorageItemPictureInfo';
+import { StorageItemType } from './StorageItemType';
 
 export class StorageItem {
     public id: number;

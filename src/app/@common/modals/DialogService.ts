@@ -1,7 +1,7 @@
 import { ComponentType } from '@angular/cdk/portal';
 import { Injectable, TemplateRef } from '@angular/core';
 import { ConfirmationDialogComponent } from './ConfirmationDialogService';
-import { ConfirmationDialogComponentData } from "./ConfirmationDialogComponentData";
+import { ConfirmationDialogComponentData } from './ConfirmationDialogComponentData';
 import { AbstractDialogComponent } from './abstract-dialog-component';
 import { DialogConfig } from './DialogConfig';
 import { MatDialog } from '@angular/material/dialog';

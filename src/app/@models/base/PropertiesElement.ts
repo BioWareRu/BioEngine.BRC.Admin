@@ -1,5 +1,5 @@
 import { PropertiesElementType } from './PropertiesElementType';
-import { PropertiesElementValue } from "./PropertiesElementValue";
+import { PropertiesElementValue } from './PropertiesElementValue';
 export class PropertiesElement {
     public name: string;
     public key: string;

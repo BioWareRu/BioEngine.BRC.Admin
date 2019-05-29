@@ -1,4 +1,4 @@
-import { AbstractContentBlockData } from "./AbstractContentBlockData";
+import { AbstractContentBlockData } from './AbstractContentBlockData';
 export class TwitchBlockData extends AbstractContentBlockData {
     public videoId = '';
     public channelId = '';

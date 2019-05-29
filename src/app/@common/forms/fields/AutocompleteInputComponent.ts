@@ -1,8 +1,8 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { IBaseService } from "@common/IBaseService";
+import { IBaseService } from '@common/IBaseService';
 import { Filter } from '@common/Filter';
-import { FilterOperator } from "@common/FilterOperator";
+import { FilterOperator } from '@common/FilterOperator';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import Dictionary from '../../Dictionary';

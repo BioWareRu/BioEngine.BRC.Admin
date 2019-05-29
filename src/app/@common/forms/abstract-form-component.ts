@@ -4,7 +4,7 @@ import { CustomValidators } from 'ngx-custom-validators';
 import { Observable } from 'rxjs/Observable';
 import { AbstractModel } from '@models/base/abstract-model';
 import { Properties } from '@models/base/Properties';
-import { PropertiesElementType } from "@models/base/PropertiesElementType";
+import { PropertiesElementType } from '@models/base/PropertiesElementType';
 import { ServicesProvider } from '@services/ServicesProvider';
 import { AbstractBaseService } from '../abstract-base-service';
 import { SaveModelResponse } from '../SaveModelResponse';

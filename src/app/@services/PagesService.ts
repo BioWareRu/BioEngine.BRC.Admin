@@ -5,7 +5,7 @@ import { RestClient } from '@common/HttpClient';
 import { SaveModelResponse } from '@common/SaveModelResponse';
 import { Page } from '@models/Page';
 import { PageListResult } from '@models/results/Page';
-import { SavePageResponse } from "@models/results/SavePageResponse";
+import { SavePageResponse } from '@models/results/SavePageResponse';
 
 @Injectable()
 export class PagesService extends AbstractBaseService<Page> {

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { AbstractContentFormComponent } from "@common/forms/AbstractContentFormComponent";
+import { AbstractContentFormComponent } from '@common/forms/AbstractContentFormComponent';
 import { DialogService } from '@common/modals/DialogService';
 import { SnackBarService } from '@common/snacks/SnackBarService';
 import { Page } from '@models/Page';
-import { SavePageResponse } from "@models/results/SavePageResponse";
+import { SavePageResponse } from '@models/results/SavePageResponse';
 import { ServicesProvider } from '@services/ServicesProvider';
 
 @Component({

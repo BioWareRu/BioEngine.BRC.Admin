@@ -1,7 +1,7 @@
 import { Icon } from '@common/shared/icon/Icon';
 import { Type } from 'class-transformer';
 import { AbstractContentBlock } from './abstract-content-block';
-import { ContentBlockItemType } from "./ContentBlockItemType";
+import { ContentBlockItemType } from './ContentBlockItemType';
 import { PictureBlockData } from './PictureBlockData';
 
 export class PictureBlock extends AbstractContentBlock<PictureBlockData> {

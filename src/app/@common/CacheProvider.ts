@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { AbstractBaseService } from './abstract-base-service';
 import Dictionary from './Dictionary';
 import { Filter } from './Filter';
-import { FilterOperator } from "./FilterOperator";
+import { FilterOperator } from './FilterOperator';
 
 export class CacheProvider<TModel extends AbstractModel> {
     public constructor(private readonly _service: AbstractBaseService<TModel>) {

@@ -3,7 +3,7 @@ import { Validators } from '@angular/forms';
 import { SnackBarService } from '@common/snacks/SnackBarService';
 import { CustomValidators } from 'ngx-custom-validators';
 import { AbstractFormComponent } from '@common/forms/abstract-form-component';
-import { SaveSiteResponse } from "@models/results/SaveSiteResponse";
+import { SaveSiteResponse } from '@models/results/SaveSiteResponse';
 import { Site } from '@models/Site';
 import { ServicesProvider } from '@services/ServicesProvider';
 

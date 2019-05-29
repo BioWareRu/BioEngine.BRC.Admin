@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { AbstractBaseService } from '@common/abstract-base-service';
-import { AbstractFormPageComponent } from "@common/forms/AbstractFormPageComponent";
-import { PageContext } from "@common/PageContext";
-import { SaveSiteResponse } from "@models/results/SaveSiteResponse";
+import { AbstractFormPageComponent } from '@common/forms/AbstractFormPageComponent';
+import { PageContext } from '@common/PageContext';
+import { SaveSiteResponse } from '@models/results/SaveSiteResponse';
 import { Site } from '@models/Site';
 import { SitesService } from '@services/SitesService';
 

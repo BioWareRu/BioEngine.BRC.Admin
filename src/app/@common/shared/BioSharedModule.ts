@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { IconComponent } from "./icon/IconComponent";
+import { IconComponent } from './icon/IconComponent';
 import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({

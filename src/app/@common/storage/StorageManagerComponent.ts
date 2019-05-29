@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { StorageService } from '@services/StorageService';
-import { StorageNode } from "@services/StorageNode";
+import { StorageNode } from '@services/StorageNode';
 import Dictionary from '../Dictionary';
 import { DialogService } from '../modals/DialogService';
 import { CreateFolderDialogComponent } from './CreateFolderDialogComponent';

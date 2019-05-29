@@ -4,7 +4,7 @@ import { InputFile } from 'ngx-input-file';
 import { forkJoin } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
 import { StorageItem } from '@models/results/StorageItem';
-import { IBaseServiceWithUpload } from "../../IBaseServiceWithUpload";
+import { IBaseServiceWithUpload } from '../../IBaseServiceWithUpload';
 import { SnackBarMessage } from '../../snacks/SnackBarMessage';
 import { SnackBarService } from '../../snacks/SnackBarService';
 import { AbstractFormInput } from './abstract-form-input';

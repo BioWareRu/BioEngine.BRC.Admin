@@ -15,7 +15,7 @@ import { SelectInputComponent } from './fields/SelectInputComponent';
 import { TextAreaInputComponent } from './fields/TextAreaInputComponent';
 import { TextInputComponent } from './fields/TextInputComponent';
 import { UploadInputComponent } from './fields/UploadInputComponent';
-import { KeysPipe } from "./KeysPipe";
+import { KeysPipe } from './KeysPipe';
 import { FormLayoutComponent } from './FormLayoutComponent';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';

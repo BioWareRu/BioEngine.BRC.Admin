@@ -3,12 +3,12 @@ import { Icon } from '@common/shared/icon/Icon';
 import { AbstractListComponent } from '@common/list/abstract-list-component';
 import { ListTableColumnType } from '@common/list/ListEnums';
 import { ListTableColumn } from '@common/list/ListTableColumn';
-import { AuthorTableColumn } from "@common/list/AuthorTableColumn";
-import { TagsTableColumn } from "@common/list/TagsTableColumn";
-import { SectionsTableColumn } from "@common/list/SectionsTableColumn";
-import { SitesTableColumn } from "@common/list/SitesTableColumn";
+import { AuthorTableColumn } from '@common/list/AuthorTableColumn';
+import { TagsTableColumn } from '@common/list/TagsTableColumn';
+import { SectionsTableColumn } from '@common/list/SectionsTableColumn';
+import { SitesTableColumn } from '@common/list/SitesTableColumn';
 import { ListTableColumnAction } from '@common/list/ListTableColumnAction';
-import { PageContext } from "@common/PageContext";
+import { PageContext } from '@common/PageContext';
 import { Post } from '@models/posts/Post';
 import { ServicesProvider } from '@services/ServicesProvider';
 

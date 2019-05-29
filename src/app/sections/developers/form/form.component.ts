@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { SnackBarService } from '@common/snacks/SnackBarService';
-import { AbstractSectionFormComponent } from "@common/forms/AbstractSectionFormComponent";
+import { AbstractSectionFormComponent } from '@common/forms/AbstractSectionFormComponent';
 import { Developer } from '@models/Developer';
-import { SaveDeveloperResponse } from "@models/results/SaveDeveloperResponse";
+import { SaveDeveloperResponse } from '@models/results/SaveDeveloperResponse';
 import { ServicesProvider } from '@services/ServicesProvider';
 
 @Component({

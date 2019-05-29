@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Ad } from '@models/Ad';
 import { AdListResult } from '@models/results/Ad';
-import { SaveAdResponse } from "@models/results/SaveAdResponse";
+import { SaveAdResponse } from '@models/results/SaveAdResponse';
 import { ClassType } from 'class-transformer/ClassTransformer';
-import { AbstractServiceWithUpload } from "@common/AbstractServiceWithUpload";
+import { AbstractServiceWithUpload } from '@common/AbstractServiceWithUpload';
 import { RestClient } from '@common/HttpClient';
 import { AbstractListResult } from '@common/list/abstract-list-result';
 import { SaveModelResponse } from '@common/SaveModelResponse';

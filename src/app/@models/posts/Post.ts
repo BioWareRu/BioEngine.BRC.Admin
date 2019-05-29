@@ -1,6 +1,6 @@
 import { Type } from 'class-transformer';
 import { AbstractModel } from '../base/abstract-model';
-import { AbstractBaseContentBlock } from "../blocks/AbstractBaseContentBlock";
+import { AbstractBaseContentBlock } from '../blocks/AbstractBaseContentBlock';
 import { IContentEntity } from '../interfaces/IContentEntity';
 import { ISectionEntity } from '../interfaces/ISectionEntity';
 import { ISiteEntity } from '../interfaces/ISiteEntity';

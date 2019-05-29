@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { ClassType } from 'class-transformer/ClassTransformer';
 import { Observable } from 'rxjs';
 import { AbstractBaseService } from '@common/abstract-base-service';
-import { IBaseServiceCreatable } from "@common/IBaseServiceCreatable";
+import { IBaseServiceCreatable } from '@common/IBaseServiceCreatable';
 import { RestClient } from '@common/HttpClient';
 import { AbstractListResult } from '@common/list/abstract-list-result';
 import { SaveModelResponse } from '@common/SaveModelResponse';
 import { TagListResult } from '@models/results/Tag';
-import { SaveTagResponse } from "@models/results/SaveTagResponse";
+import { SaveTagResponse } from '@models/results/SaveTagResponse';
 import { Tag } from '@models/Tag';
 
 @Injectable()

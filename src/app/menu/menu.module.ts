@@ -9,7 +9,7 @@ import { MenuFormPageComponent } from './form-page.component';
 import { MenuFormComponent } from './form.component';
 import { MenuListComponent } from './list.component';
 import { MenuItemFormComponent } from './menuItemForm.component';
-import { MenuItemFormDialogComponent } from "./MenuItemFormDialogComponent";
+import { MenuItemFormDialogComponent } from './MenuItemFormDialogComponent';
 
 const routes: Routes = [
     {

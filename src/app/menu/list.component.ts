@@ -3,9 +3,9 @@ import { Icon } from '@common/shared/icon/Icon';
 import { AbstractListComponent } from '@common/list/abstract-list-component';
 import { ListTableColumnType } from '@common/list/ListEnums';
 import { ListTableColumn } from '@common/list/ListTableColumn';
-import { SiteTableColumn } from "@common/list/SiteTableColumn";
+import { SiteTableColumn } from '@common/list/SiteTableColumn';
 import { ListTableColumnAction } from '@common/list/ListTableColumnAction';
-import { PageContext } from "@common/PageContext";
+import { PageContext } from '@common/PageContext';
 import { Menu } from '@models/Menu';
 import { ServicesProvider } from '@services/ServicesProvider';
 

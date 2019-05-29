@@ -1,5 +1,5 @@
-import { defaultToString } from "./defaultToString";
-import { ValuePair } from "./ValuePair";
+import { defaultToString } from './defaultToString';
+import { ValuePair } from './ValuePair';
 
 export default class Dictionary<TKey, TValue> {
     private _table: { [key: string]: ValuePair<TKey, TValue> };

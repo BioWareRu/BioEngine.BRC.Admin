@@ -1,7 +1,7 @@
 import { AbstractModel } from './base/abstract-model';
 import { ISiteEntity } from './interfaces/ISiteEntity';
 import { StorageItem } from './results/StorageItem';
-import { SectionType } from "./SectionType";
+import { SectionType } from './SectionType';
 export class BaseSection extends AbstractModel implements ISiteEntity {
     public id: string;
     public type: SectionType;

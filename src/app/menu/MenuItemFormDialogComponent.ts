@@ -2,8 +2,8 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TreeNode } from 'angular-tree-component';
 import { AbstractDialogComponent } from '@common/modals/abstract-dialog-component';
-import { PageContext } from "@common/PageContext";
-import { MenuItem } from "@models/MenuItem";
+import { PageContext } from '@common/PageContext';
+import { MenuItem } from '@models/MenuItem';
 @Component({
     moduleId: module.id,
     selector: 'menuItemFormDialog',

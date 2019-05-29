@@ -6,8 +6,12 @@ import { DialogService } from '../modals/DialogService';
 import { SaveModelResponse } from '../SaveModelResponse';
 import { SnackBarService } from '../snacks/SnackBarService';
 import { AbstractSiteEntityFormComponent } from './AbstractSiteEntityFormComponent';
-export abstract class AbstractContentFormComponent<TModel extends IContentEntity, TSaveModel extends SaveModelResponse<TModel>> extends AbstractSiteEntityFormComponent<TModel, TSaveModel> {
-    protected constructor(private readonly _dialogService: DialogService, servicesProvider: ServicesProvider, snackBarService: SnackBarService, modelService: AbstractBaseService<TModel>) {
+export abstract class AbstractContentFormComponent<TModel extends IContentEntity, TSaveModel extends SaveModelResponse<TModel>>
+    extends AbstractSiteEntityFormComponent<TModel, TSaveModel> {
+    protected constructor(private readonly _dialogService: DialogService,
+        servicesProvider: ServicesProvider,
+        snackBarService: SnackBarService,
+        modelService: AbstractBaseService<TModel>) {
         super(servicesProvider, modelService, snackBarService);
     }
     protected _constructForm(): void {
