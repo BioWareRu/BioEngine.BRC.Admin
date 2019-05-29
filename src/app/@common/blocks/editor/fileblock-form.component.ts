@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { DialogService } from '@common/modals/DialogService';
 import { SnackBarService } from '@common/snacks/SnackBarService';
-import { StorageManagerSelectMode } from '@common/storage/StorageManagerComponent';
+import { StorageManagerSelectMode } from '@common/storage/StorageManagerSelectMode';
 import { StorageManagerDialogComponent } from '@common/storage/StorageManagerDialogComponent';
 import { FileBlock } from '@models/blocks/FileBlock';
 import { StorageItem } from '@models/results/StorageItem';
 import { ServicesProvider } from '@services/ServicesProvider';
-import { StorageNode } from '@services/StorageService';
-import { BlockFieldDescriptor, AbstractContentBlockFormComponent } from './abstract-content-block-form-component';
+import { StorageNode } from '@services/StorageNode';
+import { AbstractContentBlockFormComponent } from './abstract-content-block-form-component';
+import { BlockFieldDescriptor } from './BlockFieldDescriptor';
 
 @Component({
     selector: 'file-block-form',

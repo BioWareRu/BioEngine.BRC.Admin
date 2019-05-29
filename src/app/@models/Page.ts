@@ -1,5 +1,5 @@
 import { AbstractModel } from './base/abstract-model';
-import { AbstractBaseContentBlock } from './blocks/abstract-content-block';
+import { AbstractBaseContentBlock } from './blocks/AbstractBaseContentBlock';
 import { IContentEntity } from './interfaces/IContentEntity';
 import { ISiteEntity } from './interfaces/ISiteEntity';
 

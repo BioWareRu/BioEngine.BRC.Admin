@@ -1,9 +1,10 @@
-import { Component, ElementRef, Inject, Input, OnInit, Pipe, PipeTransform, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material';
-import { StorageNode, StorageService } from '@services/StorageService';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { StorageService } from '@services/StorageService';
+import { StorageNode } from '@services/StorageNode';
 import Dictionary from '../Dictionary';
-import { AbstractDialogComponent } from '../modals/abstract-dialog-component';
 import { DialogService } from '../modals/DialogService';
+import { CreateFolderDialogComponent } from './CreateFolderDialogComponent';
+import { StorageManagerSelectMode } from './StorageManagerSelectMode';
 
 @Component({
     selector: 'storage-manager',
@@ -31,7 +32,7 @@ export class StorageManagerComponent implements OnInit {
             name: '/'
         }
     ];
-    @ViewChild('fileInput') fileInput: ElementRef;
+    @ViewChild('fileInput', { static: true }) fileInput: ElementRef;
 
     public selection = new Dictionary<string, StorageNode>();
 
@@ -144,64 +145,4 @@ export class StorageManagerComponent implements OnInit {
     }
 }
 
-@Component({
-    selector: 'confirmation-dialog-component',
-    template: `
-        <h1 mat-dialog-title>Создать папку</h1>
-        <div mat-dialog-content><input type="text" required [(ngModel)]="folderName"/></div>
-        <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end">
-            <button mat-raised-button color="warn" (click)="cancel()">Отмена</button>
-            <button
-                    mat-raised-button
-                    color="accent"
-                    cdkFocusInitial
-                    [disabled]="folderName === null || folderName === ''"
-                    (keydown.enter)="confirm()"
-                    (click)="confirm()"
-            >
-                Создать
-            </button>
-        </div>
-    `
-})
-export class CreateFolderDialogComponent extends AbstractDialogComponent<string> {
-    public folderName: string;
 
-    public constructor(@Inject(MAT_DIALOG_DATA) data: string) {
-        super(data);
-    }
-
-    public confirm(): void {
-        this.dialogRef.close(this.folderName);
-    }
-
-    public cancel(): void {
-        this.dialogRef.close();
-    }
-}
-
-@Pipe({name: 'fileSize'})
-export class FileSizePipe implements PipeTransform {
-    private readonly _units = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB'];
-
-    transform(bytes: number = 0, precision: number = 2): string {
-        if (isNaN(parseFloat(String(bytes))) || !isFinite(bytes)) {
-            return '?';
-        }
-
-        let unit = 0;
-
-        while (bytes >= 1024) {
-            bytes /= 1024;
-            unit++;
-        }
-
-        return bytes.toFixed(+precision) + ' ' + this._units[unit];
-    }
-}
-
-export enum StorageManagerSelectMode {
-    None = 1,
-    Single = 2,
-    Multiple = 3
-}

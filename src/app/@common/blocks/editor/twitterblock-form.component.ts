@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { SnackBarService } from '@common/snacks/SnackBarService';
 import { TwitterBlock } from '@models/blocks/TwitterBlock';
-import { BlockFieldDescriptor, AbstractContentBlockFormComponent } from './abstract-content-block-form-component';
+import { AbstractContentBlockFormComponent } from './abstract-content-block-form-component';
+import { BlockFieldDescriptor } from './BlockFieldDescriptor';
 import { CustomValidators } from 'ngx-custom-validators';
-import { FieldInputChange } from '@common/forms/Form';
+import { FieldInputChange } from '@common/forms/FieldInputChange';
 import * as url from 'url';
 
 @Component({
@@ -103,13 +104,15 @@ export class TwitterBlockFormComponent extends AbstractContentBlockFormComponent
     }
 
     private _render(): void {
-        twttr.widgets.createTweet(
-            this.model.data.tweetId + '',
-            <HTMLElement>document.getElementById('twitter-' + this.model.id),
-            {
-                theme: 'light'
-            }
-        );
+        twttr.ready(twitter => {
+            twitter.widgets.createTweet(
+                this.model.data.tweetId + '',
+                <HTMLElement>document.getElementById('twitter-' + this.model.id),
+                {
+                    theme: 'light'
+                }
+            );
+        });
     }
 
     public edit(): void {

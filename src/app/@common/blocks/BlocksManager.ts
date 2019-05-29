@@ -1,11 +1,12 @@
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { Type } from '@angular/core';
-import { AbstractBaseContentBlock, ContentBlockItemType } from '@models/blocks/abstract-content-block';
+import { AbstractBaseContentBlock } from '@models/blocks/AbstractBaseContentBlock';
+import { ContentBlockItemType } from '@models/blocks/ContentBlockItemType';
 import { IContentEntity } from '@models/interfaces/IContentEntity';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import * as uuid from 'uuid';
 import Dictionary from '../Dictionary';
-import { Icon } from '../shared/icon/Icon';
+import { BlockConfig } from './BlockConfig';
 
 export class BlocksManager {
     constructor(private readonly _contentItem: IContentEntity) {
@@ -93,16 +94,5 @@ export class BlocksManager {
 
     public getBlockConfig(type: ContentBlockItemType): BlockConfig | null {
         return this.types.get(type);
-    }
-}
-
-export class BlockConfig {
-    constructor(
-        public type: ContentBlockItemType,
-        public typeClass: Type<any>,
-        public title: string,
-        public icon: Icon,
-        public formComponent: Type<any>
-    ) {
     }
 }

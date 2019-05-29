@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatIconRegistry } from '@angular/material';
+import { MatIconRegistry } from '@angular/material/icon';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { NavigationItem } from '@common/navigation/NavigationItem';
 import { AUTH_CONFIG } from './auth.config';

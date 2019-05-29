@@ -1,4 +1,3 @@
-import { StorageItem } from '@models/results/StorageItem';
 import { plainToClass } from 'class-transformer';
 import { ClassType } from 'class-transformer/ClassTransformer';
 import { Observable } from 'rxjs';
@@ -7,6 +6,7 @@ import { Filter } from './Filter';
 import { RestClient } from './HttpClient';
 import { AbstractListResult } from './list/abstract-list-result';
 import { SaveModelResponse } from './SaveModelResponse';
+import { IBaseService } from './IBaseService';
 
 export abstract class AbstractBaseService<T> implements IBaseService<T> {
     protected constructor(protected _httpClient: RestClient) {
@@ -96,47 +96,4 @@ export abstract class AbstractBaseService<T> implements IBaseService<T> {
     protected abstract _getSaveType(): ClassType<SaveModelResponse<T>> | null;
 
     protected abstract _getType(): ClassType<T>;
-}
-
-export interface IBaseService<T> {
-    getAll(
-        page: number | null,
-        perPage: number | null,
-        sort: string | null,
-        filter: Filter | null
-    ): Observable<AbstractListResult<T>>;
-
-    get(id: string): Observable<T>;
-
-    getNew(): Observable<T>;
-
-    add(item: T): Observable<SaveModelResponse<T>>;
-
-    update(id: number, item: T): Observable<SaveModelResponse<T>>;
-
-    publish(id: number): Observable<T>;
-
-    unpublish(id: number): Observable<T>;
-
-    delete(id: number): Observable<boolean>;
-
-    count(): Observable<number>;
-}
-
-export interface IBaseServiceWithUpload {
-    upload(file: File): Observable<StorageItem>;
-}
-
-export interface IBaseServiceCreatable<T> extends IBaseService<T> {
-    create(name: string): Observable<SaveModelResponse<T>>;
-}
-
-export abstract class AbstractServiceWithUpload<T> extends AbstractBaseService<T>
-    implements IBaseServiceWithUpload {
-    public upload(file: File): Observable<StorageItem> {
-        return this._httpClient
-            // @ts-ignore
-            .post(this._getResource() + '/upload/', file, { name: file.name })
-            .pipe(map(data => plainToClass(StorageItem, <StorageItem>data)));
-    }
 }

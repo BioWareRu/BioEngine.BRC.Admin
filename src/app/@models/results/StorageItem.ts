@@ -1,3 +1,6 @@
+import { StorageItemPictureInfo } from './StorageItemPictureInfo';
+import { StorageItemType } from './StorageItemType';
+
 export class StorageItem {
     public id: number;
     public fileName: string;
@@ -8,12 +11,4 @@ export class StorageItem {
     public pictureInfo: StorageItemPictureInfo;
 }
 
-export enum StorageItemType {
-    Picture = 1,
-    Other = 2
-}
 
-export class StorageItemPictureInfo {
-    public verticalResolution: number;
-    public horizontalResolution: number;
-}

@@ -1,6 +1,8 @@
 import { Icon } from '@common/shared/icon/Icon';
 import { Type } from 'class-transformer';
-import { AbstractContentBlock, AbstractContentBlockData, ContentBlockItemType } from './abstract-content-block';
+import { AbstractContentBlock } from './abstract-content-block';
+import { ContentBlockItemType } from './ContentBlockItemType';
+import { TextBlockData } from './TextBlockData';
 
 export class TextBlock extends AbstractContentBlock<TextBlockData> {
     public title = 'Текст';
@@ -14,6 +16,4 @@ export class TextBlock extends AbstractContentBlock<TextBlockData> {
     }
 }
 
-export class TextBlockData extends AbstractContentBlockData {
-    public text = '';
-}
+

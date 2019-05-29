@@ -1,12 +1,15 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material';
-import { IBaseService } from '@common/abstract-base-service';
-import { Filter, FilterOperator } from '@common/Filter';
+import { IBaseService } from '@common/IBaseService';
+import { Filter } from '@common/Filter';
+import { FilterOperator } from '@common/FilterOperator';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import Dictionary from '../../Dictionary';
 import { AbstractFormInput } from './abstract-form-input';
+import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
+import { SelectGroup } from './SelectGroup';
+import { SelectOption } from './SelectOption';
 
 @Component({
     selector: 'autocomplete-input',
@@ -20,10 +23,10 @@ export class AutocompleteInputComponent extends AbstractFormInput implements OnI
     @Input() public titleField = 'title';
     @Input() public valueField = 'value';
     @Input() public type = 'text';
-    @ViewChild(MatAutocompleteTrigger)
+    @ViewChild(MatAutocompleteTrigger, { static: false })
     autoCompleteTrigger: MatAutocompleteTrigger;
-    @ViewChild(MatAutocomplete) matAutocomplete: MatAutocomplete;
-    @ViewChild('input') input: ElementRef<HTMLInputElement>;
+    @ViewChild(MatAutocomplete, { static: false }) matAutocomplete: MatAutocomplete;
+    @ViewChild('input', { static: false }) input: ElementRef<HTMLInputElement>;
     protected _removeSelectedValues = false;
     protected _labels = new Dictionary<number, string>();
     protected _values: Array<any> = [];
@@ -152,12 +155,4 @@ export class AutocompleteInputComponent extends AbstractFormInput implements OnI
     }
 }
 
-export class SelectGroup {
-    public options: Array<SelectOption> = [];
-    public title: string | null = '';
-}
 
-export class SelectOption {
-    public title: string;
-    public value: any;
-}

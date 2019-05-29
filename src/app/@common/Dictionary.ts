@@ -1,3 +1,6 @@
+import { defaultToString } from './defaultToString';
+import { ValuePair } from './ValuePair';
+
 export default class Dictionary<TKey, TValue> {
     private _table: { [key: string]: ValuePair<TKey, TValue> };
 
@@ -103,23 +106,4 @@ export default class Dictionary<TKey, TValue> {
     }
 }
 
-export function defaultToString(item: any): string {
-    if (item === null) {
-        return 'NULL';
-    }
-    if (item === undefined) {
-        return 'UNDEFINED';
-    }
-    if (typeof item === 'string' || item instanceof String) {
-        return `${item}`;
-    }
-    return item.toString();
-}
 
-export class ValuePair<TKey, TValue> {
-    constructor(public key: TKey, public value: TValue) { }
-
-    public toString(): string {
-        return `[#${this.key}: ${this.value}]`;
-    }
-}

@@ -1,6 +1,8 @@
 import { Icon } from '@common/shared/icon/Icon';
 import { Type } from 'class-transformer';
-import { AbstractContentBlock, AbstractContentBlockData, ContentBlockItemType } from './abstract-content-block';
+import { AbstractContentBlock } from './abstract-content-block';
+import { ContentBlockItemType } from './ContentBlockItemType';
+import { TwitchBlockData } from './TwitchBlockData';
 
 export class TwitchBlock extends AbstractContentBlock<TwitchBlockData> {
     public title = 'Twitch';
@@ -14,9 +16,4 @@ export class TwitchBlock extends AbstractContentBlock<TwitchBlockData> {
     }
 }
 
-export class TwitchBlockData extends AbstractContentBlockData {
-    public videoId = '';
-    public channelId = '';
-    public collectionId = '';
-    public videoUrl = '';
-}
+

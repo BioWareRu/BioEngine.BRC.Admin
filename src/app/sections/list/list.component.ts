@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Icon } from '@common/shared/icon/Icon';
 import { map } from 'rxjs/operators';
-import { Filter, FilterOperator } from '@common/Filter';
+import { Filter } from '@common/Filter';
+import { FilterOperator } from '@common/FilterOperator';
 import { AbstractListComponent } from '@common/list/abstract-list-component';
 import { ListTableColumnType } from '@common/list/ListEnums';
-import { ListTableColumn, SitesTableColumn } from '@common/list/ListTableColumn';
+import { ListTableColumn } from '@common/list/ListTableColumn';
+import { SitesTableColumn } from '@common/list/SitesTableColumn';
 import { ListTableColumnAction } from '@common/list/ListTableColumnAction';
-import { PageContext } from '@common/abstract-page-component';
-import { BaseSection, SectionType } from '@models/abstract-section';
+import { PageContext } from '@common/PageContext';
+import { SectionType } from '@models/SectionType';
+import { BaseSection } from '@models/BaseSection';
 import { ServicesProvider } from '@services/ServicesProvider';
 
 @Component({

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { FieldInputChange } from '@common/forms/Form';
+import { FieldInputChange } from '@common/forms/FieldInputChange';
 import { SnackBarService } from '@common/snacks/SnackBarService';
 import { YoutubeBlock } from '@models/blocks/YoutubeBlock';
 import { CustomValidators } from 'ngx-custom-validators';
-import { BlockFieldDescriptor, AbstractContentBlockFormComponent } from './abstract-content-block-form-component';
+import { AbstractContentBlockFormComponent } from './abstract-content-block-form-component';
+import { BlockFieldDescriptor } from './BlockFieldDescriptor';
 
 @Component({
     selector: 'youtube-block-form',

@@ -5,6 +5,4 @@ export interface ISiteEntity extends AbstractModel {
     sites: Array<any>;
 }
 
-export interface ISingleSiteEntity extends AbstractModel {
-    siteId: string;
-}
+

@@ -4,7 +4,7 @@ import { InputFile } from 'ngx-input-file';
 import { forkJoin } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
 import { StorageItem } from '@models/results/StorageItem';
-import { IBaseServiceWithUpload } from '../../abstract-base-service';
+import { IBaseServiceWithUpload } from '../../IBaseServiceWithUpload';
 import { SnackBarMessage } from '../../snacks/SnackBarMessage';
 import { SnackBarService } from '../../snacks/SnackBarService';
 import { AbstractFormInput } from './abstract-form-input';
@@ -18,7 +18,7 @@ export class UploadInputComponent extends AbstractFormInput implements OnInit {
     @Input() public multiple: boolean;
     @Input() public displayMode = 'images';
     @Input() public service: IBaseServiceWithUpload;
-    @ViewChild('fileInput') fileInput;
+    @ViewChild('fileInput', { static: false }) fileInput;
     protected _items: Array<StorageItem> = [];
     private _uploadControl: FormControl;
 

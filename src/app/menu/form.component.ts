@@ -2,12 +2,13 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { SnackBarService } from '@common/snacks/SnackBarService';
 import { ITreeOptions, TreeComponent, TreeNode } from 'angular-tree-component';
-import { AbstractSingleSiteEntityFormComponent } from '@common/forms/abstract-form-component';
+import { AbstractSingleSiteEntityFormComponent } from '@common/forms/AbstractSingleSiteEntityFormComponent';
 import { DialogService } from '@common/modals/DialogService';
-import { Menu, MenuItem } from '@models/Menu';
-import { SaveMenuResponse } from '@models/results/Menu';
+import { Menu } from '@models/Menu';
+import { MenuItem } from '@models/MenuItem';
+import { SaveMenuResponse } from '@models/results/SaveMenuResponse';
 import { ServicesProvider } from '@services/ServicesProvider';
-import { MenuItemFormDialogComponent } from './menuItemForm.component';
+import { MenuItemFormDialogComponent } from './MenuItemFormDialogComponent';
 
 @Component({
     selector: 'menu-form',

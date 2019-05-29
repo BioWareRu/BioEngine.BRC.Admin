@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { SnackBarService } from '@common/snacks/SnackBarService';
 import { CutBlock } from '@models/blocks/CutBlock';
-import { BlockFieldDescriptor, AbstractContentBlockFormComponent } from './abstract-content-block-form-component';
+import { AbstractContentBlockFormComponent } from './abstract-content-block-form-component';
+import { BlockFieldDescriptor } from './BlockFieldDescriptor';
 
 @Component({
     selector: 'cut-block-form',

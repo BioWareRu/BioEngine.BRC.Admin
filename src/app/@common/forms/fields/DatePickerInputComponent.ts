@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { AbstractFormInput } from './abstract-form-input';
+import { MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter } from '@angular/material/core';
 
-export const MY_FORMATS = {
+export const BIO_DATE_FORMATS = {
     parse: {
         dateInput: 'LL'
     },
@@ -19,9 +19,9 @@ export const MY_FORMATS = {
     selector: 'date-picker-input',
     templateUrl: './DatePickerInputComponent.html',
     providers: [
-        {provide: MAT_DATE_LOCALE, useValue: 'ru-RU'},
-        {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-        {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS}
+        { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' },
+        { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+        { provide: MAT_DATE_FORMATS, useValue: BIO_DATE_FORMATS }
     ]
 })
 export class DatePickerInputComponent extends AbstractFormInput {

@@ -2,12 +2,13 @@ import { AbstractModel } from '@models/base/abstract-model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AbstractBaseService } from './abstract-base-service';
 import Dictionary from './Dictionary';
-import { Filter, FilterOperator } from './Filter';
+import { Filter } from './Filter';
+import { FilterOperator } from './FilterOperator';
 
 export class CacheProvider<TModel extends AbstractModel> {
     public constructor(private readonly _service: AbstractBaseService<TModel>) {
     }
-    
+
     private readonly _cache = new Dictionary<string, TModel>();
     private readonly _queue = new Dictionary<string, BehaviorSubject<Dictionary<string, TModel>>>();
 

@@ -2,19 +2,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {
-    MatAutocompleteModule,
-    MatButtonModule,
-    MatCheckboxModule,
-    MatChipsModule,
-    MatDatepickerModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatProgressSpinnerModule,
-    MatSelectModule,
-    MatTabsModule
-} from '@angular/material';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { FormLayoutContentComponent } from '@common/forms/FormLayoutContentComponent';
 import { InputFileConfig, InputFileModule } from 'ngx-input-file';
@@ -28,8 +15,19 @@ import { SelectInputComponent } from './fields/SelectInputComponent';
 import { TextAreaInputComponent } from './fields/TextAreaInputComponent';
 import { TextInputComponent } from './fields/TextInputComponent';
 import { UploadInputComponent } from './fields/UploadInputComponent';
-import { KeysPipe } from './abstract-form-component';
+import { KeysPipe } from './KeysPipe';
 import { FormLayoutComponent } from './FormLayoutComponent';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatButtonModule } from '@angular/material/button';
 
 const config: InputFileConfig = {};
 

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { RestClient } from '@common/HttpClient';
-import { StorageItem } from '@models/results/StorageItem';
 import { plainToClass } from 'class-transformer';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { StorageNode } from './StorageNode';
 
 @Injectable({
     providedIn: 'root'
@@ -26,11 +26,4 @@ export class StorageService {
     }
 }
 
-export class StorageNode {
-    public name: string;
-    public path: string;
-    public isDirectory: boolean;
-    public selected: boolean;
-    public item: StorageItem;
-    public items: Array<StorageNode>;
-}
+

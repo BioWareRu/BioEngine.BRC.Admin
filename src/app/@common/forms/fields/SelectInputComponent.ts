@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AbstractFormInput } from './abstract-form-input';
+import { SelectGroup } from './SelectGroup';
+import { SelectOption } from './SelectOption';
 
 @Component({
     selector: 'select-input',
@@ -52,14 +54,4 @@ export class SelectInputComponent extends AbstractFormInput implements OnInit {
             }
         });
     }
-}
-
-export class SelectGroup {
-    public options: Array<SelectOption> = [];
-    public title: string | null = '';
-}
-
-export class SelectOption {
-    public title: string;
-    public value: any;
 }

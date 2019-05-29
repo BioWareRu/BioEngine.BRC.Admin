@@ -1,9 +1,10 @@
 import { ComponentType } from '@angular/cdk/portal';
 import { Injectable, TemplateRef } from '@angular/core';
-import { MatDialog } from '@angular/material';
-import { ConfirmationDialogComponent, ConfirmationDialogComponentData } from './ConfirmationDialogService';
+import { ConfirmationDialogComponent } from './ConfirmationDialogService';
+import { ConfirmationDialogComponentData } from './ConfirmationDialogComponentData';
 import { AbstractDialogComponent } from './abstract-dialog-component';
 import { DialogConfig } from './DialogConfig';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable({
     providedIn: 'root'

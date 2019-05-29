@@ -1,9 +1,10 @@
 import { Input, OnDestroy, OnInit } from '@angular/core';
 
-import { AbstractSimpleFormComponent } from '@common/forms/abstract-form-component';
-import { AbstractBaseContentBlock } from '@models/blocks/abstract-content-block';
+import { AbstractSimpleFormComponent } from '@common/forms/AbstractSimpleFormComponent';
+import { AbstractBaseContentBlock } from '@models/blocks/AbstractBaseContentBlock';
 
 import { BlocksManager } from '../BlocksManager';
+import { BlockFieldDescriptor } from './BlockFieldDescriptor';
 
 export abstract class AbstractContentBlockFormComponent<TBlock extends AbstractBaseContentBlock>
     extends AbstractSimpleFormComponent<TBlock>
@@ -46,11 +47,4 @@ export abstract class AbstractContentBlockFormComponent<TBlock extends AbstractB
     }
 }
 
-export class BlockFieldDescriptor {
-    public constructor(
-        public name: string,
-        public validators: Array<any>,
-        public property = ''
-    ) {
-    }
-}
+

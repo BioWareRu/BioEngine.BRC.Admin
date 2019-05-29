@@ -1,6 +1,7 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component } from '@angular/core';
-import { AbstractPageComponent, PageContext } from '@common/abstract-page-component';
+import { AbstractPageComponent } from '@common/abstract-page-component';
+import { PageContext } from '@common/PageContext';
 import { map } from 'rxjs/operators';
 
 @Component({

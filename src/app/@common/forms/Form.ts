@@ -1,6 +1,7 @@
 import { EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { BioFormControl } from './BioFormControl';
+import { FieldInputChange } from './FieldInputChange';
 
 export class Form {
     public success = false;
@@ -31,10 +32,5 @@ export class Form {
         this.hasErrors = false;
         this.success = false;
         this.onChange.emit(change);
-    }
-}
-
-export class FieldInputChange {
-    public constructor(public key: string, public oldValue: any, public newValue: any) {
     }
 }

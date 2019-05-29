@@ -2,20 +2,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
-import {
-    MatButtonModule,
-    MatCardModule,
-    MatChipsModule,
-    MatDialogModule,
-    MatGridListModule,
-    MatIconModule,
-    MatMenuModule,
-    MatPaginatorModule,
-    MatProgressSpinnerModule,
-    MatSnackBarModule,
-    MatSortModule,
-    MatTableModule
-} from '@angular/material';
 import { RouterModule } from '@angular/router';
 import 'moment/locale/ru';
 import { TrackByPropertyPipe } from '@common/pipes/TrackByPropertyPipe';
@@ -32,9 +18,23 @@ import { TruncatePipe } from './pipes/TruncatePipe';
 import { BrcPerfectScrollbarDirective } from './scroll/scrollbar.component';
 import { BioSharedModule } from './shared/BioSharedModule';
 import { NotificationComponent } from './snacks/NotificationComponent';
-import { CreateFolderDialogComponent, FileSizePipe, StorageManagerComponent } from './storage/StorageManagerComponent';
+import { StorageManagerComponent } from './storage/StorageManagerComponent';
+import { FileSizePipe } from './storage/FileSizePipe';
+import { CreateFolderDialogComponent } from './storage/CreateFolderDialogComponent';
 import { StorageManagerDialogComponent } from './storage/StorageManagerDialogComponent';
 import { UserComponent } from './user/user.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTableModule } from '@angular/material/table';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
     declarations: [
@@ -105,4 +105,4 @@ import { UserComponent } from './user/user.component';
         StorageManagerDialogComponent
     ]
 })
-export class BioCommonModule {}
+export class BioCommonModule { }

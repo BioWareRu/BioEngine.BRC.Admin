@@ -5,7 +5,7 @@ import { RestClient } from '@common/HttpClient';
 import { AbstractListResult } from '@common/list/abstract-list-result';
 import { SaveModelResponse } from '@common/SaveModelResponse';
 import { SectionsListResult } from '@models/results/BaseSection';
-import { BaseSection } from '@models/abstract-section';
+import { BaseSection } from '@models/BaseSection';
 
 @Injectable()
 export class SectionsService extends AbstractBaseService<BaseSection> {

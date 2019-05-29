@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatIconModule } from '@angular/material';
-import { IconComponent } from './icon/Icon';
+import { IconComponent } from './icon/IconComponent';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
     declarations: [IconComponent],
@@ -9,4 +9,4 @@ import { IconComponent } from './icon/Icon';
     providers: [],
     imports: [MatIconModule, CommonModule]
 })
-export class BioSharedModule {}
+export class BioSharedModule { }

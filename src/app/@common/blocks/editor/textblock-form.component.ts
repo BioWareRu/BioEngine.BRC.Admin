@@ -3,9 +3,9 @@ import { Validators } from '@angular/forms';
 import { AbstractEditorBlockFormComponent } from '@common/blocks/editor/abstract-editor-block-form-component';
 
 import { SnackBarService } from '@common/snacks/SnackBarService';
-import { ContentBlockItemType } from '@models/blocks/abstract-content-block';
+import { ContentBlockItemType } from '@models/blocks/ContentBlockItemType';
 import { TextBlock } from '@models/blocks/TextBlock';
-import { BlockFieldDescriptor } from './abstract-content-block-form-component';
+import { BlockFieldDescriptor } from './BlockFieldDescriptor';
 
 @Component({
     selector: 'text-block-form',
@@ -21,7 +21,7 @@ import { BlockFieldDescriptor } from './abstract-content-block-form-component';
         </div>
     `,
     styles: [
-            `
+        `
             .ck.ck-editor__editable_inline > :last-child {
                 margin-bottom: 5px;
             }
@@ -42,7 +42,7 @@ export class TextBlockFormComponent extends AbstractEditorBlockFormComponent<Tex
 
     splitSymbol = '‌‌\u200C';
 
-    @ViewChild('editor') editorElement: ElementRef<HTMLElement>;
+    @ViewChild('editor', { static: true }) editorElement: ElementRef<HTMLElement>;
 
     protected _getFields(): Array<BlockFieldDescriptor> {
         return [new BlockFieldDescriptor('text', [Validators.required], 'data.text')];

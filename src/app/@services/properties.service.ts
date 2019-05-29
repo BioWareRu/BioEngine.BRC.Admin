@@ -6,7 +6,7 @@ import { AbstractBaseService } from '@common/abstract-base-service';
 import { RestClient } from '@common/HttpClient';
 import { AbstractListResult } from '@common/list/abstract-list-result';
 import { SaveModelResponse } from '@common/SaveModelResponse';
-import { PropertiesOption } from '@models/base/Properties';
+import { PropertiesOption } from '@models/base/PropertiesOption';
 
 @Injectable()
 export class PropertiesService extends AbstractBaseService<PropertiesOption> {

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ClassType } from 'class-transformer/ClassTransformer';
-import { AbstractServiceWithUpload } from '@common/abstract-base-service';
+import { AbstractServiceWithUpload } from '@common/AbstractServiceWithUpload';
 import { RestClient } from '@common/HttpClient';
 import { AbstractListResult } from '@common/list/abstract-list-result';
 import { SaveModelResponse } from '@common/SaveModelResponse';
 import { Developer } from '@models/Developer';
-import { DeveloperListResult, SaveDeveloperResponse } from '@models/results/Developer';
+import { DeveloperListResult } from '@models/results/Developer';
+import { SaveDeveloperResponse } from '@models/results/SaveDeveloperResponse';
 
 @Injectable()
 export class DevelopersService extends AbstractServiceWithUpload<Developer> {

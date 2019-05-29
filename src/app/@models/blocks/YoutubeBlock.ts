@@ -1,6 +1,8 @@
 import { Icon } from '@common/shared/icon/Icon';
 import { Type } from 'class-transformer';
-import { AbstractContentBlock, AbstractContentBlockData, ContentBlockItemType } from './abstract-content-block';
+import { AbstractContentBlock } from './abstract-content-block';
+import { ContentBlockItemType } from './ContentBlockItemType';
+import { YoutubeBlockData } from './YoutubeBlockData';
 
 export class YoutubeBlock extends AbstractContentBlock<YoutubeBlockData> {
     public title = 'Youtube';
@@ -12,9 +14,4 @@ export class YoutubeBlock extends AbstractContentBlock<YoutubeBlockData> {
     static isEmpty(block: YoutubeBlock): boolean {
         return !block.data.youtubeId;
     }
-}
-
-export class YoutubeBlockData extends AbstractContentBlockData {
-    public youtubeId = '';
-    public youtubeUrl = '';
 }

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material';
 import { AbstractDialogComponent } from './abstract-dialog-component';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ConfirmationDialogComponentData } from './ConfirmationDialogComponentData';
 
 @Component({
     selector: 'confirmation-dialog-component',
@@ -24,7 +25,7 @@ import { AbstractDialogComponent } from './abstract-dialog-component';
     `
 })
 export class ConfirmationDialogComponent extends AbstractDialogComponent<
-    ConfirmationDialogComponentData
+ConfirmationDialogComponentData
 > {
     public onConfirm = new EventEmitter();
     public onCancel = new EventEmitter();
@@ -44,13 +45,4 @@ export class ConfirmationDialogComponent extends AbstractDialogComponent<
         this.onConfirm.emit();
         this.hideDialog();
     }
-}
-
-export class ConfirmationDialogComponentData {
-    constructor(
-        public title: string,
-        public text: string,
-        public confirmText: string,
-        public cancelText: string
-    ) {}
 }

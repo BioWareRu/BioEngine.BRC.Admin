@@ -8,7 +8,8 @@ import { DialogService } from '@common/modals/DialogService';
 import { MenuFormPageComponent } from './form-page.component';
 import { MenuFormComponent } from './form.component';
 import { MenuListComponent } from './list.component';
-import { MenuItemFormComponent, MenuItemFormDialogComponent } from './menuItemForm.component';
+import { MenuItemFormComponent } from './menuItemForm.component';
+import { MenuItemFormDialogComponent } from './MenuItemFormDialogComponent';
 
 const routes: Routes = [
     {

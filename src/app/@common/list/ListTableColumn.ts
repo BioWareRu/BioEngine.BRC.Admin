@@ -85,33 +85,3 @@ export class ListTableColumn<T = AbstractModel> {
         return this;
     }
 }
-
-export class SitesTableColumn<T = AbstractModel> extends ListTableColumn<T> {
-    constructor(key: string, title: string) {
-        super(key, title, ListTableColumnType.SitesList);
-    }
-}
-
-export class SiteTableColumn<T = AbstractModel> extends ListTableColumn<T> {
-    constructor(key: string, title: string) {
-        super(key, title, ListTableColumnType.Site);
-    }
-}
-
-export class SectionsTableColumn<T = AbstractModel> extends ListTableColumn<T> {
-    constructor(key: string, title: string) {
-        super(key, title, ListTableColumnType.SectionsList);
-    }
-}
-
-export class TagsTableColumn<T = AbstractModel> extends ListTableColumn<T> {
-    constructor(key: string, title: string) {
-        super(key, title, ListTableColumnType.TagsList);
-    }
-}
-
-export class AuthorTableColumn<T = AbstractModel> extends ListTableColumn<T> {
-    constructor(key: string, title: string) {
-        super(key, title, ListTableColumnType.Author);
-    }
-}
