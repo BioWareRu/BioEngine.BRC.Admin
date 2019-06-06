@@ -35,7 +35,7 @@
     "@angular/platform-browser-dynamic": "^8.0.0",
     "@angular/router": "^8.0.0",
     "@ckeditor/ckeditor5-angular": "^1.1.0",
-    "@ckeditor/ckeditor5-build-balloon": "^12.1.0",
+    "@ckeditor/ckeditor5-build-balloon": "^12.2.0",
     "@fortawesome/fontawesome-free": "^5.8.2",
     "angular-oauth2-oidc": "5.0.2",
     "angular-tree-component": "^8.4.0",
