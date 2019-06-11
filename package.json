@@ -43,7 +43,7 @@
     "classlist.js": "^1.1.20150312",
     "moment": "2.24.0",
     "ngx-custom-validators": "^7.0.0",
-    "ngx-input-file": "^7.0.4",
+    "ngx-input-file": "^8.0.0",
     "ngx-moment": "3.4.0",
     "object-path": "^0.11.4",
     "perfect-scrollbar": "^1.4.0",
