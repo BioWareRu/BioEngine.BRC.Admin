@@ -240,6 +240,6 @@
   "no-reference": true,
   "file-name-casing": [
     true,
-    "kebab-case"
+    "pascal-case"
   ]
 }
