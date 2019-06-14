@@ -12,22 +12,22 @@ steps:
     displayName: 'Install Node.js'
 
   - task: Npm@1
-      displayName: 'install npm packages'
-      inputs:
-        command: 'custom'
-        customCommand: 'ci'
+    displayName: 'install npm packages'
+    inputs:
+      command: 'custom'
+      customCommand: 'ci'
 
   - task: Npm@1
-      displayName: 'lint files'
-      inputs:
-        command: 'custom'
-        customCommand: 'run lint'
+    displayName: 'lint files'
+    inputs:
+      command: 'custom'
+      customCommand: 'run lint'
 
   - task: Npm@1
-      displayName: 'build'
-      inputs:
-        command: 'custom'
-        customCommand: 'run build-prod'
+    displayName: 'build'
+    inputs:
+      command: 'custom'
+      customCommand: 'run build-prod'
 
   - task: Docker@2
     displayName: 'build and push image'
