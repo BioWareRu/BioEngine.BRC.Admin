@@ -1,11 +1,6 @@
-import { AbstractModel } from './base/abstract-model';
-import { AbstractBaseContentBlock } from './blocks/AbstractBaseContentBlock';
-import { IContentEntity } from './interfaces/IContentEntity';
-import { ISiteEntity } from './interfaces/ISiteEntity';
+import { AbstractTypedContentItem } from '@models/base/AbstractTypedContentItem';
+import { PageData } from '@models/PageData';
 
-export class Page extends AbstractModel implements ISiteEntity, IContentEntity {
-    public siteIds: Array<string>;
-    public sites: Array<any>;
+export class Page extends AbstractTypedContentItem<PageData> {
 
-    blocks: Array<AbstractBaseContentBlock> = [];
 }

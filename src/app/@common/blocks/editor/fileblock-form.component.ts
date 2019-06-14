@@ -8,7 +8,7 @@ import { FileBlock } from '@models/blocks/FileBlock';
 import { StorageItem } from '@models/results/StorageItem';
 import { ServicesProvider } from '@services/ServicesProvider';
 import { StorageNode } from '@services/StorageNode';
-import { AbstractContentBlockFormComponent } from './abstract-content-block-form-component';
+import { AbstractContentBlockFormComponent } from './AbstractContentBlockFormComponent';
 import { BlockFieldDescriptor } from './BlockFieldDescriptor';
 
 @Component({
@@ -83,7 +83,6 @@ export class FileBlockFormComponent extends AbstractContentBlockFormComponent<Fi
                 const control = this.form.formGroup.get(this.getFieldName('file'));
                 if (control) {
                     control.patchValue(this.file);
-                    console.log(this.form);
                 }
             });
     }

@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TreeNode } from 'angular-tree-component';
-import { AbstractDialogComponent } from '@common/modals/abstract-dialog-component';
+import { AbstractDialogComponent } from '@common/modals/AbstractDialogComponent';
 import { PageContext } from '@common/PageContext';
 import { MenuItem } from '@models/MenuItem';
 @Component({

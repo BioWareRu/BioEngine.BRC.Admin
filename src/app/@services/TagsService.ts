@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AbstractBaseService } from '@common/abstract-base-service';
+import { AbstractBaseService } from '@common/AbstractBaseService';
 import { IBaseServiceCreatable } from '@common/IBaseServiceCreatable';
 import { RestClient } from '@common/HttpClient';
 import { SaveModelResponse } from '@common/SaveModelResponse';

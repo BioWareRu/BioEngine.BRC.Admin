@@ -8,8 +8,6 @@ export interface IBaseService<T> {
     getNew(): Observable<T>;
     add(item: T): Observable<SaveModelResponse<T>>;
     update(id: number, item: T): Observable<SaveModelResponse<T>>;
-    publish(id: number): Observable<T>;
-    unpublish(id: number): Observable<T>;
     delete(id: number): Observable<boolean>;
     count(): Observable<number>;
 }

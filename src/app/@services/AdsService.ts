@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
+import { AbstractContentEntityService } from '@common/abstract-content-entity-service';
 import { Ad } from '@models/Ad';
-import { AbstractServiceWithUpload } from '@common/AbstractServiceWithUpload';
 import { RestClient } from '@common/HttpClient';
 
 @Injectable()
-export class AdsService extends AbstractServiceWithUpload<Ad> {
+export class AdsService extends AbstractContentEntityService<Ad> {
 
     constructor(httpClient: RestClient) {
         super(httpClient);

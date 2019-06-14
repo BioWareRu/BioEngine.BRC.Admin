@@ -1,31 +1,30 @@
 import { EventEmitter, Input } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { CustomValidators } from 'ngx-custom-validators';
-import { AbstractModel } from '@models/base/abstract-model';
-import { Properties } from '@models/base/Properties';
-import { PropertiesElementType } from '@models/base/PropertiesElementType';
+import { AbstractEntity } from '@models/base/AbstractEntity';
+import { Properties } from '@models/Properties';
+import { PropertiesElementType } from '@models/PropertiesElementType';
 import { ServicesProvider } from '@services/ServicesProvider';
-import { AbstractBaseService } from '../abstract-base-service';
+import { AbstractBaseService } from '../AbstractBaseService';
 import { SaveModelResponse } from '../SaveModelResponse';
 import { SnackBarMessage } from '../snacks/SnackBarMessage';
 import { SnackBarService } from '../snacks/SnackBarService';
 import { AbstractBaseFormComponent } from './AbstractBaseFormComponent';
 import { Observable } from 'rxjs';
 
-export abstract class AbstractFormComponent<TModel extends AbstractModel> extends AbstractBaseFormComponent {
+export abstract class AbstractFormComponent<TModel extends AbstractEntity, TService extends AbstractBaseService<TModel>> extends AbstractBaseFormComponent {
     @Input()
     public model: TModel | null;
     public propertiesElementTypes = PropertiesElementType;
     public modelProperties: Array<Properties> = [];
-    protected _modelId: number;
-    protected _isPublished: boolean;
+    public emptyId = '00000000-0000-0000-0000-000000000000';
 
     public onSuccessSave: EventEmitter<SaveModelResponse<TModel>> = new EventEmitter<SaveModelResponse<TModel>>();
     private _isNew = true;
 
     protected constructor(
         public servicesProvider: ServicesProvider,
-        public service: AbstractBaseService<TModel>,
+        public service: TService,
         snackBarService: SnackBarService
     ) {
         super(snackBarService);
@@ -92,40 +91,6 @@ export abstract class AbstractFormComponent<TModel extends AbstractModel> extend
         );
     }
 
-    public changePublishState(): void {
-        this.form.success = false;
-        this.form.inProgress = true;
-        let result;
-        if (!this.model) {
-            return;
-        }
-        if (this.model.isPublished) {
-            result = this.service.unpublish(this.model.id);
-        } else {
-            result = this.service.publish(this.model.id);
-        }
-        result.subscribe(
-            (saveResult: TModel) => {
-                this.form.hasChanges = false;
-                this.form.success = true;
-                this.model = saveResult;
-                if (saveResult.isPublished) {
-                    this._snackBarService.success(new SnackBarMessage('Успех!', 'Опубликовано.'));
-                } else {
-                    this._snackBarService.success(
-                        new SnackBarMessage('Успех!', 'Публикация снята.')
-                    );
-                }
-                this.form.inProgress = false;
-            },
-            e => {
-                this.form.hasErrors = true;
-                this._handleSubmitError(e);
-                this.form.inProgress = false;
-            }
-        );
-    }
-
     updateControlValue(name: string): void {
         this.form.updateControlValue(name);
     }
@@ -146,7 +111,7 @@ export abstract class AbstractFormComponent<TModel extends AbstractModel> extend
 
     public loadFormData(model: TModel | null = null): void {
         this.model = model;
-        if (this.model && this.model.id !== this.model.emptyId) {
+        if (this.model && this.model.id !== this.emptyId) {
             this._isNew = false;
         }
         this.initForm();

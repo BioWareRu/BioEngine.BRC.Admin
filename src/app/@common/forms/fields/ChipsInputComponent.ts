@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { IBaseServiceCreatable } from '../../IBaseServiceCreatable';
 import { AutocompleteInputComponent } from './AutocompleteInputComponent';
-import { AbstractFormInput } from './abstract-form-input';
+import { AbstractFormInput } from './AbstractFormInput';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { ErrorStateMatcher } from '@angular/material/core';
 

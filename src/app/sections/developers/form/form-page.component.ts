@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AbstractBaseService } from '@common/abstract-base-service';
+import { AbstractBaseService } from '@common/AbstractBaseService';
 import { AbstractFormPageComponent } from '@common/forms/AbstractFormPageComponent';
 import { PageContext } from '@common/PageContext';
 import { Developer } from '@models/Developer';
@@ -16,7 +16,7 @@ import { DevelopersService } from '@services/DevelopersService';
     `,
     providers: [PageContext]
 })
-export class DeveloperFormPageComponent extends AbstractFormPageComponent<Developer> {
+export class DeveloperFormPageComponent extends AbstractFormPageComponent<Developer, DevelopersService> {
     constructor(
         protected _developerService: DevelopersService,
         context: PageContext

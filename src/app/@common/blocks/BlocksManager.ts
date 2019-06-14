@@ -1,6 +1,6 @@
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { Type } from '@angular/core';
-import { AbstractBaseContentBlock } from '@models/blocks/AbstractBaseContentBlock';
+import { AbstractBaseContentBlock } from '@models/base/AbstractBaseContentBlock';
 import { ContentBlockItemType } from '@models/blocks/ContentBlockItemType';
 import { IContentEntity } from '@models/interfaces/IContentEntity';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';

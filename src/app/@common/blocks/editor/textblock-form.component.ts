@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { AbstractEditorBlockFormComponent } from '@common/blocks/editor/abstract-editor-block-form-component';
+import { AbstractEditorBlockFormComponent } from '@common/blocks/editor/AbstractEditorBlockFormComponent';
 
 import { SnackBarService } from '@common/snacks/SnackBarService';
 import { ContentBlockItemType } from '@models/blocks/ContentBlockItemType';

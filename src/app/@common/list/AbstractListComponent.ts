@@ -1,12 +1,12 @@
 import { OnInit } from '@angular/core';
-import { AbstractModel } from '@models/base/abstract-model';
-import { AbstractBaseService } from '../abstract-base-service';
-import { AbstractPageComponent } from '../abstract-page-component';
+import { AbstractEntity } from '@models/base/AbstractEntity';
+import { AbstractBaseService } from '../AbstractBaseService';
+import { AbstractPageComponent } from '../AbstractPageComponent';
 import { PageContext } from '../PageContext';
 import { ListProvider } from './ListProvider';
 import { ListTableColumn } from './ListTableColumn';
 
-export abstract class AbstractListComponent<T extends AbstractModel> extends AbstractPageComponent
+export abstract class AbstractListComponent<T extends AbstractEntity> extends AbstractPageComponent
     implements OnInit {
     public provider: ListProvider<T>;
     public addUrl = '';

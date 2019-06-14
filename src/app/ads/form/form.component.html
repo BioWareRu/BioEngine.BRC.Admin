@@ -1,5 +1,5 @@
 <div class="page-layout blank p-24">
-    <form-layout *ngIf="formLoaded" [formComponent]="this">
+    <content-form-layout *ngIf="formLoaded" [formComponent]="this">
         <div fxLayout="row">
             <div fxFlex="45">
                 <text-input [inputFormGroup]="form.formGroup" inputFieldName="title" inputLabel="Название"></text-input>
@@ -15,5 +15,5 @@
         <upload-input [inputFormGroup]="form.formGroup" inputFieldName="picture" inputLabel="Картинка"
                       [multiple]="false" [service]="servicesProvider.adsService"
                       [types]="['image/png', 'image/jpeg', 'image/jpg', 'image/gif']"></upload-input>
-    </form-layout>
+    </content-form-layout>
 </div>

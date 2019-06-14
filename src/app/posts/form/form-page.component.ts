@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { AbstractBaseService } from '@common/abstract-base-service';
+import { AbstractBaseService } from '@common/AbstractBaseService';
 import { AbstractFormPageComponent } from '@common/forms/AbstractFormPageComponent';
 import { PageContext } from '@common/PageContext';
-import { Post } from '@models/posts/Post';
+import { Post } from '@models/Post';
 import { PostsService } from '@services/ContentService';
 
 @Component({
@@ -12,7 +12,7 @@ import { PostsService } from '@services/ContentService';
     `,
     providers: [PageContext]
 })
-export class PostFormPageComponent extends AbstractFormPageComponent<Post> {
+export class PostFormPageComponent extends AbstractFormPageComponent<Post, PostsService> {
     constructor(protected _postsService: PostsService, context: PageContext) {
         super(context);
     }

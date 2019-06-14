@@ -1,8 +1,9 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { AbstractSiteEntityFormComponent } from '@common/forms/AbstractSiteEntityFormComponent';
 import { SnackBarService } from '@common/snacks/SnackBarService';
+import { MenuService } from '@services/MenuService';
 import { ITreeOptions, TreeComponent, TreeNode } from 'angular-tree-component';
-import { AbstractSingleSiteEntityFormComponent } from '@common/forms/AbstractSingleSiteEntityFormComponent';
 import { DialogService } from '@common/modals/DialogService';
 import { Menu } from '@models/Menu';
 import { MenuItem } from '@models/MenuItem';
@@ -15,7 +16,7 @@ import { MenuItemFormDialogComponent } from './MenuItemFormDialogComponent';
     styleUrls: ['./form.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class MenuFormComponent extends AbstractSingleSiteEntityFormComponent<Menu> {
+export class MenuFormComponent extends AbstractSiteEntityFormComponent<Menu, MenuService> {
     public options: ITreeOptions = {
         allowDrag: true,
         displayField: 'inputLabel',

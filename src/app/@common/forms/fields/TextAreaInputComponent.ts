@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { AbstractFormInput } from './abstract-form-input';
+import { AbstractFormInput } from './AbstractFormInput';
 
 @Component({
     selector: 'textarea-input',

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { ContentFormLayoutComponent } from '@common/forms/ContentItemFormLayoutComponent';
 import { FormLayoutContentComponent } from '@common/forms/FormLayoutContentComponent';
 import { InputFileConfig, InputFileModule } from 'ngx-input-file';
 import { BioSharedModule } from './../shared/BioSharedModule';
@@ -41,6 +42,7 @@ const config: InputFileConfig = {};
         SelectInputComponent,
         FormLayoutComponent,
         FormLayoutContentComponent,
+        ContentFormLayoutComponent,
         ChipsInputComponent,
         AutocompleteInputComponent,
         DatePickerInputComponent,
@@ -57,6 +59,7 @@ const config: InputFileConfig = {};
         CheckboxInputComponent,
         FormLayoutComponent,
         FormLayoutContentComponent,
+        ContentFormLayoutComponent,
         ChipsInputComponent,
         AutocompleteInputComponent,
         DatePickerInputComponent,

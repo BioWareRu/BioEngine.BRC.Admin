@@ -1,6 +1,5 @@
-import { AbstractSection } from './abstract-section';
+import { AbstractTypedSection } from '@models/base/AbstractTypedSection';
 import { TopicData } from './TopicData';
 
-export class Topic extends AbstractSection<TopicData> {
-  data: TopicData;
+export class Topic extends AbstractTypedSection<TopicData> {
 }

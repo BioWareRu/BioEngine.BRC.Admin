@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AbstractDialogComponent } from '../modals/abstract-dialog-component';
+import { AbstractDialogComponent } from '../modals/AbstractDialogComponent';
 import { StorageManagerComponent } from './StorageManagerComponent';
 import { StorageManagerSelectMode } from './StorageManagerSelectMode';
 

@@ -1,5 +1,5 @@
 import { Icon } from '@common/shared/icon/Icon';
-import { AbstractContentBlock } from './abstract-content-block';
+import { AbstractContentBlock } from '../base/AbstractContentBlock';
 import { ContentBlockItemType } from './ContentBlockItemType';
 import { TextBlockData } from './TextBlockData';
 

@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Icon } from '@common/shared/icon/Icon';
+import { AbstractSection } from '@models/base/AbstractSection';
 import { map } from 'rxjs/operators';
 import { Filter } from '@common/Filter';
 import { FilterOperator } from '@common/FilterOperator';
-import { AbstractListComponent } from '@common/list/abstract-list-component';
+import { AbstractListComponent } from '@common/list/AbstractListComponent';
 import { ListTableColumnType } from '@common/list/ListEnums';
 import { ListTableColumn } from '@common/list/ListTableColumn';
 import { SitesTableColumn } from '@common/list/SitesTableColumn';
 import { ListTableColumnAction } from '@common/list/ListTableColumnAction';
 import { PageContext } from '@common/PageContext';
 import { SectionType } from '@models/SectionType';
-import { BaseSection } from '@models/BaseSection';
 import { ServicesProvider } from '@services/ServicesProvider';
 
 @Component({
@@ -18,7 +18,7 @@ import { ServicesProvider } from '@services/ServicesProvider';
     templateUrl: './list.component.html',
     providers: [PageContext]
 })
-export class SectionsListComponent extends AbstractListComponent<BaseSection> implements OnInit {
+export class SectionsListComponent extends AbstractListComponent<AbstractSection> implements OnInit {
     private _showType = true;
 
     constructor(private readonly _servicesProvider: ServicesProvider, context: PageContext) {
@@ -61,9 +61,9 @@ export class SectionsListComponent extends AbstractListComponent<BaseSection> im
         });
     }
 
-    protected _getColumns(): Array<ListTableColumn<BaseSection>> {
+    protected _getColumns(): Array<ListTableColumn<AbstractSection>> {
         return [
-            new ListTableColumn<BaseSection>('title', 'Заголовок')
+            new ListTableColumn<AbstractSection>('title', 'Заголовок')
                 .setSortable()
                 .setLinkGetter(section => {
                     switch (section.type) {
@@ -74,26 +74,34 @@ export class SectionsListComponent extends AbstractListComponent<BaseSection> im
                         case SectionType.Topic:
                             return ['/sections/topics', section.id, 'edit'];
                     }
+                    return {};
                 }),
-            new ListTableColumn<BaseSection>('typeTitle', 'Тип').setHidden(!this._showType),
-            /*.setDisabled(!this.can(UserRights.AddNews))*/ new ListTableColumn<BaseSection>(
+            new ListTableColumn<AbstractSection>('typeTitle', 'Тип').setHidden(!this._showType),
+            /*.setDisabled(!this.can(UserRights.AddNews))*/ new ListTableColumn<AbstractSection>(
                 'dateAdded',
                 'Дата',
                 ListTableColumnType.TimeAgo
             ).setSortable(),
-            new SitesTableColumn<BaseSection>('siteIds', 'Сайты'),
-            new ListTableColumn<BaseSection>('actions', '')
-                .addAction(
-                    new ListTableColumnAction<BaseSection>(
-                        'Просмотреть на сайте',
-                        new Icon('fa-globe')
-                    ).setExternal(secion => secion.url)
+            new SitesTableColumn<AbstractSection>('siteIds', 'Сайты'),
+            new ListTableColumn<AbstractSection>('actions', '')
+                .addActions(section => {
+                        const actions: ListTableColumnAction<AbstractSection>[] = [];
+                        section.publicUrls.forEach(url => {
+                            actions.push(new ListTableColumnAction<AbstractSection>(
+                                'Просмотреть на ' + url.site.title,
+                                new Icon('fa-globe')
+                            ).setExternal(url.url));
+                        });
+                        return actions;
+                    }
                 )
-                .addAction(
-                    new ListTableColumnAction<BaseSection>(
-                        'Удалить',
-                        new Icon('fa-trash')
-                    ).setClick(section => this.deleteItem(section))
+                .addActions(section =>
+                    [
+                        new ListTableColumnAction<AbstractSection>(
+                            'Удалить',
+                            new Icon('fa-trash')
+                        ).setClick(() => this.deleteItem(section))
+                    ]
                 )
         ];
     }

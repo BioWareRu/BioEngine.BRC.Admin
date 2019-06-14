@@ -1,4 +1,7 @@
-import { ISiteEntity } from '@models/interfaces/ISiteEntity';
-import { AbstractFormComponent } from './abstract-form-component';
-export abstract class AbstractSiteEntityFormComponent<TModel extends ISiteEntity> extends AbstractFormComponent<TModel> {
+import { AbstractBaseService } from '@common/AbstractBaseService';
+import { AbstractSiteEntity } from '@models/base/AbstractSiteEntity';
+import { AbstractFormComponent } from './AbstractFormComponent';
+
+export abstract class AbstractSiteEntityFormComponent<TModel extends AbstractSiteEntity,
+    TService extends AbstractBaseService<TModel>> extends AbstractFormComponent<TModel, TService> {
 }

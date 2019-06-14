@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Icon } from '@common/shared/icon/Icon';
-import { AbstractListComponent } from '@common/list/abstract-list-component';
+import { AbstractListComponent } from '@common/list/AbstractListComponent';
 import { ListTableColumnType } from '@common/list/ListEnums';
 import { ListTableColumn } from '@common/list/ListTableColumn';
 import { SitesTableColumn } from '@common/list/SitesTableColumn';
@@ -39,11 +39,16 @@ export class PagesListComponent extends AbstractListComponent<Page> implements O
             ).setSortable(),
             new SitesTableColumn<Page>('siteIds', 'Сайты'),
             new ListTableColumn<Page>('actions', '')
-                .addAction(
-                    new ListTableColumnAction<Page>(
-                        'Просмотреть на сайте',
-                        new Icon('fa-globe')
-                    ).setExternal(page => page.url)
+                .addActions(page => {
+                        const actions: ListTableColumnAction<Page>[] = [];
+                        page.publicUrls.forEach(url => {
+                            actions.push(new ListTableColumnAction<Page>(
+                                'Просмотреть на ' + url.site.title,
+                                new Icon('fa-globe')
+                            ).setExternal(url.url));
+                        });
+                        return actions;
+                    }
                 )
                 .addAction(
                     new ListTableColumnAction<Page>('Удалить', new Icon('fa-trash')).setClick(

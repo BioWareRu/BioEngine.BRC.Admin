@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AbstractBaseService } from '@common/abstract-base-service';
+import { AbstractBaseService } from '@common/AbstractBaseService';
 import { RestClient } from '@common/HttpClient';
 import { AbstractListResult } from '@common/list/abstract-list-result';
-import { PropertiesOption } from '@models/base/PropertiesOption';
+import { PropertiesOption } from '@models/PropertiesOption';
 
 @Injectable()
 export class PropertiesService extends AbstractBaseService<PropertiesOption> {

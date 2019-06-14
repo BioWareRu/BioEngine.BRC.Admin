@@ -9,7 +9,7 @@ import { StorageItem } from '@models/results/StorageItem';
 import { ServicesProvider } from '@services/ServicesProvider';
 import { StorageNode } from '@services/StorageNode';
 import { CustomValidators } from 'ngx-custom-validators';
-import { AbstractContentBlockFormComponent } from './abstract-content-block-form-component';
+import { AbstractContentBlockFormComponent } from './AbstractContentBlockFormComponent';
 import { BlockFieldDescriptor } from './BlockFieldDescriptor';
 
 @Component({

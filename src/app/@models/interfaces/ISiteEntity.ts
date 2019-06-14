@@ -1,6 +1,6 @@
-import { AbstractModel } from '../base/abstract-model';
+import { IEntity } from './IEntity';
 
-export interface ISiteEntity extends AbstractModel {
+export interface ISiteEntity extends IEntity {
     siteIds: Array<string>;
     sites: Array<any>;
 }

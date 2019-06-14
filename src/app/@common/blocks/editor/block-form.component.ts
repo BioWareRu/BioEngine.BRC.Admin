@@ -1,7 +1,7 @@
 import { Component, ComponentFactoryResolver, Input, OnInit, ViewChild } from '@angular/core';
 import { DynamicHostDirective } from '@common/directives/DynamicHostDirective';
 import { Form } from '@common/forms/Form';
-import { AbstractBaseContentBlock } from '@models/blocks/AbstractBaseContentBlock';
+import { AbstractBaseContentBlock } from '@models/base/AbstractBaseContentBlock';
 import { ContentBlockItemType } from '@models/blocks/ContentBlockItemType';
 import { CutBlock } from '@models/blocks/CutBlock';
 import { FileBlock } from '@models/blocks/FileBlock';
@@ -11,7 +11,7 @@ import { TextBlock } from '@models/blocks/TextBlock';
 import { TwitterBlock } from '@models/blocks/TwitterBlock';
 import { YoutubeBlock } from '@models/blocks/YoutubeBlock';
 import { BlocksManager } from '../BlocksManager';
-import { AbstractContentBlockFormComponent } from './abstract-content-block-form-component';
+import { AbstractContentBlockFormComponent } from './AbstractContentBlockFormComponent';
 import { TwitchBlock } from '@models/blocks/TwitchBlock';
 import { QuoteBlock } from '@models/blocks/QuoteBlock';
 

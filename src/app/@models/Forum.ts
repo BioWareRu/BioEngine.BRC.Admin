@@ -1,6 +1,6 @@
-import { AbstractModel } from './base/abstract-model';
 
-export class Forum extends AbstractModel {
+export class Forum {
+  id: number;
   name: string;
   topics: number;
   parentId: number;

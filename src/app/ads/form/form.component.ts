@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { AbstractSiteEntityFormComponent } from '@common/forms/AbstractSiteEntityFormComponent';
+import { AbstractContentFormComponent } from '@common/forms/AbstractContentFormComponent';
+import { DialogService } from '@common/modals/DialogService';
 import { SnackBarService } from '@common/snacks/SnackBarService';
 import { Ad } from '@models/Ad';
+import { AdsService } from '@services/AdsService';
 import { ServicesProvider } from '@services/ServicesProvider';
 import { CustomValidators } from 'ngx-custom-validators';
 
@@ -10,12 +12,13 @@ import { CustomValidators } from 'ngx-custom-validators';
     selector: 'ad-form',
     templateUrl: './form.component.html'
 })
-export class AdFormComponent extends AbstractSiteEntityFormComponent<Ad> {
+export class AdFormComponent extends AbstractContentFormComponent<Ad, AdsService> {
     public constructor(
+        dialogService: DialogService,
         snackBarService: SnackBarService,
         servicesProvider: ServicesProvider
     ) {
-        super(servicesProvider, servicesProvider.adsService, snackBarService);
+        super(dialogService, servicesProvider, snackBarService, servicesProvider.adsService);
     }
 
     protected _constructForm(): void {

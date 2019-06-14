@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { SnackBarService } from '@common/snacks/SnackBarService';
 import { TwitterBlock } from '@models/blocks/TwitterBlock';
-import { AbstractContentBlockFormComponent } from './abstract-content-block-form-component';
+import { AbstractContentBlockFormComponent } from './AbstractContentBlockFormComponent';
 import { BlockFieldDescriptor } from './BlockFieldDescriptor';
 import { CustomValidators } from 'ngx-custom-validators';
 import { FieldInputChange } from '@common/forms/FieldInputChange';
@@ -66,7 +66,6 @@ export class TwitterBlockFormComponent extends AbstractContentBlockFormComponent
             if (change.key === this.getFieldName('tweetUrl')) {
 
                 const info = this._getTweetInfo(change.newValue);
-                console.log(info);
                 if (info !== null) {
                     this.model.data.tweetId = info.id;
                     this.model.data.tweetAuthor = info.author;
@@ -81,7 +80,6 @@ export class TwitterBlockFormComponent extends AbstractContentBlockFormComponent
 
     private _getTweetInfo(uri: string): TweetInfo | null {
         const parsed = url.parse(uri);
-        console.log(parsed);
         if (parsed.host !== 'twitter.com') {
             return null;
         }
@@ -95,7 +93,6 @@ export class TwitterBlockFormComponent extends AbstractContentBlockFormComponent
         }
 
         const match = this._statusIdRegex.exec(parsed.path);
-        console.log(match);
         if (match === null) {
             return null;
         }

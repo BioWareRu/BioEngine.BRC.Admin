@@ -1,5 +1,5 @@
 <div class="page-layout blank p-24">
-    <form-layout *ngIf="formLoaded" [formComponent]="this">
+    <content-form-layout *ngIf="formLoaded" [formComponent]="this">
         <div fxLayout="row">
             <div fxFlex="45">
                 <text-input [inputFormGroup]="form.formGroup" inputFieldName="title" inputLabel="Название"></text-input>
@@ -13,5 +13,5 @@
         <chips-input [inputFormGroup]="form.formGroup" inputFieldName="siteIds" inputLabel="Сайты" titleField="title"
             valueField="id" [entitiesService]="servicesProvider.sitesService"></chips-input>
         <blocksForm [model]="model" [form]="form"></blocksForm>
-    </form-layout>
+    </content-form-layout>
 </div>

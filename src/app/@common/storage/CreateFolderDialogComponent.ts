@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AbstractDialogComponent } from '../modals/abstract-dialog-component';
+import { AbstractDialogComponent } from '../modals/AbstractDialogComponent';
 @Component({
     selector: 'confirmation-dialog-component',
     template: `

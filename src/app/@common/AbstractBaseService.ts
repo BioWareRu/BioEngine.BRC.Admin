@@ -2,9 +2,9 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Filter } from './Filter';
 import { RestClient } from './HttpClient';
+import { IBaseService } from './IBaseService';
 import { AbstractListResult } from './list/abstract-list-result';
 import { SaveModelResponse } from './SaveModelResponse';
-import { IBaseService } from './IBaseService';
 
 export abstract class AbstractBaseService<T> implements IBaseService<T> {
     protected constructor(protected _httpClient: RestClient) {
@@ -50,18 +50,6 @@ export abstract class AbstractBaseService<T> implements IBaseService<T> {
             .pipe(map(res => <SaveModelResponse<T>>res));
     }
 
-    public publish(id: number): Observable<T> {
-        return this._httpClient
-            .post(this._getResource() + '/publish/' + id, {})
-            .pipe(map(res => <T>res));
-    }
-
-    public unpublish(id: number): Observable<T> {
-        return this._httpClient
-            .post(this._getResource() + '/hide/' + id, {})
-            .pipe(map(res => <T>res));
-    }
-
     public delete(id: number): Observable<boolean> {
         return this._httpClient.delete(this._getResource() + '/' + id).pipe(map(() => true));
     }
@@ -74,3 +62,4 @@ export abstract class AbstractBaseService<T> implements IBaseService<T> {
 
     protected abstract _getResource(): string;
 }
+

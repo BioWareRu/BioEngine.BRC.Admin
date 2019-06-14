@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AbstractBaseService } from '@common/abstract-base-service';
+import { AbstractBaseService } from '@common/AbstractBaseService';
 import { AbstractFormPageComponent } from '@common/forms/AbstractFormPageComponent';
 import { PageContext } from '@common/PageContext';
 import { Ad } from '@models/Ad';
@@ -12,7 +12,7 @@ import { AdsService } from '@services/AdsService';
     `,
     providers: [PageContext]
 })
-export class AdFormPageComponent extends AbstractFormPageComponent<Ad> {
+export class AdFormPageComponent extends AbstractFormPageComponent<Ad, AdsService> {
     constructor(protected _adsService: AdsService, context: PageContext) {
         super(context);
     }

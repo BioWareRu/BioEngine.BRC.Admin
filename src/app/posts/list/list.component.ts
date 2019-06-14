@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Icon } from '@common/shared/icon/Icon';
-import { AbstractListComponent } from '@common/list/abstract-list-component';
+import { AbstractListComponent } from '@common/list/AbstractListComponent';
 import { ListTableColumnType } from '@common/list/ListEnums';
 import { ListTableColumn } from '@common/list/ListTableColumn';
 import { AuthorTableColumn } from '@common/list/AuthorTableColumn';
@@ -9,7 +9,7 @@ import { SectionsTableColumn } from '@common/list/SectionsTableColumn';
 import { SitesTableColumn } from '@common/list/SitesTableColumn';
 import { ListTableColumnAction } from '@common/list/ListTableColumnAction';
 import { PageContext } from '@common/PageContext';
-import { Post } from '@models/posts/Post';
+import { Post } from '@models/Post';
 import { ServicesProvider } from '@services/ServicesProvider';
 
 @Component({
@@ -45,11 +45,16 @@ export class ContentListComponent extends AbstractListComponent<Post> implements
             new TagsTableColumn<Post>('tagIds', 'Тэги'),
             new AuthorTableColumn<Post>('author', 'Автор'),
             new ListTableColumn<Post>('actions', '')
-                .addAction(
-                    new ListTableColumnAction<Post>(
-                        'Просмотреть на сайте',
-                        new Icon('fa-globe')
-                    ).setExternal(content => content.url)
+                .addActions(post => {
+                        const actions: ListTableColumnAction<Post>[] = [];
+                    post.publicUrls.forEach(url => {
+                            actions.push(new ListTableColumnAction<Post>(
+                                'Просмотреть на ' + url.site.title,
+                                new Icon('fa-globe')
+                            ).setExternal(url.url));
+                        });
+                        return actions;
+                    }
                 )
                 .addAction(
                     new ListTableColumnAction<Post>('Удалить', new Icon('fa-trash')).setClick(

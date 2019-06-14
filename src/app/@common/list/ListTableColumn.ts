@@ -1,24 +1,28 @@
-import { AbstractModel } from '@models/base/abstract-model';
+import Dictionary from '@common/Dictionary';
+import { AbstractEntity } from '@models/base/AbstractEntity';
 import { ListTableColumnType } from './ListEnums';
 import { ListTableColumnAction } from './ListTableColumnAction';
 
-export class ListTableColumn<T = AbstractModel> {
-    public title: string;
-    public key: string;
-    public sortable: boolean;
-    public type: ListTableColumnType;
-    public disabled: boolean;
-    public hidden = false;
-    public actions: Array<ListTableColumnAction<T>> = [];
-    public doClick: (model: T) => any;
-    private _getter: (model: T) => {};
-    private _linkGetter: (model: T) => {};
+export class ListTableColumn<T extends AbstractEntity> {
 
     constructor(key: string, title: string, type: ListTableColumnType = ListTableColumnType.Text) {
         this.key = key;
         this.title = title;
         this.type = type;
     }
+
+    public title: string;
+    public key: string;
+    public sortable: boolean;
+    public type: ListTableColumnType;
+    public disabled: boolean;
+    public hidden = false;
+    public doClick: (model: T) => any;
+    private _actionGenerators: Array<(model: T) => ListTableColumnAction<T>[]> = [];
+    private _getter: (model: T) => {};
+    private _linkGetter: (model: T) => {};
+
+    private _actions = new Dictionary<string, ListTableColumnAction<T>[]>();
 
     public setSortable(sortable: boolean = true): ListTableColumn<T> {
         this.sortable = sortable;
@@ -39,11 +43,32 @@ export class ListTableColumn<T = AbstractModel> {
         return this;
     }
 
-    public addAction(action: ListTableColumnAction<T>): ListTableColumn<T> {
+    public addActions(actions: (model: T) => ListTableColumnAction<T>[]): ListTableColumn<T> {
         this.type = ListTableColumnType.Actions;
-        this.actions.push(action);
+        this._actionGenerators.push(actions);
 
         return this;
+    }
+
+    public addAction(action: ListTableColumnAction<T>): ListTableColumn<T> {
+        this.type = ListTableColumnType.Actions;
+        this._actionGenerators.push(() => [action]);
+
+        return this;
+    }
+
+    public getActions(model: T): ListTableColumnAction<T>[] {
+        if (!this._actions.hasKey(model.id)) {
+            const actions: ListTableColumnAction<T>[] = [];
+            this._actionGenerators.forEach(generator => {
+                generator(model).forEach(action => {
+
+                    actions.push(action);
+                });
+            });
+            this._actions.set(model.id, actions);
+        }
+        return <[]>this._actions.get(model.id);
     }
 
     public setDisabled(disabled: boolean): ListTableColumn<T> {

@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { AbstractServiceWithUpload } from '@common/AbstractServiceWithUpload';
+import { AbstractContentEntityService } from '@common/abstract-content-entity-service';
 import { RestClient } from '@common/HttpClient';
 import { Topic } from '@models/Topic';
 
 @Injectable()
-export class TopicsService extends AbstractServiceWithUpload<Topic> {
+export class TopicsService extends AbstractContentEntityService<Topic> {
 
-  constructor(httpClient: RestClient) {
-    super(httpClient);
-  }
+    constructor(httpClient: RestClient) {
+        super(httpClient);
+    }
 
-  protected _getResource(): string {
-    return 'topics';
-  }
+    protected _getResource(): string {
+        return 'topics';
+    }
 }

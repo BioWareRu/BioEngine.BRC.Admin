@@ -1,18 +1,11 @@
 import { Validators } from '@angular/forms';
-import { ISiteEntity } from '@models/interfaces/ISiteEntity';
-import { Utils } from '../Utils';
-import { AbstractSiteEntityFormComponent } from './AbstractSiteEntityFormComponent';
-export abstract class AbstractSectionFormComponent<TModel extends ISiteEntity>
-    extends AbstractSiteEntityFormComponent<TModel> {
-    public processChange(key: string, oldValue: any, newValue: any): void {
-        if (key === 'title') {
-            const origSlug = Utils.slugifyUrl(oldValue);
-            if (this.model && (!this.model.url || origSlug === this.model.url)) {
-                this.model.url = Utils.slugifyUrl(newValue);
-                this.updateControlValue('url');
-            }
-        }
-    }
+import { AbstractContentEntityService } from '@common/abstract-content-entity-service';
+import { AbstractContentFormComponent } from '@common/forms/AbstractContentFormComponent';
+import { AbstractSection } from '@models/base/AbstractSection';
+
+export abstract class AbstractSectionFormComponent<TModel extends AbstractSection, TService extends AbstractContentEntityService<TModel>>
+    extends AbstractContentFormComponent<TModel, TService> {
+
     protected _constructForm(): void {
         this.registerFormControl('title', [<any>Validators.required]);
         this.registerFormControl('url', [<any>Validators.required]);

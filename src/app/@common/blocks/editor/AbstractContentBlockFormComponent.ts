@@ -1,7 +1,7 @@
 import { Input, OnDestroy, OnInit } from '@angular/core';
 
 import { AbstractSimpleFormComponent } from '@common/forms/AbstractSimpleFormComponent';
-import { AbstractBaseContentBlock } from '@models/blocks/AbstractBaseContentBlock';
+import { AbstractBaseContentBlock } from '@models/base/AbstractBaseContentBlock';
 
 import { BlocksManager } from '../BlocksManager';
 import { BlockFieldDescriptor } from './BlockFieldDescriptor';

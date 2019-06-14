@@ -1,4 +1,4 @@
-﻿import { AbstractModel } from './base/abstract-model';
+﻿import { AbstractEntity } from '@models/base/AbstractEntity';
 
-export class Site extends AbstractModel {
+export class Site extends AbstractEntity {
 }

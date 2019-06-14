@@ -6,7 +6,7 @@ import { StorageItem } from '@models/results/StorageItem';
 import { IBaseServiceWithUpload } from '../../IBaseServiceWithUpload';
 import { SnackBarMessage } from '../../snacks/SnackBarMessage';
 import { SnackBarService } from '../../snacks/SnackBarService';
-import { AbstractFormInput } from './abstract-form-input';
+import { AbstractFormInput } from './AbstractFormInput';
 
 @Component({
     selector: 'upload-input',

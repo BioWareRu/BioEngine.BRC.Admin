@@ -6,7 +6,7 @@ import { FilterOperator } from '@common/FilterOperator';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import Dictionary from '../../Dictionary';
-import { AbstractFormInput } from './abstract-form-input';
+import { AbstractFormInput } from './AbstractFormInput';
 import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
 import { SelectGroup } from './SelectGroup';
 import { SelectOption } from './SelectOption';

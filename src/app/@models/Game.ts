@@ -1,8 +1,7 @@
-import { AbstractSection } from './abstract-section';
+import { AbstractTypedSection } from '@models/base/AbstractTypedSection';
 import { GameData } from './GameData';
 
-export class Game extends AbstractSection<GameData> {
-  data: GameData;
+export class Game extends AbstractTypedSection<GameData> {
 }
 
 

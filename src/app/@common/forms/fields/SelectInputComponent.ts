@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AbstractFormInput } from './abstract-form-input';
+import { AbstractFormInput } from './AbstractFormInput';
 import { SelectGroup } from './SelectGroup';
 import { SelectOption } from './SelectOption';
 

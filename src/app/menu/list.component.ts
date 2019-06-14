@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Icon } from '@common/shared/icon/Icon';
-import { AbstractListComponent } from '@common/list/abstract-list-component';
+import { AbstractListComponent } from '@common/list/AbstractListComponent';
 import { ListTableColumnType } from '@common/list/ListEnums';
 import { ListTableColumn } from '@common/list/ListTableColumn';
 import { SiteTableColumn } from '@common/list/SiteTableColumn';

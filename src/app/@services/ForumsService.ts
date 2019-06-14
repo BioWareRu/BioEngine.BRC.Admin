@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AbstractBaseService } from '@common/abstract-base-service';
+import { AbstractBaseService } from '@common/AbstractBaseService';
 import { RestClient } from '@common/HttpClient';
 import { Forum } from '@models/Forum';
 

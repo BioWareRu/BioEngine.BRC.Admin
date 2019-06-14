@@ -14,23 +14,6 @@
                 ">
                 Сохранить
             </button>
-
-            <button mat-raised-button color="accent" (click)="formComponent.changePublishState()"
-                *ngIf="!formComponent.model.isPublished" [disabled]="
-                    formComponent.form.formGroup.invalid ||
-                    formComponent.form.hasChanges ||
-                    formComponent.form.inProgress
-                ">
-                Опубликовать
-            </button>
-            <button mat-raised-button color="warn" (click)="formComponent.changePublishState()"
-                *ngIf="formComponent.model.isPublished" [disabled]="
-                    formComponent.form.formGroup.invalid ||
-                    formComponent.form.hasChanges ||
-                    formComponent.form.inProgress
-                ">
-                Спрятать
-            </button>
         </div>
         <!-- <div *ngIf="!formComponent.form.formGroup.valid">
             <div *ngFor="let control of formComponent.form.formGroup.controls | keys">

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { AbstractFormInput } from './abstract-form-input';
+import { AbstractFormInput } from './AbstractFormInput';
 import { MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter } from '@angular/material/core';
 
 export const BIO_DATE_FORMATS = {

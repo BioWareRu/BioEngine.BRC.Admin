@@ -2,7 +2,7 @@ import { StorageItem } from '@models/results/StorageItem';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IBaseServiceWithUpload } from './IBaseServiceWithUpload';
-import { AbstractBaseService } from './abstract-base-service';
+import { AbstractBaseService } from './AbstractBaseService';
 export abstract class AbstractServiceWithUpload<T> extends AbstractBaseService<T> implements IBaseServiceWithUpload {
     public upload(file: File): Observable<StorageItem> {
         return this._httpClient

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { SnackBarService } from '@common/snacks/SnackBarService';
 import { CustomValidators } from 'ngx-custom-validators';
-import { AbstractContentBlockFormComponent } from './abstract-content-block-form-component';
+import { AbstractContentBlockFormComponent } from './AbstractContentBlockFormComponent';
 import { BlockFieldDescriptor } from './BlockFieldDescriptor';
 import { TwitchBlock } from '@models/blocks/TwitchBlock';
 import { FieldInputChange } from '@common/forms/FieldInputChange';

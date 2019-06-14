@@ -1,13 +1,15 @@
+import { CollectionViewer } from '@angular/cdk/collections';
+import { DataSource } from '@angular/cdk/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AbstractModel } from '@models/base/abstract-model';
-import { AbstractBaseService } from '../abstract-base-service';
+import { AbstractEntity } from '@models/base/AbstractEntity';
+import { AbstractBaseService } from '../AbstractBaseService';
 import { Filter } from '../Filter';
 import { ListTableColumn } from './ListTableColumn';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, SortDirection } from '@angular/material/sort';
-import { Subject, BehaviorSubject } from 'rxjs';
+import { Subject, BehaviorSubject, Observable } from 'rxjs';
 
-export class ListProvider<T extends AbstractModel> {
+export class ListProvider<T extends AbstractEntity> implements DataSource<T> {
     public items: Subject<Array<T>>;
     public itemsPerPage = 10;
     public columns: Array<ListTableColumn<T>>;
@@ -67,9 +69,9 @@ export class ListProvider<T extends AbstractModel> {
         this._service
             .getAll(page, this.paginator.pageSize, this._sort, this._filter)
             .subscribe(res => {
-                this.items.next(res.data);
                 this.paginator.pageIndex = <number>page;
                 this.paginator.length = res.totalItems;
+                this.items.next(res.data);
                 this.dataLoaded = true;
             });
     }
@@ -110,5 +112,13 @@ export class ListProvider<T extends AbstractModel> {
             },
             relativeTo: this._route
         });
+    }
+
+    connect(_: CollectionViewer): Observable<T[] | ReadonlyArray<T>> {
+        return this.items.asObservable();
+    }
+
+    disconnect(_: CollectionViewer): void {
+        this.items.complete();
     }
 }

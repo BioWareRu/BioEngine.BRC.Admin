@@ -1,0 +1,44 @@
+<div style="position: relative;" class="mat-elevation-z8 p-24">
+    <form class="form-horizontal" [formGroup]="formComponent.form.formGroup" *ngIf="formComponent.formLoaded">
+        <form-layout-content [formComponent]="formComponent">
+            <ng-content></ng-content>
+        </form-layout-content>
+        <div class="p-12">
+            <button mat-raised-button color="primary" type="submit" (click)="save()" [ngClass]="{
+                    invalid: formComponent.form.formGroup.invalid,
+                    'no-changes': !formComponent.form.hasChanges
+                }" [disabled]="
+                    formComponent.form.formGroup.invalid ||
+                    !formComponent.form.hasChanges ||
+                    formComponent.form.inProgress
+                ">
+                Сохранить
+            </button>
+
+            <button mat-raised-button color="accent" (click)="formComponent.changePublishState()"
+                *ngIf="!formComponent.model.isPublished" [disabled]="
+                    formComponent.form.formGroup.invalid ||
+                    formComponent.form.hasChanges ||
+                    formComponent.form.inProgress
+                ">
+                Опубликовать
+            </button>
+            <button mat-raised-button color="warn" (click)="formComponent.changePublishState()"
+                *ngIf="formComponent.model.isPublished" [disabled]="
+                    formComponent.form.formGroup.invalid ||
+                    formComponent.form.hasChanges ||
+                    formComponent.form.inProgress
+                ">
+                Спрятать
+            </button>
+        </div>
+        <!-- <div *ngIf="!formComponent.form.formGroup.valid">
+            <div *ngFor="let control of formComponent.form.formGroup.controls | keys">
+                <div *ngIf="control.value.invalid">
+                    {{control.key}}
+                    : {{control.value.status}} {{control.value.errors|json}} {{control.value.value|json}}
+                </div>
+            </div>
+        </div> -->
+    </form>
+</div>

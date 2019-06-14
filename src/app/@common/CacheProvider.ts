@@ -1,11 +1,11 @@
-import { AbstractModel } from '@models/base/abstract-model';
+import { AbstractEntity } from '@models/base/AbstractEntity';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { AbstractBaseService } from './abstract-base-service';
+import { AbstractBaseService } from './AbstractBaseService';
 import Dictionary from './Dictionary';
 import { Filter } from './Filter';
 import { FilterOperator } from './FilterOperator';
 
-export class CacheProvider<TModel extends AbstractModel> {
+export class CacheProvider<TModel extends AbstractEntity> {
     public constructor(private readonly _service: AbstractBaseService<TModel>) {
     }
 

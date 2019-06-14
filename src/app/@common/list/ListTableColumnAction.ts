@@ -6,7 +6,7 @@ export class ListTableColumnAction<T> {
     public title: string;
     public type: ListTableColumnActionType;
     public types = ListTableColumnActionType;
-    public generateUrl: (model: T) => string;
+    public url: string;
     public doClick: (model: T) => any;
 
     constructor(
@@ -26,9 +26,9 @@ export class ListTableColumnAction<T> {
         return this;
     }
 
-    public setExternal(externalLinkGenerator: (model: T) => string): ListTableColumnAction<T> {
+    public setExternal(url: string): ListTableColumnAction<T> {
         this.type = ListTableColumnActionType.ExternalLink;
-        this.generateUrl = externalLinkGenerator;
+        this.url = url;
 
         return this;
     }

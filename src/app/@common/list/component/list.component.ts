@@ -1,5 +1,5 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { AbstractModel } from '@models/base/abstract-model';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AbstractEntity } from '@models/base/AbstractEntity';
 import { StateService } from '../../StateService';
 import { ListTableColumnType } from '../ListEnums';
 import { ListProvider } from '../ListProvider';
@@ -10,6 +10,7 @@ import { MatSort } from '@angular/material/sort';
 @Component({
     selector: 'ngx-list-table',
     templateUrl: './list.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     styles: [`
         .loading-shade {
             position: absolute;
@@ -42,7 +43,7 @@ import { MatSort } from '@angular/material/sort';
         }
     `]
 })
-export class ListTableComponent<T extends AbstractModel = AbstractModel> implements OnInit {
+export class ListTableComponent<T extends AbstractEntity> implements OnInit {
     @Input() public provider: ListProvider<T>;
     @Input() public columns: Array<ListTableColumn<T>>;
     @Input() public addUrl = '';

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { AbstractBaseService } from '@common/abstract-base-service';
+import { AbstractBaseService } from '@common/AbstractBaseService';
 import { RestClient } from '@common/HttpClient';
-import { BaseSection } from '@models/BaseSection';
+import { AbstractSection } from '@models/base/AbstractSection';
 
 @Injectable()
-export class SectionsService extends AbstractBaseService<BaseSection> {
+export class SectionsService extends AbstractBaseService<AbstractSection> {
 
     constructor(httpClient: RestClient) {
         super(httpClient);

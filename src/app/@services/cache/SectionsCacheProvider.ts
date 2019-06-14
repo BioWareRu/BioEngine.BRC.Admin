@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { CacheProvider } from '@common/CacheProvider';
+import { AbstractSection } from '@models/base/AbstractSection';
 import { SectionsService } from '../SectionsService';
-import { BaseSection } from '@models/BaseSection';
 
 @Injectable({
     providedIn: 'root'
 })
-export class SectionsCacheProvider extends CacheProvider<BaseSection> {
+export class SectionsCacheProvider extends CacheProvider<AbstractSection> {
     constructor(service: SectionsService) {
         super(service);
     }
