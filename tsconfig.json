@@ -1,8 +1,14 @@
 {
     "compileOnSave": false,
     "compilerOptions": {
+        "importHelpers": true,
+        "target": "es5",
+        "lib": [
+            "es2018",
+            "dom"
+        ],
         "baseUrl": "./src",
-        "module": "esnext",
+        "module": "esNext",
         "outDir": "./dist/out-tsc",
         "sourceMap": true,
         "declaration": false,
@@ -20,13 +26,8 @@
                 "app/@services/*"
             ]
         },
-        "target": "es2015",
         "typeRoots": [
             "node_modules/@types"
-        ],
-        "lib": [
-            "es2017",
-            "dom"
         ],
         "strictNullChecks": true
     }
