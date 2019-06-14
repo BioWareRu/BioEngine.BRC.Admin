@@ -3,7 +3,6 @@ import { AbstractBaseService } from '@common/abstract-base-service';
 import { AbstractFormPageComponent } from '@common/forms/AbstractFormPageComponent';
 import { PageContext } from '@common/PageContext';
 import { Menu } from '@models/Menu';
-import { SaveMenuResponse } from '@models/results/SaveMenuResponse';
 import { MenuService } from '@services/MenuService';
 
 @Component({
@@ -13,10 +12,7 @@ import { MenuService } from '@services/MenuService';
     `,
     providers: [PageContext]
 })
-export class MenuFormPageComponent extends AbstractFormPageComponent<
-    Menu,
-    SaveMenuResponse
-> {
+export class MenuFormPageComponent extends AbstractFormPageComponent<Menu> {
     constructor(protected _menuService: MenuService, pageContext: PageContext) {
         super(pageContext);
     }

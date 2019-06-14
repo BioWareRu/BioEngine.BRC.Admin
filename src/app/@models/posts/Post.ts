@@ -1,4 +1,3 @@
-import { Type } from 'class-transformer';
 import { AbstractModel } from '../base/abstract-model';
 import { AbstractBaseContentBlock } from '../blocks/AbstractBaseContentBlock';
 import { IContentEntity } from '../interfaces/IContentEntity';
@@ -17,7 +16,6 @@ export class Post extends AbstractModel implements ISiteEntity, ISectionEntity, 
     public siteIds: Array<string>;
     tagIds: Array<string>;
 
-    @Type(() => AbstractBaseContentBlock)
     public blocks: Array<AbstractBaseContentBlock>;
 
     public sections: Array<any>;

@@ -104,7 +104,7 @@ export class TwitterBlockFormComponent extends AbstractContentBlockFormComponent
     }
 
     private _render(): void {
-        twttr.ready(twitter => {
+        (<any>window).twttr.ready(twitter => {
             twitter.widgets.createTweet(
                 this.model.data.tweetId + '',
                 <HTMLElement>document.getElementById('twitter-' + this.model.id),

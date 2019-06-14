@@ -3,7 +3,6 @@ import { Validators } from '@angular/forms';
 import { AbstractSiteEntityFormComponent } from '@common/forms/AbstractSiteEntityFormComponent';
 import { SnackBarService } from '@common/snacks/SnackBarService';
 import { Ad } from '@models/Ad';
-import { SaveAdResponse } from '@models/results/SaveAdResponse';
 import { ServicesProvider } from '@services/ServicesProvider';
 import { CustomValidators } from 'ngx-custom-validators';
 
@@ -11,7 +10,7 @@ import { CustomValidators } from 'ngx-custom-validators';
     selector: 'ad-form',
     templateUrl: './form.component.html'
 })
-export class AdFormComponent extends AbstractSiteEntityFormComponent<Ad, SaveAdResponse> {
+export class AdFormComponent extends AbstractSiteEntityFormComponent<Ad> {
     public constructor(
         snackBarService: SnackBarService,
         servicesProvider: ServicesProvider

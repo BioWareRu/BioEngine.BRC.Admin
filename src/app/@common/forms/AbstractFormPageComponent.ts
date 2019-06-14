@@ -6,13 +6,13 @@ import { AbstractPageComponent } from '../abstract-page-component';
 import { SaveModelResponse } from '../SaveModelResponse';
 import { AbstractFormComponent } from './abstract-form-component';
 import { Observable } from 'rxjs';
-export abstract class AbstractFormPageComponent<TModel extends AbstractModel, TResultModel extends SaveModelResponse<TModel>> extends AbstractPageComponent implements OnInit {
+export abstract class AbstractFormPageComponent<TModel extends AbstractModel> extends AbstractPageComponent implements OnInit {
     @Input()
     public model: TModel | null;
     protected _modelId: string;
     protected _isPublished: boolean;
     @ViewChild('modelForm', { static: true })
-    protected _form: AbstractFormComponent<TModel, TResultModel>;
+    protected _form: AbstractFormComponent<TModel>;
     ngOnInit(): void {
         const id: Observable<string> = this._route.params.pipe(map(p => p.id));
         id.subscribe(modelId => {

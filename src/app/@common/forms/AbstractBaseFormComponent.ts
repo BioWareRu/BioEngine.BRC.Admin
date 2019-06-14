@@ -1,7 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { HostListener, Input } from '@angular/core';
 import { ValidatorFn, AbstractControlOptions } from '@angular/forms';
-import { plainToClass } from 'class-transformer';
 import { RestResult } from '../RestResult';
 import { SnackBarMessage } from '../snacks/SnackBarMessage';
 import { SnackBarService } from '../snacks/SnackBarService';
@@ -34,7 +33,7 @@ export abstract class AbstractBaseFormComponent {
     protected abstract _constructForm(): void;
     protected _handleSubmitError(response: HttpErrorResponse): void {
         if (response.status === 422) {
-            const data = plainToClass(RestResult, <RestResult>response.error);
+            const data = <RestResult>response.error;
             data.errors.forEach(error => {
                 const control = this.form.getControlByProperty(error.field);
                 if (control != null) {

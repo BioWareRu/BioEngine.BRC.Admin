@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { plainToClass } from 'class-transformer';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ENV } from '../../environments/environment';
@@ -15,6 +14,6 @@ export class UsersService {
     }
 
     getUser(): Observable<User> {
-        return this._httpClient.get(ENV.apiUrl + 'me').pipe(map(data => plainToClass(User, <User>data)));
+        return this._httpClient.get(ENV.apiUrl + 'me').pipe(map(data => <User>data));
     }
 }

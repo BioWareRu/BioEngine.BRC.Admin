@@ -6,7 +6,6 @@ import { PageContext } from '@common/PageContext';
 import { SnackBarService } from '@common/snacks/SnackBarService';
 import { StateService } from '@common/StateService';
 import { Post } from '@models/posts/Post';
-import { SavePostResponse } from '@models/results/SavePostResponse';
 import { BaseSection } from '@models/BaseSection';
 import { Tag } from '@models/Tag';
 import { ServicesProvider } from '@services/ServicesProvider';
@@ -18,7 +17,7 @@ import { AbstractBaseService } from '@common/abstract-base-service';
     styleUrls: ['./form.component.scss'],
     providers: [PageContext]
 })
-export class PostFormComponent extends AbstractContentFormComponent<Post, SavePostResponse>
+export class PostFormComponent extends AbstractContentFormComponent<Post>
     implements OnInit, OnDestroy {
     constructor(
         private readonly _stateService: StateService,

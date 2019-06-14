@@ -1,10 +1,9 @@
 import { Validators } from '@angular/forms';
 import { ISiteEntity } from '@models/interfaces/ISiteEntity';
-import { SaveModelResponse } from '../SaveModelResponse';
 import { Utils } from '../Utils';
 import { AbstractSiteEntityFormComponent } from './AbstractSiteEntityFormComponent';
-export abstract class AbstractSectionFormComponent<TModel extends ISiteEntity, TSaveModel extends SaveModelResponse<TModel>>
-    extends AbstractSiteEntityFormComponent<TModel, TSaveModel> {
+export abstract class AbstractSectionFormComponent<TModel extends ISiteEntity>
+    extends AbstractSiteEntityFormComponent<TModel> {
     public processChange(key: string, oldValue: any, newValue: any): void {
         if (key === 'title') {
             const origSlug = Utils.slugifyUrl(oldValue);

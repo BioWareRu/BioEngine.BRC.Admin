@@ -12,8 +12,7 @@ import { SnackBarService } from '../snacks/SnackBarService';
 import { AbstractBaseFormComponent } from './AbstractBaseFormComponent';
 import { Observable } from 'rxjs';
 
-export abstract class AbstractFormComponent<TModel extends AbstractModel,
-    TResultModel extends SaveModelResponse<TModel>> extends AbstractBaseFormComponent {
+export abstract class AbstractFormComponent<TModel extends AbstractModel> extends AbstractBaseFormComponent {
     @Input()
     public model: TModel | null;
     public propertiesElementTypes = PropertiesElementType;
@@ -21,7 +20,7 @@ export abstract class AbstractFormComponent<TModel extends AbstractModel,
     protected _modelId: number;
     protected _isPublished: boolean;
 
-    public onSuccessSave: EventEmitter<TResultModel> = new EventEmitter<TResultModel>();
+    public onSuccessSave: EventEmitter<SaveModelResponse<TModel>> = new EventEmitter<SaveModelResponse<TModel>>();
     private _isNew = true;
 
     protected constructor(
@@ -76,7 +75,7 @@ export abstract class AbstractFormComponent<TModel extends AbstractModel,
             result = this._doUpdate();
         }
         result.subscribe(
-            (saveResult: TResultModel) => {
+            (saveResult: SaveModelResponse<TModel>) => {
                 this.form.hasChanges = false;
                 this.form.success = true;
                 this.onSuccessSave.emit(saveResult);

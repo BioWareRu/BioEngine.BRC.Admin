@@ -1,5 +1,3 @@
-import { plainToClass } from 'class-transformer';
-import { ClassType } from 'class-transformer/ClassTransformer';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Filter } from './Filter';
@@ -18,11 +16,6 @@ export abstract class AbstractBaseService<T> implements IBaseService<T> {
         sort: string | null = '',
         filter: Filter | null = null
     ): Observable<AbstractListResult<T>> {
-        const listType = this._getListType();
-        if (!listType) {
-            throw new Error('No list type');
-        }
-
         return this._httpClient
             .get(this._getResource(), {
                 limit: perPage || 10,
@@ -30,53 +23,43 @@ export abstract class AbstractBaseService<T> implements IBaseService<T> {
                 order: sort,
                 filter: filter === null ? null : filter.toString()
             })
-            .pipe(map(res => plainToClass(listType, <AbstractListResult<T>>res)));
+            .pipe(map(res => <AbstractListResult<T>>res));
     }
 
     public get(id: string): Observable<T> {
         return this._httpClient
             .get(this._getResource() + '/' + id, {})
-            .pipe(map(res => plainToClass(this._getType(), <T>res)));
+            .pipe(map(res => <T>res));
     }
 
     public getNew(): Observable<T> {
         return this._httpClient
             .get(this._getResource() + '/new', {})
-            .pipe(map(res => plainToClass(this._getType(), <T>res)));
+            .pipe(map(res => <T>res));
     }
 
     public add(item: T): Observable<SaveModelResponse<T>> {
-        const saveType = this._getSaveType();
-        if (!saveType) {
-            throw new Error('No save type');
-        }
-
         return this._httpClient
             .post(this._getResource(), item)
-            .pipe(map(res => plainToClass(saveType, <SaveModelResponse<T>>res)));
+            .pipe(map(res => <SaveModelResponse<T>>res));
     }
 
     public update(id: number, item: T): Observable<SaveModelResponse<T>> {
-        const saveType = this._getSaveType();
-        if (!saveType) {
-            throw new Error('No save type');
-        }
-
         return this._httpClient
             .put(this._getResource() + '/' + id, item)
-            .pipe(map(res => plainToClass(saveType, <SaveModelResponse<T>>res)));
+            .pipe(map(res => <SaveModelResponse<T>>res));
     }
 
     public publish(id: number): Observable<T> {
         return this._httpClient
             .post(this._getResource() + '/publish/' + id, {})
-            .pipe(map(res => plainToClass(this._getType(), <T>res)));
+            .pipe(map(res => <T>res));
     }
 
     public unpublish(id: number): Observable<T> {
         return this._httpClient
             .post(this._getResource() + '/hide/' + id, {})
-            .pipe(map(res => plainToClass(this._getType(), <T>res)));
+            .pipe(map(res => <T>res));
     }
 
     public delete(id: number): Observable<boolean> {
@@ -90,10 +73,4 @@ export abstract class AbstractBaseService<T> implements IBaseService<T> {
     }
 
     protected abstract _getResource(): string;
-
-    protected abstract _getListType(): ClassType<AbstractListResult<T>> | null;
-
-    protected abstract _getSaveType(): ClassType<SaveModelResponse<T>> | null;
-
-    protected abstract _getType(): ClassType<T>;
 }

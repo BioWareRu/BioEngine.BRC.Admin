@@ -1,5 +1,4 @@
 import { StorageItem } from '@models/results/StorageItem';
-import { plainToClass } from 'class-transformer';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IBaseServiceWithUpload } from './IBaseServiceWithUpload';
@@ -9,6 +8,6 @@ export abstract class AbstractServiceWithUpload<T> extends AbstractBaseService<T
         return this._httpClient
             // @ts-ignore
             .post(this._getResource() + '/upload/', file, { name: file.name })
-            .pipe(map(data => plainToClass(StorageItem, <StorageItem>data)));
+            .pipe(map(data => <StorageItem>data));
     }
 }

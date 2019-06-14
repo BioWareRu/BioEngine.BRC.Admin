@@ -4,14 +4,13 @@ import { AbstractContentFormComponent } from '@common/forms/AbstractContentFormC
 import { DialogService } from '@common/modals/DialogService';
 import { SnackBarService } from '@common/snacks/SnackBarService';
 import { Page } from '@models/Page';
-import { SavePageResponse } from '@models/results/SavePageResponse';
 import { ServicesProvider } from '@services/ServicesProvider';
 
 @Component({
     selector: 'page-form',
     templateUrl: './form.component.html'
 })
-export class PageFormComponent extends AbstractContentFormComponent<Page, SavePageResponse> {
+export class PageFormComponent extends AbstractContentFormComponent<Page> {
     public constructor(
         snackBarService: SnackBarService,
         servicesProvider: ServicesProvider,

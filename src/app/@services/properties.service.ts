@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ClassType } from 'class-transformer/ClassTransformer';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AbstractBaseService } from '@common/abstract-base-service';
 import { RestClient } from '@common/HttpClient';
 import { AbstractListResult } from '@common/list/abstract-list-result';
-import { SaveModelResponse } from '@common/SaveModelResponse';
 import { PropertiesOption } from '@models/base/PropertiesOption';
 
 @Injectable()
@@ -25,17 +23,5 @@ export class PropertiesService extends AbstractBaseService<PropertiesOption> {
 
     protected _getResource(): string {
         return 'properties';
-    }
-
-    protected _getListType(): ClassType<AbstractListResult<PropertiesOption>> | null {
-        return null;
-    }
-
-    protected _getSaveType(): ClassType<SaveModelResponse<PropertiesOption>> | null {
-        return null;
-    }
-
-    protected _getType(): ClassType<PropertiesOption> {
-        return PropertiesOption;
     }
 }

@@ -3,15 +3,14 @@ import { Validators } from '@angular/forms';
 import { SnackBarService } from '@common/snacks/SnackBarService';
 import { CustomValidators } from 'ngx-custom-validators';
 import { AbstractFormComponent } from '@common/forms/abstract-form-component';
-import { SaveSiteResponse } from '@models/results/SaveSiteResponse';
-import { Site } from '@models/Site';
 import { ServicesProvider } from '@services/ServicesProvider';
+import { Site } from '@models/Site';
 
 @Component({
     selector: 'site-form',
     templateUrl: './site-form.component.html'
 })
-export class SitesFormComponent extends AbstractFormComponent<Site, SaveSiteResponse> {
+export class SitesFormComponent extends AbstractFormComponent<Site> {
     constructor(
         snackBarService: SnackBarService,
         servicesProvider: ServicesProvider

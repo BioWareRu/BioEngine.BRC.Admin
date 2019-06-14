@@ -3,7 +3,6 @@ import { AbstractBaseService } from '@common/abstract-base-service';
 import { AbstractFormPageComponent } from '@common/forms/AbstractFormPageComponent';
 import { PageContext } from '@common/PageContext';
 import { Page } from '@models/Page';
-import { SavePageResponse } from '@models/results/SavePageResponse';
 import { PagesService } from '@services/PagesService';
 
 @Component({
@@ -13,10 +12,7 @@ import { PagesService } from '@services/PagesService';
     `,
     providers: [PageContext]
 })
-export class PageFormPageComponent extends AbstractFormPageComponent<
-    Page,
-    SavePageResponse
-> {
+export class PageFormPageComponent extends AbstractFormPageComponent<Page> {
     constructor(protected _pagesService: PagesService, context: PageContext) {
         super(context);
     }

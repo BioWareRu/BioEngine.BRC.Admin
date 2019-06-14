@@ -3,7 +3,6 @@ import { AbstractBaseService } from '@common/abstract-base-service';
 import { AbstractFormPageComponent } from '@common/forms/AbstractFormPageComponent';
 import { PageContext } from '@common/PageContext';
 import { Ad } from '@models/Ad';
-import { SaveAdResponse } from '@models/results/SaveAdResponse';
 import { AdsService } from '@services/AdsService';
 
 @Component({
@@ -13,10 +12,7 @@ import { AdsService } from '@services/AdsService';
     `,
     providers: [PageContext]
 })
-export class AdFormPageComponent extends AbstractFormPageComponent<
-    Ad,
-    SaveAdResponse
-> {
+export class AdFormPageComponent extends AbstractFormPageComponent<Ad> {
     constructor(protected _adsService: AdsService, context: PageContext) {
         super(context);
     }

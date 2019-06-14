@@ -3,11 +3,10 @@ import { IContentEntity } from '@models/interfaces/IContentEntity';
 import { ServicesProvider } from '@services/ServicesProvider';
 import { AbstractBaseService } from '../abstract-base-service';
 import { DialogService } from '../modals/DialogService';
-import { SaveModelResponse } from '../SaveModelResponse';
 import { SnackBarService } from '../snacks/SnackBarService';
 import { AbstractSiteEntityFormComponent } from './AbstractSiteEntityFormComponent';
-export abstract class AbstractContentFormComponent<TModel extends IContentEntity, TSaveModel extends SaveModelResponse<TModel>>
-    extends AbstractSiteEntityFormComponent<TModel, TSaveModel> {
+export abstract class AbstractContentFormComponent<TModel extends IContentEntity>
+    extends AbstractSiteEntityFormComponent<TModel> {
     protected constructor(private readonly _dialogService: DialogService,
         servicesProvider: ServicesProvider,
         snackBarService: SnackBarService,

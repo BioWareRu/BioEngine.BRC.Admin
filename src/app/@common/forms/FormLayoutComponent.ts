@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { AbstractModel } from '@models/base/abstract-model';
-import { SaveModelResponse } from '../SaveModelResponse';
 import { AbstractFormComponent } from './abstract-form-component';
 
 @Component({
@@ -14,11 +13,8 @@ import { AbstractFormComponent } from './abstract-form-component';
         `
     ]
 })
-export class FormLayoutComponent<
-    TModel extends AbstractModel,
-    TResultModel extends SaveModelResponse<TModel>
-> {
-    @Input() public formComponent: AbstractFormComponent<TModel, TResultModel>;
+export class FormLayoutComponent<TModel extends AbstractModel> {
+    @Input() public formComponent: AbstractFormComponent<TModel>;
     public objectKeys = Object.keys;
 
     public save(): void {

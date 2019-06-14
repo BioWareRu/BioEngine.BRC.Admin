@@ -6,7 +6,6 @@ import { AbstractSingleSiteEntityFormComponent } from '@common/forms/AbstractSin
 import { DialogService } from '@common/modals/DialogService';
 import { Menu } from '@models/Menu';
 import { MenuItem } from '@models/MenuItem';
-import { SaveMenuResponse } from '@models/results/SaveMenuResponse';
 import { ServicesProvider } from '@services/ServicesProvider';
 import { MenuItemFormDialogComponent } from './MenuItemFormDialogComponent';
 
@@ -16,7 +15,7 @@ import { MenuItemFormDialogComponent } from './MenuItemFormDialogComponent';
     styleUrls: ['./form.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class MenuFormComponent extends AbstractSingleSiteEntityFormComponent<Menu, SaveMenuResponse> {
+export class MenuFormComponent extends AbstractSingleSiteEntityFormComponent<Menu> {
     public options: ITreeOptions = {
         allowDrag: true,
         displayField: 'inputLabel',
@@ -50,12 +49,12 @@ export class MenuFormComponent extends AbstractSingleSiteEntityFormComponent<Men
         this._dialogService
             .confirm('Удаление пункта меню', 'Вы точно хотите удалить это пункт меню?')
             .onConfirm.subscribe(() => {
-            // @ts-ignore
-            const root = currentNode.parent ? currentNode.parent.data.items : this.model.Items;
-            root.splice(root.indexOf(currentNode.data), 1);
-            this._tree.treeModel.update();
-            this.form.hasChanges = true;
-        });
+                // @ts-ignore
+                const root = currentNode.parent ? currentNode.parent.data.items : this.model.Items;
+                root.splice(root.indexOf(currentNode.data), 1);
+                this._tree.treeModel.update();
+                this.form.hasChanges = true;
+            });
     }
 
     public addMenuItem(currentNode: TreeNode | null = null): void {

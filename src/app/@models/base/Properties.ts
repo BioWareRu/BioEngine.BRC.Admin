@@ -1,4 +1,3 @@
-import { Type } from 'class-transformer';
 import { PropertiesFrequency } from './PropertiesFrequency';
 import { PropertiesElement } from './PropertiesElement';
 
@@ -8,6 +7,5 @@ export class Properties {
     public isEditable: boolean;
     public frequency: PropertiesFrequency;
 
-    @Type(() => PropertiesElement)
     public properties: Array<PropertiesElement> = [];
 }

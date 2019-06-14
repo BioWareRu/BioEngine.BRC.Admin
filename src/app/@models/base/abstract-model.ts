@@ -1,4 +1,3 @@
-import { Type } from 'class-transformer';
 import { Properties } from './Properties';
 
 export abstract class AbstractModel {
@@ -11,6 +10,5 @@ export abstract class AbstractModel {
     public dateUpdated: string;
     public datePublished: string;
 
-    @Type(() => Properties)
     public propertiesGroups: Array<Properties> = [];
 }
