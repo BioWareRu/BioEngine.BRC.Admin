@@ -6,19 +6,32 @@ variables:
   ImageName: :$(Version)
 
 steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '12.x'
-  displayName: 'Install Node.js'
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '12.x'
+    displayName: 'Install Node.js'
 
-- script: |
-      npm ci
-      npm run build-prod
-  displayName: 'npm install and build'
+  - task: Npm@1
+      displayName: 'install npm packages'
+      inputs:
+        command: 'custom'
+        customCommand: 'ci'
 
-- task: Docker@2
-  displayName: 'build and push image'
-  inputs:
+  - task: Npm@1
+      displayName: 'lint files'
+      inputs:
+        command: 'custom'
+        customCommand: 'run lint'
+
+  - task: Npm@1
+      displayName: 'build'
+      inputs:
+        command: 'custom'
+        customCommand: 'run build-prod'
+
+  - task: Docker@2
+    displayName: 'build and push image'
+    inputs:
       containerRegistry: 'BioWareRU DockerHub'
       repository: 'biowareru/bioengine-brc-admin'
       command: 'buildAndPush'
