@@ -7,13 +7,14 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdsService } from '@services/AdsService';
+import { PostTemplatesService } from '@services/PostTemplatesService';
 
 import { OAuthModule, OAuthModuleConfig, OAuthStorage } from 'angular-oauth2-oidc';
 import { CustomFormsModule } from 'ngx-custom-validators';
 import { ENV } from '../environments/environment';
 import { BioCommonModule } from '@common/BioCommonModule';
 import { RestClient } from '@common/HttpClient';
-import { PostsService } from '@services/ContentService';
+import { PostsService } from '@services/PostsService';
 import { DevelopersService } from '@services/DevelopersService';
 import { ForumsService } from '@services/ForumsService';
 import { GamesService } from '@services/GamesService';
@@ -92,6 +93,7 @@ import { storageFactory } from './storageFactory';
         TopicsService,
         SectionsService,
         PostsService,
+        PostTemplatesService,
         TagsService,
         AdsService,
         PagesService,

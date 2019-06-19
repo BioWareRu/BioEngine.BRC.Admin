@@ -7,10 +7,11 @@ import { ContentListComponent } from './list/list.component';
 import { PostsRoutingModule } from './posts-routing.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTabsModule } from '@angular/material/tabs';
+import { TemplatesListComponent } from './templates/templates.component';
 
 @NgModule({
     imports: [PostsRoutingModule, MatSidenavModule, BlocksModule, MatTabsModule],
-    declarations: [ContentListComponent, PostFormComponent, PostFormPageComponent],
+    declarations: [ContentListComponent, PostFormComponent, PostFormPageComponent, TemplatesListComponent],
     entryComponents: []
 })
 export class PostsModule {

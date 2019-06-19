@@ -8,7 +8,7 @@ import { StateService } from '@common/StateService';
 import { AbstractSection } from '@models/base/AbstractSection';
 import { Post } from '@models/Post';
 import { Tag } from '@models/Tag';
-import { PostsService } from '@services/ContentService';
+import { PostsService } from '@services/PostsService';
 import { ServicesProvider } from '@services/ServicesProvider';
 import { AbstractBaseService } from '@common/AbstractBaseService';
 

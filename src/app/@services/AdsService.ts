@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AbstractContentEntityService } from '@common/abstract-content-entity-service';
+import { AbstractContentEntityService } from '@common/AbstractContentEntityService';
 import { Ad } from '@models/Ad';
 import { RestClient } from '@common/HttpClient';
 

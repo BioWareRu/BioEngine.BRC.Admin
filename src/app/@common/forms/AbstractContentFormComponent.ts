@@ -1,5 +1,5 @@
 import { Validators } from '@angular/forms';
-import { AbstractContentEntityService } from '@common/abstract-content-entity-service';
+import { AbstractContentEntityService } from '@common/AbstractContentEntityService';
 import { FieldInputChange } from '@common/forms/FieldInputChange';
 import { SnackBarMessage } from '@common/snacks/SnackBarMessage';
 import { Utils } from '@common/Utils';

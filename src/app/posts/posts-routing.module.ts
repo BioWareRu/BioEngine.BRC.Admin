@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { PostFormPageComponent } from './form/form-page.component';
 import { ContentListComponent } from './list/list.component';
+import { TemplatesListComponent } from './templates/templates.component';
 
 const routes: Routes = [
     {
@@ -10,7 +11,15 @@ const routes: Routes = [
         component: ContentListComponent
     },
     {
+        path: 'templates',
+        component: TemplatesListComponent
+    },
+    {
         path: 'add',
+        component: PostFormPageComponent
+    },
+    {
+        path: 'add/template/:templateId',
         component: PostFormPageComponent
     },
     {

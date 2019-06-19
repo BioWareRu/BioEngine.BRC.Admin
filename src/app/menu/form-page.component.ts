@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AbstractBaseService } from '@common/AbstractBaseService';
 import { AbstractFormPageComponent } from '@common/forms/AbstractFormPageComponent';
 import { PageContext } from '@common/PageContext';
 import { Menu } from '@models/Menu';
@@ -21,7 +20,7 @@ export class MenuFormPageComponent extends AbstractFormPageComponent<Menu, MenuS
         return '/menu';
     }
 
-    protected _getService(): AbstractBaseService<Menu> {
+    protected _getService(): MenuService {
         return this._menuService;
     }
 

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AbstractBaseService } from '@common/AbstractBaseService';
 import { AbstractFormPageComponent } from '@common/forms/AbstractFormPageComponent';
 import { PageContext } from '@common/PageContext';
 import { Ad } from '@models/Ad';
@@ -20,7 +19,7 @@ export class AdFormPageComponent extends AbstractFormPageComponent<Ad, AdsServic
     protected _getNewModelTitle(): string {
         return 'Создание баннера';
     }
-    protected _getService(): AbstractBaseService<Ad> {
+    protected _getService(): AdsService {
         return this._adsService;
     }
 

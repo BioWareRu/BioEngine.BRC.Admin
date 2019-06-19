@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { AbstractContentEntityService } from '@common/abstract-content-entity-service';
+import { AbstractContentEntityService } from '@common/AbstractContentEntityService';
 import { AbstractContentFormComponent } from '@common/forms/AbstractContentFormComponent';
 import { FormLayoutComponent } from '@common/forms/FormLayoutComponent';
 import { AbstractContentItem } from '@models/base/AbstractContentItem';

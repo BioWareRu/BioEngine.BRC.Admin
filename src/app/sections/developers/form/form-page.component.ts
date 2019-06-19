@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AbstractBaseService } from '@common/AbstractBaseService';
 import { AbstractFormPageComponent } from '@common/forms/AbstractFormPageComponent';
 import { PageContext } from '@common/PageContext';
 import { Developer } from '@models/Developer';
@@ -27,7 +26,7 @@ export class DeveloperFormPageComponent extends AbstractFormPageComponent<Develo
     protected _getNewModelTitle(): string {
         return 'Создание разработчика';
     }
-    protected _getService(): AbstractBaseService<Developer> {
+    protected _getService(): DevelopersService {
         return this._developerService;
     }
 

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AbstractBaseService } from '@common/AbstractBaseService';
 import { AbstractFormPageComponent } from '@common/forms/AbstractFormPageComponent';
 import { PageContext } from '@common/PageContext';
 import { Site } from '@models/Site';
@@ -20,7 +19,7 @@ export class SiteFormPageComponent extends AbstractFormPageComponent<Site, Sites
     protected _getNewModelTitle(): string {
         return 'Создание сайта';
     }
-    protected _getService(): AbstractBaseService<Site> {
+    protected _getService(): SitesService {
         return this._sitesService;
     }
 

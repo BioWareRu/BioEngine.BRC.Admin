@@ -9,6 +9,7 @@ import { SectionsTableColumn } from '@common/list/SectionsTableColumn';
 import { SitesTableColumn } from '@common/list/SitesTableColumn';
 import { ListTableColumnAction } from '@common/list/ListTableColumnAction';
 import { PageContext } from '@common/PageContext';
+import { SnackBarMessage } from '@common/snacks/SnackBarMessage';
 import { Post } from '@models/Post';
 import { ServicesProvider } from '@services/ServicesProvider';
 
@@ -47,7 +48,7 @@ export class ContentListComponent extends AbstractListComponent<Post> implements
             new ListTableColumn<Post>('actions', '')
                 .addActions(post => {
                         const actions: ListTableColumnAction<Post>[] = [];
-                    post.publicUrls.forEach(url => {
+                        post.publicUrls.forEach(url => {
                             actions.push(new ListTableColumnAction<Post>(
                                 'Просмотреть на ' + url.site.title,
                                 new Icon('fa-globe')
@@ -57,10 +58,19 @@ export class ContentListComponent extends AbstractListComponent<Post> implements
                     }
                 )
                 .addAction(
+                    new ListTableColumnAction<Post>('Сохранить как шаблон', new Icon('fa-clone'))
+                        .setClick(content => this._createTemplate(content)))
+                .addAction(
                     new ListTableColumnAction<Post>('Удалить', new Icon('fa-trash')).setClick(
                         content => this.deleteItem(content)
                     )
                 )
         ];
+    }
+
+    private _createTemplate(content: Post): void {
+        this._servicesProvider.postsService.createTemplate(content.id).subscribe(() => {
+            this.snackBarService.success(new SnackBarMessage('Успех', 'Шаблон успешно создан'));
+        });
     }
 }

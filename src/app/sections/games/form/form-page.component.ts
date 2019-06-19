@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AbstractBaseService } from '@common/AbstractBaseService';
 import { AbstractFormPageComponent } from '@common/forms/AbstractFormPageComponent';
 import { PageContext } from '@common/PageContext';
 import { Game } from '@models/Game';
@@ -25,7 +24,7 @@ export class GameFormPageComponent extends AbstractFormPageComponent<Game, Games
         return '/sections/games';
     }
 
-    protected _getService(): AbstractBaseService<Game> {
+    protected _getService(): GamesService {
         return this._gamesService;
     }
 }

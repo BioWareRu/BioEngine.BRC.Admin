@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AdsService } from '@services/AdsService';
-import { PostsService } from './ContentService';
+import { PostTemplatesService } from '@services/PostTemplatesService';
+import { PostsService } from './PostsService';
 import { DevelopersService } from './DevelopersService';
 import { ForumsService } from './ForumsService';
 import { GamesService } from './GamesService';
@@ -27,6 +28,7 @@ export class ServicesProvider {
         private readonly _propertiesService: PropertiesService,
         private readonly _menuService: MenuService,
         private readonly _adsService: AdsService,
+        private readonly _postTemplatesService: PostTemplatesService
     ) {
     }
 
@@ -76,5 +78,9 @@ export class ServicesProvider {
 
     get menuService(): MenuService {
         return this._menuService;
+    }
+
+    get postTemplatesService(): PostTemplatesService {
+        return this._postTemplatesService;
     }
 }

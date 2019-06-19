@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AbstractBaseService } from '@common/AbstractBaseService';
 import { AbstractFormPageComponent } from '@common/forms/AbstractFormPageComponent';
 import { PageContext } from '@common/PageContext';
 import { Page } from '@models/Page';
@@ -21,7 +20,7 @@ export class PageFormPageComponent extends AbstractFormPageComponent<Page, Pages
         return 'Создание страницы';
     }
 
-    protected _getService(): AbstractBaseService<Page> {
+    protected _getService(): PagesService {
         return this._pagesService;
     }
 

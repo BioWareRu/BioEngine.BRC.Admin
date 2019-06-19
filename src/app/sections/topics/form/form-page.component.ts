@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AbstractBaseService } from '@common/AbstractBaseService';
 import { AbstractFormPageComponent } from '@common/forms/AbstractFormPageComponent';
 import { PageContext } from '@common/PageContext';
 import { Topic } from '@models/Topic';
@@ -25,7 +24,7 @@ export class TopicFormPageComponent extends AbstractFormPageComponent<Topic, Top
         return '/sections/topics';
     }
 
-    protected _getService(): AbstractBaseService<Topic> {
+    protected _getService(): TopicsService {
         return this._topicsService;
     }
 }

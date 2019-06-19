@@ -1,5 +1,5 @@
 import { Validators } from '@angular/forms';
-import { AbstractContentEntityService } from '@common/abstract-content-entity-service';
+import { AbstractContentEntityService } from '@common/AbstractContentEntityService';
 import { AbstractContentFormComponent } from '@common/forms/AbstractContentFormComponent';
 import { AbstractSection } from '@models/base/AbstractSection';
 

@@ -1,11 +1,9 @@
 import { Input, OnInit, ViewChild } from '@angular/core';
 import { AbstractEntity } from '@models/base/AbstractEntity';
-import { map } from 'rxjs/operators';
 import { AbstractBaseService } from '../AbstractBaseService';
 import { AbstractPageComponent } from '../AbstractPageComponent';
 import { SaveModelResponse } from '../SaveModelResponse';
 import { AbstractFormComponent } from './AbstractFormComponent';
-import { Observable } from 'rxjs';
 
 export abstract class AbstractFormPageComponent<TModel extends AbstractEntity, TService extends AbstractBaseService<TModel>> extends AbstractPageComponent implements OnInit {
     @Input()
@@ -15,27 +13,39 @@ export abstract class AbstractFormPageComponent<TModel extends AbstractEntity, T
     protected _form: AbstractFormComponent<TModel, TService>;
 
     ngOnInit(): void {
-        const id: Observable<string> = this._route.params.pipe(map(p => p.id));
-        id.subscribe(modelId => {
-            if (modelId && modelId !== '') {
-                this._modelId = modelId;
-                this._getService()
-                    .get(modelId)
-                    .subscribe(model => {
-                        this.model = model;
-                        this._setTitle(model.title);
-                        this.loadFormData();
-                    });
-            } else {
-                this._getService()
-                    .getNew()
-                    .subscribe(model => {
-                        this.model = model;
-                        this._setTitle(this._getNewModelTitle());
-                        this.loadFormData();
-                    });
-            }
+        this._route.params.subscribe(routeParams => {
+            this._loadModel(routeParams);
         });
+    }
+
+    protected _loadModel(routeParams: any): void {
+        const modelId = routeParams.id;
+        if (modelId && modelId !== '') {
+            this._loadModelById(modelId);
+        } else {
+            this._loadNewModel();
+        }
+    }
+
+    protected _loadNewModel(): void {
+        this._getService()
+            .getNew()
+            .subscribe(model => {
+                this.model = model;
+                this._setTitle(this._getNewModelTitle());
+                this.loadFormData();
+            });
+    }
+
+    protected _loadModelById(modelId: string): void {
+        this._modelId = modelId;
+        this._getService()
+            .get(modelId)
+            .subscribe(model => {
+                this.model = model;
+                this._setTitle(model.title);
+                this.loadFormData();
+            });
     }
 
     loadFormData(): void {
@@ -51,7 +61,7 @@ export abstract class AbstractFormPageComponent<TModel extends AbstractEntity, T
 
     protected abstract _getNewModelTitle(): string;
 
-    protected abstract _getService(): AbstractBaseService<TModel>;
+    protected abstract _getService(): TService;
 
     protected abstract _getRoute(): string;
 }

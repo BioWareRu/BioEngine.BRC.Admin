@@ -28,7 +28,14 @@ export const NAVIGATION: Array<NavigationItem> = [
                 title: 'Добавить пост',
                 icon: new Icon('fa-pen'),
                 url: '/posts/add'
-            }
+            },
+            {
+                id: 'postTemplates',
+                type: 'item',
+                title: 'Шаблоны',
+                icon: new Icon('fa-clone'),
+                url: '/posts/templates'
+            },
         ]
     },
     {
