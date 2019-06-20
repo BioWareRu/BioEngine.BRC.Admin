@@ -11,17 +11,24 @@ import { BlockFieldDescriptor } from './BlockFieldDescriptor';
     selector: 'text-block-form',
     template: `
         <div [formGroup]="form.formGroup">
-            <ckeditor
-                    #editor
-                    [editor]="editorInstance"
-                    [config]="editorConfig"
-                    [formControlName]="getFieldName('text')"
-                    (ready)="ready($event)"
-            ></ckeditor>
+            <ng-container *ngIf="!htmlMode">
+                <ckeditor
+                        #editor
+                        [editor]="editorInstance"
+                        [config]="editorConfig"
+                        [formControlName]="getFieldName('text')"
+                        (ready)="ready($event)"
+                ></ckeditor>
+                <div style="text-align: right"><a mat-button (click)="switchHtml()">Редактировать HTML</a></div>
+            </ng-container>
+            <ng-container *ngIf="htmlMode">
+                <textarea-input [inputFieldName]="getFieldName('text')" [inputFormGroup]="form.formGroup"></textarea-input>
+                <div style="text-align: right"><a mat-button (click)="switchHtml()">Вернуться в редактор</a></div>
+            </ng-container>
         </div>
     `,
     styles: [
-        `
+            `
             .ck.ck-editor__editable_inline > :last-child {
                 margin-bottom: 5px;
             }
@@ -39,13 +46,18 @@ export class TextBlockFormComponent extends AbstractEditorBlockFormComponent<Tex
 
     view: any;
     focusOnReady: boolean;
+    htmlMode = false;
 
     splitSymbol = '‌‌\u200C';
 
-    @ViewChild('editor', { static: true }) editorElement: ElementRef<HTMLElement>;
+    @ViewChild('editor', {static: true}) editorElement: ElementRef<HTMLElement>;
 
     protected _getFields(): Array<BlockFieldDescriptor> {
         return [new BlockFieldDescriptor('text', [Validators.required], 'data.text')];
+    }
+
+    public switchHtml(): void {
+        this.htmlMode = !this.htmlMode;
     }
 
     private _onDelete(): void {

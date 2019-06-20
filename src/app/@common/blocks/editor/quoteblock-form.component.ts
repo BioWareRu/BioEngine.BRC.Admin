@@ -11,12 +11,19 @@ import { CustomValidators } from 'ngx-custom-validators';
     template: `
         <div [formGroup]="form.formGroup">
             <div>
-                <ckeditor
-                        #editor
-                        [editor]="editorInstance"
-                        [config]="editorConfig"
-                        [formControlName]="getFieldName('text')"
-                ></ckeditor>
+                <ng-container *ngIf="!htmlMode">
+                    <ckeditor
+                            #editor
+                            [editor]="editorInstance"
+                            [config]="editorConfig"
+                            [formControlName]="getFieldName('text')"
+                    ></ckeditor>
+                    <div style="text-align: right"><a mat-button (click)="switchHtml()">Редактировать HTML</a></div>
+                </ng-container>
+                <ng-container *ngIf="htmlMode">
+                    <textarea-input [inputFieldName]="getFieldName('text')" [inputFormGroup]="form.formGroup"></textarea-input>
+                    <div style="text-align: right"><a mat-button (click)="switchHtml()">Вернуться в редактор</a></div>
+                </ng-container>
             </div>
             <hr/>
             <div fxLayout="row wrap"
@@ -51,8 +58,13 @@ export class QuoteBlockFormComponent extends AbstractEditorBlockFormComponent<Qu
 
     view: any;
     focusOnReady: boolean;
+    htmlMode = false;
 
     @ViewChild('editor', { static: true }) editorElement: ElementRef<HTMLElement>;
+
+    public switchHtml(): void {
+        this.htmlMode = !this.htmlMode;
+    }
 
     protected _getFields(): Array<BlockFieldDescriptor> {
         return [
