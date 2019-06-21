@@ -1,5 +1,4 @@
-import { Platform } from './Platform';
+import { AbstractSectionData } from '@models/base/AbstractSectionData';
 
-export class GameData {
-    public platforms: Array<Platform>;
+export class GameData extends AbstractSectionData {
 }

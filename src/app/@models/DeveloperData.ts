@@ -1,5 +1,4 @@
-import { Person } from './Person';
+import { AbstractSectionData } from '@models/base/AbstractSectionData';
 
-export class DeveloperData {
-    public persons: Array<Person>;
+export class DeveloperData extends AbstractSectionData {
 }
