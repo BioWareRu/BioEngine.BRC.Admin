@@ -51,7 +51,7 @@
     "@angular/router": "8.0.3",
     "angular-oauth2-oidc": "5.0.2",
     "angular-tree-component": "8.4.0",
-    "bioengine.core.api.client": "1.0.8",
+    "bioengine-angular": "1.0.13",
     "classlist.js": "1.1.20150312",
     "perfect-scrollbar": "1.4.0",
     "web-animations-js": "github:angular/web-animations-js#release_pr208"

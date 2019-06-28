@@ -1,4 +1,4 @@
-import { AbstractEntity, User } from 'bioengine.core.api.client';
+import { AbstractEntity, User } from 'bioengine-angular';
 
 export class ContentItemTemplate extends AbstractEntity {
     public contentType: string;

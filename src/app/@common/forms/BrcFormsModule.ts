@@ -3,7 +3,7 @@ import { MatTabsModule } from '@angular/material';
 import { ContentFormLayoutComponent } from '@common/forms/ContentItemFormLayoutComponent';
 import { FormLayoutComponent } from '@common/forms/FormLayoutComponent';
 import { FormLayoutContentComponent } from '@common/forms/FormLayoutContentComponent';
-import { BioFormsModule } from 'bioengine.core.api.client';
+import { BioFormsModule } from 'bioengine-angular';
 
 @NgModule({
     imports: [BioFormsModule, MatTabsModule],

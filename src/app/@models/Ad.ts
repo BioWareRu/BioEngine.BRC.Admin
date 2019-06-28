@@ -1,4 +1,4 @@
-import { AbstractBaseContentBlock, AbstractSiteEntity, IContentEntity, PublicUrl } from 'bioengine.core.api.client';
+import { AbstractBaseContentBlock, AbstractSiteEntity, IContentEntity, PublicUrl } from 'bioengine-angular';
 
 export class Ad extends AbstractSiteEntity implements IContentEntity {
     public blocks: AbstractBaseContentBlock[];

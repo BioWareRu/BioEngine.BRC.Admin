@@ -1,5 +1,5 @@
 import { ContentItemTemplate } from '@models/ContentItemTemplate';
-import { AbstractBaseService, AbstractListResult, Filter, IContentEntity } from 'bioengine.core.api.client';
+import { AbstractBaseService, AbstractListResult, Filter, IContentEntity } from 'bioengine-angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

@@ -1,4 +1,4 @@
-import { Icon } from 'bioengine.core.api.client';
+import { Icon } from 'bioengine-angular';
 
 export class NavigationItem {
     id: string;

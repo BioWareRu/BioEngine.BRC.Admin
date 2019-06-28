@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { AbstractContentFormComponent, DialogService, Page, PagesService, PropertiesService, SitesService, SnackBarService } from 'bioengine.core.api.client';
+import { AbstractContentFormComponent, DialogService, Page, PagesService, PropertiesService, SitesService, SnackBarService } from 'bioengine-angular';
 
 @Component({
     selector: 'page-form',

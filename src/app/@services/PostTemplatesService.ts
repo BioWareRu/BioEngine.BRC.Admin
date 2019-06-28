@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AbstractBaseTemplatesService } from '@common/AbstractBaseTemplatesService';
-import { Post, RestClient } from 'bioengine.core.api.client';
+import { Post, RestClient } from 'bioengine-angular';
 
 @Injectable()
 export class PostTemplatesService extends AbstractBaseTemplatesService<Post> {

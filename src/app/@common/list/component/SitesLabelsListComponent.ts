@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { SitesCacheProvider } from 'bioengine.core.api.client';
+import { SitesCacheProvider } from 'bioengine-angular';
 
 @Component({
     selector: 'sitesList',

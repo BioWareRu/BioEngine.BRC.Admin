@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Game } from '@models/Game';
 import { GamesService } from '@services/GamesService';
-import { AbstractSectionFormComponent, DialogService, PropertiesService, SitesService, SnackBarService } from 'bioengine.core.api.client';
+import { AbstractSectionFormComponent, DialogService, PropertiesService, SitesService, SnackBarService } from 'bioengine-angular';
 
 @Component({
     selector: 'game-form',

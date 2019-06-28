@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { User } from 'bioengine.core.api.client';
+import { User } from 'bioengine-angular';
 
 @Component({
     template: `

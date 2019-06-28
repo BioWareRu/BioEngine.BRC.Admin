@@ -1,5 +1,5 @@
     import { Component, Input } from '@angular/core';
-import { SectionsCacheProvider } from 'bioengine.core.api.client';
+import { SectionsCacheProvider } from 'bioengine-angular';
 
 @Component({
     selector: 'sectionsList',

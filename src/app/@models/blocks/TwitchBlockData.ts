@@ -1,4 +1,4 @@
-import { AbstractContentBlockData } from 'bioengine.core.api.client';
+import { AbstractContentBlockData } from 'bioengine-angular';
 
 export class TwitchBlockData extends AbstractContentBlockData {
     public videoId = '';

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { AbstractFormComponent, PropertiesService, Site, SitesService, SnackBarService } from 'bioengine.core.api.client';
+import { AbstractFormComponent, PropertiesService, Site, SitesService, SnackBarService } from 'bioengine-angular';
 import { CustomValidators } from 'ngx-custom-validators';
 
 @Component({

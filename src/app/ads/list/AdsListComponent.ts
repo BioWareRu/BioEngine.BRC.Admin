@@ -3,7 +3,7 @@ import { AbstractListComponent } from '@common/list/AbstractListComponent';
 import { PageContext } from '@common/PageContext';
 import { Ad } from '@models/Ad';
 import { AdsService } from '@services/AdsService';
-import { Icon, ListTableColumn, ListTableColumnAction, ListTableColumnType, SitesTableColumn } from 'bioengine.core.api.client';
+import { Icon, ListTableColumn, ListTableColumnAction, ListTableColumnType, SitesTableColumn } from 'bioengine-angular';
 
 @Component({
     selector: 'ads-list',

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from 'bioengine.core.api.client';
+import { User } from 'bioengine-angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ENV } from '../../environments/environment';

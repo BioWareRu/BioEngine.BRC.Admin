@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AbstractFormPageComponent } from '@common/forms/AbstractFormPageComponent';
 import { PageContext } from '@common/PageContext';
-import { Site, SitesService } from 'bioengine.core.api.client';
+import { Site, SitesService } from 'bioengine-angular';
 
 @Component({
     selector: 'site-form-page',

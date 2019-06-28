@@ -1,5 +1,5 @@
 import { NavigationItem } from '@common/navigation/NavigationItem';
-import { Icon } from 'bioengine.core.api.client';
+import { Icon } from 'bioengine-angular';
 
 export const NAVIGATION: Array<NavigationItem> = [
     {

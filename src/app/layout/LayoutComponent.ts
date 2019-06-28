@@ -1,6 +1,6 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, Input } from '@angular/core';
-import { User } from 'bioengine.core.api.client';
+import { User } from 'bioengine-angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { NavigationItem } from '@common/navigation/NavigationItem';

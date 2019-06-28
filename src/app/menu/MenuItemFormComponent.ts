@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { AbstractSimpleFormComponent, MenuItem, SnackBarService } from 'bioengine.core.api.client';
+import { AbstractSimpleFormComponent, MenuItem, SnackBarService } from 'bioengine-angular';
 
 @Component({
     selector: 'menuItemForm',

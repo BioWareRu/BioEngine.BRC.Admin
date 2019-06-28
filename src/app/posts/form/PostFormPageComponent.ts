@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { AbstractContentEntityFormPageComponent } from '@common/forms/AbstractContentEntityFormPageComponent';
 import { PageContext } from '@common/PageContext';
 import { PostTemplatesService } from '@services/PostTemplatesService';
-import { Post, PostsService } from 'bioengine.core.api.client';
+import { Post, PostsService } from 'bioengine-angular';
 
 @Component({
     selector: 'post-form-page',

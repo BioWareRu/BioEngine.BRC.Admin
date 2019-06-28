@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { BioCommonModule } from 'bioengine.core.api.client';
+import { BioCommonModule } from 'bioengine-angular';
 
 import { NavigationCollapsableComponent } from './NavigationCollapsableComponent';
 import { NavigationGroupComponent } from './NavigationGroupComponent';

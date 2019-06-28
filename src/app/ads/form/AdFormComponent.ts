@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Ad } from '@models/Ad';
 import { AdsService } from '@services/AdsService';
-import { AbstractContentFormComponent, DialogService, PropertiesService, SitesService, SnackBarService } from 'bioengine.core.api.client';
+import { AbstractContentFormComponent, DialogService, PropertiesService, SitesService, SnackBarService } from 'bioengine-angular';
 import { CustomValidators } from 'ngx-custom-validators';
 
 @Component({

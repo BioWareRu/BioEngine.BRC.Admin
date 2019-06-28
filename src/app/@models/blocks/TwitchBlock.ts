@@ -1,4 +1,4 @@
-import { AbstractContentBlock, Icon } from 'bioengine.core.api.client';
+import { AbstractContentBlock, Icon } from 'bioengine-angular';
 import { TwitchBlockData } from './TwitchBlockData';
 
 export class TwitchBlock extends AbstractContentBlock<TwitchBlockData> {

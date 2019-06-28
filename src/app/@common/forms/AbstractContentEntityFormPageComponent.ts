@@ -1,7 +1,7 @@
 import { AbstractBaseTemplatesService } from '@common/AbstractBaseTemplatesService';
 import { AbstractFormPageComponent } from '@common/forms/AbstractFormPageComponent';
 import { PageContext } from '@common/PageContext';
-import { AbstractContentEntityService, IContentEntity } from 'bioengine.core.api.client';
+import { AbstractContentEntityService, IContentEntity } from 'bioengine-angular';
 
 export abstract class AbstractContentEntityFormPageComponent<TModel extends IContentEntity,
     TService extends AbstractContentEntityService<TModel>> extends AbstractFormPageComponent<TModel, TService> {

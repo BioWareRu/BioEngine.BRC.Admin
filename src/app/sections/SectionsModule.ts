@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrcBlocksModule } from '@common/blocks/BrcBlocksModule';
 import { BrcFormsModule } from '@common/forms/BrcFormsModule';
 import { BrcListModule } from '@common/list/BrcListModule';
-import { BioCommonModule } from 'bioengine.core.api.client';
+import { BioCommonModule } from 'bioengine-angular';
 
 import { DeveloperFormPageComponent } from './developers/form/DeveloperFormPageComponent';
 import { DeveloperFormComponent } from './developers/form/DeveloperFormComponent';

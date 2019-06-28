@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AbstractFormPageComponent } from '@common/forms/AbstractFormPageComponent';
 import { PageContext } from '@common/PageContext';
-import { Menu, MenuService } from 'bioengine.core.api.client';
+import { Menu, MenuService } from 'bioengine-angular';
 
 @Component({
     selector: 'menu-form-page',
@@ -14,6 +14,7 @@ export class MenuFormPageComponent extends AbstractFormPageComponent<Menu, MenuS
     constructor(protected _menuService: MenuService, pageContext: PageContext) {
         super(pageContext);
     }
+
 
     protected _getRoute(): string {
         return '/menu';

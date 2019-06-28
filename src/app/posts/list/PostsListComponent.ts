@@ -13,7 +13,7 @@ import {
     SitesTableColumn,
     SnackBarMessage,
     TagsTableColumn
-} from 'bioengine.core.api.client';
+} from 'bioengine-angular';
 
 @Component({
     selector: 'posts-list',

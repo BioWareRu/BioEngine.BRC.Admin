@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TreeNode } from 'angular-tree-component';
 import { PageContext } from '@common/PageContext';
-import { AbstractDialogComponent, MenuItem } from 'bioengine.core.api.client';
+import { AbstractDialogComponent, MenuItem } from 'bioengine-angular';
 
 @Component({
     selector: 'menuItemFormDialog',

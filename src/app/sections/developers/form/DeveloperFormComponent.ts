@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Developer } from '@models/Developer';
 import { DevelopersService } from '@services/DevelopersService';
-import { AbstractSectionFormComponent, DialogService, PropertiesService, SitesService, SnackBarService } from 'bioengine.core.api.client';
+import { AbstractSectionFormComponent, DialogService, PropertiesService, SitesService, SnackBarService } from 'bioengine-angular';
 
 @Component({
     selector: 'developer-form',

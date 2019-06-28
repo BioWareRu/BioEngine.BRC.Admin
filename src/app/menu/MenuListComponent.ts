@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractListComponent } from '@common/list/AbstractListComponent';
 import { PageContext } from '@common/PageContext';
-import { Icon, ListTableColumn, ListTableColumnAction, ListTableColumnType, Menu, MenuService, SiteTableColumn } from 'bioengine.core.api.client';
+import { Icon, ListTableColumn, ListTableColumnAction, ListTableColumnType, Menu, MenuService, SiteTableColumn } from 'bioengine-angular';
 
 @Component({
     selector: 'menu-list',

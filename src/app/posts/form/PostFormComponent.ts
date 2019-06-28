@@ -12,7 +12,7 @@ import {
     SectionsService,
     SnackBarService,
     Tag, TagsService
-} from 'bioengine.core.api.client';
+} from 'bioengine-angular';
 
 @Component({
     selector: 'post-form',

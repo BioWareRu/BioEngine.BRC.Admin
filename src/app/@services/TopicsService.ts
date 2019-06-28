@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Topic } from '@models/Topic';
-import { AbstractContentEntityService, RestClient } from 'bioengine.core.api.client';
+import { AbstractContentEntityService, RestClient } from 'bioengine-angular';
 
 @Injectable()
 export class TopicsService extends AbstractContentEntityService<Topic> {

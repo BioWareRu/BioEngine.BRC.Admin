@@ -9,7 +9,7 @@ import {
     ListTableColumnType,
     SectionsService,
     SitesTableColumn
-} from 'bioengine.core.api.client';
+} from 'bioengine-angular';
 import { map } from 'rxjs/operators';
 import { AbstractListComponent } from '@common/list/AbstractListComponent';
 import { PageContext } from '@common/PageContext';

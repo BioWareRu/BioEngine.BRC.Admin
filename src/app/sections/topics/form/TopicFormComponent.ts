@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Topic } from '@models/Topic';
 import { TopicsService } from '@services/TopicsService';
-import { AbstractSectionFormComponent, DialogService, PropertiesService, SitesService, SnackBarService } from 'bioengine.core.api.client';
+import { AbstractSectionFormComponent, DialogService, PropertiesService, SitesService, SnackBarService } from 'bioengine-angular';
 
 @Component({
     selector: 'topic-form',

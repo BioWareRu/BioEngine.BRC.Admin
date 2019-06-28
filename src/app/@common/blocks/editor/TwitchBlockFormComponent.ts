@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { AbstractContentBlockFormComponent, BlockFieldDescriptor, FieldInputChange, SnackBarService } from 'bioengine.core.api.client';
+import { AbstractContentBlockFormComponent, BlockFieldDescriptor, FieldInputChange, SnackBarService } from 'bioengine-angular';
 import { CustomValidators } from 'ngx-custom-validators';
 import { TwitchBlock } from '@models/blocks/TwitchBlock';
 import * as URLParse from 'url-parse';

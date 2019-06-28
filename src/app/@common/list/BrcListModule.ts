@@ -6,7 +6,7 @@ import { ListTableComponent } from '@common/list/component/ListTableComponent';
 import { SectionsLabelsListComponent } from '@common/list/component/SectionsLabelsListComponent';
 import { SitesLabelsListComponent } from '@common/list/component/SitesLabelsListComponent';
 import { TagsLabelsListComponent } from '@common/list/component/TagsLabelsListComponent';
-import { BioCommonModule } from 'bioengine.core.api.client';
+import { BioCommonModule } from 'bioengine-angular';
 
 @NgModule({
     imports: [BioCommonModule, MatProgressSpinnerModule, MatTableModule, RouterModule, BrcCommonModule, MatSortModule, MatPaginatorModule],

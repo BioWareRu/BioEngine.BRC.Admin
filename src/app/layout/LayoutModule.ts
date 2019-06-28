@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { BrcCommonModule } from '@common/BRCCommonModule';
 import { NavigationModule } from '@common/navigation/NavigationModule';
-import { BioCommonModule } from 'bioengine.core.api.client';
+import { BioCommonModule } from 'bioengine-angular';
 
 import { ContentComponent } from './content/ContentComponent';
 import { LayoutComponent } from './LayoutComponent';

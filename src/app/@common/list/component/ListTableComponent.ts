@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, ViewChild } from '@angular/core';
-import { AbstractEntity, ListProvider, ListTableColumn, ListTableColumnType } from 'bioengine.core.api.client';
+import { AbstractEntity, ListProvider, ListTableColumn, ListTableColumnType } from 'bioengine-angular';
 import { StateService } from '../../StateService';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';

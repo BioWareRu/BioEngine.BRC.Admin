@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { TagsCacheProvider } from 'bioengine.core.api.client';
+import { TagsCacheProvider } from 'bioengine-angular';
 
 @Component({
     selector: 'tagsList',

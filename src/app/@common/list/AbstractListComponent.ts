@@ -1,5 +1,5 @@
 import { OnInit } from '@angular/core';
-import { AbstractBaseService, AbstractEntity, Filter, ListProvider, ListProviderState, ListTableColumn } from 'bioengine.core.api.client';
+import { AbstractBaseService, AbstractEntity, Filter, ListProvider, ListProviderState, ListTableColumn } from 'bioengine-angular';
 import { AbstractPageComponent } from '../AbstractPageComponent';
 import { PageContext } from '../PageContext';
 

@@ -3,7 +3,7 @@ import { AbstractListComponent } from '@common/list/AbstractListComponent';
 import { PageContext } from '@common/PageContext';
 import { ContentItemTemplate } from '@models/ContentItemTemplate';
 import { PostTemplatesService } from '@services/PostTemplatesService';
-import { AuthorTableColumn, Icon, ListTableColumn, ListTableColumnAction, ListTableColumnType, SectionsTableColumn, TagsTableColumn } from 'bioengine.core.api.client';
+import { AuthorTableColumn, Icon, ListTableColumn, ListTableColumnAction, ListTableColumnType, SectionsTableColumn, TagsTableColumn } from 'bioengine-angular';
 
 @Component({
     selector: 'posts-templates-list',

@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ITreeOptions, TreeComponent, TreeNode } from 'angular-tree-component';
-import { AbstractSiteEntityFormComponent, DialogService, Menu, MenuItem, MenuService, PropertiesService, SitesService, SnackBarService } from 'bioengine.core.api.client';
+import { AbstractSiteEntityFormComponent, DialogService, Menu, MenuItem, MenuService, PropertiesService, SitesService, SnackBarService } from 'bioengine-angular';
 import { MenuItemFormDialogComponent } from './MenuItemFormDialogComponent';
 
 @Component({

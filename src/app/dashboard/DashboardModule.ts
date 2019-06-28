@@ -3,7 +3,7 @@ import { MatCardModule, MatGridListModule } from '@angular/material';
 
 import { RouterModule, Routes } from '@angular/router';
 import { BrcCommonModule } from '@common/BRCCommonModule';
-import { BioCommonModule } from 'bioengine.core.api.client';
+import { BioCommonModule } from 'bioengine-angular';
 import { DashboardComponent } from './DashboardComponent';
 
 const routes: Routes = [{

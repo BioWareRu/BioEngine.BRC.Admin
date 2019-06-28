@@ -10,7 +10,7 @@ import { AdsService } from '@services/AdsService';
 import { PostTemplatesService } from '@services/PostTemplatesService';
 
 import { OAuthModule, OAuthModuleConfig, OAuthStorage } from 'angular-oauth2-oidc';
-import { BioCommonModule, BioStorageModule, BlocksManagerFactory, CreateFolderDialogComponent, RestClientOptions } from 'bioengine.core.api.client';
+import { BioCommonModule, BioStorageModule, BlocksManagerFactory, CreateFolderDialogComponent, RestClientOptions } from 'bioengine-angular';
 import { CustomFormsModule } from 'ngx-custom-validators';
 import { ENV } from '../environments/environment';
 import { DevelopersService } from '@services/DevelopersService';

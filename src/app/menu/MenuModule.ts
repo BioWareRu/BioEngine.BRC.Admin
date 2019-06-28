@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BrcFormsModule } from '@common/forms/BrcFormsModule';
 import { BrcListModule } from '@common/list/BrcListModule';
 import { TreeModule } from 'angular-tree-component';
-import { BioCommonModule, BioDialogsModule, DialogService } from 'bioengine.core.api.client';
+import { BioCommonModule, BioDialogsModule, DialogService } from 'bioengine-angular';
 import { MenuFormPageComponent } from './MenuFormPageComponent';
 import { MenuFormComponent } from './MenuFormComponent';
 import { MenuListComponent } from './MenuListComponent';

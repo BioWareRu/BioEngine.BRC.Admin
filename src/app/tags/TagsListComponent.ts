@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AbstractListComponent } from '@common/list/AbstractListComponent';
 import { PageContext } from '@common/PageContext';
-import { Icon, ListTableColumn, ListTableColumnAction, ListTableColumnType, Tag, TagsService } from 'bioengine.core.api.client';
+import { Icon, ListTableColumn, ListTableColumnAction, ListTableColumnType, Tag, TagsService } from 'bioengine-angular';
 
 @Component({
     selector: 'tags-list',
