@@ -15,6 +15,7 @@
         "moduleResolution": "node",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
+        "preserveSymlinks": true,
         "paths": {
             "@common/*": [
                 "app/@common/*"

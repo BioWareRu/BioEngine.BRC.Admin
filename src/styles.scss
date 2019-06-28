@@ -53,6 +53,10 @@ $fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
 @import '~@fortawesome/fontawesome-free/scss/solid';
 @import '~@fortawesome/fontawesome-free/scss/brands';
 
+$storage-manager-bg-color: mat-color($brc-accent) !important;
+$storage-manager-row-hover: mat-color($brc-accent);
+$storage-manager-row-selected: lighten(mat-color($brc-accent), 10);
+
 .page-layout {
   position: relative;
   overflow: hidden;

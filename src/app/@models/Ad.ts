@@ -1,7 +1,4 @@
-import { AbstractSiteEntity } from '@models/base/AbstractSiteEntity';
-import { AbstractBaseContentBlock } from '@models/base/AbstractBaseContentBlock';
-import { IContentEntity } from '@models/interfaces/IContentEntity';
-import { PublicUrl } from '@models/interfaces/IRoutable';
+import { AbstractBaseContentBlock, AbstractSiteEntity, IContentEntity, PublicUrl } from 'bioengine.core.api.client';
 
 export class Ad extends AbstractSiteEntity implements IContentEntity {
     public blocks: AbstractBaseContentBlock[];

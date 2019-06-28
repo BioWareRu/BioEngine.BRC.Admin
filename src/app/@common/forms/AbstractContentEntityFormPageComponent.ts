@@ -1,9 +1,14 @@
-import { AbstractContentEntityService } from '@common/AbstractContentEntityService';
+import { AbstractBaseTemplatesService } from '@common/AbstractBaseTemplatesService';
 import { AbstractFormPageComponent } from '@common/forms/AbstractFormPageComponent';
-import { IContentEntity } from '@models/interfaces/IContentEntity';
+import { PageContext } from '@common/PageContext';
+import { AbstractContentEntityService, IContentEntity } from 'bioengine.core.api.client';
 
 export abstract class AbstractContentEntityFormPageComponent<TModel extends IContentEntity,
     TService extends AbstractContentEntityService<TModel>> extends AbstractFormPageComponent<TModel, TService> {
+
+    protected constructor(protected readonly _templatesService: AbstractBaseTemplatesService<TModel>, context: PageContext) {
+        super(context);
+    }
 
     protected _loadModel(routeParams: any): void {
         const modelId = routeParams.id;
@@ -18,7 +23,7 @@ export abstract class AbstractContentEntityFormPageComponent<TModel extends ICon
     }
 
     protected _loadFromTemplate(templateId: string): void {
-        this._getService().createFromTemplate(templateId).subscribe(res => {
+        this._templatesService.createFromTemplate(templateId).subscribe(res => {
             if (res) {
                 this.model = res;
                 this._setTitle(this._getNewModelTitle());

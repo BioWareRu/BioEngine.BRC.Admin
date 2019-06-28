@@ -1,11 +1,10 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TreeNode } from 'angular-tree-component';
-import { AbstractDialogComponent } from '@common/modals/AbstractDialogComponent';
 import { PageContext } from '@common/PageContext';
-import { MenuItem } from '@models/MenuItem';
+import { AbstractDialogComponent, MenuItem } from 'bioengine.core.api.client';
+
 @Component({
-    moduleId: module.id,
     selector: 'menuItemFormDialog',
     template: `
         <h1 mat-dialog-title>Пункт меню {{ item.label }}</h1>
@@ -22,9 +21,10 @@ import { MenuItem } from '@models/MenuItem';
 })
 export class MenuItemFormDialogComponent extends AbstractDialogComponent<TreeNode> {
     public item: MenuItem;
+
     public constructor(
         @Inject(MAT_DIALOG_DATA)
-        data: TreeNode) {
+            data: TreeNode) {
         super(data);
         this.item = data.data;
     }

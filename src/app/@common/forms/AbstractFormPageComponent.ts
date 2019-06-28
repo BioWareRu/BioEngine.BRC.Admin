@@ -1,9 +1,6 @@
 import { Input, OnInit, ViewChild } from '@angular/core';
-import { AbstractEntity } from '@models/base/AbstractEntity';
-import { AbstractBaseService } from '../AbstractBaseService';
+import { AbstractBaseService, AbstractEntity, AbstractFormComponent, SaveModelResponse } from 'bioengine.core.api.client';
 import { AbstractPageComponent } from '../AbstractPageComponent';
-import { SaveModelResponse } from '../SaveModelResponse';
-import { AbstractFormComponent } from './AbstractFormComponent';
 
 export abstract class AbstractFormPageComponent<TModel extends AbstractEntity, TService extends AbstractBaseService<TModel>> extends AbstractPageComponent implements OnInit {
     @Input()

@@ -1,5 +1,4 @@
-import { AbstractEntity } from '@models/base/AbstractEntity';
-import { User } from '@models/User';
+import { AbstractEntity, User } from 'bioengine.core.api.client';
 
 export class ContentItemTemplate extends AbstractEntity {
     public contentType: string;

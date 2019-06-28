@@ -1,7 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { AbstractBaseService } from '@common/AbstractBaseService';
-import { AbstractEntity } from '@models/base/AbstractEntity';
-import { AbstractFormComponent } from './AbstractFormComponent';
+import { AbstractBaseService, AbstractEntity, AbstractFormComponent } from 'bioengine.core.api.client';
 
 @Component({
     selector: 'form-layout',

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AbstractContentEntityService } from '@common/AbstractContentEntityService';
-import { RestClient } from '@common/HttpClient';
 import { Game } from '@models/Game';
+import { AbstractContentEntityService, RestClient } from 'bioengine.core.api.client';
 
 @Injectable()
 export class GamesService extends AbstractContentEntityService<Game> {

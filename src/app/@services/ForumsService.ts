@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AbstractBaseService } from '@common/AbstractBaseService';
-import { RestClient } from '@common/HttpClient';
 import { Forum } from '@models/Forum';
+import { AbstractBaseService, RestClient } from 'bioengine.core.api.client';
 
 @Injectable()
 export class ForumsService extends AbstractBaseService<Forum> {

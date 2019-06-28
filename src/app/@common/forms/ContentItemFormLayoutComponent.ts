@@ -1,9 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { AbstractContentEntityService } from '@common/AbstractContentEntityService';
-import { AbstractContentFormComponent } from '@common/forms/AbstractContentFormComponent';
 import { FormLayoutComponent } from '@common/forms/FormLayoutComponent';
-import { AbstractContentItem } from '@models/base/AbstractContentItem';
-import { AbstractSection } from '@models/base/AbstractSection';
+import { AbstractContentEntityService, AbstractContentFormComponent, AbstractContentItem, AbstractSection } from 'bioengine.core.api.client';
 
 @Component({
     selector: 'content-form-layout',

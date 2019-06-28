@@ -1,6 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { DialogService } from './modals/DialogService';
-import { SnackBarService } from './snacks/SnackBarService';
+import { DialogService, SnackBarService } from 'bioengine.core.api.client';
 import { StateService } from './StateService';
 import { PageContext } from './PageContext';
 

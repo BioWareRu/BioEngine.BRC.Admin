@@ -1,5 +1,5 @@
 export enum SectionType {
-    Developer = 'developer',
-    Game = 'game',
-    Topic = 'topic'
+    Developer = 'developersection',
+    Game = 'gamesection',
+    Topic = 'topicsection'
 }
