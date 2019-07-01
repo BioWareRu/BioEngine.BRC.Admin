@@ -6,6 +6,6 @@ export class ContentItemTemplate extends AbstractEntity {
     public tagIds: string[];
     public sections: any[];
     public tags: any[];
-    public authorId: number;
+    public authorId: string;
     public author: User;
 }
