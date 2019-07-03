@@ -1,4 +1,10 @@
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgModule } from '@angular/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTreeModule } from '@angular/material/tree';
 
 import { RouterModule, Routes } from '@angular/router';
 import { BrcFormsModule } from '@common/forms/BrcFormsModule';
@@ -35,7 +41,13 @@ const routes: Routes = [
         BioDialogsModule,
         BrcFormsModule,
         BrcListModule,
-        RouterModule.forChild(routes)
+        RouterModule.forChild(routes),
+        MatTreeModule,
+        MatCheckboxModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatInputModule,
+        DragDropModule
     ],
     declarations: [
         MenuListComponent,
