@@ -45,7 +45,6 @@ body {
 @include angular-material-theme($brc-theme);
 
 @import '~perfect-scrollbar/css/perfect-scrollbar.css';
-@import '~angular-tree-component/dist/angular-tree-component.css';
 
 $fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
 @import '~@fortawesome/fontawesome-free/scss/fontawesome';

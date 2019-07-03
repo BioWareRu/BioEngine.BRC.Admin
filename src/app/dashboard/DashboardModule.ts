@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { MatCardModule, MatGridListModule } from '@angular/material';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
 
 import { RouterModule, Routes } from '@angular/router';
 import { BrcCommonModule } from '@common/BRCCommonModule';

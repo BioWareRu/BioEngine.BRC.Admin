@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
-import { MatPaginatorModule, MatProgressSpinnerModule, MatSortModule, MatTableModule } from '@angular/material';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSortModule } from '@angular/material/sort';
 import { RouterModule } from '@angular/router';
 import { BrcCommonModule } from '@common/BRCCommonModule';
 import { ListTableComponent } from '@common/list/component/ListTableComponent';
