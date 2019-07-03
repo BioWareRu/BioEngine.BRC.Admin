@@ -74,11 +74,7 @@ export class MenuFormComponent extends AbstractSiteEntityFormComponent<Menu, Men
 
     getChildren = (node: MenuItem): MenuItem[] => node.items;
 
-    hasChild = (index: number, nodeData: FlatMenuItem) => {
-        const is = nodeData.expandable && !this.inEdit(index, nodeData);
-        console.log(nodeData, is);
-        return is;
-    };
+    hasChild = (index: number, nodeData: FlatMenuItem) => nodeData.expandable && !this.inEdit(index, nodeData);
 
     hasNoContent = (_: number, nodeData: FlatMenuItem) => nodeData.label === '';
     inEdit = (_: number, nodeData: FlatMenuItem) => nodeData.inEdit;
@@ -204,7 +200,7 @@ export class MenuFormComponent extends AbstractSiteEntityFormComponent<Menu, Men
         this.dragNodeExpandOverTime = 0;
     }
 
-    handleDragEnd(_event): void {
+    handleDragEnd(): void {
         this.dragNode = null;
         this.dragNodeExpandOverNode = null;
         this.dragNodeExpandOverTime = 0;
