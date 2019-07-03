@@ -1,4 +1,4 @@
-import { AbstractSectionData } from 'bioengine-angular';
+import { AbstractBrcSectionData } from '@models/AbstractBrcSectionData';
 
-export class TopicData extends AbstractSectionData {
+export class TopicData extends AbstractBrcSectionData {
 }

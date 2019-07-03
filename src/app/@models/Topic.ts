@@ -1,5 +1,5 @@
-import { AbstractTypedSection } from 'bioengine-angular';
+import { AbstractBrcSection } from '@models/AbstractBrcSection';
 import { TopicData } from './TopicData';
 
-export class Topic extends AbstractTypedSection<TopicData> {
+export class Topic extends AbstractBrcSection<TopicData> {
 }

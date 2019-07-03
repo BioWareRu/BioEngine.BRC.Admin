@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
+import { AbstractBrcSectionFormComponent } from '@common/forms/AbstractBrcSectionFormComponent';
 import { Developer } from '@models/Developer';
+import { DeveloperData } from '@models/DeveloperData';
 import { DevelopersService } from '@services/DevelopersService';
-import { AbstractSectionFormComponent, DialogService, PropertiesService, SitesService, SnackBarService } from 'bioengine-angular';
+import { DialogService, PropertiesService, SitesService, SnackBarService } from 'bioengine-angular';
 
 @Component({
     selector: 'developer-form',
     templateUrl: './DeveloperFormComponent.html'
 })
-export class DeveloperFormComponent extends AbstractSectionFormComponent<Developer, DevelopersService> {
+export class DeveloperFormComponent extends AbstractBrcSectionFormComponent<Developer, DeveloperData, DevelopersService> {
     constructor(
         public sitesService: SitesService,
         dialogService: DialogService,
