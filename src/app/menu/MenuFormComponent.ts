@@ -218,6 +218,7 @@ export class MenuFormComponent extends AbstractSiteEntityFormComponent<Menu, Men
                 this.dataSource.data = [];
                 this.dataSource.data = data;
                 this.form.getControlByProperty('items').patchValue(data);
+                this.form.hasChanges = true;
             });
         }
     }
