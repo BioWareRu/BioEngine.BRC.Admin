@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AbstractListComponent } from '@common/list/AbstractListComponent';
 import { PageContext } from '@common/PageContext';
 import { PostTemplatesService } from '@services/PostTemplatesService';
@@ -20,7 +20,7 @@ import {
     templateUrl: './PostsListComponent.html',
     providers: [PageContext]
 })
-export class PostsListComponent extends AbstractListComponent<Post> implements OnInit {
+export class PostsListComponent extends AbstractListComponent<Post> {
     constructor(private readonly _postTemplatesService: PostTemplatesService, context: PageContext, postsService: PostsService) {
         super(postsService, context);
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AbstractListComponent } from '@common/list/AbstractListComponent';
 import { PageContext } from '@common/PageContext';
 import { Icon, ListTableColumn, ListTableColumnAction, ListTableColumnType, Page, PagesService, SitesTableColumn } from 'bioengine-angular';
@@ -8,7 +8,7 @@ import { Icon, ListTableColumn, ListTableColumnAction, ListTableColumnType, Page
     templateUrl: './PagesListComponent.html',
     providers: [PageContext]
 })
-export class PagesListComponent extends AbstractListComponent<Page> implements OnInit {
+export class PagesListComponent extends AbstractListComponent<Page> {
     constructor(pagesService: PagesService, context: PageContext) {
         super(pagesService, context);
 
