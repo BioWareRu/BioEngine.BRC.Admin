@@ -45,7 +45,7 @@ export class PostFormComponent extends AbstractContentFormComponent<Post, PostsS
     protected _constructForm(): void {
         super._constructForm();
         this.registerFormControl('sectionIds', [Validators.required]);
-        this.registerFormControl('tagIds', [Validators.required]);
+        this.registerFormControl('tagIds', []);
     }
 
     public get sectionsService(): AbstractBaseService<AbstractSection> {
