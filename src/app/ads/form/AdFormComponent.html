@@ -11,7 +11,10 @@
             </div>
         </div>
         <chips-input [inputFormGroup]="form.formGroup" inputFieldName="siteIds" inputLabel="Сайты" titleField="title"
-            valueField="id" [entitiesService]="sitesService"></chips-input>
-        <blocksForm [model]="model" [form]="form"></blocksForm>
+                     valueField="id" [entitiesService]="sitesService"></chips-input>
+        <h3>Контент</h3>
+        <div class="p-24">
+            <blocksForm [model]="model" [form]="form"></blocksForm>
+        </div>
     </content-form-layout>
 </div>
