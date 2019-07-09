@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 
@@ -30,6 +31,7 @@ const routes: Routes = [{
         RouterModule.forChild(routes),
         MatGridListModule,
         MatCardModule,
+        MatListModule
     ],
     exports: [
         RouterModule
