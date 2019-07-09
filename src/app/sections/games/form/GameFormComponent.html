@@ -23,7 +23,10 @@
                 </text-input>
             </div>
         </div>
-        <blocksForm [model]="model" [form]="form"></blocksForm>
+        <h3>Описание</h3>
+        <div class="p-24">
+            <blocksForm [model]="model" [form]="form"></blocksForm>
+        </div>
         <upload-input [inputFormGroup]="form.formGroup" inputFieldName="headerPicture"
                       inputLabel="Картинка в шапку страницы"
                       [multiple]="false" [service]="service"
