@@ -58,7 +58,7 @@
     "@angular/cli": "8.1.0",
     "@angular/compiler-cli": "8.1.0",
     "@angular/language-service": "8.1.0",
-    "@types/node": "12.0.12",
+    "@types/node": "12.6.6",
     "@types/object-path": "0.11.0",
     "@types/twitter-for-web": "0.0.1",
     "@types/url-parse": "1.4.3",
