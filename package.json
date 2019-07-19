@@ -47,7 +47,7 @@
     "uuid": "3.3.2",
     "zone.js": "0.9.1",
     "@angular/router": "8.1.0",
-    "angular-oauth2-oidc": "5.0.2",
+    "angular-oauth2-oidc": "8.0.1",
     "bioengine-angular": "1.1.7",
     "classlist.js": "1.1.20150312",
     "perfect-scrollbar": "1.4.0",
