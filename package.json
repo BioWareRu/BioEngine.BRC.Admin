@@ -45,10 +45,10 @@
     "tslib": "1.10.0",
     "url-parse": "1.4.7",
     "uuid": "3.3.2",
-    "zone.js": "0.9.1",
+    "zone.js": "0.10.1",
     "@angular/router": "8.2.0",
     "angular-oauth2-oidc": "8.0.4",
-    "bioengine-angular": "1.2.0",
+    "bioengine-angular": "1.2.1",
     "classlist.js": "1.1.20150312",
     "perfect-scrollbar": "1.4.0",
     "web-animations-js": "github:angular/web-animations-js#release_pr208"
@@ -68,7 +68,7 @@
     "ts-node": "8.3.0",
     "tslint": "5.18.0",
     "tslint-consistent-codestyle": "1.15.1",
-    "typescript": "3.4.5",
+    "typescript": "3.5.3",
     "webpack-bundle-analyzer": "3.4.1"
   }
 }
