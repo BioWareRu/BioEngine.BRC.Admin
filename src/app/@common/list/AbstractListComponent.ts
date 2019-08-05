@@ -8,8 +8,8 @@ export abstract class AbstractListComponent<T extends AbstractEntity> extends Ab
     implements OnInit, AfterViewInit {
     public addUrl = '';
     public isInitialized = false;
-    public page = 0;
-    public itemsPerPage = 20;
+    public page: number;
+    public itemsPerPage: number;
     public sort = '-dateAdded';
     public filter: Filter | null = null;
     @ViewChild(ListTableComponent, {static: true}) public listTable: ListTableComponent<T>;
@@ -32,16 +32,20 @@ export abstract class AbstractListComponent<T extends AbstractEntity> extends Ab
             const perPage = parseInt(params.get('perPage') || '0', 10);
             if (pageNumber >= 1) {
                 this.page = pageNumber;
+            } else {
+                this.page = 0;
             }
             if (perPage >= 1) {
                 this.itemsPerPage = perPage;
+            } else {
+                this.itemsPerPage = 20;
             }
-            const sortStr = params.get('_sort');
-            if (sortStr !== null) {
+            const sortStr = params.get('sort');
+            if (sortStr !== null && sortStr !== '') {
                 this.sort = sortStr;
             }
 
-            const filterStr = params.get('_filter');
+            const filterStr = params.get('filter');
             if (filterStr !== null && filterStr !== '') {
                 this.filter = Filter.fromString(filterStr);
             }
