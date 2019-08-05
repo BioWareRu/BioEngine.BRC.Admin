@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AbstractListComponent } from '@common/list/AbstractListComponent';
 import { PageContext } from '@common/PageContext';
 import { ContentItemTemplate } from '@models/ContentItemTemplate';
@@ -10,7 +10,7 @@ import { AuthorTableColumn, Icon, ListTableColumn, ListTableColumnAction, ListTa
     templateUrl: './PostsTemplatesListComponent.html',
     providers: [PageContext]
 })
-export class PostsTemplatesListComponent extends AbstractListComponent<ContentItemTemplate> implements OnInit {
+export class PostsTemplatesListComponent extends AbstractListComponent<ContentItemTemplate> {
     constructor(context: PageContext, postTemplatesService: PostTemplatesService) {
         super(postTemplatesService, context);
 

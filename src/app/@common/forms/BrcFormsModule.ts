@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { MatTabsModule } from '@angular/material';
+import { MatTabsModule } from '@angular/material/tabs';
 import { ContentFormLayoutComponent } from '@common/forms/ContentItemFormLayoutComponent';
 import { FormLayoutComponent } from '@common/forms/FormLayoutComponent';
 import { FormLayoutContentComponent } from '@common/forms/FormLayoutContentComponent';

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Params } from '@angular/router';
 import {
     AbstractSection,
     Filter,
@@ -10,7 +11,6 @@ import {
     SectionsService,
     SitesTableColumn
 } from 'bioengine-angular';
-import { map } from 'rxjs/operators';
 import { AbstractListComponent } from '@common/list/AbstractListComponent';
 import { PageContext } from '@common/PageContext';
 import { SectionType } from '@models/SectionType';
@@ -29,31 +29,31 @@ export class SectionsListComponent extends AbstractListComponent<AbstractSection
         context.stateService.setTitle('Список разделов');
     }
 
-    ngOnInit(): void {
-        this._route.params.pipe(map(p => p.type)).subscribe(type => {
-            this._showType = false;
-            switch (type) {
-                case 'developers':
-                    this._filter = Filter.simple('type', FilterOperator.Equal, SectionType.Developer);
-                    this._setTitle('Разработчики');
-                    this.addUrl = '/sections/developers/add';
-                    break;
-                case 'games':
-                    this._filter = Filter.simple('type', FilterOperator.Equal, SectionType.Game);
-                    this._setTitle('Игры');
-                    this.addUrl = '/sections/games/add';
-                    break;
-                case 'topics':
-                    this._filter = Filter.simple('type', FilterOperator.Equal, SectionType.Topic);
-                    this._setTitle('Темы');
-                    this.addUrl = '/sections/topics/add';
-                    break;
-                default:
-                    this._showType = true;
-                    break;
-            }
-            super.ngOnInit();
-        });
+    protected _beforeLoad(queryParams: Params): void {
+        super._beforeLoad(queryParams);
+
+        const type = queryParams.hasOwnProperty('type') ? queryParams['type'] : '';
+        this._showType = false;
+        switch (type) {
+            case 'developers':
+                this.filter = Filter.simple('type', FilterOperator.Equal, SectionType.Developer);
+                this._setTitle('Разработчики');
+                this.addUrl = '/sections/developers/add';
+                break;
+            case 'games':
+                this.filter = Filter.simple('type', FilterOperator.Equal, SectionType.Game);
+                this._setTitle('Игры');
+                this.addUrl = '/sections/games/add';
+                break;
+            case 'topics':
+                this.filter = Filter.simple('type', FilterOperator.Equal, SectionType.Topic);
+                this._setTitle('Темы');
+                this.addUrl = '/sections/topics/add';
+                break;
+            default:
+                this._showType = true;
+                break;
+        }
     }
 
     protected _getColumns(): Array<ListTableColumn<AbstractSection>> {

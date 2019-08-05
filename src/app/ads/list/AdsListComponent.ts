@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AbstractListComponent } from '@common/list/AbstractListComponent';
 import { PageContext } from '@common/PageContext';
 import { Ad } from '@models/Ad';
@@ -10,7 +10,7 @@ import { Icon, ListTableColumn, ListTableColumnAction, ListTableColumnType, Site
     templateUrl: './AdsListComponent.html',
     providers: [PageContext]
 })
-export class AdsListComponent extends AbstractListComponent<Ad> implements OnInit {
+export class AdsListComponent extends AbstractListComponent<Ad> {
     constructor(context: PageContext, adsService: AdsService) {
         super(adsService, context);
 

@@ -2,17 +2,76 @@
     <form-layout *ngIf="formLoaded" [formComponent]="this">
         <text-input [inputFormGroup]="form.formGroup" inputFieldName="title" inputLabel="Название"></text-input>
         <chips-input [inputFormGroup]="form.formGroup" inputFieldName="siteIds" inputLabel="Сайт"
-            titleField="title" valueField="id" [entitiesService]="sitesService"></chips-input>
-        Пункты меню
-        <tree-root class="mat-elevation-z4" #tree (initialized)="onInit(tree)" [nodes]="model.items"
-            [options]="options">
-            <ng-template #treeNodeTemplate let-node let-index="index">
-                <span (dblclick)="openEditDialog(node)" node="node">{{ node.data.label }}</span>
-                <icon (click)="addMenuItem(node)" iconName="fa-plus"></icon>
-                <icon (click)="deleteMenuItem(node)" iconName="fa-trash"></icon>
-            </ng-template>
-        </tree-root>
-        <button mat-raised-button color="primary" (click)="addMenuItem()">
+                     titleField="title" valueField="id" [entitiesService]="sitesService"></chips-input>
+        <label>Пункты меню</label><br/><br/>
+        <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+            <mat-tree-node *matTreeNodeDef="let node"
+                           matTreeNodeToggle
+                           matTreeNodePadding>
+                <button mat-icon-button disabled></button>
+                <span class="checklist-leaf-node"
+                      [ngClass]="{'drop-above': dragNodeExpandOverArea === 'above' && dragNodeExpandOverNode === node,
+                              'drop-below': dragNodeExpandOverArea === 'below' && dragNodeExpandOverNode === node,
+                              'drop-center': dragNodeExpandOverArea === 'center' && dragNodeExpandOverNode === node}"
+                      draggable="true"
+                      (dragstart)="handleDragStart($event, node);"
+                      (dragover)="handleDragOver($event, node);"
+                      (drop)="handleDrop($event, node);"
+                      (dragend)="handleDragEnd($event);">{{node.label}}</span>
+            </mat-tree-node>
+
+            <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
+                <button mat-icon-button disabled></button>
+                <mat-form-field>
+                    <input matInput #itemLabel required placeholder="Название...">
+                </mat-form-field>&nbsp;&nbsp;
+                <mat-form-field>
+                    <input type="url" matInput #itemUrl required placeholder="Урл...">
+                </mat-form-field>
+                <button mat-button (click)="saveNode(node, itemLabel.value, itemUrl.value)">Сохранить</button>
+            </mat-tree-node>
+
+            <mat-tree-node *matTreeNodeDef="let node; when: inEdit" matTreeNodePadding>
+                <button mat-icon-button disabled></button>
+                <mat-form-field>
+                    <input matInput #itemLabel required placeholder="Название..." [value]="node.label">
+                </mat-form-field>&nbsp;&nbsp;
+                <mat-form-field>
+                    <input type="url" matInput #itemUrl required placeholder="Урл..." [value]="node.url">
+                </mat-form-field>
+                <button mat-button (click)="saveNode(node, itemLabel.value, itemUrl.value)">Сохранить</button>
+            </mat-tree-node>
+
+            <mat-tree-node *matTreeNodeDef="let node; when: hasChild"
+                           matTreeNodePadding>
+                <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
+                    <icon classes="mat-icon-rtl-mirror"
+                          iconName="{{treeControl.isExpanded(node) ? 'fa-angle-down' : 'fa-angle-right'}}"></icon>
+                </button>
+                <span [ngClass]="{'drop-above': dragNodeExpandOverArea === 'above' && dragNodeExpandOverNode === node,
+                              'drop-below': dragNodeExpandOverArea === 'below' && dragNodeExpandOverNode === node,
+                              'drop-center': dragNodeExpandOverArea === 'center' && dragNodeExpandOverNode === node}"
+                      draggable="true"
+                      (dragstart)="handleDragStart($event, node);"
+                      (dragover)="handleDragOver($event, node);"
+                      (drop)="handleDrop($event, node);"
+                      (dragend)="handleDragEnd($event);"
+                      (change)="todoItemSelectionToggle(node)">{{node.label}}</span>
+                <button mat-icon-button (click)="addNewItem(node)">
+                    <icon iconSet="fa" iconName="fa-plus"></icon>
+                </button>
+                <button mat-icon-button (click)="editItem(node)">
+                    <icon iconSet="fa" iconName="fa-edit"></icon>
+                </button>
+                <button mat-icon-button (click)="deleteItem(node)">
+                    <icon iconSet="fa" iconName="fa-trash"></icon>
+                </button>
+            </mat-tree-node>
+        </mat-tree>
+
+        <span #emptyItem></span>
+        <br/>
+        <button mat-raised-button color="primary" (click)="addRootItem()">
             Добавить пункт
         </button>
     </form-layout>

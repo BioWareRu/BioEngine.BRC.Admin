@@ -1,61 +1,75 @@
-import { OnInit } from '@angular/core';
-import { AbstractBaseService, AbstractEntity, Filter, ListProvider, ListProviderState, ListTableColumn } from 'bioengine-angular';
+import { AfterViewInit, OnInit, ViewChild } from '@angular/core';
+import { Params } from '@angular/router';
+import { AbstractBaseService, AbstractEntity, Filter, ListTableColumn, ListTableComponent, ListTableState } from 'bioengine-angular';
 import { AbstractPageComponent } from '../AbstractPageComponent';
 import { PageContext } from '../PageContext';
 
 export abstract class AbstractListComponent<T extends AbstractEntity> extends AbstractPageComponent
-    implements OnInit {
-    public provider: ListProvider<T>;
+    implements OnInit, AfterViewInit {
     public addUrl = '';
-    public columns: Array<ListTableColumn<T>> = [];
     public isInitialized = false;
-    protected _page = 0;
-    protected _itemsPerPage = 20;
-    protected _sort = '-dateAdded';
-    protected _filter: Filter | null = null;
+    public page: number;
+    public itemsPerPage: number;
+    public sort = '-dateAdded';
+    public filter: Filter | null = null;
+    @ViewChild(ListTableComponent, {static: true}) public listTable: ListTableComponent<T>;
 
-    protected constructor(
-        protected readonly _service: AbstractBaseService<T>,
-        context: PageContext
-    ) {
+    protected constructor(public service: AbstractBaseService<T>, context: PageContext) {
         super(context);
-
     }
 
     ngOnInit(): void {
+        this.listTable.onStateChange().subscribe(state => {
+            this._reload(state);
+        });
+        this.listTable.setColumns(this._getColumns());
+    }
+
+    ngAfterViewInit(): void {
         this._route.queryParamMap.subscribe(params => {
-            const pageNumber = parseInt(params.get('_page') || '0', 10);
+            this.isInitialized = false;
+            const pageNumber = parseInt(params.get('page') || '0', 10);
             const perPage = parseInt(params.get('perPage') || '0', 10);
             if (pageNumber >= 1) {
-                this._page = pageNumber;
+                this.page = pageNumber;
+            } else {
+                this.page = 0;
             }
             if (perPage >= 1) {
-                this._itemsPerPage = perPage;
+                this.itemsPerPage = perPage;
+            } else {
+                this.itemsPerPage = 20;
             }
-            const sortStr = params.get('_sort');
-            if (sortStr !== null) {
-                this._sort = sortStr;
+            const sortStr = params.get('sort');
+            if (sortStr !== null && sortStr !== '') {
+                this.sort = sortStr;
             }
 
-            const filterStr = params.get('_filter');
+            const filterStr = params.get('filter');
             if (filterStr !== null && filterStr !== '') {
-                this._filter = Filter.fromString(filterStr);
+                this.filter = Filter.fromString(filterStr);
             }
-            this.provider = new ListProvider<T>(
-                this._service,
-                this._filter,
-                this._page,
-                this._itemsPerPage,
-                this._sort
-            );
-            this.provider.onStateChange().subscribe(state => {
-                this._reload(state);
+
+            this._route.params.subscribe(routeParams => {
+                this._beforeLoad(routeParams);
+
+                this._load();
+                this.isInitialized = true;
             });
-            this._init();
+
         });
     }
 
-    private _reload(state: ListProviderState): void {
+    // tslint:disable-next-line:no-unused
+    protected _beforeLoad(queryParams: Params): void {
+
+    }
+
+    protected _load(): void {
+        this.listTable.load(this.page, this.filter, this.itemsPerPage, this.sort);
+    }
+
+    private _reload(state: ListTableState): void {
         this._router.navigate([], {
             queryParams: {
                 page: state.currentPage,
@@ -72,10 +86,10 @@ export abstract class AbstractListComponent<T extends AbstractEntity> extends Ab
             `Удаление записи "${model.title}"`,
             `Вы точно хотите удалить запись "${model.title}"?`
         ).onConfirm.subscribe(() => {
-            this.provider.dataLoaded = false;
-            this._service.delete(model.id).subscribe((res: boolean) => {
+            this.listTable.dataLoaded = false;
+            this.service.delete(model.id).subscribe((res: boolean) => {
                 if (res) {
-                    this.provider.load();
+                    this._load();
                 }
             });
         });
@@ -83,8 +97,4 @@ export abstract class AbstractListComponent<T extends AbstractEntity> extends Ab
 
     protected abstract _getColumns(): Array<ListTableColumn<T>>;
 
-    protected _init(): void {
-        this.columns = this._getColumns();
-        this.isInitialized = true;
-    }
 }

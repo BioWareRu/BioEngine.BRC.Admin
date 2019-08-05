@@ -23,19 +23,13 @@
                 </text-input>
             </div>
         </div>
-        <blocksForm [model]="model" [form]="form"></blocksForm>
-        <div fxLayout="row">
-            <div fxFlex="45">
-                <upload-input [inputFormGroup]="form.formGroup" inputFieldName="logo" inputLabel="Большой логотип"
-                              [multiple]="false" [service]="service"
-                              [types]="['image/png', 'image/jpeg', 'image/jpg', 'image/gif']"></upload-input>
-            </div>
-            <div fxFlex="10"></div>
-            <div fxFlex="45">
-                <upload-input [inputFormGroup]="form.formGroup" inputFieldName="logoSmall"
-                              inputLabel="Маленький логотип" [multiple]="false" [service]="service"
-                              [types]="['image/png', 'image/jpeg', 'image/jpg', 'image/gif']"></upload-input>
-            </div>
+        <h3>Описание</h3>
+        <div class="p-24">
+            <blocksForm [model]="model" [form]="form"></blocksForm>
         </div>
+        <upload-input [inputFormGroup]="form.formGroup" inputFieldName="headerPicture"
+                      inputLabel="Картинка в шапку страницы"
+                      [multiple]="false" [service]="service"
+                      [types]="['image/png', 'image/jpeg', 'image/jpg', 'image/gif']"></upload-input>
     </content-form-layout>
 </div>
