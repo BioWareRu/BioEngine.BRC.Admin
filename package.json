@@ -67,7 +67,7 @@
     "node-sass": "4.12.0",
     "ts-node": "8.4.1",
     "tslint": "5.20.0",
-    "tslint-consistent-codestyle": "1.15.1",
+    "tslint-consistent-codestyle": "1.16.0",
     "typescript": "3.5.3",
     "webpack-bundle-analyzer": "3.5.0"
   }
