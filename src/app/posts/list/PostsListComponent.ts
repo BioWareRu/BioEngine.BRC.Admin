@@ -70,4 +70,10 @@ export class PostsListComponent extends AbstractListComponent<Post> {
             this.snackBarService.success(new SnackBarMessage('Успех', 'Шаблон успешно создан'));
         });
     }
+
+    protected _getRowClassGenerator(): (model: Post) => string {
+        return model => {
+            return !model.isPublished ? 'unpublished' : 'published';
+        };
+    }
 }

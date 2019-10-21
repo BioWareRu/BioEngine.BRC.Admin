@@ -46,4 +46,10 @@ export class PagesListComponent extends AbstractListComponent<Page> {
                 )
         ];
     }
+
+    protected _getRowClassGenerator(): (model: Page) => string {
+        return model => {
+            return !model.isPublished ? 'unpublished' : 'published';
+        };
+    }
 }

@@ -66,6 +66,7 @@ export abstract class AbstractListComponent<T extends AbstractEntity> extends Ab
     }
 
     protected _load(): void {
+        this.listTable.setRowClassGetter(this._getRowClassGenerator());
         this.listTable.load(this.page, this.filter, this.itemsPerPage, this.sort);
     }
 
@@ -96,5 +97,11 @@ export abstract class AbstractListComponent<T extends AbstractEntity> extends Ab
     }
 
     protected abstract _getColumns(): Array<ListTableColumn<T>>;
+
+    protected _getRowClassGenerator(): (model: T) => string {
+        return model => {
+            return model.id;
+        };
+    }
 
 }

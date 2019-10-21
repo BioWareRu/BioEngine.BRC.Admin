@@ -100,4 +100,10 @@ export class SectionsListComponent extends AbstractListComponent<AbstractSection
                 )
         ];
     }
+
+    protected _getRowClassGenerator(): (model: AbstractSection) => string {
+        return model => {
+            return !model.isPublished ? 'unpublished' : 'published';
+        };
+    }
 }

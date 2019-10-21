@@ -160,3 +160,9 @@ mat-chip {
         font-size: 18px;
     }
 }
+
+ngx-list-table {
+    mat-row.unpublished {
+        background: rgba(99, 99, 99, 0.1);
+    }
+}

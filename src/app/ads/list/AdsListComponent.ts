@@ -37,4 +37,10 @@ export class AdsListComponent extends AbstractListComponent<Ad> {
                 )
         ];
     }
+
+    protected _getRowClassGenerator(): (model: Ad) => string {
+        return model => {
+            return !model.isPublished ? 'unpublished' : 'published';
+        };
+    }
 }
