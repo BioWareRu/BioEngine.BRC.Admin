@@ -63,7 +63,7 @@
     "@types/twitter-for-web": "0.0.1",
     "@types/url-parse": "1.4.3",
     "@types/uuid": "3.4.5",
-    "codelyzer": "5.1.2",
+    "codelyzer": "5.2.0",
     "node-sass": "4.12.0",
     "ts-node": "8.4.1",
     "tslint": "5.20.0",
