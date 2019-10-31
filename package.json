@@ -57,7 +57,7 @@
     "@angular-devkit/build-angular": "0.803.12",
     "@angular/cli": "8.3.12",
     "@angular/compiler-cli": "8.2.11",
-    "@angular/language-service": "8.2.11",
+    "@angular/language-service": "8.2.13",
     "@types/node": "12.11.1",
     "@types/object-path": "0.11.0",
     "@types/twitter-for-web": "0.0.1",
