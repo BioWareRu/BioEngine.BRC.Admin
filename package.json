@@ -65,7 +65,7 @@
     "@types/uuid": "3.4.6",
     "codelyzer": "5.2.0",
     "node-sass": "4.13.0",
-    "ts-node": "8.5.4",
+    "ts-node": "8.6.0",
     "tslint": "5.20.1",
     "tslint-consistent-codestyle": "1.16.0",
     "typescript": "3.5.3",
