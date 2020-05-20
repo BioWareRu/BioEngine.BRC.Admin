@@ -62,7 +62,7 @@
     "@types/object-path": "0.11.0",
     "@types/twitter-for-web": "0.0.1",
     "@types/url-parse": "1.4.3",
-    "@types/uuid": "3.4.6",
+    "@types/uuid": "8.0.0",
     "codelyzer": "5.2.1",
     "node-sass": "4.13.0",
     "ts-node": "8.6.2",
