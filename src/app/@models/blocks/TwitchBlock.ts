@@ -4,7 +4,7 @@ import { TwitchBlockData } from './TwitchBlockData';
 export class TwitchBlock extends AbstractContentBlock<TwitchBlockData> {
     public title = 'Twitch';
     public icon = new Icon('fa-twitch', 'fab');
-    public type = 'twitch';
+    public type = 'twitchblock';
     data: TwitchBlockData = new TwitchBlockData();
 
     public isEmpty(): boolean {
