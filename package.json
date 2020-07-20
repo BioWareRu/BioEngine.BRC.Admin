@@ -36,7 +36,7 @@
         "@angular/router": "8.2.14",
         "@ckeditor/ckeditor5-angular": "1.2.3",
         "@ckeditor/ckeditor5-build-balloon": "20.0.0",
-        "@fortawesome/fontawesome-free": "5.13.1",
+        "@fortawesome/fontawesome-free": "5.14.0",
         "moment": "2.27.0",
         "ngx-custom-validators": "8.0.0",
         "ngx-input-file": "8.0.1",
