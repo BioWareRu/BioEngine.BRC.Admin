@@ -1,0 +1,13 @@
+﻿@using BioEngine.BRC.Common.Entities.Abstractions
+
+@foreach (var block in Item.Blocks)
+{
+    <BlockForm Block="@block"></BlockForm>
+}
+
+@code {
+
+    [Parameter]
+    public IContentItem Item { get; set; }
+
+}

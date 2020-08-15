@@ -1,0 +1,26 @@
+﻿@using BioEngine.BRC.Common.Entities
+@using BioEngine.BRC.Common.Entities.Blocks
+<RadzenCard class="block-form">
+    @if (Block != null)
+    {
+        switch (Block)
+        {
+            case TextBlock textBlock:
+                <TextBlockForm Block="@textBlock"/>
+                break;
+            case PictureBlock pictureBlock:
+                <PictureBlockForm Block="@pictureBlock"></PictureBlockForm>
+                break;
+            case TwitterBlock twitterBlock:
+                <TwitterBlockForm Block="@twitterBlock"></TwitterBlockForm>
+                break;
+        }
+    }
+</RadzenCard>
+
+@code {
+
+    [Parameter]
+    public ContentBlock Block { get; set; }
+
+}
