@@ -25,7 +25,10 @@ namespace BioEngine.BRC.Admin
             {
                 options.Conventions.AuthorizeFolder("/");
             });
-            services.AddServerSideBlazor();
+            services.AddServerSideBlazor().AddCircuitOptions(options =>
+            {
+                options.DetailedErrors = Environment.IsDevelopment();
+            });
             services.AddScoped<IContentRender, ContentRender>();
             services.AddScoped<BRCPostsPublisher>();
             services.Configure<BrcAdminOptions>(options =>
@@ -43,7 +46,7 @@ namespace BioEngine.BRC.Admin
             app.UseAuthentication();
             app.UseAuthorization();
         }
-        
+
         protected override void ConfigureEndpoints(IApplicationBuilder app, IEndpointRouteBuilder endpoints)
         {
             base.ConfigureEndpoints(app, endpoints);

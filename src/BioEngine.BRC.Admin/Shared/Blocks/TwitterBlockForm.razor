@@ -3,7 +3,7 @@
 @inject IJSRuntime JsRuntime
 
 <div>
-    <RadzenTextBox Value="@TweetLink" Change="@(link => GetTweetData(link))" Style="width: 100%"/>
+    <RadzenTextBox @bind-Value="TweetLink" Change="@(link => GetTweetData(link))" Style="width: 100%"/>
 </div>
 
 <div id="twitter-@Block.Id"></div>

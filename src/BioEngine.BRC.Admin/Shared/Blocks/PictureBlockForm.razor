@@ -3,28 +3,19 @@
 @using BioEngine.BRC.Common.Entities.Blocks
 @inject IStorage<BRCStorageConfig> Storage
 
-
-@if (Block.Data.Url != String.Empty)
-{
-    <div>
-        <img src="@Storage.PublicUri(Block.Data.Picture)"/>
-        <a Icon="delete" @onclick="DeleteImg"></a>
-    </div>    
-}
+<div>
+    <img src="@Storage.PublicUri(Block.Data.Picture)"/>
+    <RadzenIcon Icon="delete" @onclick="DeleteImg"/>
+</div>
 
 @code
 {
     [Parameter]
     public PictureBlock Block { get; set; }
 
-   
 
-    async Task DeleteImg()
+    private void DeleteImg()
     {
-        if (Block.Data.Picture != null)
-        {
-            await Storage.DeleteFileAsync(Block.Data.Picture.Path);
-            Block.Data = new PictureBlockData();
-        }
+        Block.Data = new PictureBlockData();
     }
 }

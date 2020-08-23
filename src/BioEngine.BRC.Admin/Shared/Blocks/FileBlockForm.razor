@@ -1,0 +1,25 @@
+﻿@using Sitko.Core.Storage
+@using BioEngine.BRC.Common
+@using BioEngine.BRC.Common.Entities.Blocks
+@using System.IO
+@using StorageItem = BioEngine.BRC.Common.Entities.StorageItem
+@inject IStorage<BRCStorageConfig> Storage
+
+<InputFile OnChange="HandleSelection"/>
+
+@code
+{
+    [Parameter]
+    public FileBlock Block { get; set; }
+
+    async Task HandleSelection(IFileListEntry[] files)
+    {
+        var file = files.FirstOrDefault();
+        if (file != null)
+        {
+            await using var stream = new MemoryStream();
+            await file.Data.CopyToAsync(stream);
+            Block.Data.File = StorageItem.FromCore(await Storage.SaveFileAsync(stream, file.Name, "posts"));
+        }
+    }
+}

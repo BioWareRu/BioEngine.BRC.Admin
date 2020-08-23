@@ -1,4 +1,5 @@
 ﻿require('./index.scss');
+import { Sortable, Plugins } from '@shopify/draggable';
 
 window["BlazorCKE"] = {
     init: function (params) {
@@ -44,4 +45,20 @@ window.BlazorTwttr = {
             }
         );
     }
+};
+
+window.BlazorSortable = function (params) {
+    const sortable = new Sortable(document.getElementById(params.id), {
+        draggable: params.element,
+        handle: params.handle,
+        sortAnimation: {
+            duration: 200,
+            easingFunction: 'ease-in-out',
+        },
+        plugins: [Plugins.SortAnimation]
+    });
+    sortable.on('sortable:sorted', function (evnt) {
+        console.log(evnt);
+        params.instance.invokeMethodAsync('updateIndex', evnt.data.newIndex, evnt.data.oldIndex);
+    });
 };
