@@ -24,4 +24,7 @@
       <Content Include="Web\ckeditor\src\ckeditor.js" />
       <Content Include="Web\ckeditor\webpack.config.js" />
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="wwwroot\dist" />
+    </ItemGroup>
 </Project>

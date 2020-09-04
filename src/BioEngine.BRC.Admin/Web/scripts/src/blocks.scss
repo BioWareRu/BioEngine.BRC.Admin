@@ -1,0 +1,305 @@
+﻿.blocksForm {
+    display: block;
+
+    .addBlock {
+        position: absolute;
+        left: 50%;
+        margin-left: -10px;
+        width: 16px;
+        height: 16px;
+        border: solid 1px #ccc;
+        border-radius: 14px;
+        line-height: 14px;
+
+        i {
+            font-size: 14px;
+            width: 14px;
+            height: 14px;
+            line-height: 14px;
+        }
+
+        display: none;
+    }
+
+    .addBlock.top {
+        top: -9px;
+    }
+
+    .addBlock.bottom {
+        bottom: -9px;
+    }
+}
+
+.block-form {
+    color: rgba(0, 0, 0, 0.87);
+    box-sizing: border-box;
+    font-size: 14px;
+
+    display: block;
+    padding: 10px;
+    background: #f7f7f7;
+    margin-bottom: 10px;
+
+    &.text {
+        padding: 0;
+        background: white;
+    }
+
+    position: relative;
+    margin-right: 60px;
+    border: solid 1px transparent;
+
+    i[blockicon] {
+        position: absolute;
+        left: -22px;
+        color: #999;
+        top: 10px;
+        font-size: 1.5em;
+    }
+
+    i[draghandle] {
+        position: absolute;
+        right: -30px;
+        top: 0;
+        opacity: 0;
+    }
+
+    i[delete] {
+        position: absolute;
+        right: -60px;
+        top: 0;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    &:hover {
+        // border: solid 1px #ccc;
+        // border-radius: 4px;
+
+        .blockButton {
+            opacity: 1;
+        }
+
+        i[draghandle] {
+            opacity: 0.3;
+        }
+
+        i[delete] {
+            opacity: 0.3;
+        }
+
+        .addBlock {
+            display: block;
+        }
+    }
+
+    .blockButton {
+        opacity: 0;
+        position: absolute;
+        z-index: 99;
+        right: -30px;
+
+        &.handle {
+            top: 40px;
+            cursor: move;
+        }
+
+        &.delete {
+            top: 10px;
+            cursor: pointer;
+        }
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
+
+.block-fileblock {
+    .file {
+        background: #ececec;
+        max-width: 300px;
+        height: auto;
+        padding: 5px;
+        position: relative;
+
+        div.icon,
+        p {
+            text-align: center;
+        }
+
+        .deleteOverlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &:hover {
+                background: rgba(0, 0, 0, 0.3);
+
+                i {
+                    display: inline-block;
+                    color: white;
+                }
+            }
+
+            i {
+                display: none;
+            }
+
+            cursor: pointer;
+        }
+    }
+}
+
+.block-galleryblock {
+    .picturesList {
+        display: flex;
+
+        .addButton {
+            width: 90px;
+            height: 90px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #dedede;
+            margin: 5px;
+
+            i {
+                width: 40px;
+                height: 40px;
+                font-size: 40px;
+            }
+        }
+
+        .pic {
+            display: flex;
+            max-width: 100px;
+            height: 100px;
+            padding: 5px;
+            position: relative;
+
+            img {
+                max-width: 100%;
+                width: 100%;
+                object-fit: cover;
+            }
+
+            .deleteOverlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                &:hover {
+                    background: rgba(0, 0, 0, 0.3);
+
+                    i {
+                        display: inline-block;
+                        color: white;
+                    }
+                }
+
+                i {
+                    display: none;
+                }
+
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+.block-pictureblock {
+    .singlePicture {
+        position: relative;
+        text-align: center;
+
+        img {
+            max-width: 100%;
+        }
+
+        .addOverlay {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            opacity: 0;
+            background: #000;
+
+            top: 0;
+            left: 0;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &:hover {
+                opacity: 0.7;
+            }
+
+            i {
+                color: white;
+                width: 80px;
+                height: 80px;
+                font-size: 80px;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+.block-quoteblock {
+    .singlePicture {
+        position: relative;
+        text-align: center;
+
+        img {
+            max-width: 100%;
+        }
+
+        .addOverlay {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            opacity: 0;
+            background: #000;
+
+            top: 0;
+            left: 0;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &:hover {
+                opacity: 0.7;
+            }
+
+            i {
+                color: white;
+                width: 40px;
+                height: 40px;
+                font-size: 40px;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+.block-youtubeblock {
+    i.editUrl {
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        cursor: pointer;
+        opacity: 0.3;
+    }
+}

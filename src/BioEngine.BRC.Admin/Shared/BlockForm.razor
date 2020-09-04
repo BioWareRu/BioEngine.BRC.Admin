@@ -1,44 +1,38 @@
 ﻿@using BioEngine.BRC.Common.Entities
 @using BioEngine.BRC.Common.Entities.Blocks
 @using BioEngine.BRC.Common.Components
-<RadzenCard class="@BlockClass">
-    <RadzenIcon Icon="drag_indicator" dragHandle></RadzenIcon>
-    @if (Block != null)
-    {
-        switch (Block)
-        {
-            case TextBlock textBlock:
-                <TextBlockForm Block="@textBlock"/>
-                break;
-            case CutBlock cutBlock:
-                <CutBlockForm Block="@cutBlock"></CutBlockForm>
-                break;
-            case FileBlock fileBlock:
-                <FileBlockForm Block="@fileBlock"></FileBlockForm>
-                break;
-            case PictureBlock pictureBlock:
-                <PictureBlockForm Block="@pictureBlock"></PictureBlockForm>
-                break;
-            case GalleryBlock galleryBlock:
-                <GalleryBlockForm Block="@galleryBlock"></GalleryBlockForm>
-                break;
-            case TwitterBlock twitterBlock:
-                <TwitterBlockForm Block="@twitterBlock"></TwitterBlockForm>
-                break;
-            case QuoteBlock quoteBlock:
-                <QuoteBlockForm Block="@quoteBlock"></QuoteBlockForm>
-                break;
-            case YoutubeBlock youtubeBlock:
-                <YoutubeBlockForm Block="@youtubeBlock"></YoutubeBlockForm>
-                break;
-        }
-    }
-</RadzenCard>
+
+@switch (Block)
+{
+    case TextBlock textBlock:
+        <TextBlockForm Block="@textBlock"/>
+        break;
+    case CutBlock cutBlock:
+        <CutBlockForm Block="@cutBlock"></CutBlockForm>
+        break;
+    case FileBlock fileBlock:
+        <FileBlockForm Block="@fileBlock"></FileBlockForm>
+        break;
+    case PictureBlock pictureBlock:
+        <PictureBlockForm Block="@pictureBlock"></PictureBlockForm>
+        break;
+    case GalleryBlock galleryBlock:
+        <GalleryBlockForm Block="@galleryBlock"></GalleryBlockForm>
+        break;
+    case TwitterBlock twitterBlock:
+        <TwitterBlockForm Block="@twitterBlock"></TwitterBlockForm>
+        break;
+    case QuoteBlock quoteBlock:
+        <QuoteBlockForm Block="@quoteBlock"></QuoteBlockForm>
+        break;
+    case YoutubeBlock youtubeBlock:
+        <YoutubeBlockForm Block="@youtubeBlock"></YoutubeBlockForm>
+        break;
+}
 
 @code {
 
     [Parameter]
     public ContentBlock Block { get; set; }
 
-    private string BlockClass => $"block-form block-{Block.GetKey()}";
 }

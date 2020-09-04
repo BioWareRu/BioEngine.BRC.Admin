@@ -1,12 +1,18 @@
 ﻿@using BioEngine.BRC.Common.Entities.Abstractions
 @using BioEngine.BRC.Common.Entities
 @using System.Collections.ObjectModel
+@using BioEngine.BRC.Common.Components
 @inject IJSRuntime JsRuntime
 
-<div id="blocks-@Item.Id">
+<div class="blocksForm" id="blocks-@Item.Id">
     @foreach (var block in Blocks)
     {
-        <BlockForm Block="block"></BlockForm>
+        <RadzenCard class="@GetBlockClass(block)">
+            <RadzenIcon Icon="drag_indicator" dragHandle></RadzenIcon>
+            <RadzenIcon Icon="delete" delete @onclick="@(async () => await DeleteBlockAsync(block))"></RadzenIcon>
+            <RadzenIcon Icon="@block.TypeIcon" blockIcon></RadzenIcon>
+            <BlockForm Block="block"></BlockForm>
+        </RadzenCard>
     }
 </div>
 
@@ -55,6 +61,17 @@
             block.Position = Blocks.IndexOf(block);
         }
         return true;
+    }
+
+    private async Task DeleteBlockAsync(ContentBlock block)
+    {
+        Item.Blocks.Remove(block);
+        Blocks.Remove(block);
+    }
+
+    private string GetBlockClass(ContentBlock block)
+    {
+        return $"block-form block-{block.GetKey()}";
     }
 
 }
