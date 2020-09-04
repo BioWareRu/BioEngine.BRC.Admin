@@ -8,7 +8,7 @@
     <ItemGroup>
         <PackageReference Include="BioEngine.BRC.Common" Version="3.1.*" Condition="!Exists('..\..\..\BioEngine.BRC.Common')" />
         <PackageReference Include="BlazorInputFile" Version="0.2.0" />
-        <PackageReference Include="Radzen.Blazor" Version="2.11.13" />
+        <PackageReference Include="Radzen.Blazor" Version="2.11.17" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\..\BioEngine.BRC.Common\src\BioEngine.BRC.Common\BioEngine.BRC.Common.csproj" Condition="Exists('..\..\..\BioEngine.BRC.Common')" />
