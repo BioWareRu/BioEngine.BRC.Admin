@@ -35,7 +35,7 @@
         "@angular/platform-browser-dynamic": "8.2.14",
         "@angular/router": "8.2.14",
         "@ckeditor/ckeditor5-angular": "1.2.3",
-        "@ckeditor/ckeditor5-build-balloon": "21.0.0",
+        "@ckeditor/ckeditor5-build-balloon": "23.0.0",
         "@fortawesome/fontawesome-free": "5.14.0",
         "moment": "2.29.1",
         "ngx-custom-validators": "8.0.0",
