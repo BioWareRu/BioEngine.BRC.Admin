@@ -15,7 +15,6 @@ jobs:
                 with:
                     node-version: '14'
             -   name: Build JS
-                working-directory: src/${{ env.PROJECT}}
                 run: |
                     npm ci
                     npm run build-prod
