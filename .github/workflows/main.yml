@@ -1,0 +1,23 @@
+name: Build
+
+on:
+    push:
+        branches: [ master ]
+    pull_request:
+        branches: [ master ]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        container: ghcr.io/sitkoru/actions-container
+        steps:
+            -   uses: actions/checkout@v2
+            -   name: Install NodeJS
+                uses: actions/setup-node@v2.1.5
+                with:
+                    node-version: '13'
+            -   name: Build JS
+                working-directory: src/${{ env.PROJECT}}
+                run: |
+                    npm ci
+                    npm run build
