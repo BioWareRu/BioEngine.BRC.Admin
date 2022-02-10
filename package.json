@@ -64,7 +64,7 @@
         "@types/url-parse": "1.4.3",
         "@types/uuid": "8.3.0",
         "codelyzer": "6.0.0",
-        "node-sass": "4.14.1",
+        "node-sass": "7.0.0",
         "ts-node": "8.10.2",
         "tslint": "5.20.1",
         "tslint-consistent-codestyle": "1.16.0",
